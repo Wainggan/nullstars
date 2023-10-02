@@ -112,15 +112,17 @@ state_free = state_base.add()
 	y_vel += _y_accel
 
 	y_vel = min(y_vel, defs.terminal_vel);
+	
+	var _wall = place_meeting(x + defs.wall_distance, y, obj_wall) - place_meeting(x - defs.wall_distance, y, obj_wall);
 
-	if place_meeting(x, y + 1, obj_wall) {
+	if place_meeting(x, y + 1, obj_wall) || _wall != 0 {
 		grace = defs.grace;
 		grace_y = y;
 	}
 
 	if grace > 0 {
 		if buffer > 0 {
-			buffer = 0;
+			buffer = 0
 			grace = 0;
 			y = grace_y; // may cause clipping. consider using actor_move_y()
 		
@@ -129,6 +131,13 @@ state_free = state_base.add()
 			
 			scale_x = 0.8;
 			scale_y = 1.2;
+		}
+	}
+	
+	if _wall != 0 {
+		if !place_meeting(x, y + 1, obj_wall) && _kh == _wall && y_vel > 0 {
+			dir = _wall;
+			state.change(state_climb);
 		}
 	}
 
@@ -152,24 +161,6 @@ state_free = state_base.add()
 		x_vel = 0;
 	});
 	
-	// additional checks
-	
-	var _wall = place_meeting(x + defs.wall_distance, y, obj_wall) - place_meeting(x - defs.wall_distance, y, obj_wall);
-	
-	if _wall != 0 {
-		if buffer {
-			buffer = 0;
-			grace = 0;
-		
-			y_vel = defs.jump_vel;
-			scale_x = 0.8;
-			scale_y = 1.2;
-		}
-		if _kh == _wall && y_vel > 1 {
-			dir = _wall;
-			state.change(state_climb);
-		}
-	}
 	
 })
 
@@ -181,15 +172,7 @@ state_climb = state_base.add()
 	
 	// y direction logic
 	
-	var _y_accel = 0;
-	
-	if y_vel < -defs.climb_speed { // moving up
-		_y_accel = defs.climb_slide;
-	} else {
-		_y_accel = defs.climb_accel;
-	}
-	
-	y_vel = approach(y_vel, _kv * defs.climb_speed, _y_accel);
+	y_vel = approach(y_vel, _kv * defs.climb_speed, defs.climb_accel);
 	
 	x_vel = dir * defs.move_speed;
 	
@@ -204,6 +187,7 @@ state_climb = state_base.add()
 	var _wall = place_meeting(x + dir, y, obj_wall);
 	
 	if !_wall {
+		grace = 0;
 		state.change(state_free);
 	} else {
 		grace = defs.grace
@@ -215,7 +199,7 @@ state_climb = state_base.add()
 	} else {
 		climb_away = 0;
 	}
-	if climb_away > 6 {
+	if climb_away > 8 {
 		state.change(state_free)
 	}
 	
