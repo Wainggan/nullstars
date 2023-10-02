@@ -8,6 +8,7 @@ defs = {
 	
 	move_speed: 2,
 	move_accel: 1,
+	move_slowdown: 0.2,
 	
 	jump_vel: -4,
 	jump_move_boost: 0.5,
@@ -40,6 +41,9 @@ input = {
 	jump: false,
 	jump_pressed: false,
 	jump_released: false,
+	dash: false,
+	dash_pressed: false,
+	dash_released: false,
 };
 
 
@@ -54,7 +58,13 @@ grace = 0;
 grace_y = y;
 buffer = 0;
 
+gravity_hold = 0;
+
 climb_away = 0;
+
+dash_dir_x = 0;
+dash_dir_y = 0;
+dash_timer = 0;
 
 // state machine
 
@@ -72,8 +82,13 @@ state_base = state.add()
 	input.jump_pressed = keyboard_check_pressed(ord("Z"));
 	input.jump_released = keyboard_check_released(ord("Z"));
 	
+	input.dash = keyboard_check(ord("X"));
+	input.dash_pressed = keyboard_check_pressed(ord("X"));
+	input.dash_released = keyboard_check_released(ord("X"));
+	
 	buffer -= 1;
 	grace -= 1;
+	gravity_hold -= 1;
 
 	if input.jump_pressed buffer = defs.buffer;
 
@@ -103,6 +118,9 @@ state_free = state_base.add()
 		}
 	} else {
 		_y_accel = defs.gravity;
+	}
+	if gravity_hold > 0 {
+		_y_accel = defs.gravity_peak;
 	}
 
 	if input.jump_released && y_vel < 0 {
@@ -144,9 +162,28 @@ state_free = state_base.add()
 
 	// x direction logic
 
-	x_vel = approach(x_vel, _kh * defs.move_speed, defs.move_accel);
+	var _x_accel = 0;
+	if abs(x_vel) > defs.move_speed && _kh == sign(x_vel) {
+		_x_accel = defs.move_slowdown;
+	} else {
+		_x_accel = defs.move_accel;
+	}
+
+	x_vel = approach(x_vel, _kh * defs.move_speed, _x_accel);
+	if _kh != 0
+		dir = _kh;
 	
-	dir = _kh;
+	
+	if input.dash_pressed {
+		if _kh == 0
+			dash_dir_x = dir;
+		else
+			dash_dir_x = _kh;
+		
+		dash_dir_y = 0;
+		
+		state.change(state_dash)
+	}
 
 	// move
 	
@@ -215,6 +252,35 @@ state_climb = state_base.add()
 		scale_y = 1.2;
 		
 		state.change(state_free)
+	}
+	
+})
+
+state_dash = state_base.add()
+.set("enter", function(){
+	dash_timer = 6;
+})
+.set("step", function(){
+	
+	var _dir = point_direction(0, 0, dash_dir_x, dash_dir_y);
+	
+	x_vel = lengthdir_x(7, _dir);
+	y_vel = lengthdir_y(7, _dir);
+	
+	actor_move_y(y_vel, function(){
+		y_vel = 0;
+	});
+
+	actor_move_x(x_vel, function(){
+		x_vel = 0;
+	});
+	
+	dash_timer -= 1;
+	if dash_timer <= 0 {
+		gravity_hold = 8
+		x_vel *= 0.6;
+		x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+		state.change(state_free);
 	}
 	
 })

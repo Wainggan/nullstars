@@ -4,6 +4,8 @@ function State() constructor {
 	__current = [];
 	__depth = 0;
 	__name = "";
+	__deferchange = undefined;
+	__running = false;
 	current = undefined;
 	
 	time = 0;
@@ -14,6 +16,13 @@ function State() constructor {
 	}
 	
 	static change = function(_child){
+		if !__running {
+			__change(_child);
+			return;
+		}
+		__deferchange = _child; // only change event at end of run
+	}
+	static __change = function(_child){
 		run("leave");
 		
 		current = _child;
@@ -42,11 +51,19 @@ function State() constructor {
 	
 	static run = function(_name = "step"){
 		if current == undefined return;
+		__running = true;
 		__depth = 0;
 		__name = _name;
 		current.__delegate(_name);
 		
 		time += 1;
+		
+		if __deferchange != undefined {
+			var _child = __deferchange;
+			__deferchange = undefined;
+			__change(_child)
+		}
+		__running = false;
 	}
 	
 	static __push = function(_child){
