@@ -25,6 +25,7 @@ defs = {
 	climb_speed: 2,
 	climb_accel: 1,
 	climb_slide: 0.1,
+	climb_leave: 8,
 	
 	buffer: 12,
 	grace: 4,
@@ -199,7 +200,7 @@ state_climb = state_base.add()
 	} else {
 		climb_away = 0;
 	}
-	if climb_away > 8 {
+	if climb_away > defs.climb_leave {
 		state.change(state_free)
 	}
 	
@@ -215,7 +216,6 @@ state_climb = state_base.add()
 		
 		state.change(state_free)
 	}
-	
 	
 })
 
