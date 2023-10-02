@@ -10,6 +10,7 @@ defs = {
 	move_accel: 1,
 	
 	jump_vel: -4,
+	jump_move_boost: 0.5,
 	terminal_vel: 4,
 	
 	gravity: 0.45,
@@ -18,6 +19,12 @@ defs = {
 	gravity_peak_thresh: 0.36,
 	
 	gravity_damp: 0.8,
+	
+	wall_distance: 4,
+	
+	climb_speed: 2,
+	climb_accel: 1,
+	climb_slide: 0.1,
 	
 	buffer: 12,
 	grace: 4,
@@ -40,10 +47,13 @@ input = {
 scale_x = 0;
 scale_y = 0;
 
+dir = 0;
+
 grace = 0;
 grace_y = y;
 buffer = 0;
 
+climb_away = 0;
 
 // state machine
 
@@ -115,6 +125,8 @@ state_free = state_base.add()
 			y = grace_y; // may cause clipping. consider using actor_move_y()
 		
 			y_vel = defs.jump_vel;
+			x_vel += (defs.jump_move_boost + defs.move_accel) * sign(x_vel);
+			
 			scale_x = 0.8;
 			scale_y = 1.2;
 		}
@@ -123,6 +135,8 @@ state_free = state_base.add()
 	// x direction logic
 
 	x_vel = approach(x_vel, _kh * defs.move_speed, defs.move_accel);
+	
+	dir = _kh;
 
 	// move
 	
@@ -137,6 +151,87 @@ state_free = state_base.add()
 	actor_move_x(x_vel, function(){
 		x_vel = 0;
 	});
+	
+	// additional checks
+	
+	var _wall = place_meeting(x + defs.wall_distance, y, obj_wall) - place_meeting(x - defs.wall_distance, y, obj_wall);
+	
+	if _wall != 0 {
+		if buffer {
+			buffer = 0;
+			grace = 0;
+		
+			y_vel = defs.jump_vel;
+			scale_x = 0.8;
+			scale_y = 1.2;
+		}
+		if _kh == _wall && y_vel > 1 {
+			dir = _wall;
+			state.change(state_climb);
+		}
+	}
+	
+})
+
+state_climb = state_base.add()
+.set("step", function(){
+	
+	var _kh = input.right - input.left;
+	var _kv = input.down - input.up;
+	
+	// y direction logic
+	
+	var _y_accel = 0;
+	
+	if y_vel < -defs.climb_speed { // moving up
+		_y_accel = defs.climb_slide;
+	} else {
+		_y_accel = defs.climb_accel;
+	}
+	
+	y_vel = approach(y_vel, _kv * defs.climb_speed, _y_accel);
+	
+	x_vel = dir * defs.move_speed;
+	
+	actor_move_y(y_vel, function(){
+		y_vel = 0;
+	});
+
+	actor_move_x(x_vel, function(){
+		x_vel = 0;
+	});
+	
+	var _wall = place_meeting(x + dir, y, obj_wall);
+	
+	if !_wall {
+		state.change(state_free);
+	} else {
+		grace = defs.grace
+		grace_y = y;
+	}
+	
+	if _kh != 0 && _kh != dir {
+		climb_away += 1;
+	} else {
+		climb_away = 0;
+	}
+	if climb_away > 6 {
+		state.change(state_free)
+	}
+	
+	if buffer >= 0 {
+		buffer = 0;
+		grace = 0;
+		
+		y_vel = defs.jump_vel;
+		x_vel = (defs.jump_move_boost + defs.move_speed) * sign(_kh);
+		
+		scale_x = 0.8;
+		scale_y = 1.2;
+		
+		state.change(state_free)
+	}
+	
 	
 })
 
