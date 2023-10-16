@@ -6,6 +6,7 @@ function game_get_pause() {
 	return global.pause;
 }
 
+// game_get_pause() and game_pause() only change once game_pause_update() is run
 function game_set_pause(_pause) {
 	global.pause_defer = max(_pause, global.pause_defer);
 }
