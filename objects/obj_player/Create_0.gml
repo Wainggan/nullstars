@@ -11,7 +11,7 @@ defs = {
 	move_slowdown: 0.1,
 	
 	jump_vel: -4,
-	jump_move_boost: 0.4,
+	jump_move_boost: 0.2,
 	terminal_vel: 4,
 	
 	jump_short_vel: -3,
@@ -65,7 +65,9 @@ gravity_hold = 0;
 climb_away = 0;
 
 dash_dir_x = 0;
+dash_dir_x_vel = 0;
 dash_dir_y = 0;
+dash_dir_y_vel = 0;
 dash_timer = 0;
 dash_jump_grace = 0;
 
@@ -79,19 +81,20 @@ f_dashjump = function(){
 	gravity_hold = 0;
 			
 	if dash_dir_y == 0 {
+		
 		if _kh != dash_dir_x {
 			y_vel = -5.4;
-			x_vel *= 0.4
+			x_vel = dash_dir_x_vel * 0.4
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 		} else {
 			y_vel = defs.jump_vel;
-			x_vel *= 0.8
+			x_vel = dash_dir_x_vel * 0.8
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 		}
 	} else {
-		y_vel = -3;
-		x_vel *= 0.7
-		x_vel += (_kh == 0 ? dash_dir_x : _kh) * 4
+		y_vel = -3
+		x_vel = abs(dash_dir_x_vel) * 0.7 * sign(_kh == 0 ? sign(x_vel) : _kh)
+		x_vel += (_kh == 0 ? dir : _kh) * 4
 	}
 }
 
@@ -169,7 +172,7 @@ state_free = state_base.add()
 		grace_y = y;
 	}
 	
-	if grace > 0 {
+	if grace > 0 || dash_jump_grace > 0 {
 		
 		if buffer > 0 {
 			
@@ -185,7 +188,13 @@ state_free = state_base.add()
 				scale_x = 0.8;
 				scale_y = 1.2;
 			} else {
-				f_dashjump()
+				var _close = place_meeting(x, y + 32, obj_wall)
+				if _close {
+					dash_jump_grace = 2;
+				}
+				if (_close && grace > 0) || !_close || dash_dir_y == 0 {
+					f_dashjump()
+				}
 			}
 		
 		}
@@ -214,14 +223,8 @@ state_free = state_base.add()
 	
 	
 	if input.dash_pressed {
-		if _kh == 0
-			dash_dir_x = dir;
-		else
-			dash_dir_x = _kh;
-		
-		dash_dir_y = _kv == 1 ? 1 : 0;
-		
-		state.change(state_dash)
+		game_set_pause(3)
+		state.change(state_dashset)
 	}
 
 	// move
@@ -295,14 +298,31 @@ state_climb = state_base.add()
 	
 })
 
+state_dashset = state_base.add()
+.set("step", function(){
+	var _kh = input.right - input.left;
+	var _kv = input.down - input.up;
+	
+	if _kh == 0
+		dash_dir_x = dir;
+	else
+		dash_dir_x = _kh;
+	
+	dash_dir_y = _kv == 1 ? 1 : 0;
+	
+	state.change(state_dash);
+})
+
 state_dash = state_base.add()
 .set("enter", function(){
 	dash_timer = 6;
 	x_vel *= 0.5;
 	y_vel = 0;
 	var _dir = point_direction(0, 0, dash_dir_x, dash_dir_y);
-	x_vel += lengthdir_x(7, _dir);
-	y_vel += lengthdir_y(6, _dir);
+	dash_dir_x_vel = lengthdir_x(7, _dir);
+	dash_dir_y_vel = lengthdir_y(6, _dir);
+	x_vel += dash_dir_x_vel;
+	y_vel += dash_dir_y_vel;
 })
 .set("step", function(){
 	
@@ -324,13 +344,9 @@ state_dash = state_base.add()
 		}
 	}
 	
-	actor_move_y(y_vel, function(){
-		y_vel = 0;
-	});
+	actor_move_y(y_vel);
 
-	actor_move_x(x_vel, function(){
-		x_vel = 0;
-	});
+	actor_move_x(x_vel);
 	
 	dash_timer -= 1;
 	if dash_timer <= 0 && !_jumped {
