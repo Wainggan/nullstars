@@ -107,7 +107,7 @@ f_dashjump = function(){
 			x_vel = abs(dash_dir_x_vel) * 0.7 * sign(_kh == 0 ? sign(x_vel) : _kh)
 			x_vel += (_kh == 0 ? dir : _kh) * 4
 		} else {
-			x_vel = dash_dir_x * 2 * -_wall
+			x_vel = 2 * -_wall
 			x_vel += -_wall * 4
 			key_hold = sign(x_vel);
 			key_hold_timer = 5
@@ -135,13 +135,17 @@ state_base = state.add()
 	input.dash_pressed = keyboard_check_pressed(ord("Z"));
 	input.dash_released = keyboard_check_released(ord("Z"));
 	
+	if input.jump_pressed buffer = defs.buffer + 1;
+	
+	if game_paused() {
+		return;
+	}
+	
 	buffer -= 1;
 	grace -= 1;
 	gravity_hold -= 1;
 	key_hold_timer -= 1;
 	dash_jump_grace -= 1;
-
-	if input.jump_pressed buffer = defs.buffer;
 
 	scale_x = lerp(scale_x, 1, 0.2);
 	scale_y = lerp(scale_y, 1, 0.2);

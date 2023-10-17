@@ -55,8 +55,8 @@ function actor_collision(_x, _y) {
 
 	var _x1 = tilemap_get_cell_x_at_pixel(_tm, bbox_left + (_x - x), y),
 		_y1 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_top + (_y - y)),
-		_x2 = tilemap_get_cell_x_at_pixel(_tm, bbox_right + (_x - x), y),
-		_y2 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_bottom + (_y - y));
+		_x2 = tilemap_get_cell_x_at_pixel(_tm, bbox_right + (_x - x) - 1, y),
+		_y2 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_bottom + (_y - y) - 1);
 
 	for (var _xx = _x1; _xx <= _x2; _xx++) {
 		for (var _yy = _y1; _yy <= _y2; _yy++) {

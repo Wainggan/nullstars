@@ -10,6 +10,7 @@
     {"name":"tl_debug","order":3,"path":"tilesets/tl_debug/tl_debug.yy",},
     {"name":"obj_player","order":5,"path":"objects/obj_player/obj_player.yy",},
     {"name":"game","order":1,"path":"objects/game/game.yy",},
+    {"name":"obj_Static","order":19,"path":"objects/obj_Static/obj_Static.yy",},
     {"name":"scr_util","order":11,"path":"scripts/scr_util/scr_util.yy",},
     {"name":"scr_actor","order":8,"path":"scripts/scr_actor/scr_actor.yy",},
     {"name":"scr_state","order":14,"path":"scripts/scr_state/scr_state.yy",},
