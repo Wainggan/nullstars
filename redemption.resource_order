@@ -14,7 +14,6 @@
     {"name":"game","order":1,"path":"objects/game/game.yy",},
     {"name":"scr_util","order":11,"path":"scripts/scr_util/scr_util.yy",},
     {"name":"scr_actor","order":3,"path":"scripts/scr_actor/scr_actor.yy",},
-    {"name":"scr_state","order":14,"path":"scripts/scr_state/scr_state.yy",},
     {"name":"obj_solid","order":2,"path":"objects/obj_solid/obj_solid.yy",},
     {"name":"spr_debug_wall","order":1,"path":"sprites/spr_debug_wall/spr_debug_wall.yy",},
     {"name":"obj_Entity","order":1,"path":"objects/obj_Entity/obj_Entity.yy",},

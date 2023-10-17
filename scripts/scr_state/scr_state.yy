@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "redemption",
-    "path": "redemption.yyp",
+    "name": "scripts",
+    "path": "folders/objects/scripts.yy",
   },
 }
