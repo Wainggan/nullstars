@@ -78,6 +78,9 @@ dash_jump_grace = 0;
 
 dash_left = 0;
 
+cam_ground_x = x;
+cam_ground_y = y;
+
 
 f_dashjump = function(){
 	var _kh = input.right - input.left;
@@ -401,3 +404,23 @@ state_dash = state_base.add()
 })
 
 state.change(state_free);
+
+
+riding = function(_solid){
+	return place_meeting(x, y + 1, _solid) || place_meeting(x + dir, y, _solid)
+}
+
+cam = function(){
+	
+	if (state.is(state_free) && actor_collision(x, y + 1)) || state.is(state_climb) {
+		cam_ground_x = x + dir * 32;
+		cam_ground_y = y;
+	}
+	
+	var _dist = point_distance(cam_ground_x, cam_ground_y, x, y);
+	
+	camera.target_x = lerp(cam_ground_x, x, 1 - max(0, 1 - power(_dist / 64, 2)) * 0.2);
+	camera.target_y = lerp(cam_ground_y, y, 1 - max(0, 1 - power(_dist / 128, 2)) * 0.8);
+	
+}
+
