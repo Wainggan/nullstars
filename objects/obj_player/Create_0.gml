@@ -83,7 +83,7 @@ f_dashjump = function(){
 	var _kh = input.right - input.left;
 	var _kv = input.down - input.up;
 	
-	var _wall = place_meeting(x + defs.wall_distance, y, obj_wall) - place_meeting(x - defs.wall_distance, y, obj_wall);
+	var _wall = actor_collision(x + defs.wall_distance, y) - actor_collision(x - defs.wall_distance, y);
 	
 	grace = 0;
 	buffer = 0;
@@ -183,9 +183,9 @@ state_free = state_base.add()
 
 	y_vel = min(y_vel, defs.terminal_vel);
 	
-	var _wall = place_meeting(x + defs.wall_distance, y, obj_wall) - place_meeting(x - defs.wall_distance, y, obj_wall);
+	var _wall = actor_collision(x + defs.wall_distance, y) - actor_collision(x - defs.wall_distance, y);
 	
-	if place_meeting(x, y + 1, obj_wall) || _wall != 0 {
+	if actor_collision(x, y + 1) || _wall != 0 {
 		grace = defs.grace;
 		grace_y = y;
 		
@@ -208,7 +208,7 @@ state_free = state_base.add()
 				scale_x = 0.8;
 				scale_y = 1.2;
 			} else {
-				var _close = place_meeting(x, y + 32, obj_wall)
+				var _close = actor_collision(x, y + 32)
 				if _close {
 					dash_jump_grace = 2;
 				}
@@ -222,7 +222,7 @@ state_free = state_base.add()
 	}
 	
 	if _wall != 0 {
-		if !place_meeting(x, y + 1, obj_wall) && _kh == _wall && y_vel > 0 {
+		if !actor_collision(x, y + 1) && _kh == _wall && y_vel > 0 {
 			dir = _wall;
 			state.change(state_climb);
 		}
@@ -289,7 +289,7 @@ state_climb = state_base.add()
 		x_vel = 0;
 	});
 	
-	var _wall = place_meeting(x + dir, y, obj_wall);
+	var _wall = actor_collision(x + dir, y);
 	
 	if !_wall {
 		grace = 0;
@@ -361,7 +361,7 @@ state_dash = state_base.add()
 	var _kh = input.right - input.left;
 	var _kv = input.down - input.up;
 	
-	if place_meeting(x, y + 1, obj_wall) {
+	if actor_collision(x, y + 1) {
 		grace = defs.grace;
 	}
 	

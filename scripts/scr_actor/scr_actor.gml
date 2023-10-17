@@ -10,7 +10,7 @@ function actor_move_x(_amount, _callback = undefined) {
 		var _sign = sign(_move);
 		
 		while _move != 0 {
-			if !place_meeting(x + _sign, y, obj_wall) {
+			if !actor_collision(x + _sign, y) {
 				x += _sign;
 				_move -= _sign;
 			} else {
@@ -36,7 +36,7 @@ function actor_move_y(_amount, _callback = undefined) {
 		var _sign = sign(_move);
 		
 		while _move != 0 {
-			if !place_meeting(x, y + _sign, obj_wall) {
+			if !actor_collision(x, y + _sign) {
 				y += _sign;
 				_move -= _sign;
 			} else {
@@ -58,9 +58,9 @@ function actor_collision(_x, _y) {
 		_x2 = tilemap_get_cell_x_at_pixel(_tm, bbox_right + (_x - x), y),
 		_y2 = tilemap_get_cell_y_at_pixel(_tm, x, bbox_bottom + (_y - y));
 
-	for (var _x = _x1; _x <= _x2; _x++) {
-		for (var _y = _y1; _y <= _y2; _y++) {
-			if(tile_get_index(tilemap_get(_tm, _x, _y))){
+	for (var _xx = _x1; _xx <= _x2; _xx++) {
+		for (var _yy = _y1; _yy <= _y2; _yy++) {
+			if tile_get_index(tilemap_get(_tm, _xx, _yy)) {
 				return true;
 			}
 		}
