@@ -30,6 +30,8 @@ defs = {
 	climb_slide: 0.1,
 	climb_leave: 8,
 	
+	dash_total: 1,
+	
 	buffer: 12,
 	grace: 4,
 	
@@ -62,6 +64,9 @@ buffer = 0;
 
 gravity_hold = 0;
 
+key_hold = 0;
+key_hold_timer = 0;
+
 climb_away = 0;
 
 dash_dir_x = 0;
@@ -71,16 +76,20 @@ dash_dir_y_vel = 0;
 dash_timer = 0;
 dash_jump_grace = 0;
 
+dash_left = 0;
+
 
 f_dashjump = function(){
 	var _kh = input.right - input.left;
 	var _kv = input.down - input.up;
 	
+	var _wall = place_meeting(x + defs.wall_distance, y, obj_wall) - place_meeting(x - defs.wall_distance, y, obj_wall);
+	
 	grace = 0;
 	buffer = 0;
 	gravity_hold = 0;
 			
-	if dash_dir_y == 0 {
+	if dash_dir_y == 0 && _wall == 0 {
 		
 		if _kh != dash_dir_x {
 			y_vel = -5.4;
@@ -91,10 +100,18 @@ f_dashjump = function(){
 			x_vel = dash_dir_x_vel * 0.8
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 		}
+		
 	} else {
 		y_vel = -3
-		x_vel = abs(dash_dir_x_vel) * 0.7 * sign(_kh == 0 ? sign(x_vel) : _kh)
-		x_vel += (_kh == 0 ? dir : _kh) * 4
+		if _wall == 0 {
+			x_vel = abs(dash_dir_x_vel) * 0.7 * sign(_kh == 0 ? sign(x_vel) : _kh)
+			x_vel += (_kh == 0 ? dir : _kh) * 4
+		} else {
+			x_vel = dash_dir_x * 2 * -_wall
+			x_vel += -_wall * 4
+			key_hold = sign(x_vel);
+			key_hold_timer = 5
+		}
 	}
 }
 
@@ -121,6 +138,7 @@ state_base = state.add()
 	buffer -= 1;
 	grace -= 1;
 	gravity_hold -= 1;
+	key_hold_timer -= 1;
 	dash_jump_grace -= 1;
 
 	if input.jump_pressed buffer = defs.buffer;
@@ -170,6 +188,8 @@ state_free = state_base.add()
 	if place_meeting(x, y + 1, obj_wall) || _wall != 0 {
 		grace = defs.grace;
 		grace_y = y;
+		
+		dash_left = defs.dash_total;
 	}
 	
 	if grace > 0 || dash_jump_grace > 0 {
@@ -210,19 +230,22 @@ state_free = state_base.add()
 	
 	// x direction logic
 	
+	var _kh_move = _kh;
+	if key_hold_timer _kh_move = key_hold;
+	
 	var _x_accel = 0;
-	if abs(x_vel) > defs.move_speed && _kh == sign(x_vel) {
+	if abs(x_vel) > defs.move_speed && _kh_move == sign(x_vel) {
 		_x_accel = defs.move_slowdown;
 	} else {
 		_x_accel = defs.move_accel;
 	}
 	
-	x_vel = approach(x_vel, _kh * defs.move_speed, _x_accel);
+	x_vel = approach(x_vel, _kh_move * defs.move_speed, _x_accel);
 	if _kh != 0
 		dir = _kh;
 	
 	
-	if input.dash_pressed {
+	if input.dash_pressed && dash_left > 0 {
 		game_set_pause(3)
 		state.change(state_dashset)
 	}
@@ -256,6 +279,8 @@ state_climb = state_base.add()
 	
 	x_vel = dir * defs.move_speed;
 	
+	dash_left = defs.dash_total;
+	
 	actor_move_y(y_vel, function(){
 		y_vel = 0;
 	});
@@ -274,13 +299,18 @@ state_climb = state_base.add()
 		grace_y = y;
 	}
 	
-	if _kh != 0 && _kh != dir {
+	if _kh != dir {
 		climb_away += 1;
 	} else {
 		climb_away = 0;
 	}
 	if climb_away > defs.climb_leave {
 		state.change(state_free)
+	}
+	
+	if input.dash_pressed && dash_left > 0 {
+		game_set_pause(3)
+		state.change(state_dashset)
 	}
 	
 	if buffer >= 0 {
@@ -316,6 +346,8 @@ state_dashset = state_base.add()
 state_dash = state_base.add()
 .set("enter", function(){
 	dash_timer = 6;
+	dash_left -= 1;
+	
 	x_vel *= 0.5;
 	y_vel = 0;
 	var _dir = point_direction(0, 0, dash_dir_x, dash_dir_y);
@@ -352,7 +384,7 @@ state_dash = state_base.add()
 	if dash_timer <= 0 && !_jumped {
 		grace = 0;
 		gravity_hold = 8
-		dash_jump_grace = 6;
+		dash_jump_grace = 8;
 		
 		if dash_dir_y == 0
 			x_vel = clamp(x_vel * 0.5, -4, 4);
