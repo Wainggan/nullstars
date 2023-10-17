@@ -65,7 +65,20 @@ function actor_collision(_x, _y) {
 			}
 		}
 	}
+	
+	var _list = ds_list_create();
+	
+	instance_place_list(_x, _y, obj_solid, _list, false);
+	
+	for (var i = 0; i < ds_list_size(_list); i++) {
+		if _list[| i].collidable {
+			ds_list_destroy(_list)
+			return true;
+		}
+	}
+	
+	ds_list_destroy(_list)
 
-	return place_meeting(_x, _y, obj_wall);
+	return false;
 }
 
