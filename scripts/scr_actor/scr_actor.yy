@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "redemption",
-    "path": "redemption.yyp",
+    "name": "objects",
+    "path": "folders/objects.yy",
   },
 }

@@ -8,8 +8,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "redemption",
-    "path": "redemption.yyp",
+    "name": "objects",
+    "path": "folders/objects.yy",
   },
   "parentObjectId": {
     "name": "obj_Entity",

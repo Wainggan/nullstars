@@ -6,8 +6,8 @@
   "managed": false,
   "overriddenProperties": [],
   "parent": {
-    "name": "redemption",
-    "path": "redemption.yyp",
+    "name": "objects",
+    "path": "folders/objects.yy",
   },
   "parentObjectId": null,
   "persistent": false,

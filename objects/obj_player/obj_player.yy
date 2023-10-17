@@ -10,8 +10,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "redemption",
-    "path": "redemption.yyp",
+    "name": "entities",
+    "path": "folders/entities.yy",
   },
   "parentObjectId": {
     "name": "obj_Actor",
