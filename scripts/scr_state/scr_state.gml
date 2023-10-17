@@ -58,12 +58,13 @@ function State() constructor {
 		
 		time += 1;
 		
+		__running = false;
 		if __deferchange != undefined {
 			var _child = __deferchange;
 			__deferchange = undefined;
 			__change(_child)
 		}
-		__running = false;
+		
 	}
 	
 	static __push = function(_child){
@@ -111,36 +112,3 @@ function StateChild(_parent = undefined, _top) constructor {
 		top.__pop();
 	}
 }
-
-state = new State();
-
-state_default = state.add()
-.set("step", function(){
-	show_debug_message("!! default start")
-	state.child();
-	show_debug_message("!! default end")
-})
-
-state_free = state_default.add()
-.set("step", function(){
-	show_debug_message("!! free start")
-	state.child();
-	show_debug_message("!! free end")
-})
-
-state_tied = state_free.add()
-.set("step", function(){
-	show_debug_message("!! tie start")
-	state.child();
-	show_debug_message("!! tie end")
-})
-.set("fill", function(){
-	show_debug_message("!! free fill start")
-	state.child();
-	show_debug_message("!! free fill end")
-})
-
-state.change(state_tied);
-
-state.run();
-
