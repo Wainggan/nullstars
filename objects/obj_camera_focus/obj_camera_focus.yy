@@ -33,5 +33,5 @@
     "path": "sprites/spr_debug_camera_focus/spr_debug_camera_focus.yy",
   },
   "spriteMaskId": null,
-  "visible": true,
+  "visible": false,
 }

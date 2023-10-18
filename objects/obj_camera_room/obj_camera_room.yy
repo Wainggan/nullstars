@@ -33,5 +33,5 @@
     "path": "sprites/spr_debug_camera_room/spr_debug_camera_room.yy",
   },
   "spriteMaskId": null,
-  "visible": true,
+  "visible": false,
 }
