@@ -1,17 +1,21 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_Solid",
+  "name": "obj_lift",
   "eventList": [
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,},
   ],
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "objects",
-    "path": "folders/objects.yy",
+    "name": "entities",
+    "path": "folders/entities.yy",
   },
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "obj_Solid",
+    "path": "objects/obj_Solid/obj_Solid.yy",
+  },
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
@@ -28,8 +32,8 @@
   "properties": [],
   "solid": false,
   "spriteId": {
-    "name": "spr_debug_wall",
-    "path": "sprites/spr_debug_wall/spr_debug_wall.yy",
+    "name": "spr_debug_treadmill",
+    "path": "sprites/spr_debug_treadmill/spr_debug_treadmill.yy",
   },
   "spriteMaskId": null,
   "visible": true,

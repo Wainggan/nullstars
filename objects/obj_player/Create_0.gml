@@ -60,6 +60,7 @@ dir = 0;
 
 grace = 0;
 grace_y = y;
+grace_solid = noone;
 buffer = 0;
 
 gravity_hold = 0;
@@ -116,6 +117,9 @@ f_dashjump = function(){
 			key_hold_timer = 5
 		}
 	}
+	
+	x_vel += x_lift;
+	y_vel += y_lift;
 }
 
 // state machine
@@ -153,7 +157,13 @@ state_base = state.add()
 	scale_x = lerp(scale_x, 1, 0.2);
 	scale_y = lerp(scale_y, 1, 0.2);
 	
+	x_lift = clamp(x_lift, -6, 6);
+	y_lift = clamp(y_lift, -3, 0);
+	
 	state.child();
+	
+	x_lift = 0;
+	y_lift = 0;
 	
 })
 
@@ -195,6 +205,7 @@ state_free = state_base.add()
 	if actor_collision(x, y + 1) || _wall != 0 {
 		grace = defs.grace;
 		grace_y = y;
+		grace_solid = instance_place(x, y, obj_Solid);
 		
 		dash_left = defs.dash_total;
 	}
@@ -211,6 +222,15 @@ state_free = state_base.add()
 			
 				y_vel = defs.jump_vel;
 				x_vel += (defs.jump_move_boost + defs.move_accel) * sign(x_vel);
+				
+				if x_lift == 0 && y_lift == 0 {
+					with grace_solid {
+						other.x_lift = x_lift;
+						other.y_lift = y_lift;
+					}
+				}
+				x_vel += x_lift;
+				y_vel += y_lift;
 			
 				scale_x = 0.8;
 				scale_y = 1.2;
@@ -256,6 +276,7 @@ state_free = state_base.add()
 		game_set_pause(3)
 		state.change(state_dashset)
 	}
+	
 
 	// move
 	
@@ -326,6 +347,9 @@ state_climb = state_base.add()
 		
 		y_vel = defs.jump_vel;
 		x_vel = (defs.jump_move_boost + defs.move_speed) * sign(_kh);
+		
+		x_vel += x_lift;
+		y_vel += y_lift;
 		
 		scale_x = 0.8;
 		scale_y = 1.2;

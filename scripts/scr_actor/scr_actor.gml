@@ -68,7 +68,7 @@ function actor_collision(_x, _y) {
 	
 	var _list = ds_list_create();
 	
-	instance_place_list(_x, _y, obj_solid, _list, false);
+	instance_place_list(_x, _y, obj_Solid, _list, false);
 	
 	for (var i = 0; i < ds_list_size(_list); i++) {
 		if _list[| i].collidable {

@@ -22,7 +22,7 @@ function map(_val, _start1, _end1, _start2, _end2) {
 
 function wave(_from, _to, _duration, _offset = 0, _time = current_time * 0.001) {
 	var _a4 = (_from - _to) * 0.5;
-	return _to + _a4 + sin(((_time + _duration * _offset) / _duration) * (pi*2)) * a4;
+	return _to + _a4 + sin(((_time + _duration * _offset) / _duration) * (pi*2)) * _a4;
 }
 
 function wrap(_value,_min,_max) {
