@@ -1,4 +1,7 @@
 
+var _cam_w = camera_get_view_width(view_camera[0]),
+	_cam_h = camera_get_view_height(view_camera[0])
+
 if instance_exists(target) {
 	target.cam()
 }
@@ -17,9 +20,6 @@ if _weights != noone {
 _weights = collision_circle(target_x, target_y, 16, obj_camera_room, true, true);
 
 if _weights != noone {
-	
-	var _cam_w = camera_get_view_width(view_camera[0]),
-		_cam_h = camera_get_view_height(view_camera[0])
 	
 	if _weights.sprite_width <= _cam_w {
 		_tx = _weights.x + _weights.sprite_width / 2;
@@ -42,6 +42,9 @@ roomsnap_last = _weights
 	
 roomsnap_timer = approach(roomsnap_timer, 0, 0.05)
 _ts = lerp(_ts, 0, roomsnap_timer)
+
+_tx = clamp(_tx, _cam_w / 2, room_width - _cam_w / 2);
+_ty = clamp(_ty, _cam_h / 2, room_height - _cam_h / 2);
 
 
 x = lerp(x, _tx, _ts);
