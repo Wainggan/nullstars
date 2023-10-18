@@ -10,6 +10,9 @@ defs = {
 	move_accel: 1,
 	move_slowdown: 0.1,
 	
+	boost_limit_x: 9,
+	boost_limit_y: 3,
+	
 	jump_vel: -4,
 	jump_move_boost: 0.2,
 	terminal_vel: 4,
@@ -30,6 +33,7 @@ defs = {
 	climb_slide: 0.1,
 	climb_leave: 8,
 	
+	dash_timer: 6,
 	dash_total: 1,
 	
 	buffer: 12,
@@ -157,8 +161,8 @@ state_base = state.add()
 	scale_x = lerp(scale_x, 1, 0.2);
 	scale_y = lerp(scale_y, 1, 0.2);
 	
-	x_lift = clamp(x_lift, -6, 6);
-	y_lift = clamp(y_lift, -3, 0);
+	x_lift = clamp(x_lift, -defs.boost_limit_x, defs.boost_limit_y);
+	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
 	
 	state.child();
 	
@@ -431,7 +435,7 @@ state.change(state_free);
 
 
 riding = function(_solid){
-	return place_meeting(x, y + 1, _solid) || place_meeting(x + dir, y, _solid)
+	return place_meeting(x, y + 1, _solid) || (state.is(state_climb) && place_meeting(x + dir, y, _solid))
 }
 
 cam = function(){
