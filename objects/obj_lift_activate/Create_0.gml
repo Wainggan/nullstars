@@ -47,8 +47,8 @@ state_active = state.add()
 	
 	solid_move(lengthdir_x(vel, _dir), lengthdir_y(vel, _dir));
 	
-	if sign(x - target_x) != sign(start_x - target_x)
-	&& sign(y - target_y) != sign(start_y - target_y) {
+	if (start_x == target_x || sign(x - target_x) != sign(start_x - target_x))
+	&& (start_y == target_y || sign(y - target_y) != sign(start_y - target_y)) {
 		solid_move(target_x - x, target_y - y);
 		state.change(state_retract)
 	}
@@ -69,8 +69,8 @@ state_retract = state.add()
 	
 	solid_move(lengthdir_x(vel, _dir), lengthdir_y(vel, _dir));
 	
-	if sign(x - start_x) != sign(target_x - start_x)
-	&& sign(y - start_y) != sign(target_y - start_y) {
+	if (start_x == target_x || sign(x - start_x) != sign(target_x - start_x))
+	&& (start_y == target_y || sign(y - start_y) != sign(target_y - start_y)) {
 		solid_move(start_x - x, start_y - y);
 		state.change(state_idle)
 	}
