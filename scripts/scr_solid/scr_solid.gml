@@ -28,7 +28,7 @@ function solid_move(_xv, _yv) {
 						x_lift = _xv;
 					} else if array_get_index(_riding, self) != -1 {
 						actor_move_x(_moveX);
-						x_lift = _yv;
+						x_lift = _xv;
 					}
 				}
 			} else {
