@@ -21,11 +21,18 @@ for (var i = 0; i < array_length(file.levels); i++) {
 	max_height = max(max_height, (_lv_y + _lv_h) * TILESIZE);
 	
 	var _lvl = {};
-	_lvl.layer = layer_create(0);
+	_lvl.layer = layer_create(100);
 	_lvl.tiles = layer_tilemap_create(
 		_lvl.layer,
 		_lv_x * TILESIZE, _lv_y * TILESIZE,
 		tl_debug, 
+		_lv_w, _lv_h
+	);
+	_lvl.spikes_layer = layer_create(0);
+	_lvl.spikes_tiles = layer_tilemap_create(
+		_lvl.layer,
+		_lv_x * TILESIZE, _lv_y * TILESIZE,
+		tl_debug_spikes, 
 		_lv_w, _lv_h
 	);
 	
@@ -35,9 +42,12 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		
 		var _layer = _level.layerInstances[j];
 		
+		var _targetLayer = _lvl.tiles;
+		
 		switch _layer.__identifier {
 			
-			
+			case "Spikes":
+				_targetLayer = _lvl.spikes_tiles;
 			case "Tiles":
 				
 				for (var n = 0; n < array_length(_layer.intGridCsv); n++) {
@@ -46,7 +56,7 @@ for (var i = 0; i < array_length(file.levels); i++) {
 					var _ty = floor(n / _layer.__cWid);
 					var _t = _layer.intGridCsv[n];
 					
-					tilemap_set(_lvl.tiles, _t, _tx, _ty);
+					tilemap_set(_targetLayer, _t, _tx, _ty);
 					
 				}
 				
@@ -101,5 +111,5 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		
 	}
 	
-	
 }
+

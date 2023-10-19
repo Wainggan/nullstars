@@ -92,6 +92,73 @@ checkWall = function(_dir){
 	return actor_collision(x + _dir * defs.wall_distance, y);
 }
 
+checkDeath_point = function(_x, _y, _xv = 0, _yv = 0) {
+	
+	for (var i = 0; i < array_length(level.levels); i++) {
+		
+		var _tm = level.levels[i].spikes_tiles;
+		var _tile = tilemap_get_at_pixel(_tm, _x, _y);
+		
+		if _tile == 0 continue;
+		
+		switch _tile {
+			case 1:
+				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, 0, 8, 16)
+					break;
+				if _xv > 0 break;
+				return true;
+			case 2:
+				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, 8, 16, 16)
+					break;
+				if _yv > 0 break;
+				return true;
+			case 3:
+				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 8, 0, 16, 16)
+					break;
+				if _xv < 0 break;
+				return true;
+			case 4:
+				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, 0, 16, 8)
+					break;
+				if _yv < 0 break;
+				return true;
+		}
+		
+	}
+	
+	return false;
+	
+}
+
+checkDeath = function(_x, _y){
+	
+	var _inst = instance_place(_x, _y, obj_spike);
+	with _inst {
+		if object_index == obj_spike_up && other.y_vel >= 0 return true;
+		if object_index == obj_spike_down && other.y_vel <= 0 return true;
+		if object_index == obj_spike_left && other.x_vel >= 0 return true;
+		if object_index == obj_spike_right && other.x_vel <= 0 return true;
+	}
+	
+	var _lx = x, _ly = y;
+	
+	x = _x;
+	y = _y;
+	
+	var _out = false 
+		|| checkDeath_point(bbox_left, bbox_top, x_vel, y_vel)
+		|| checkDeath_point(bbox_right, bbox_top, x_vel, y_vel)
+		|| checkDeath_point(bbox_left, bbox_bottom, x_vel, y_vel)
+		|| checkDeath_point(bbox_right, bbox_bottom, x_vel, y_vel)
+	
+	x = _lx;
+	y = _ly;
+	
+	return _out;
+	
+	
+}
+
 jump = function(){
 	
 	buffer = 0
@@ -228,6 +295,8 @@ state_base = state.add()
 
 state_free = state_base.add()
 .set("step", function(){
+	
+	show_debug_message(checkDeath(x, y))
 
 	var _kh = input.right - input.left;
 	var _kv = input.down - input.up;
