@@ -219,6 +219,8 @@ state_base = state.add()
 	
 	state.child();
 	
+	// this will almost certainly cause an issue later. 
+	// todo: figure out how to reset a_lift when touching tiles
 	x_lift = 0;
 	y_lift = 0;
 	
@@ -441,7 +443,7 @@ state_dash = state_base.add()
 })
 .set("leave", function(){
 	dash_grace = 8;
-	dash_recover = 2;
+	dash_recover = 1;
 })
 .set("step", function(){
 	
@@ -508,4 +510,6 @@ cam = function(){
 	camera.target_y = lerp(cam_ground_y, y, 1 - max(0, 1 - power(_dist / 128, 2)) * 0.8);
 	
 }
+
+
 
