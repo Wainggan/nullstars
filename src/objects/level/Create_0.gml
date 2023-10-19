@@ -37,6 +37,7 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		
 		switch _layer.__identifier {
 			
+			
 			case "Tiles":
 				
 				for (var n = 0; n < array_length(_layer.intGridCsv); n++) {
