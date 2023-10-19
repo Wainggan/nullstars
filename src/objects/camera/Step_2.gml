@@ -9,7 +9,7 @@ if instance_exists(target) {
 var _tx = target_x, _ty = target_y;
 var _ts = 0.08;
 
-var _weights = collision_circle(target_x, target_y, 16, obj_camera_focus, true, true);
+var _weights = collision_circle(_tx, _ty, 16, obj_camera_focus, true, true);
 
 if _weights != noone {
 	var _dist = point_distance(target_x, target_y, _weights.x, _weights.y);
@@ -18,6 +18,14 @@ if _weights != noone {
 }
 
 _weights = collision_circle(target_x, target_y, 16, obj_camera_room, true, true);
+
+with _weights
+	if !point_in_rectangle(
+		_tx, _ty, 
+		x + crop_x1 * TILESIZE, y + crop_y1 * TILESIZE, 
+		x + sprite_width - crop_x2 * TILESIZE,
+		y + sprite_height - crop_y2 * TILESIZE
+	) _weights = noone;
 
 if _weights != noone {
 	
