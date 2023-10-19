@@ -1,19 +1,18 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_camera_focus",
-  "eventList": [],
+  "name": "level",
+  "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
+  ],
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "flags",
-    "path": "folders/game/flags.yy",
+    "name": "game",
+    "path": "folders/game.yy",
   },
-  "parentObjectId": {
-    "name": "obj_camera_parent",
-    "path": "objects/obj_camera_parent/obj_camera_parent.yy",
-  },
-  "persistent": false,
+  "parentObjectId": null,
+  "persistent": true,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
   "physicsFriction": 0.2,
@@ -28,10 +27,7 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": {
-    "name": "spr_debug_camera_focus",
-    "path": "sprites/spr_debug_camera_focus/spr_debug_camera_focus.yy",
-  },
+  "spriteId": null,
   "spriteMaskId": null,
   "visible": true,
 }

@@ -43,10 +43,19 @@ roomsnap_last = _weights
 roomsnap_timer = approach(roomsnap_timer, 0, 0.05)
 _ts = lerp(_ts, 0, roomsnap_timer)
 
-_tx = clamp(_tx, _cam_w / 2, room_width - _cam_w / 2);
-_ty = clamp(_ty, _cam_h / 2, room_height - _cam_h / 2);
+var _w = room_width, _h = room_height;
+
+if instance_exists(level) {
+	_w = level.max_width;
+	_h = level.max_height;
+}
+
+_tx = clamp(_tx, _cam_w / 2, _w - _cam_w / 2);
+_ty = clamp(_ty, _cam_h / 2, _h - _cam_h / 2);
 
 
 x = lerp(x, _tx, _ts);
 y = lerp(y, _ty, _ts);
+
+camera_set_view_pos(view_camera[0], x - _cam_w / 2, y - _cam_h / 2)
 
