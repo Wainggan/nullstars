@@ -5,6 +5,7 @@ function solid_move(_xv, _yv) {
 	y_rem += _yv;
 	x_lift = _xv;
 	y_lift = _yv;
+	
 	var _moveX = round(x_rem);
 	var _moveY = round(y_rem);
 	
@@ -24,44 +25,46 @@ function solid_move(_xv, _yv) {
 				with obj_Actor {
 					if place_meeting(x, y, other) {
 						actor_move_x(other.bbox_right - bbox_left, squish);
-						x_lift = _moveX;
+						x_lift = _xv;
 					} else if array_get_index(_riding, self) != -1 {
 						actor_move_x(_moveX);
-						x_lift = _moveX;
+						x_lift = _yv;
 					}
 				}
 			} else {
 				with obj_Actor {
 					if place_meeting(x, y, other) {
 						actor_move_x(other.bbox_left - bbox_right, squish);
+						x_lift = _xv;
 					} else if array_get_index(_riding, self) != -1 {
 						actor_move_x(_moveX);
+						x_lift = _xv;
 					}
 				}
 			}
 		}
 		
-		if _moveY!= 0 {
+		if _moveY != 0 {
 			y_rem -= _moveY;
 			y += _moveY;
 			if _moveY > 0 {
 				with obj_Actor {
 					if place_meeting(x, y, other) {
 						actor_move_y(other.bbox_bottom - bbox_top, squish);
-						y_lift = _moveY;
+						y_lift = _yv;
 					} else if array_get_index(_riding, self) != -1 {
 						actor_move_y(_moveY);
-						y_lift = _moveY;
+						y_lift = _yv;
 					}
 				}
 			} else {
 				with obj_Actor {
 					if place_meeting(x, y, other) {
 						actor_move_y(other.bbox_top - bbox_bottom, squish);
-						y_lift = _moveY;
+						y_lift = _yv;
 					} else if array_get_index(_riding, self) != -1 {
 						actor_move_y(_moveY);
-						y_lift = _moveY;
+						y_lift = _yv;
 					}
 				}
 			}
