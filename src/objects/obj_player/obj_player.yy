@@ -10,8 +10,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "entities",
-    "path": "folders/entities.yy",
+    "name": "objects",
+    "path": "folders/objects.yy",
   },
   "parentObjectId": {
     "name": "obj_Actor",

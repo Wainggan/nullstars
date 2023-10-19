@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "objects",
-    "path": "folders/objects.yy",
+    "name": "entities",
+    "path": "folders/entities.yy",
   },
 }

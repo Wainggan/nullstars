@@ -1,13 +1,13 @@
 {
   "FolderOrderSettings": [
-    {"name":"entities","order":22,"path":"folders/entities.yy",},
+    {"name":"objects","order":22,"path":"folders/objects.yy",},
     {"name":"game","order":18,"path":"folders/game.yy",},
     {"name":"flags","order":3,"path":"folders/game/flags.yy",},
     {"name":"meta","order":5,"path":"folders/game/meta.yy",},
     {"name":"graphics","order":12,"path":"folders/graphics.yy",},
     {"name":"debug","order":4,"path":"folders/graphics/debug.yy",},
-    {"name":"objects","order":23,"path":"folders/objects.yy",},
-    {"name":"scripts","order":5,"path":"folders/objects/scripts.yy",},
+    {"name":"entities","order":23,"path":"folders/entities.yy",},
+    {"name":"scripts","order":5,"path":"folders/entities/scripts.yy",},
     {"name":"rooms","order":15,"path":"folders/rooms.yy",},
   ],
   "ResourceOrderSettings": [
