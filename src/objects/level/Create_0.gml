@@ -20,8 +20,6 @@ for (var i = 0; i < array_length(file.levels); i++) {
 	max_width = max(max_width, (_lv_x + _lv_w) * TILESIZE);
 	max_height = max(max_height, (_lv_y + _lv_h) * TILESIZE);
 	
-	show_debug_message(_lv_x)
-	
 	var _lvl = {};
 	_lvl.layer = layer_create(0);
 	_lvl.tiles = layer_tilemap_create(
@@ -84,15 +82,15 @@ for (var i = 0; i < array_length(file.levels); i++) {
 						_field[$ _f.__identifier] = _val;
 					}
 					
+					_field.image_xscale = floor(_e.width / TILESIZE);
+					_field.image_yscale = floor(_e.height / TILESIZE);
+					
 					var _inst = instance_create_layer(
 						_e.__worldX, _e.__worldY, 
 						_layer.__identifier, 
 						asset_get_index(_e.__identifier),
 						_field
 					);
-					
-					_inst.image_xscale = floor(_e.width / TILESIZE);
-					_inst.image_yscale = floor(_e.height / TILESIZE);
 					
 				}
 			
