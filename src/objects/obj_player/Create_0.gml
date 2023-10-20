@@ -323,6 +323,67 @@ state_base = state.add()
 	
 	state.child();
 	
+	var _d = 0, _amount = 0;
+	
+	if y_vel < 0 {
+		_d = 0;
+		_amount = 8;
+		if actor_collision(x, y + y_vel)
+			for (_d = 1; _d < _amount; _d++) {
+				if actor_collision(x - _d, y + y_vel) {
+				} else break;
+			}
+		if _d != _amount
+			actor_move_x(-_d)
+		
+		_d = 0;
+		if actor_collision(x, y + y_vel)
+			for (_d = 1; _d < _amount; _d++) {
+				if actor_collision(x + _d, y + y_vel) {
+				} else break;
+			}
+		if _d != _amount
+			actor_move_x(_d)
+	}
+	
+	actor_move_y(y_vel, function(){
+		if y_vel > 1.5 {
+			scale_x = 1.2;
+			scale_y = 0.8;
+		}
+		y_vel = 0;
+	});
+	
+	if !state.is(state_climb) {
+		_d = 0;
+		_amount = 4;
+		if y_vel > 1 _amount = 7;
+		if state.is(state_dash) _amount = 10;
+		if actor_collision(x + x_vel, y)
+			for (_d = 1; _d < _amount; _d++) {
+				if actor_collision(x + x_vel, y - _d) {
+				} else break;
+			}
+		if _d != _amount
+			actor_move_y(-_d)
+	}
+	
+	if state.is(state_dash) {
+		_d = 0;
+		_amount = 8;
+		if actor_collision(x + x_vel, y)
+			for (_d = 1; _d < _amount; _d++) {
+				if actor_collision(x + x_vel, y + _d) {
+				} else break;
+			}
+		if _d != _amount
+			actor_move_y(_d)
+	}
+
+	actor_move_x(x_vel, function(){
+		x_vel = 0;
+	});
+	
 	if checkDeath(x, y) {
 		instance_destroy();
 		instance_create_layer(xstart, ystart, layer, object_index);
@@ -441,21 +502,6 @@ state_free = state_base.add()
 		}
 	}
 	
-
-	// move
-	
-	actor_move_y(y_vel, function(){
-		if y_vel > 1.5 {
-			scale_x = 1.2;
-			scale_y = 0.8;
-		}
-		y_vel = 0;
-	});
-
-	actor_move_x(x_vel, function(){
-		x_vel = 0;
-	});
-	
 	if input.dash_pressed && dash_left > 0 {
 		game_set_pause(3);
 		state.change(state_dashset);
@@ -486,13 +532,13 @@ state_climb = state_base.add()
 	
 	dash_left = defs.dash_total;
 	
-	actor_move_y(y_vel, function(){
-		y_vel = 0;
-	});
+	//actor_move_y(y_vel, function(){
+	//	y_vel = 0;
+	//});
 
-	actor_move_x(x_vel, function(){
-		x_vel = 0;
-	});
+	//actor_move_x(x_vel, function(){
+	//	x_vel = 0;
+	//});
 	
 	var _wall = actor_collision(x + dir, y);
 	
@@ -572,9 +618,9 @@ state_dash = state_base.add()
 		grace_y = y;
 	}
 	
-	actor_move_y(y_vel);
+	//actor_move_y(y_vel);
 
-	actor_move_x(x_vel);
+	//actor_move_x(x_vel);
 	
 	if buffer > 0 {
 		if grace > 0 {

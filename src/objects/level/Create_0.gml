@@ -1,7 +1,7 @@
 
 #macro TILESIZE 16
 
-file = game_json_open("test.ldtk");
+file = game_json_open("level.ldtk");
 
 levels = [];
 
