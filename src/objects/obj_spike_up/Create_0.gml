@@ -1,3 +1,6 @@
+
+event_inherited()
+
 image_angle = 90;
 
 var _e = image_xscale;

@@ -4,7 +4,7 @@
   "name": "spr_debug_spike",
   "bbox_bottom": 15,
   "bbox_left": 0,
-  "bbox_right": 7,
+  "bbox_right": 4,
   "bbox_top": 0,
   "bboxMode": 2,
   "collisionKind": 1,

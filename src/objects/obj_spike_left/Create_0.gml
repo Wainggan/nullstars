@@ -1,3 +1,6 @@
+
+event_inherited()
+
 image_angle = 180;
 
 x += TILESIZE;

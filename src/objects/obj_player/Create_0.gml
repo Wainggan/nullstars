@@ -94,6 +94,11 @@ checkWall = function(_dir){
 
 checkDeath_point = function(_x, _y, _xv = 0, _yv = 0) {
 	
+	_xv = round(_xv);
+	_yv = round(_yv);
+	
+	static _size = 4;
+	
 	for (var i = 0; i < array_length(level.levels); i++) {
 		
 		var _tm = level.levels[i].spikes_tiles;
@@ -103,24 +108,24 @@ checkDeath_point = function(_x, _y, _xv = 0, _yv = 0) {
 		
 		switch _tile {
 			case 1:
-				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, 0, 8, 16)
+				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, 0, _size, 16)
 					break;
 				if _xv > 0 break;
 				return true;
 			case 2:
-				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, 8, 16, 16)
+				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, _size, 16, 16)
 					break;
-				if _yv > 0 break;
+				if _yv < 0 break;
 				return true;
 			case 3:
-				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 8, 0, 16, 16)
+				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, _size, 0, 16, 16)
 					break;
 				if _xv < 0 break;
 				return true;
 			case 4:
-				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, 0, 16, 8)
+				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, 0, 16, _size)
 					break;
-				if _yv < 0 break;
+				if _yv > 0 break;
 				return true;
 		}
 		
@@ -286,6 +291,11 @@ state_base = state.add()
 	
 	state.child();
 	
+	if checkDeath(x, y) {
+		instance_destroy();
+		instance_create_layer(xstart, ystart, layer, object_index);
+	}
+	
 	// this will almost certainly cause an issue later. 
 	// todo: figure out how to reset a_lift when touching tiles
 	x_lift = 0;
@@ -295,8 +305,6 @@ state_base = state.add()
 
 state_free = state_base.add()
 .set("step", function(){
-	
-	show_debug_message(checkDeath(x, y))
 
 	var _kh = input.right - input.left;
 	var _kv = input.down - input.up;
