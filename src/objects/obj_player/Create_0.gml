@@ -97,7 +97,7 @@ checkDeath_point = function(_x, _y, _xv = 0, _yv = 0) {
 	_xv = round(_xv);
 	_yv = round(_yv);
 	
-	static _size = 4;
+	static _size = 5;
 	
 	for (var i = 0; i < array_length(level.levels); i++) {
 		
@@ -106,6 +106,8 @@ checkDeath_point = function(_x, _y, _xv = 0, _yv = 0) {
 		
 		if _tile == 0 continue;
 		
+		show_debug_message($"{_tile} {_x} {_y} {_x % TILESIZE} {_y % TILESIZE}")
+		
 		switch _tile {
 			case 1:
 				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, 0, _size, 16)
@@ -113,12 +115,12 @@ checkDeath_point = function(_x, _y, _xv = 0, _yv = 0) {
 				if _xv > 0 break;
 				return true;
 			case 2:
-				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, _size, 16, 16)
+				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 0, 16 - _size, 16, 16)
 					break;
 				if _yv < 0 break;
 				return true;
 			case 3:
-				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, _size, 0, 16, 16)
+				if !point_in_rectangle(_x % TILESIZE, _y % TILESIZE, 16 - _size, 0, 16, 16)
 					break;
 				if _xv < 0 break;
 				return true;
@@ -152,9 +154,9 @@ checkDeath = function(_x, _y){
 	
 	var _out = false 
 		|| checkDeath_point(bbox_left, bbox_top, x_vel, y_vel)
-		|| checkDeath_point(bbox_right, bbox_top, x_vel, y_vel)
-		|| checkDeath_point(bbox_left, bbox_bottom, x_vel, y_vel)
-		|| checkDeath_point(bbox_right, bbox_bottom, x_vel, y_vel)
+		|| checkDeath_point(bbox_right - 1, bbox_top, x_vel, y_vel)
+		|| checkDeath_point(bbox_left, bbox_bottom - 1, x_vel, y_vel)
+		|| checkDeath_point(bbox_right - 1, bbox_bottom - 1, x_vel, y_vel)
 	
 	x = _lx;
 	y = _ly;
