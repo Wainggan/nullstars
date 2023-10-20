@@ -177,7 +177,7 @@ jump = function(){
 	x_vel += (defs.jump_move_boost + defs.move_accel) * sign(x_vel);
 	
 	if x_lift == 0 && y_lift == 0 {
-		with grace_solid {
+		with instance_place(x, y + 1, obj_Solid) {
 			other.x_lift = x_lift;
 			other.y_lift = y_lift;
 		}
@@ -220,6 +220,12 @@ jumpdash = function(){
 		x_vel += (_kh == 0 ? dir : _kh) * 4
 	}
 	
+	if x_lift == 0 && y_lift == 0 {
+		with instance_place(x, y + 1, obj_Solid) {
+			other.x_lift = x_lift;
+			other.y_lift = y_lift;
+		}
+	}
 	x_vel += x_lift;
 	y_vel += y_lift;
 	
@@ -248,7 +254,33 @@ wallbounce = function(_dir){
 	
 }
 
-walljump = jump;
+walljump = function(_dir){
+	
+	buffer = 0
+	grace = 0;
+	gravity_hold = 0;
+	//actor_move_y(grace_y - y)
+	
+	dash_left = defs.dash_total;
+
+	y_vel = defs.jump_vel;
+	x_vel += (defs.jump_move_boost + defs.move_accel) * _dir;
+	
+	if x_lift == 0 && y_lift == 0 {
+		with instance_place(x + _dir * defs.wall_distance, y, obj_Solid) {
+			other.x_lift = x_lift;
+			other.y_lift = y_lift;
+		}
+	}
+	x_vel += x_lift;
+	y_vel += y_lift;
+	
+	scale_x = 0.8;
+	scale_y = 1.2;
+	
+	state.change(state_free);
+	
+};
 
 // state machine
 
@@ -383,16 +415,16 @@ state_free = state_base.add()
 			} else {
 				
 				if checkWall(1) {
-					if dash_grace > 0 {
+					if dash_grace > 0 && _kh != dir {
 						wallbounce(-1);
 					} else {
-						walljump();
+						walljump(-1);
 					}
 				} else if checkWall(-1) {
-					if dash_grace > 0 {
+					if dash_grace > 0 && _kh != dir {
 						wallbounce(1);
 					} else {
-						walljump();
+						walljump(1);
 					}
 				}
 				
@@ -442,6 +474,14 @@ state_climb = state_base.add()
 	
 	y_vel = approach(y_vel, _kv * defs.climb_speed, defs.climb_accel);
 	
+	if !actor_collision(x + dir, y - 5) {
+		actor_move_y(1);
+		y_vel = 0;
+	}
+	if !actor_collision(x + dir, y - 6) && y_vel < 0 {
+		y_vel = 0;
+	}
+	
 	x_vel = dir * defs.move_speed;
 	
 	dash_left = defs.dash_total;
@@ -482,7 +522,7 @@ state_climb = state_base.add()
 	}
 	
 	if buffer > 0 {
-		walljump();
+		walljump(-dir);
 		return;
 	}
 	
@@ -544,7 +584,10 @@ state_dash = state_base.add()
 			}
 		} else {
 			if checkWall(dir) {
-				wallbounce(-dir);
+				if _kh != dir
+					wallbounce(-dir);
+				else
+					walljump(-dir);
 				return;
 			}
 		}

@@ -19,8 +19,8 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"graphics","folderPath":"folders/graphics.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"debug","folderPath":"folders/graphics/debug.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"objects","folderPath":"folders/objects.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"rooms","folderPath":"folders/rooms.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"spike","folderPath":"folders/objects/spike.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"rooms","folderPath":"folders/rooms.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"test.ldtk","CopyToMask":-1,"filePath":"datafiles",},

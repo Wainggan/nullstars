@@ -8,8 +8,8 @@
     {"name":"graphics","order":12,"path":"folders/graphics.yy",},
     {"name":"debug","order":4,"path":"folders/graphics/debug.yy",},
     {"name":"objects","order":22,"path":"folders/objects.yy",},
-    {"name":"rooms","order":15,"path":"folders/rooms.yy",},
     {"name":"spike","order":5,"path":"folders/objects/spike.yy",},
+    {"name":"rooms","order":15,"path":"folders/rooms.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"obj_camera_parent","order":1,"path":"objects/obj_camera_parent/obj_camera_parent.yy",},
