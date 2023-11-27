@@ -7,7 +7,7 @@ event_inherited();
 defs = {
 	
 	move_speed: 2,
-	move_accel: 1,
+	move_accel: 0.5,
 	move_slowdown: 0.1,
 	
 	boost_limit_x: 9,
@@ -66,6 +66,7 @@ grace = 0;
 grace_y = y;
 grace_solid = noone;
 buffer = 0;
+buffer_dash = 0;
 
 gravity_hold = 0;
 
@@ -105,8 +106,6 @@ checkDeath_point = function(_x, _y, _xv = 0, _yv = 0) {
 		var _tile = tilemap_get_at_pixel(_tm, _x, _y);
 		
 		if _tile == 0 continue;
-		
-		show_debug_message($"{_tile} {_x} {_y} {_x % TILESIZE} {_y % TILESIZE}")
 		
 		switch _tile {
 			case 1:
@@ -305,12 +304,14 @@ state_base = state.add()
 	input.dash_released = keyboard_check_released(ord("Z"));
 	
 	if input.jump_pressed buffer = defs.buffer + 1;
+	if input.dash_pressed buffer_dash = defs.buffer + 1;
 	
 	if game_paused() {
 		return;
 	}
 	
 	buffer -= 1;
+	buffer_dash -= 1;
 	grace -= 1;
 	gravity_hold -= 1;
 	key_hold_timer -= 1;
@@ -504,7 +505,7 @@ state_free = state_base.add()
 		}
 	}
 	
-	if input.dash_pressed && dash_left > 0 {
+	if buffer_dash > 0 && dash_left > 0 {
 		game_set_pause(3);
 		state.change(state_dashset);
 		return;
@@ -544,7 +545,7 @@ state_climb = state_base.add()
 	
 	var _wall = actor_collision(x + dir, y);
 	
-	if input.dash_pressed && dash_left > 0 {
+	if buffer_dash > 0 && dash_left > 0 {
 		game_set_pause(3)
 		state.change(state_dashset)
 		return;
@@ -578,6 +579,8 @@ state_climb = state_base.add()
 
 state_dashset = state_base.add()
 .set("step", function(){
+	buffer_dash = 0;
+	
 	var _kh = input.right - input.left;
 	var _kv = input.down - input.up;
 	

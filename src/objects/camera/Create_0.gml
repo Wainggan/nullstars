@@ -6,3 +6,4 @@ target_y = 0;
 
 roomsnap_timer = 0
 roomsnap_last = noone;
+roomsnap_last_inside = false;
