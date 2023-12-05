@@ -15,7 +15,7 @@ defs = {
 	
 	jump_vel: -4,
 	jump_move_boost: 0.2,
-	terminal_vel: 4,
+	terminal_vel: global.defs.terminal_vel,
 	
 	jump_short_vel: -3,
 	
@@ -39,6 +39,11 @@ defs = {
 	buffer: 12,
 	grace: 4,
 	
+	anim_dive_time: 20,
+	anim_jab_time: 20,
+	anim_longjump_time: 30,
+	
+	
 };
 
 input = {
@@ -52,7 +57,60 @@ input = {
 	dash: false,
 	dash_pressed: false,
 	dash_released: false,
+	hold: false,
+	hold_pressed: false,
+	hold_released: false,
 };
+
+anim = new AnimController()
+.add("idle", new AnimLevel([0]))
+.add("walk", new AnimLevel([3, 1, 4, 2], 12)) // todo: more frames. make subtle variations of these two
+.add("jump", new AnimLevel([5]))
+.add("fall", new AnimLevel([6]))
+.add("dive", new AnimLevel([7]))
+.add("jab", new AnimLevel([11]))
+.add("longjump", new AnimLevel([8]))
+
+.meta_default({
+	x: -2, y: -16,
+	eye_x: 2, eye_y: -29,
+	front: false
+})
+.meta_items([1, 2], {
+	y: -15
+})
+.meta_items([5, 6], {
+	y: -17
+})
+.meta_items([7], {
+	x: -4, y: -21,
+	front: true
+})
+.meta_items([8], {
+	x: -8, y: -16
+})
+.meta_items([11], {
+	x: 3, y: -11
+})
+
+
+event = new Event()
+.add("ground", function(){
+	anim_longjump_timer = 0;
+})
+.add("jump", function(){
+	anim_dive_timer = 0;
+	anim_jab_timer = 0;
+})
+.add("jumpdash", function(){
+	anim_longjump_timer = defs.anim_longjump_time;
+})
+.add("dive", function(){
+	if y_vel > 0
+		anim_dive_timer = defs.anim_dive_time;
+	else
+		anim_jab_timer = defs.anim_jab_time;
+})
 
 
 // properties
@@ -60,7 +118,7 @@ input = {
 scale_x = 0;
 scale_y = 0;
 
-dir = 0;
+dir = 1;
 
 grace = 0;
 grace_y = y;
@@ -68,10 +126,14 @@ grace_solid = noone;
 buffer = 0;
 buffer_dash = 0;
 
+gravity_hold_peak = 0;
 gravity_hold = 0;
 
 key_hold = 0;
 key_hold_timer = 0;
+
+momentum_grace = 0;
+momentum_grace_amount = 0;
 
 climb_away = 0;
 
@@ -85,8 +147,49 @@ dash_recover = 0;
 
 dash_left = 0;
 
+holding = noone;
+hold_cooldown = 0;
+hold_throw_x = 0;
+hold_throw_y = 0;
+
+anim_dive_timer = 0;
+anim_jab_timer = 0;
+anim_longjump_timer = 0;
+
 cam_ground_x = x;
 cam_ground_y = y;
+
+
+depth = -10;
+mask_index = spr_debug_player;
+
+tail_length = 12;
+tail = yarn_create(tail_length, function(_p, i){
+	//_p.len = min(power(max(i - 4, 0) , 1.12) + 4, 8)
+	_p.length = 4;
+	
+	_p.x = x
+	_p.y = y + i * 6
+		
+	_p.size = max(parabola_mid(3, 7, 6, i) + 3, 6)
+	_p.round = floor(clamp(i / (tail_length / 4), 1, 4))
+})
+
+draw_tail = function(_tip = #ff00ff, _blend = c_white){
+	self._tip = _tip;
+	self._blend = _blend;
+	tail.loop_reverse(function(_p, j) {
+		var _c = merge_color(c_white, _tip, clamp(j - 3, 0, tail_length) / tail_length);
+		_c = multiply_color(_c, _blend);
+		draw_sprite_ext(
+			spr_player_tail, 0, 
+			round_ext(_p.x, _p.round), round_ext(_p.y, _p.round), 
+			//round_ext(_p.x, 0), round_ext(_p.y, 0), 
+			_p.size / 16, _p.size / 16, 
+			0, _c, 1
+		);
+	})
+}
 
 
 checkWall = function(_dir){
@@ -165,11 +268,39 @@ checkDeath = function(_x, _y){
 	
 }
 
+hold_begin = function(_inst){
+	holding = _inst;
+	anim_holding = 0;
+			
+	holding.state.change(holding.state_held)
+			
+	state.change(state_free);
+}
+hold_end = function(){
+	if !holding return;
+	holding.state.change(holding.state_free);
+	holding = noone;
+}
+
+#region jump
+
 jump = function(){
 	
 	buffer = 0
+	if grace && grace_target {
+		if grace_target.object_index == obj_box {
+			grace_target.x_vel += sign(x_vel)
+			grace_target.y_vel = 4;
+		}
+		if grace_target.object_index == obj_ball {
+			//grace_target.x_vel = 0;
+			grace_target.y_vel = 4;
+		}
+	}
 	grace = 0;
+	grace_target = noone;
 	gravity_hold = 0;
+	gravity_hold_peak = 0;
 	//actor_move_y(grace_y - y)
 	
 	dash_left = defs.dash_total;
@@ -189,6 +320,8 @@ jump = function(){
 	scale_x = 0.8;
 	scale_y = 1.2;
 	
+	event.call("jump")
+	
 	state.change(state_free);
 	
 }
@@ -198,10 +331,24 @@ jumpdash = function(){
 	var _kh = input.right - input.left;
 	var _kv = input.down - input.up;
 	
+	if grace && grace_target {
+		if grace_target.object_index == obj_box {
+			dash_left = defs.dash_total;
+			grace_target.x_vel += sign(x_vel) * 3
+			grace_target.y_vel = 4;
+		}
+		if grace_target.object_index == obj_ball {
+			dash_left = defs.dash_total;
+			grace_target.x_vel += sign(x_vel) * 3
+			grace_target.y_vel = 4;
+		}
+	}
 	grace = 0;
+	grace_target = noone;
 	dash_grace = 0;
 	buffer = 0;
 	gravity_hold = 0;
+	gravity_hold_peak = 0;
 			
 	if dash_dir_y == 0 {
 		
@@ -230,6 +377,12 @@ jumpdash = function(){
 	x_vel += x_lift;
 	y_vel += y_lift;
 	
+	scale_x = 0.9;
+	scale_y = 1.1;
+	
+	event.call("jump")
+	event.call("jumpdash")
+	
 	state.change(state_free);
 	
 }
@@ -240,6 +393,9 @@ wallbounce = function(_dir){
 	grace = 0;
 	dash_grace = 0;
 	gravity_hold = 0;
+	gravity_hold_peak = 0;
+	
+	dash_left = defs.dash_total
 	
 	y_vel = -3
 	
@@ -251,6 +407,8 @@ wallbounce = function(_dir){
 	x_vel += x_lift;
 	y_vel += y_lift;
 	
+	event.call("jump")
+	
 	state.change(state_free);
 	
 }
@@ -260,12 +418,13 @@ walljump = function(_dir){
 	buffer = 0
 	grace = 0;
 	gravity_hold = 0;
+	gravity_hold_peak = 0;
 	//actor_move_y(grace_y - y)
 	
 	dash_left = defs.dash_total;
 
 	y_vel = defs.jump_vel;
-	x_vel += (defs.jump_move_boost + defs.move_accel) * _dir;
+	//x_vel += (defs.jump_move_boost + defs.move_accel) * _dir;
 	
 	if x_lift == 0 && y_lift == 0 {
 		with instance_place(x + _dir * defs.wall_distance, y, obj_Solid) {
@@ -279,9 +438,13 @@ walljump = function(_dir){
 	scale_x = 0.8;
 	scale_y = 1.2;
 	
+	event.call("jump")
+	
 	state.change(state_free);
 	
 };
+
+#endregion
 
 // state machine
 
@@ -303,8 +466,23 @@ state_base = state.add()
 	input.dash_pressed = keyboard_check_pressed(ord("Z"));
 	input.dash_released = keyboard_check_released(ord("Z"));
 	
+	input.hold = keyboard_check(vk_shift);
+	input.hold_pressed = keyboard_check_pressed(vk_shift);
+	input.hold_released = keyboard_check_released(vk_shift);
+	
 	if input.jump_pressed buffer = defs.buffer + 1;
 	if input.dash_pressed buffer_dash = defs.buffer + 1;
+	
+	if place_meeting(x, y, obj_flag_stop) {
+		show_debug_message("e")
+		// lazy
+		var _names = struct_get_names(input);
+		for (var i = 0; i < array_length(_names); i++) {
+			input[$ _names[i]] = false;
+		}
+		buffer = 0;
+		buffer_dash = 0;
+	}
 	
 	if game_paused() {
 		return;
@@ -314,9 +492,15 @@ state_base = state.add()
 	buffer_dash -= 1;
 	grace -= 1;
 	gravity_hold -= 1;
+	gravity_hold_peak -= 1;
 	key_hold_timer -= 1;
 	dash_grace -= 1;
 	dash_recover -= 1;
+	hold_cooldown -= 1;
+	
+	if !grace {
+		grace_target = noone;
+	}
 
 	scale_x = lerp(scale_x, 1, 0.2);
 	scale_y = lerp(scale_y, 1, 0.2);
@@ -357,19 +541,6 @@ state_base = state.add()
 		y_vel = 0;
 	});
 	
-	if !state.is(state_climb) {
-		_d = 0;
-		_amount = 4;
-		if y_vel > 1 _amount = 7;
-		if state.is(state_dash) _amount = 10;
-		if actor_collision(x + x_vel, y)
-			for (_d = 1; _d < _amount; _d++) {
-				if actor_collision(x + x_vel, y - _d) {
-				} else break;
-			}
-		if _d != _amount
-			actor_move_y(-_d)
-	}
 	
 	if state.is(state_dash) {
 		_d = 0;
@@ -387,10 +558,69 @@ state_base = state.add()
 		x_vel = 0;
 	});
 	
-	if checkDeath(x, y) {
-		instance_destroy();
-		instance_create_layer(xstart, ystart, layer, object_index);
+	
+	if state.is(state_free) || state.is(state_dash) {
+		
+		if anim_jab_timer && !buffer {		
+			var _inst = instance_place(x, y, [obj_box, obj_ball]);
+			if _inst {
+				game_set_pause(4)
+				
+				if dash_dir_y == 0 {
+					_inst.x_vel = clamp(abs(_inst.x_vel + sign(x_vel) * 2), 4, 8) * sign(x_vel);
+					_inst.y_vel = clamp(_inst.y_vel - 1, -3, -4);
+				} else {
+					_inst.x_vel = clamp(abs(_inst.x_vel + sign(x_vel) * 1), 3, 6) * sign(x_vel);
+					_inst.y_vel = clamp(_inst.y_vel - 1, -5, -7);
+				}
+				
+				anim_jab_timer = 0;
+			}
+		}
+		
+		var _inst = instance_place(x, y, obj_dash)
+		if dash_left < defs.dash_total && _inst && _inst.state.is(_inst.state_active) {
+			game_set_pause(4)
+			
+			dash_left = defs.dash_total;
+			
+			_inst.state.change(_inst.state_recover);
+		}
+		
+		var _inst = collision_circle(x, y, 32, [obj_box, obj_ball], false, true);
+		if _inst && !holding && input.hold && !hold_cooldown {
+			game_set_pause(5);
+			hold_begin(_inst)
+		}
+		
 	}
+	
+	if holding {
+		anim_holding = approach(anim_holding, 1, 0.1)
+		
+		var _tp = tail.points[4] //[floor(array_length(tail.points) / 2)];
+		var _cx = holding.x;
+		var _cy = holding.y + 6;
+		var _tx = round(lerp(_cx, _tp.x, anim_holding))
+		var _ty = round(lerp(_cy, _tp.y, anim_holding))
+		
+		with holding {
+			x_vel = other.x_vel;
+			y_vel = other.y_vel;
+			actor_move_x(_tx - _cx)
+			actor_move_y(_ty - _cy)
+		}
+		
+	}
+	
+	
+	if checkDeath(x, y) {
+		game_set_pause(10);
+		
+		instance_destroy();
+		instance_create_layer(x, y, "Instances", obj_player_death);
+	}
+	
 	
 	// this will almost certainly cause an issue later. 
 	// todo: figure out how to reset a_lift when touching tiles
@@ -413,8 +643,14 @@ state_free = state_base.add()
 	var _x_accel = 0;
 	if abs(x_vel) > defs.move_speed && _kh_move == sign(x_vel) {
 		_x_accel = defs.move_slowdown;
+		if !actor_collision(x, y + 1)
+			momentum_grace = 6;
 	} else {
 		_x_accel = defs.move_accel;
+	}
+	momentum_grace -= 1;
+	if momentum_grace && _kh_move != sign(x_vel) {
+		_x_accel = 0;
 	}
 	
 	x_vel = approach(x_vel, _kh_move * defs.move_speed, _x_accel);
@@ -436,6 +672,9 @@ state_free = state_base.add()
 		_y_accel = defs.gravity;
 	}
 	if gravity_hold > 0 {
+		_y_accel = defs.gravity_hold;
+	}
+	if gravity_hold_peak > 0 {
 		_y_accel = defs.gravity_peak;
 	}
 
@@ -450,12 +689,20 @@ state_free = state_base.add()
 	
 	var _wall = actor_collision(x + defs.wall_distance, y) - actor_collision(x - defs.wall_distance, y);
 	
+	var _inst = collision_circle(x, y, 14, [obj_box, obj_ball], false, true);
+	if _inst {
+		grace = defs.grace;
+		grace_target = _inst;
+	}
 	if actor_collision(x, y + 1) {
 		grace = defs.grace;
+		grace_target = noone;
 		grace_y = y;
 		
 		if dash_recover < 0
 			dash_left = defs.dash_total;
+		
+		event.call("ground")
 	}
 	
 	
@@ -498,83 +745,72 @@ state_free = state_base.add()
 		
 	}
 	
-	if _wall != 0 {
-		if !actor_collision(x, y + 1) && _kh == _wall && y_vel > 0 {
-			dir = _wall;
-			state.change(state_climb);
-		}
-	}
-	
 	if buffer_dash > 0 && dash_left > 0 {
 		game_set_pause(3);
 		state.change(state_dashset);
 		return;
 	}
 	
+	if holding && !input.hold {
+		game_set_pause(5);
+		state.change(state_throw)
+		return;
+	}
+	
 })
 
-state_climb = state_base.add()
+state_throw = state_base.add()
+.set("enter", function(){
+	
+	var _kh = input.right - input.left;
+	var _kv = input.down - input.up;
+	
+	key_hold = _kh;
+	key_hold_timer = 6;
+	
+	hold_throw_x = _kh;
+	hold_throw_y = _kv;
+})
 .set("step", function(){
 	
 	var _kh = input.right - input.left;
 	var _kv = input.down - input.up;
 	
-	// y direction logic
+	_kh = hold_throw_x;
+	_kv = hold_throw_y;
 	
-	y_vel = approach(y_vel, _kv * defs.climb_speed, defs.climb_accel);
+	holding.x = x + dir * 4;
+	holding.y = y - 12
 	
-	if !actor_collision(x + dir, y - 5) {
-		actor_move_y(1);
-		y_vel = 0;
-	}
-	if !actor_collision(x + dir, y - 6) && y_vel < 0 {
-		y_vel = 0;
-	}
+	var _dir = _kh != 0 ? _kh : dir;
 	
-	x_vel = dir * defs.move_speed;
-	
-	dash_left = defs.dash_total;
-	
-	//actor_move_y(y_vel, function(){
-	//	y_vel = 0;
-	//});
-
-	//actor_move_x(x_vel, function(){
-	//	x_vel = 0;
-	//});
-	
-	var _wall = actor_collision(x + dir, y);
-	
-	if buffer_dash > 0 && dash_left > 0 {
-		game_set_pause(3)
-		state.change(state_dashset)
-		return;
-	}
-	
-	if !_wall {
-		grace = 0;
-		state.change(state_free);
-		return;
+	if _kh == 0 && _kv == 1 {
+		holding.x = x;
+		holding.y = y - 4;
+		holding.x_vel = 0;
+		holding.y_vel = 4;
+	} else if _kv == 1 {
+		holding.x_vel = _dir * 3 + x_vel / 2;
+		holding.y_vel = 4;
+	} else if _kh == 0 && _kv == -1 {
+		holding.x_vel = 0;
+		holding.y_vel = -7;
+	} else if _kv == -1 {
+		holding.x_vel = _dir * 3 + x_vel / 2;
+		holding.y_vel = -5;
 	} else {
-		grace = defs.grace
-		grace_y = y;
+		holding.x_vel = _dir * 5 + x_vel / 2;
+		holding.y_vel = -3;
 	}
+		
+	holding.x_vel = clamp(holding.x_vel, -6, 6)
+		
+	hold_end()
 	
-	if _kh != dir {
-		climb_away += 1;
-	} else {
-		climb_away = 0;
-	}
-	if climb_away > defs.climb_leave {
-		state.change(state_free)
-		return;
-	}
+	hold_cooldown = 14;
+	grace_target = noone;
 	
-	if buffer > 0 {
-		walljump(-dir);
-		return;
-	}
-	
+	state.change(state_free)
 })
 
 state_dashset = state_base.add()
@@ -589,7 +825,23 @@ state_dashset = state_base.add()
 	else
 		dash_dir_x = _kh;
 	
-	dash_dir_y = _kv == 1 ? 1 : 0;
+	dash_dir_y = _kv;
+	
+	if _kv == -1 {
+		x_vel = dash_dir_x * max(6, 4 + min(abs(x_vel), 4));
+		y_vel = defs.jump_vel;
+		
+		gravity_hold = 9;
+		key_hold_timer = 14;
+		key_hold = dash_dir_x;
+		
+		dash_left -= 1;
+		
+		event.call("dive");
+		state.change(state_free);
+		
+		return;
+	}
 	
 	state.change(state_dash);
 })
@@ -608,6 +860,8 @@ state_dash = state_base.add()
 	y_vel += dash_dir_y_vel;
 	
 	dir = sign(x_vel)
+	
+	event.call("dive")
 })
 .set("leave", function(){
 	dash_grace = 8;
@@ -647,7 +901,7 @@ state_dash = state_base.add()
 	dash_timer -= 1;
 	if dash_timer <= 0 {
 		grace = 0;
-		gravity_hold = 8
+		gravity_hold_peak = 8
 		
 		if dash_dir_y == 0
 			x_vel = clamp(x_vel * 0.5, -4, 4);
@@ -665,12 +919,12 @@ state.change(state_free);
 
 
 riding = function(_solid){
-	return place_meeting(x, y + 1, _solid) || (state.is(state_climb) && place_meeting(x + dir, y, _solid))
+	return place_meeting(x, y + 1, _solid)
 }
 
 cam = function(){
 	
-	if (state.is(state_free) && actor_collision(x, y + 1)) || state.is(state_climb) {
+	if (state.is(state_free) && actor_collision(x, y + 1)) {
 		cam_ground_x = x + dir * 32;
 		cam_ground_y = y;
 	}

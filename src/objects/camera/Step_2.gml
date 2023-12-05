@@ -1,4 +1,6 @@
 
+if game_paused() exit;
+
 var _cam_w = camera_get_view_width(view_camera[0]),
 	_cam_h = camera_get_view_height(view_camera[0])
 
@@ -13,8 +15,12 @@ var _weights = collision_point(_tx, _ty, obj_camera_focus, true, true);
 
 if _weights != noone {
 	var _dist = point_distance(target_x, target_y, _weights.x, _weights.y);
-	_tx = lerp(_tx, _weights.x, max(0, 1 - power(_dist / _weights.sprite_width * 2, 1.8)));
-	_ty = lerp(_ty, _weights.y, max(0, 1 - power(_dist / _weights.sprite_height * 2, 1.8)));
+	_tx = lerp(_tx, _weights.x, max(0, 1 - power(_dist / _weights.sprite_width * 2, _weights.weight)));
+	_ty = lerp(_ty, _weights.y, max(0, 1 - power(_dist / _weights.sprite_height * 2, _weights.weight)));
+	if _weights.force {
+		_tx = _weights.x;
+		_ty = _weights.y;
+	}
 }
 
 _weights = collision_point(_tx, _ty, obj_camera_room, true, true);
@@ -29,6 +35,7 @@ with _weights
 	) _inside = false;
 
 if _weights != noone {
+	
 	
 	if _inside || (!_inside && !_weights.unlock_x)
 		if _weights.sprite_width <= _cam_w {
@@ -46,6 +53,7 @@ if _weights != noone {
 	
 }
 
+roomsnap_cooldown -= 1;
 if roomsnap_last != _weights || roomsnap_last_inside != _inside {
 	roomsnap_timer = 1;
 }
@@ -54,6 +62,11 @@ roomsnap_last_inside = _inside;
 	
 roomsnap_timer = approach(roomsnap_timer, 0, 0.05)
 _ts = lerp(_ts, 0, roomsnap_timer)
+
+// bad idea
+if target == obj_player_death {
+	_ts = 0.8
+}
 
 var _w = room_width, _h = room_height;
 

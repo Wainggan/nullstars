@@ -5,8 +5,8 @@
   "bbox_bottom": 31,
   "bbox_left": 8,
   "bbox_right": 23,
-  "bbox_top": 10,
-  "bboxMode": 0,
+  "bbox_top": 1,
+  "bboxMode": 2,
   "collisionKind": 1,
   "collisionTolerance": 0,
   "DynamicTexturePage": false,
@@ -25,8 +25,8 @@
   "nineSlice": null,
   "origin": 7,
   "parent": {
-    "name": "graphics",
-    "path": "folders/graphics.yy",
+    "name": "player",
+    "path": "folders/graphics/player.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

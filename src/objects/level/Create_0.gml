@@ -21,18 +21,26 @@ for (var i = 0; i < array_length(file.levels); i++) {
 	max_height = max(max_height, (_lv_y + _lv_h) * TILESIZE);
 	
 	var _lvl = {};
-	_lvl.layer = layer_create(100);
+	_lvl.layer = layer_create(0);
 	_lvl.tiles = layer_tilemap_create(
 		_lvl.layer,
 		_lv_x * TILESIZE, _lv_y * TILESIZE,
 		tl_debug, 
 		_lv_w, _lv_h
 	);
+	layer_set_visible(_lvl.layer, false);
 	_lvl.spikes_layer = layer_create(0);
 	_lvl.spikes_tiles = layer_tilemap_create(
-		_lvl.layer,
+		_lvl.spikes_layer,
 		_lv_x * TILESIZE, _lv_y * TILESIZE,
 		tl_debug_spikes, 
+		_lv_w, _lv_h
+	);
+	_lvl.tilemap_layer = layer_create(0);
+	_lvl.tilemap_tiles = layer_tilemap_create(
+		_lvl.tilemap_layer,
+		_lv_x * TILESIZE, _lv_y * TILESIZE,
+		tl_tiles, 
 		_lv_w, _lv_h
 	);
 	
@@ -46,9 +54,26 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		
 		switch _layer.__identifier {
 			
+			case "Tiles":
+				_targetLayer = _lvl.tilemap_tiles;
+
+				for (var n = 0; n < array_length(_layer.autoLayerTiles); n++) {
+					
+					var _td = _layer.autoLayerTiles[n];
+					
+					var _tx = round(_td.px[0] / TILESIZE);
+					var _ty = round(_td.px[1] / TILESIZE);
+					var _t = _td.t;
+					
+					tilemap_set(_targetLayer, _t, _tx, _ty);
+					
+				}
+				
+				break;
+				
 			case "Spikes":
 				_targetLayer = _lvl.spikes_tiles;
-			case "Tiles":
+			case "Collisions":
 				
 				for (var n = 0; n < array_length(_layer.intGridCsv); n++) {
 					
@@ -93,12 +118,31 @@ for (var i = 0; i < array_length(file.levels); i++) {
 						_field[$ _f.__identifier] = _val;
 					}
 					
-					_field.image_xscale = floor(_e.width / TILESIZE);
-					_field.image_yscale = floor(_e.height / TILESIZE);
+					if array_contains(_e.__tags, "SIZE_TILE") {
+						_field.image_xscale = floor(_e.width / TILESIZE);
+						_field.image_yscale = floor(_e.height / TILESIZE);
+					} else {
+						// find the entity definition for some reason ???
+						var _def = array_find_index(file.defs.entities, method({_e}, function(_i){
+							return _i.identifier == _e.__identifier;
+						}))
+						if _def != -1 {
+							_def = file.defs.entities[_def];
+						} else {
+							if _def {
+								_field.image_xscale = floor(_e.width / _def.width);
+								_field.image_yscale = floor(_e.height / _def.height);
+							} else {
+								_field.image_xscale = floor(_e.width / TILESIZE);
+								_field.image_yscale = floor(_e.height / TILESIZE);
+							}
+						}
+						
+					}
 					
 					var _inst = instance_create_layer(
 						_e.__worldX, _e.__worldY, 
-						_layer.__identifier, 
+						_layer.__identifier,
 						asset_get_index(_e.__identifier),
 						_field
 					);
