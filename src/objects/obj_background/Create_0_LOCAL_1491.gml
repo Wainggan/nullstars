@@ -16,4 +16,3 @@ shader_4_u_offset = shader_get_uniform(shd_back_4, "u_offset");
 shader_4_u_resolution = shader_get_uniform(shd_back_4, "u_resolution");
 shader_4_u_time = shader_get_uniform(shd_back_4, "u_time");
 
-surface_mask = -1;

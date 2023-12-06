@@ -21,6 +21,11 @@ for (var i = 0; i < array_length(file.levels); i++) {
 	max_height = max(max_height, (_lv_y + _lv_h) * TILESIZE);
 	
 	var _lvl = {};
+	_lvl.x = _lv_x * TILESIZE;
+	_lvl.y = _lv_y * TILESIZE;
+	_lvl.width = _lv_w * TILESIZE;
+	_lvl.height = _lv_h * TILESIZE;
+	
 	_lvl.layer = layer_create(0);
 	_lvl.tiles = layer_tilemap_create(
 		_lvl.layer,
