@@ -58,7 +58,7 @@ shader_reset()
 
 shader_set(shd_back_4);
 
-shader_set_uniform_f(shader_4_u_offset, _cam_x / 2, _cam_y / 2);
+shader_set_uniform_f(shader_4_u_offset, _cam_x / 4, _cam_y / 4);
 shader_set_uniform_f(shader_4_u_resolution, _cam_w, _cam_h);
 shader_set_uniform_f(shader_4_u_time, current_time / 1000);
 
