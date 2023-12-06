@@ -172,7 +172,7 @@ tail = yarn_create(tail_length, function(_p, i){
 	_p.y = y + i * 6
 		
 	_p.size = max(parabola_mid(3, 7, 6, i) + 3, 6)
-	_p.round = floor(clamp(i / (tail_length / 4), 1, 4))
+	_p.round = floor(clamp(i / (tail_length / 3), 1, 3))
 })
 
 draw_tail = function(_tip = #ff00ff, _blend = c_white){
@@ -619,6 +619,7 @@ state_base = state.add()
 		
 		instance_destroy();
 		instance_create_layer(x, y, "Instances", obj_player_death);
+
 	}
 	
 	

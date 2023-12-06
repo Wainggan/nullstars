@@ -4,8 +4,8 @@ function YarnPoint() constructor {
 	x = 0;
 	y = 0;
 	
-	x_vel = 0;
-	y_vel = 0;
+	x_move = 0;
+	y_move = 0;
 	
 	direction = 0;
 	weight = 1;
@@ -63,8 +63,8 @@ function Yarn() constructor {
 			_target_x -= lengthdir_x(_p.weight, _p.direction);
 			_target_y -= lengthdir_y(_p.weight, _p.direction);
 			
-			_target_x += _p.x_vel;
-			_target_y += _p.y_vel;
+			_target_x += _p.x_move;
+			_target_y += _p.y_move;
 			
 			var _angle_snap = point_direction(_target_x, _target_y, _last_x, _last_y);
 			

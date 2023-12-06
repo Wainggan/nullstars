@@ -54,3 +54,18 @@ draw_sprite_ext(
 );
 
 shader_reset()
+
+shader_set(shd_back_4);
+
+shader_set_uniform_f(shader_4_u_offset, _cam_x / 2, _cam_y / 2);
+shader_set_uniform_f(shader_4_u_resolution, _cam_w, _cam_h);
+shader_set_uniform_f(shader_4_u_time, current_time / 1000);
+
+draw_sprite_ext(
+	spr_pixel, 0, 
+	_cam_x, _cam_y, 
+	_cam_w, _cam_h, 
+	0, c_white, mode == 3
+);
+
+shader_reset()

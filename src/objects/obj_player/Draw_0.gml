@@ -37,13 +37,15 @@ var _meta = anim.meta();
 tail.position(x + _meta.x * dir, y + _meta.y);
 
 tail.update(,function(_p, i, _points){
-	var _l = array_length(_points)
+	var _len = array_length(_points)
+	var _scale_inv = (_len - i) / _len;
+	
 	if holding {
 		_p.damp = 0.8
 		_p.weight = 6;
 		
-		var _t1 = floor(_l * 0.5)
-		var _t2 = floor(_l * 0.75)
+		var _t1 = floor(_len * 0.5)
+		var _t2 = floor(_len * 0.75)
 		
 		_p.direction = (90 + 80 * -dir)
 		if i > _t1 {
@@ -61,8 +63,8 @@ tail.update(,function(_p, i, _points){
 		_p.weight = 1;
 		
 		var _d = sin(current_time / 1000 - i * 0.6)
-		_p.x_vel = -dir * ((_l - i) / _l * 0.4 + 0.2)
-		_p.y_vel = _d * ((_l - i) / _l * 0.2 + 0.1) + 0.3 * ((_l - i) / _l)
+		_p.x_move = -dir * (_scale_inv * 0.4 + 0.2)
+		_p.y_move = _d * (_scale_inv * 0.2 + 0.1) + 0.3 * _scale_inv
 		
 	}
 })

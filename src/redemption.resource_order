@@ -35,6 +35,7 @@
     {"name":"obj_Position","order":6,"path":"objects/obj_Position/obj_Position.yy",},
     {"name":"spr_player_tail","order":2,"path":"sprites/spr_player_tail/spr_player_tail.yy",},
     {"name":"obj_oo_off","order":3,"path":"objects/obj_oo_off/obj_oo_off.yy",},
+    {"name":"shd_back_4","order":3,"path":"shaders/shd_back_4/shd_back_4.yy",},
     {"name":"spr_tiles","order":20,"path":"sprites/spr_tiles/spr_tiles.yy",},
     {"name":"obj_spike_right","order":4,"path":"objects/obj_spike_right/obj_spike_right.yy",},
     {"name":"rm_game","order":1,"path":"rooms/rm_game/rm_game.yy",},

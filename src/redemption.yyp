@@ -59,6 +59,7 @@
     {"id":{"name":"obj_Position","path":"objects/obj_Position/obj_Position.yy",},},
     {"id":{"name":"spr_player_tail","path":"sprites/spr_player_tail/spr_player_tail.yy",},},
     {"id":{"name":"obj_oo_off","path":"objects/obj_oo_off/obj_oo_off.yy",},},
+    {"id":{"name":"shd_back_4","path":"shaders/shd_back_4/shd_back_4.yy",},},
     {"id":{"name":"spr_tiles","path":"sprites/spr_tiles/spr_tiles.yy",},},
     {"id":{"name":"obj_spike_right","path":"objects/obj_spike_right/obj_spike_right.yy",},},
     {"id":{"name":"rm_game","path":"rooms/rm_game/rm_game.yy",},},

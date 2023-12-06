@@ -1,2 +1,2 @@
-mode = (mode + 1) % 3;
+mode = (mode + 1) % 4;
 
