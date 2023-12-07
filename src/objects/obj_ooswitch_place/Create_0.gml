@@ -5,3 +5,7 @@ hit = false;
 hit_buffer = 0;
 
 anim_hit = 0;
+
+light = instance_create_layer(x, y, "Lights", obj_light, {
+	size: 64
+})

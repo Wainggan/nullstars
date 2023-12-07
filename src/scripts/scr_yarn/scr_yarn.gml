@@ -80,7 +80,7 @@ function Yarn() constructor {
 		}
 	}
 	
-	static loop = function(_callback) {
+	static each = function(_callback) {
 		
 		for (var i = 0; i < array_length(points); i++) {
 			var _p = points[i];
@@ -89,7 +89,7 @@ function Yarn() constructor {
 		
 	}
 	
-	static loop_reverse = function(_callback) {
+	static each_reverse = function(_callback) {
 		
 		for (var i = array_length(points) - 1; i >= 0; i--) {
 			var _p = points[i];
@@ -102,7 +102,7 @@ function Yarn() constructor {
 
 function yarn_create(_length, _callback) {
 	var _yarn = new Yarn()
-	for (var i = 0; i < _length; i++) { // 10
+	for (var i = 0; i < _length; i++) {
 		var _p = new YarnPoint();
 		
 		if _callback _callback(_p, i)

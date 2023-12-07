@@ -8,6 +8,19 @@ levels = [];
 max_width = room_width;
 max_height = room_height;
 
+// for the one time i need this
+function hex_to_dec(_hex) {
+    var _dec = 0;
+ 
+    static _dig = "0123456789ABCDEF";
+    var _len = string_length(_hex);
+    for (var i = 1; i <= _len; i += 1) {
+        _dec = _dec << 4 | (string_pos(string_char_at(_hex, i), _dig) - 1);
+    }
+ 
+    return _dec;
+}
+
 for (var i = 0; i < array_length(file.levels); i++) {
 	
 	var _level = file.levels[i];
@@ -48,6 +61,13 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		tl_tiles, 
 		_lv_w, _lv_h
 	);
+	_lvl.background_layer = layer_create(110);
+	_lvl.background_tiles = layer_tilemap_create(
+		_lvl.background_layer,
+		_lv_x * TILESIZE, _lv_y * TILESIZE,
+		tl_tiles, 
+		_lv_w, _lv_h
+	);
 	
 	array_push(levels, _lvl);
 	
@@ -61,6 +81,22 @@ for (var i = 0; i < array_length(file.levels); i++) {
 			
 			case "Tiles":
 				_targetLayer = _lvl.tilemap_tiles;
+
+				for (var n = 0; n < array_length(_layer.autoLayerTiles); n++) {
+					
+					var _td = _layer.autoLayerTiles[n];
+					
+					var _tx = round(_td.px[0] / TILESIZE);
+					var _ty = round(_td.px[1] / TILESIZE);
+					var _t = _td.t;
+					
+					tilemap_set(_targetLayer, _t, _tx, _ty);
+					
+				}
+				
+				break;
+			case "Background":
+				_targetLayer = _lvl.background_tiles;
 
 				for (var n = 0; n < array_length(_layer.autoLayerTiles); n++) {
 					
@@ -92,6 +128,7 @@ for (var i = 0; i < array_length(file.levels); i++) {
 				
 				break;
 			
+			case "Lights":
 			case "Meta":
 			case "Instances":
 			
@@ -113,6 +150,17 @@ for (var i = 0; i < array_length(file.levels); i++) {
 									x: _val.cx * TILESIZE,
 									y: _val.cy * TILESIZE
 								};
+								
+								break;
+							case "Color":
+
+								var _r = string_copy(_val, 2, 2);
+								var _g = string_copy(_val, 2 + 2, 2);
+								var _b = string_copy(_val, 2 + 4, 2);
+								_r = hex_to_dec(_r);
+								_g = hex_to_dec(_g);
+								_b = hex_to_dec(_b);
+								_val = make_color_rgb(_r, _g, _b);
 								
 								break;
 							case "EntityRef":

@@ -160,7 +160,7 @@ cam_ground_x = x;
 cam_ground_y = y;
 
 
-depth = -10;
+depth -= 10;
 mask_index = spr_debug_player;
 
 tail_length = 12;
@@ -178,7 +178,7 @@ tail = yarn_create(tail_length, function(_p, i){
 draw_tail = function(_tip = #ff00ff, _blend = c_white){
 	self._tip = _tip;
 	self._blend = _blend;
-	tail.loop_reverse(function(_p, j) {
+	tail.each_reverse(function(_p, j) {
 		var _c = merge_color(c_white, _tip, clamp(j - 3, 0, tail_length) / tail_length);
 		_c = multiply_color(_c, _blend);
 		draw_sprite_ext(
@@ -190,6 +190,12 @@ draw_tail = function(_tip = #ff00ff, _blend = c_white){
 		);
 	})
 }
+
+light = instance_create_layer(x, y, "Lights", obj_light, {
+	color: #ffffff,
+	size: 70,
+	intensity: 0.6
+});
 
 
 checkWall = function(_dir){
@@ -613,6 +619,8 @@ state_base = state.add()
 		
 	}
 	
+	light.x = x;
+	light.y = y - 20;
 	
 	if checkDeath(x, y) {
 		game_set_pause(10);
@@ -627,6 +635,9 @@ state_base = state.add()
 	// todo: figure out how to reset a_lift when touching tiles
 	x_lift = 0;
 	y_lift = 0;
+	
+	
+	
 	
 })
 

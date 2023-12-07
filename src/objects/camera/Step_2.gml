@@ -82,5 +82,5 @@ _ty = clamp(_ty, _cam_h / 2, _h - _cam_h / 2);
 x = lerp(x, _tx, _ts);
 y = lerp(y, _ty, _ts);
 
-camera_set_view_pos(view_camera[0], x - _cam_w / 2, y - _cam_h / 2)
+camera_set_view_pos(view_camera[0], floor(x - _cam_w / 2), floor(y - _cam_h / 2))
 
