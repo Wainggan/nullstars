@@ -193,8 +193,8 @@ draw_tail = function(_tip = #ff00ff, _blend = c_white){
 
 light = instance_create_layer(x, y, "Lights", obj_light, {
 	color: #ffffff,
-	size: 70,
-	intensity: 0.6
+	size: 60,
+	intensity: 0.5
 });
 
 

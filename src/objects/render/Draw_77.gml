@@ -11,23 +11,6 @@ draw_sprite_ext(
 	0, #000209, 1
 );
 
-
-var _shader = shd_back_4;
-
-shader_set(_shader);
-
-shader_set_uniform_f(shader_get_uniform(_shader, "u_offset"), _cam_x / 4, _cam_y / 4);
-shader_set_uniform_f(shader_get_uniform(_shader, "u_resolution"), _cam_w, _cam_h);
-shader_set_uniform_f(shader_get_uniform(_shader, "u_time"), current_time / 1000);
-
-draw_sprite_ext(
-	spr_pixel, 0, 
-	0, 0, 
-	_cam_w, _cam_h, 
-	0, c_white, 1
-);
-
-shader_reset()
-
+draw_surface(surf_background, 0, 0)
 
 draw_surface(application_surface, 0, 0);

@@ -210,3 +210,5 @@ for (var i = 0; i < array_length(file.levels); i++) {
 	
 }
 
+
+render.setup_lights()
