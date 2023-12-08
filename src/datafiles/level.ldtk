@@ -3240,7 +3240,7 @@
 					"tilesetUid": null
 				},
 				{
-					"identifier": "end",
+					"identifier": "ref",
 					"doc": null,
 					"__type": "EntityRef",
 					"uid": 159,
@@ -3268,7 +3268,7 @@
 					"textLanguageMode": null,
 					"symmetricalRef": false,
 					"autoChainRef": true,
-					"allowOutOfLevelRef": true,
+					"allowOutOfLevelRef": false,
 					"allowedRefs": "OnlySpecificEntity",
 					"allowedRefsEntityUid": 157,
 					"allowedRefTags": [],
@@ -8698,7 +8698,7 @@
 							"px": [768,240],
 							"fieldInstances": [
 								{ "__identifier": "time", "__type": "Float", "__value": 1, "__tile": null, "defUid": 158, "realEditorValues": [] },
-								{ "__identifier": "end", "__type": "EntityRef", "__value": {
+								{ "__identifier": "ref", "__type": "EntityRef", "__value": {
 									"entityIid": "a8379eb0-8990-11ee-90a8-8fca2c9e12bd",
 									"layerIid": "047ae312-6280-11ee-8cd9-d995b4e64f39",
 									"levelIid": "047ae310-6280-11ee-8cd9-8bbfdf81ad3c",
@@ -29198,7 +29198,7 @@
 							"px": [368,240],
 							"fieldInstances": [
 								{ "__identifier": "time", "__type": "Float", "__value": 1, "__tile": null, "defUid": 158, "realEditorValues": [] },
-								{ "__identifier": "end", "__type": "EntityRef", "__value": {
+								{ "__identifier": "ref", "__type": "EntityRef", "__value": {
 									"entityIid": "529c7d40-8990-11ee-90a8-77a671623f62",
 									"layerIid": "fcfd25d1-8990-11ee-90a8-255341f20184",
 									"levelIid": "fcfcfec0-8990-11ee-90a8-d5a51c517f6b",

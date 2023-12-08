@@ -71,6 +71,9 @@ for (var i = 0; i < array_length(file.levels); i++) {
 	
 	array_push(levels, _lvl);
 	
+	var _entity_refs = {};
+	var _entity_ref_defer = [];
+	
 	for (var j = 0; j < array_length(_level.layerInstances); j++) {
 		
 		var _layer = _level.layerInstances[j];
@@ -140,8 +143,11 @@ for (var i = 0; i < array_length(file.levels); i++) {
 					
 					var _field = {};
 					
+					var _ref_fields = [];
+					
 					for (var k = 0; k < array_length(_e.fieldInstances); k++) {
 						var _f = _e.fieldInstances[k];
+						var _josh = _f.__identifier;
 						var _val = _f.__value;
 						switch _f.__type {
 							case "Point":
@@ -164,7 +170,8 @@ for (var i = 0; i < array_length(file.levels); i++) {
 								
 								break;
 							case "EntityRef":
-								// todo
+								array_push(_ref_fields, [_josh, _val.entityIid]);
+								_val = -1;
 								
 								break;
 						}
@@ -200,6 +207,24 @@ for (var i = 0; i < array_length(file.levels); i++) {
 						_field
 					);
 					
+					_entity_refs[$ _e.iid] = _inst;
+					
+					for (var k = 0; k < array_length(_ref_fields); k++) {
+						array_push(_entity_ref_defer, {
+							inst: _inst,
+							name: _ref_fields[k][0],
+							id: _ref_fields[k][1]
+						});
+					}
+					
+				}
+				
+				for (var n = 0; n < array_length(_entity_ref_defer); n++) {
+					variable_instance_set(
+						_entity_ref_defer[n].inst,
+						_entity_ref_defer[n].name,
+						_entity_refs[$ _entity_ref_defer[n].id]
+					);
 				}
 			
 				break;
