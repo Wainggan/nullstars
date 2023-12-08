@@ -29,6 +29,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"spike","folderPath":"folders/objects/spike.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"rooms","folderPath":"folders/rooms.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"timer","folderPath":"folders/objects/timer.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"sounds","folderPath":"folders/sounds.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles",},
@@ -97,6 +98,7 @@
     {"id":{"name":"spr_debug_ball","path":"sprites/spr_debug_ball/spr_debug_ball.yy",},},
     {"id":{"name":"obj_spike_down","path":"objects/obj_spike_down/obj_spike_down.yy",},},
     {"id":{"name":"scr_event","path":"scripts/scr_event/scr_event.yy",},},
+    {"id":{"name":"mus_questionthestars","path":"sounds/mus_questionthestars/mus_questionthestars.yy",},},
     {"id":{"name":"tl_debug_spikes","path":"tilesets/tl_debug_spikes/tl_debug_spikes.yy",},},
     {"id":{"name":"spr_debug_checkpoint","path":"sprites/spr_debug_checkpoint/spr_debug_checkpoint.yy",},},
     {"id":{"name":"shd_back_2","path":"shaders/shd_back_2/shd_back_2.yy",},},
