@@ -17,6 +17,7 @@
     {"name":"oo","order":8,"path":"folders/objects/oo.yy",},
     {"name":"spike","order":5,"path":"folders/objects/spike.yy",},
     {"name":"rooms","order":15,"path":"folders/rooms.yy",},
+    {"name":"timer","order":12,"path":"folders/objects/timer.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"obj_camera_parent","order":1,"path":"objects/obj_camera_parent/obj_camera_parent.yy",},
@@ -37,6 +38,7 @@
     {"name":"spr_debug_dashrefill","order":11,"path":"sprites/spr_debug_dashrefill/spr_debug_dashrefill.yy",},
     {"name":"shd_blur","order":3,"path":"shaders/shd_blur/shd_blur.yy",},
     {"name":"obj_Position","order":6,"path":"objects/obj_Position/obj_Position.yy",},
+    {"name":"spr_debug_timer","order":23,"path":"sprites/spr_debug_timer/spr_debug_timer.yy",},
     {"name":"spr_player_tail","order":2,"path":"sprites/spr_player_tail/spr_player_tail.yy",},
     {"name":"obj_oo_off","order":3,"path":"objects/obj_oo_off/obj_oo_off.yy",},
     {"name":"shd_back_4","order":3,"path":"shaders/shd_back_4/shd_back_4.yy",},
@@ -70,6 +72,7 @@
     {"name":"obj_lift","order":2,"path":"objects/obj_lift/obj_lift.yy",},
     {"name":"spr_none","order":16,"path":"sprites/spr_none/spr_none.yy",},
     {"name":"obj_dash","order":7,"path":"objects/obj_dash/obj_dash.yy",},
+    {"name":"obj_timer_end","order":1,"path":"objects/obj_timer_end/obj_timer_end.yy",},
     {"name":"spr_debug_oo_off","order":15,"path":"sprites/spr_debug_oo_off/spr_debug_oo_off.yy",},
     {"name":"shd_light_shadow","order":4,"path":"shaders/shd_light_shadow/shd_light_shadow.yy",},
     {"name":"obj_Solid","order":2,"path":"objects/obj_Solid/obj_Solid.yy",},
