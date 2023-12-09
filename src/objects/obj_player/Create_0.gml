@@ -9,22 +9,25 @@ defs = {
 	move_speed: 2,
 	move_accel: 0.5,
 	move_slowdown: 0.1,
+	move_slowdown_air: 0.05,
 	
 	boost_limit_x: 9,
 	boost_limit_y: 3,
 	
-	jump_vel: -4,
+	jump_vel: -4.5,
 	jump_move_boost: 0.2,
 	terminal_vel: global.defs.terminal_vel,
+	terminal_vel_fast: 6,
 	
 	jump_short_vel: -3,
 	
 	gravity: 0.45,
 	gravity_hold: 0.2,
-	gravity_peak: 0.1,
+	gravity_peak: 0.12,
 	gravity_peak_thresh: 0.36,
+	gravity_term: 0.12,
 	
-	gravity_damp: 0.8,
+	gravity_damp: 0.75,
 	
 	wall_distance: 4,
 	
@@ -362,6 +365,7 @@ jumpdash = function(){
 			y_vel = -5.4;
 			x_vel = dash_dir_x_vel * 0.4
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+			gravity_hold = 6
 		} else {
 			y_vel = defs.jump_vel;
 			x_vel = dash_dir_x_vel * 0.8
@@ -443,6 +447,8 @@ walljump = function(_dir){
 	
 	scale_x = 0.8;
 	scale_y = 1.2;
+	
+	gravity_hold = 9;
 	
 	event.call("jump")
 	
@@ -652,8 +658,10 @@ state_free = state_base.add()
 	var _x_accel = 0;
 	if abs(x_vel) > defs.move_speed && _kh_move == sign(x_vel) {
 		_x_accel = defs.move_slowdown;
-		if !actor_collision(x, y + 1)
+		if !actor_collision(x, y + 1) {
 			momentum_grace = 6;
+			_x_accel = defs.move_slowdown_air
+		}
 	} else {
 		_x_accel = defs.move_accel;
 	}
@@ -686,6 +694,9 @@ state_free = state_base.add()
 	if gravity_hold_peak > 0 {
 		_y_accel = defs.gravity_peak;
 	}
+	if y_vel >= defs.terminal_vel {
+		_y_accel = defs.gravity_term;
+	}
 
 	if input.jump_released && y_vel < 0 {
 		// release jump damping
@@ -693,8 +704,13 @@ state_free = state_base.add()
 	}
 
 	y_vel += _y_accel
-
-	y_vel = min(y_vel, defs.terminal_vel);
+	
+	var _term_vel = defs.terminal_vel
+	if _kv == 1 {
+		_term_vel = defs.terminal_vel_fast
+	}
+	
+	y_vel = min(y_vel, _term_vel);
 	
 	var _wall = actor_collision(x + defs.wall_distance, y) - actor_collision(x - defs.wall_distance, y);
 	
@@ -913,9 +929,9 @@ state_dash = state_base.add()
 		gravity_hold_peak = 8
 		
 		if dash_dir_y == 0
-			x_vel = clamp(x_vel * 0.5, -4, 4);
+			x_vel = clamp(x_vel * 0.8, -4, 4);
 		else
-			x_vel *= 0.8;
+			x_vel *= 0.9;
 		x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 		
 		state.change(state_free);
