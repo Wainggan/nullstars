@@ -13,6 +13,12 @@ switch _biome {
 	case "rain":
 		_amparts = ps_ambient_rain;
 		break;
+	case "smoke":
+		_amparts = ps_ambient_smoke;
+		break;
+	case "star":
+		_amparts = ps_ambient_star;
+		break;
 }
 
 if _amparts != -1

@@ -6,6 +6,7 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 
 var _lvl_onscreen = game_level_onscreen()
 
+
 // finish surf_background_lights
 
 surface_set_target(surf_background_lights);

@@ -28,6 +28,7 @@
   "ResourceOrderSettings": [
     {"name":"obj_camera_parent","order":1,"path":"objects/obj_camera_parent/obj_camera_parent.yy",},
     {"name":"scr_solid","order":4,"path":"scripts/scr_solid/scr_solid.yy",},
+    {"name":"ps_ambient_smoke","order":2,"path":"particles/ps_ambient_smoke/ps_ambient_smoke.yy",},
     {"name":"obj_spike_left","order":3,"path":"objects/obj_spike_left/obj_spike_left.yy",},
     {"name":"scr_globals","order":7,"path":"scripts/scr_globals/scr_globals.yy",},
     {"name":"spr_tiles_debug","order":2,"path":"sprites/spr_tiles_debug/spr_tiles_debug.yy",},
@@ -81,6 +82,7 @@
     {"name":"camera","order":2,"path":"objects/camera/camera.yy",},
     {"name":"spr_timer_pop","order":24,"path":"sprites/spr_timer_pop/spr_timer_pop.yy",},
     {"name":"obj_lift","order":2,"path":"objects/obj_lift/obj_lift.yy",},
+    {"name":"ps_ambient_star","order":3,"path":"particles/ps_ambient_star/ps_ambient_star.yy",},
     {"name":"spr_none","order":16,"path":"sprites/spr_none/spr_none.yy",},
     {"name":"obj_dash","order":7,"path":"objects/obj_dash/obj_dash.yy",},
     {"name":"obj_timer_end","order":1,"path":"objects/obj_timer_end/obj_timer_end.yy",},

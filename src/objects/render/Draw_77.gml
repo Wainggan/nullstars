@@ -13,4 +13,8 @@ draw_sprite_ext(
 
 draw_surface(surf_background, 0, 0)
 
+gpu_set_colorwriteenable(true, true, true, false)
+
 draw_surface(application_surface, 0, 0);
+
+gpu_set_colorwriteenable(true, true, true, true)
