@@ -41,12 +41,14 @@ setup_lights = function(){
 		vertex_position_3d(_vb, _x2, _y2, 1);
 	};
 	
-	vertex_begin(lights_vb, lights_vf);
-	
 	for (var i = 0; i < array_length(level.levels); i++) {
 		var _tiles = level.levels[i].tiles;
 		var _x_off = level.levels[i].x;
 		var _y_off = level.levels[i].y;
+		
+		var _vb = vertex_create_buffer();
+		
+		vertex_begin(_vb, lights_vf);
 		
 		for (var _x = 0; _x < tilemap_get_width(_tiles); _x++) {
 			for (var _y = 0; _y < tilemap_get_height(_tiles); _y++) {
@@ -56,21 +58,21 @@ setup_lights = function(){
 				var _cx = _x_off + _x * TILESIZE;
 				var _cy = _y_off + _y * TILESIZE;
 				
-				//show_debug_message($"{_cx} {_cy}")
-				
 				_Quad(
-					lights_vb, 
+					_vb, 
 					_cx, _cy, _cx + TILESIZE, _cy + TILESIZE
 				);
 				_Quad(
-					lights_vb, 
+					_vb, 
 					_cx + TILESIZE, _cy, _cx, _cy + TILESIZE
 				);
 				
 			}
 		}
+		
+		vertex_end(_vb);
+		
+		level.levels[i].vb = _vb;
 	}
-	
-	vertex_end(lights_vb);
 	
 }

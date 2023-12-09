@@ -4,6 +4,8 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 	_cam_w = camera_get_view_width(view_camera[0]),
 	_cam_h = camera_get_view_height(view_camera[0]);
 
+var _lvl_onscreen = game_level_onscreen()
+
 // finish surf_background_lights
 
 surface_set_target(surf_background_lights);
@@ -99,7 +101,9 @@ with obj_light {
 	shader_set_uniform_f(_u_s_position, x, y);
 	shader_set_uniform_f(_u_s_z, _z);
 	
-	vertex_submit(_vb, pr_trianglelist, -1);
+	for (var i = 0; i < array_length(_lvl_onscreen); i++) {
+		vertex_submit(_lvl_onscreen[i].vb, pr_trianglelist, -1);
+	}
 	
 	shader_set(shd_light_color);
 	shader_set_uniform_f(_u_l_position, x - _cam_x, y - _cam_y);
@@ -148,8 +152,8 @@ draw_clear(c_black)
 
 gpu_set_blendmode(bm_subtract);
 
-for (var i = 0; i < array_length(level.levels); i++) {
-	var _lvl = level.levels[i];
+for (var i = 0; i < array_length(_lvl_onscreen); i++) {
+	var _lvl = _lvl_onscreen[i];
 	draw_sprite_stretched(spr_pixel, 0, _lvl.x - _cam_x, _lvl.y - _cam_y, _lvl.width, _lvl.height)
 }
 

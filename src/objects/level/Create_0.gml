@@ -69,6 +69,8 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		_lv_w, _lv_h
 	);
 	
+	_lvl.vb = -1;
+	
 	_lvl.fields = {};
 	for (var j = 0; j < array_length(_level.fieldInstances); j++) {
 		var _f = _level.fieldInstances[j]
