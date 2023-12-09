@@ -63,7 +63,7 @@ tail.update(,function(_p, i, _points){
 		_p.weight = 1;
 		
 		var _d = sin(current_time / 1000 - i * 0.6)
-		_p.x_move = -dir * (_scale_inv * 0.4 + 0.2)
+		_p.x_move = -dir * (_scale_inv * 0.4 + 0.3)
 		_p.y_move = _d * (_scale_inv * 0.2 + 0.1) + 0.3 * _scale_inv
 		
 	}

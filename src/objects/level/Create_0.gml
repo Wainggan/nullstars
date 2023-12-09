@@ -200,12 +200,18 @@ for (var i = 0; i < array_length(file.levels); i++) {
 						
 					}
 					
+					var _object_index = asset_get_index(_e.__identifier);
+					
 					var _inst = instance_create_layer(
 						_e.__worldX, _e.__worldY, 
 						_layer.__identifier,
-						asset_get_index(_e.__identifier),
+						_object_index,
 						_field
 					);
+					
+					if _object_index == obj_checkpoint {
+						game_checkpoint_add(_inst)
+					}
 					
 					_entity_refs[$ _e.iid] = _inst;
 					

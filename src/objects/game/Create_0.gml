@@ -5,7 +5,8 @@ timer = 0;
 timer_active = false;
 timer_target = undefined;
 
-checkpoint = undefined;
+checkpoint_list = [];
+checkpoint = 0;
 
 instance_create_layer(0, 0, layer, camera);
 instance_create_layer(0, 0, layer, render);
