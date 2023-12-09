@@ -71,6 +71,7 @@
     {"name":"shd_back_3","order":2,"path":"shaders/shd_back_3/shd_back_3.yy",},
     {"name":"obj_oo_on","order":1,"path":"objects/obj_oo_on/obj_oo_on.yy",},
     {"name":"spr_debug_ball","order":18,"path":"sprites/spr_debug_ball/spr_debug_ball.yy",},
+    {"name":"scr_level","order":16,"path":"scripts/scr_level/scr_level.yy",},
     {"name":"obj_spike_down","order":2,"path":"objects/obj_spike_down/obj_spike_down.yy",},
     {"name":"scr_timer","order":14,"path":"scripts/scr_timer/scr_timer.yy",},
     {"name":"scr_event","order":2,"path":"scripts/scr_event/scr_event.yy",},

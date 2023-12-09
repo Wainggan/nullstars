@@ -69,6 +69,35 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		_lv_w, _lv_h
 	);
 	
+	_lvl.fields = {};
+	for (var j = 0; j < array_length(_level.fieldInstances); j++) {
+		var _f = _level.fieldInstances[j]
+		var _val = _f.__value;
+		switch _f.__type {
+			case "Point":
+								
+				_val = {
+					x: _val.cx * TILESIZE,
+					y: _val.cy * TILESIZE
+				};
+								
+				break;
+			case "Color":
+
+				var _r = string_copy(_val, 2, 2);
+				var _g = string_copy(_val, 2 + 2, 2);
+				var _b = string_copy(_val, 2 + 4, 2);
+				_r = hex_to_dec(_r);
+				_g = hex_to_dec(_g);
+				_b = hex_to_dec(_b);
+				_val = make_color_rgb(_r, _g, _b);
+								
+				break;
+		}
+		_lvl.fields[$ _f.__identifier] = _val;
+	}
+	
+	
 	array_push(levels, _lvl);
 	
 	var _entity_refs = {};

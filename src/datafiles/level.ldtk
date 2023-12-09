@@ -3436,13 +3436,13 @@
 		{ "identifier": "Level_Music", "uid": 150, "values": [
 			{ "id": "none", "tileRect": null, "color": 12470831 },
 			{ "id": "wind", "tileRect": null, "color": 14120515 },
-			{ "id": "precatory", "tileRect": null, "color": 15389866 },
+			{ "id": "stars", "tileRect": null, "color": 15389866 },
 			{ "id": "major", "tileRect": null, "color": 14984818 }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
 		{ "identifier": "Level_Biome", "uid": 151, "values": [
 			{ "id": "none", "tileRect": null, "color": 12470831 },
 			{ "id": "rain", "tileRect": null, "color": 14120515 },
-			{ "id": "spots", "tileRect": null, "color": 15389866 },
+			{ "id": "dust", "tileRect": null, "color": 15389866 },
 			{ "id": "theotherone", "tileRect": null, "color": 14984818 }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }
 	], "externalEnums": [], "levelFields": [
@@ -3580,8 +3580,14 @@
 			"externalRelPath": null,
 			"fieldInstances": [
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] }
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "wind", "__tile": null, "defUid": 153, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["wind"]
+				}] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["rain"]
+				}] }
 			],
 			"layerInstances": [
 				{
@@ -6167,8 +6173,6 @@
 						{ "px": [736,928], "src": [32,16], "f": 0, "t": 18, "d": [75,6658], "a": 1 },
 						{ "px": [752,928], "src": [32,16], "f": 0, "t": 18, "d": [75,6659], "a": 1 },
 						{ "px": [768,928], "src": [32,16], "f": 0, "t": 18, "d": [75,6660], "a": 1 },
-						{ "px": [784,928], "src": [32,16], "f": 0, "t": 18, "d": [75,6661], "a": 1 },
-						{ "px": [800,928], "src": [32,16], "f": 0, "t": 18, "d": [75,6662], "a": 1 },
 						{ "px": [1712,928], "src": [32,16], "f": 0, "t": 18, "d": [75,6719], "a": 1 },
 						{ "px": [1728,928], "src": [32,16], "f": 0, "t": 18, "d": [75,6720], "a": 1 },
 						{ "px": [1744,928], "src": [32,16], "f": 0, "t": 18, "d": [75,6721], "a": 1 },
@@ -7746,6 +7750,8 @@
 						{ "px": [1312,848], "src": [32,32], "f": 0, "t": 34, "d": [76,6124], "a": 1 },
 						{ "px": [912,864], "src": [32,32], "f": 0, "t": 34, "d": [76,6213], "a": 1 },
 						{ "px": [720,928], "src": [32,32], "f": 0, "t": 34, "d": [76,6657], "a": 1 },
+						{ "px": [784,928], "src": [32,32], "f": 0, "t": 34, "d": [76,6661], "a": 1 },
+						{ "px": [800,928], "src": [32,32], "f": 0, "t": 34, "d": [76,6662], "a": 1 },
 						{ "px": [816,928], "src": [32,32], "f": 0, "t": 34, "d": [76,6663], "a": 1 },
 						{ "px": [832,928], "src": [32,32], "f": 0, "t": 34, "d": [76,6664], "a": 1 },
 						{ "px": [848,928], "src": [32,32], "f": 0, "t": 34, "d": [76,6665], "a": 1 },
@@ -7759,8 +7765,6 @@
 						{ "px": [976,928], "src": [32,32], "f": 0, "t": 34, "d": [76,6673], "a": 1 },
 						{ "px": [992,928], "src": [32,32], "f": 0, "t": 34, "d": [76,6674], "a": 1 },
 						{ "px": [752,944], "src": [32,32], "f": 0, "t": 34, "d": [76,6773], "a": 1 },
-						{ "px": [768,944], "src": [32,32], "f": 0, "t": 34, "d": [76,6774], "a": 1 },
-						{ "px": [784,944], "src": [32,32], "f": 0, "t": 34, "d": [76,6775], "a": 1 },
 						{ "px": [1728,944], "src": [32,32], "f": 0, "t": 34, "d": [76,6834], "a": 1 },
 						{ "px": [1312,960], "src": [32,32], "f": 0, "t": 34, "d": [76,6922], "a": 1 },
 						{ "px": [1328,960], "src": [32,32], "f": 0, "t": 34, "d": [76,6923], "a": 1 },
@@ -8030,7 +8034,7 @@
 						{ "px": [928,864], "src": [48,32], "f": 0, "t": 35, "d": [82,6214], "a": 1 },
 						{ "px": [1600,896], "src": [48,32], "f": 0, "t": 35, "d": [82,6484], "a": 1 },
 						{ "px": [1008,928], "src": [48,32], "f": 0, "t": 35, "d": [82,6675], "a": 1 },
-						{ "px": [800,944], "src": [48,32], "f": 0, "t": 35, "d": [82,6776], "a": 1 },
+						{ "px": [768,944], "src": [48,32], "f": 0, "t": 35, "d": [82,6774], "a": 1 },
 						{ "px": [1392,960], "src": [48,32], "f": 0, "t": 35, "d": [82,6927], "a": 1 },
 						{ "px": [720,992], "src": [48,32], "f": 0, "t": 35, "d": [82,7113], "a": 1 },
 						{ "px": [1200,1024], "src": [48,32], "f": 0, "t": 35, "d": [82,7371], "a": 1 },
@@ -8193,9 +8197,7 @@
 						{ "px": [1088,800], "src": [160,48], "f": 0, "t": 58, "d": [147,5768], "a": 1 },
 						{ "px": [1104,800], "src": [176,48], "f": 0, "t": 59, "d": [147,5768], "a": 1 },
 						{ "px": [880,944], "src": [160,48], "f": 0, "t": 58, "d": [147,6781], "a": 1 },
-						{ "px": [896,944], "src": [176,48], "f": 0, "t": 59, "d": [147,6781], "a": 1 },
-						{ "px": [784,960], "src": [160,48], "f": 0, "t": 58, "d": [147,6889], "a": 1 },
-						{ "px": [800,960], "src": [176,48], "f": 0, "t": 59, "d": [147,6889], "a": 1 }
+						{ "px": [896,944], "src": [176,48], "f": 0, "t": 59, "d": [147,6781], "a": 1 }
 					],
 					"seed": 225205,
 					"overrideTilesetUid": null,
@@ -9095,7 +9097,7 @@
 						1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,0,0,0,
 						0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,
 						1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-						1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+						1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 						0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,1,1,0,0,0,0,0,
 						0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 						1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,
@@ -12205,8 +12207,6 @@
 						{ "px": [736,944], "src": [112,128], "f": 0, "t": 263, "d": [10,6772], "a": 1 },
 						{ "px": [752,944], "src": [112,128], "f": 0, "t": 263, "d": [10,6773], "a": 1 },
 						{ "px": [768,944], "src": [112,128], "f": 0, "t": 263, "d": [10,6774], "a": 1 },
-						{ "px": [784,944], "src": [112,128], "f": 0, "t": 263, "d": [10,6775], "a": 1 },
-						{ "px": [800,944], "src": [112,128], "f": 0, "t": 263, "d": [10,6776], "a": 1 },
 						{ "px": [1104,944], "src": [112,128], "f": 0, "t": 263, "d": [10,6795], "a": 1 },
 						{ "px": [1184,944], "src": [112,128], "f": 0, "t": 263, "d": [10,6800], "a": 1 },
 						{ "px": [1200,944], "src": [112,128], "f": 0, "t": 263, "d": [10,6801], "a": 1 },
@@ -15034,7 +15034,10 @@
 			"fieldInstances": [
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] }
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["rain"]
+				}] }
 			],
 			"layerInstances": [
 				{
@@ -20357,7 +20360,10 @@
 			"fieldInstances": [
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] }
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["dust"]
+				}] }
 			],
 			"layerInstances": [
 				{
@@ -31149,11 +31155,11 @@
 			"externalRelPath": null,
 			"fieldInstances": [
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "precatory", "__tile": null, "defUid": 153, "realEditorValues": [{
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["precatory"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] }
+					"params": ["dust"]
+				}] }
 			],
 			"layerInstances": [
 				{
@@ -34585,8 +34591,14 @@
 			"externalRelPath": null,
 			"fieldInstances": [
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] }
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["stars"]
+				}] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["dust"]
+				}] }
 			],
 			"layerInstances": [
 				{

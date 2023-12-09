@@ -103,6 +103,7 @@
     {"id":{"name":"obj_timer_start","path":"objects/obj_timer_start/obj_timer_start.yy",},},
     {"id":{"name":"obj_oo_on","path":"objects/obj_oo_on/obj_oo_on.yy",},},
     {"id":{"name":"spr_debug_ball","path":"sprites/spr_debug_ball/spr_debug_ball.yy",},},
+    {"id":{"name":"scr_level","path":"scripts/scr_level/scr_level.yy",},},
     {"id":{"name":"obj_spike_down","path":"objects/obj_spike_down/obj_spike_down.yy",},},
     {"id":{"name":"scr_timer","path":"scripts/scr_timer/scr_timer.yy",},},
     {"id":{"name":"scr_event","path":"scripts/scr_event/scr_event.yy",},},
