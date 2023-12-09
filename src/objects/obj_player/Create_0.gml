@@ -623,10 +623,7 @@ state_base = state.add()
 	light.y = y - 20;
 	
 	if checkDeath(x, y) {
-		game_set_pause(10);
-		
-		instance_destroy();
-		instance_create_layer(x, y, "Instances", obj_player_death);
+		game_player_kill()
 
 	}
 	

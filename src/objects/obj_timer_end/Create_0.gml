@@ -1,0 +1,3 @@
+
+lastTouch = false;
+

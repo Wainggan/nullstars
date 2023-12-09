@@ -11,8 +11,8 @@
   "managed": true,
   "overriddenProperties": [],
   "parent": {
-    "name": "objects",
-    "path": "folders/objects.yy",
+    "name": "player",
+    "path": "folders/objects/player.yy",
   },
   "parentObjectId": {
     "name": "obj_Actor",
