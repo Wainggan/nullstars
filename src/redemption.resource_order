@@ -22,6 +22,8 @@
     {"name":"timer","order":12,"path":"folders/objects/timer.yy",},
     {"name":"rooms","order":3,"path":"folders/rooms.yy",},
     {"name":"sounds","order":7,"path":"folders/sounds.yy",},
+    {"name":"particles","order":27,"path":"folders/graphics/particles.yy",},
+    {"name":"ambient","order":1,"path":"folders/graphics/particles/ambient.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"obj_camera_parent","order":1,"path":"objects/obj_camera_parent/obj_camera_parent.yy",},
@@ -85,6 +87,7 @@
     {"name":"shd_light_shadow","order":4,"path":"shaders/shd_light_shadow/shd_light_shadow.yy",},
     {"name":"scr_player","order":2,"path":"scripts/scr_player/scr_player.yy",},
     {"name":"obj_Solid","order":2,"path":"objects/obj_Solid/obj_Solid.yy",},
+    {"name":"ps_ambient_rain","order":1,"path":"particles/ps_ambient_rain/ps_ambient_rain.yy",},
     {"name":"spr_debug_wall","order":1,"path":"sprites/spr_debug_wall/spr_debug_wall.yy",},
     {"name":"obj_camera_room","order":2,"path":"objects/obj_camera_room/obj_camera_room.yy",},
     {"name":"obj_Entity","order":1,"path":"objects/obj_Entity/obj_Entity.yy",},

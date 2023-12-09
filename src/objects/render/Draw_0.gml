@@ -4,7 +4,6 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 	_cam_w = camera_get_view_width(view_camera[0]),
 	_cam_h = camera_get_view_height(view_camera[0]);
 
-
 // finish surf_background_lights
 
 surface_set_target(surf_background_lights);
@@ -12,6 +11,8 @@ surface_set_target(surf_background_lights);
 draw_surface_ext(application_surface, 0, 0, 1, 1, 0, c_black, 1);
 
 surface_reset_target()
+
+part_system_drawit(particles_ambient)
 
 
 // blur surf_background_lights
@@ -137,5 +138,24 @@ surface_reset_target();
 draw_surface_ext(surf_lights, _cam_x, _cam_y, 1, 1, 0, c_white, 1);
 
 
+// level mask
 
+if !surface_exists(surf_mask)
+	surf_mask = surface_create(_cam_w, _cam_h);
+
+surface_set_target(surf_mask)
+draw_clear(c_black)
+
+gpu_set_blendmode(bm_subtract);
+
+for (var i = 0; i < array_length(level.levels); i++) {
+	var _lvl = level.levels[i];
+	draw_sprite_stretched(spr_pixel, 0, _lvl.x - _cam_x, _lvl.y - _cam_y, _lvl.width, _lvl.height)
+}
+
+gpu_set_blendmode(bm_normal)
+
+surface_reset_target()
+
+draw_surface(surf_mask, _cam_x, _cam_y);
 

@@ -15,6 +15,10 @@ background_lights_kernel = 8;
 background_lights_sigma = 0.8;
 background_lights_brightness = 4;
 
+particles_ambient = part_system_create_layer("Instances", true)
+part_system_automatic_update(particles_ambient, false)
+part_system_automatic_draw(particles_ambient, false)
+
 mode = 0;
 
 vertex_format_begin();
@@ -39,7 +43,7 @@ setup_lights = function(){
 	
 	vertex_begin(lights_vb, lights_vf);
 	
-	for (var i = 0; i < /* array_length(level.levels) */1; i++) {
+	for (var i = 0; i < array_length(level.levels); i++) {
 		var _tiles = level.levels[i].tiles;
 		var _x_off = level.levels[i].x;
 		var _y_off = level.levels[i].y;

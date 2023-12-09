@@ -33,6 +33,8 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"timer","folderPath":"folders/objects/timer.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"rooms","folderPath":"folders/rooms.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"sounds","folderPath":"folders/sounds.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"particles","folderPath":"folders/graphics/particles.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"ambient","folderPath":"folders/graphics/particles/ambient.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles",},
@@ -119,7 +121,9 @@
     {"id":{"name":"spr_debug_oo_off","path":"sprites/spr_debug_oo_off/spr_debug_oo_off.yy",},},
     {"id":{"name":"shd_light_shadow","path":"shaders/shd_light_shadow/shd_light_shadow.yy",},},
     {"id":{"name":"scr_player","path":"scripts/scr_player/scr_player.yy",},},
+    {"id":{"name":"ps_ambient_dust","path":"particles/ps_ambient_dust/ps_ambient_dust.yy",},},
     {"id":{"name":"obj_Solid","path":"objects/obj_Solid/obj_Solid.yy",},},
+    {"id":{"name":"ps_ambient_rain","path":"particles/ps_ambient_rain/ps_ambient_rain.yy",},},
     {"id":{"name":"spr_debug_wall","path":"sprites/spr_debug_wall/spr_debug_wall.yy",},},
     {"id":{"name":"obj_camera_room","path":"objects/obj_camera_room/obj_camera_room.yy",},},
     {"id":{"name":"obj_Entity","path":"objects/obj_Entity/obj_Entity.yy",},},
