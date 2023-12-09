@@ -50,7 +50,7 @@ if !surface_exists(surf_lights) {
 
 surface_set_target(surf_lights);
 // ambient lights
-draw_clear_alpha(#555566, 1);
+draw_clear_alpha(#444455, 1);
 
 // background lights
 

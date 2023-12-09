@@ -11,7 +11,7 @@ surf_blur_ping = -1;
 
 surf_background_lights = -1;
 
-background_lights_kernel = 8;
+background_lights_kernel = 7;
 background_lights_sigma = 0.8;
 background_lights_brightness = 4;
 
