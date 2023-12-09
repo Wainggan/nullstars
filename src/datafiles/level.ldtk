@@ -3433,12 +3433,7 @@
 			{ "id": "judge", "tileRect": null, "color": 16732270 },
 			{ "id": "space", "tileRect": null, "color": 5990520 }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
-		{ "identifier": "Level_Music", "uid": 150, "values": [
-			{ "id": "none", "tileRect": null, "color": 12470831 },
-			{ "id": "wind", "tileRect": null, "color": 14120515 },
-			{ "id": "stars", "tileRect": null, "color": 15389866 },
-			{ "id": "major", "tileRect": null, "color": 14984818 }
-		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
+		{ "identifier": "Level_Music", "uid": 150, "values": [ { "id": "none", "tileRect": null, "color": 12470831 }, { "id": "mus_questionthestars", "tileRect": null, "color": 15389866 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
 		{ "identifier": "Level_Biome", "uid": 151, "values": [
 			{ "id": "none", "tileRect": null, "color": 12470831 },
 			{ "id": "rain", "tileRect": null, "color": 14120515 },
@@ -3580,11 +3575,11 @@
 			"__bgPos": null,
 			"externalRelPath": null,
 			"fieldInstances": [
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "wind", "__tile": null, "defUid": 153, "realEditorValues": [{
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["wind"]
+					"params": ["glow"]
 				}] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["rain"]
@@ -15279,7 +15274,10 @@
 			"__bgPos": null,
 			"externalRelPath": null,
 			"fieldInstances": [
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["none"]
+				}] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
@@ -20605,7 +20603,10 @@
 			"__bgPos": null,
 			"externalRelPath": null,
 			"fieldInstances": [
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["glow"]
+				}] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
@@ -31401,7 +31402,10 @@
 			"__bgPos": null,
 			"externalRelPath": null,
 			"fieldInstances": [
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["glow"]
+				}] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
@@ -34837,10 +34841,13 @@
 			"__bgPos": null,
 			"externalRelPath": null,
 			"fieldInstances": [
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["stars"]
+					"params": ["glow"]
+				}] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "mus_questionthestars", "__tile": null, "defUid": 153, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["mus_questionthestars"]
 				}] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",

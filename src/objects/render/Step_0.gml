@@ -30,3 +30,31 @@ if _amparts != -1
 	)
 
 part_system_update(particles_ambient)
+
+
+var _background = game_level_get_background(camera.x, camera.y)
+var _background_mode = 0;
+switch _background {
+	case "none":
+		break;
+	case "glow":
+		_background_mode = 1;
+		break;
+	case "boxes":
+		_background_mode = 2;
+		break;
+	case "judge":
+		_background_mode = 3;
+		break;
+	case "space":
+		_background_mode = 4;
+		break
+}
+
+if background_mode != _background_mode {
+	background_from = background_mode;
+	background_mode = _background_mode;
+	background_anim = 0;
+}
+background_anim = approach(background_anim, 1, 1 / 120)
+

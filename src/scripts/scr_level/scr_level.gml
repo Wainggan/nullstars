@@ -36,3 +36,8 @@ function game_level_get_biome(_x, _y) {
 	if _lvl == undefined return "";
 	return _lvl.fields.biome;
 }
+function game_level_get_background(_x, _y) {
+	var _lvl = game_level_get(_x, _y);
+	if _lvl == undefined return "";
+	return _lvl.fields.background;
+}

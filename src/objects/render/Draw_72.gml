@@ -14,21 +14,56 @@ if !surface_exists(surf_background)
 
 surface_set_target(surf_background);
 
-var _shader = [shd_back_1, shd_back_2, shd_back_3, shd_back_4];
-_shader = _shader[mode];
+var _shader_list = [undefined, shd_back_1, shd_back_2, shd_back_3, shd_back_4];
+var _shader;
 
-shader_set(_shader);
+_shader = _shader_list[background_from];
 
-shader_set_uniform_f(shader_get_uniform(_shader, "u_offset"), _cam_x / 4, _cam_y / 4);
-shader_set_uniform_f(shader_get_uniform(_shader, "u_resolution"), _cam_w, _cam_h);
-shader_set_uniform_f(shader_get_uniform(_shader, "u_time"), current_time / 1000);
+if _shader == undefined || background_anim == 1 {
+	draw_sprite_ext(
+		spr_pixel, 0, 
+		0, 0, 
+		_cam_w, _cam_h, 
+		0, #000209, 1
+	);
+} else {
+	shader_set(_shader);
 
-draw_sprite_ext(
-	spr_pixel, 0, 
-	0, 0, 
-	_cam_w, _cam_h, 
-	0, c_white, 1
-);
+	shader_set_uniform_f(shader_get_uniform(_shader, "u_offset"), _cam_x / 4, _cam_y / 4);
+	shader_set_uniform_f(shader_get_uniform(_shader, "u_resolution"), _cam_w, _cam_h);
+	shader_set_uniform_f(shader_get_uniform(_shader, "u_time"), current_time / 1000);
+
+	draw_sprite_ext(
+		spr_pixel, 0, 
+		0, 0, 
+		_cam_w, _cam_h, 
+		0, c_white, 1
+	);
+}
+
+_shader = _shader_list[background_mode];
+
+if _shader == undefined {
+	draw_sprite_ext(
+		spr_pixel, 0, 
+		0, 0, 
+		_cam_w, _cam_h, 
+		0, #000209, background_anim
+	);
+} else {
+	shader_set(_shader);
+
+	shader_set_uniform_f(shader_get_uniform(_shader, "u_offset"), _cam_x / 4, _cam_y / 4);
+	shader_set_uniform_f(shader_get_uniform(_shader, "u_resolution"), _cam_w, _cam_h);
+	shader_set_uniform_f(shader_get_uniform(_shader, "u_time"), current_time / 1000);
+
+	draw_sprite_ext(
+		spr_pixel, 0, 
+		0, 0, 
+		_cam_w, _cam_h, 
+		0, c_white, background_anim
+	);
+}
 
 shader_reset();
 
