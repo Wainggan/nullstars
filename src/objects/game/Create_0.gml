@@ -10,6 +10,7 @@ checkpoint = 0;
 
 instance_create_layer(0, 0, layer, camera);
 instance_create_layer(0, 0, layer, render);
+instance_create_layer(0, 0, layer, music);
 
 room_goto(rm_game);
 

@@ -41,3 +41,9 @@ function game_level_get_background(_x, _y) {
 	if _lvl == undefined return "";
 	return _lvl.fields.background;
 }
+function game_level_get_music(_x, _y) {
+	var _lvl = game_level_get(_x, _y);
+	if _lvl == undefined return undefined;
+	if _lvl.fields.music == pointer_null return undefined;
+	return _lvl.fields.music;
+}

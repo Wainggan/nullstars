@@ -486,7 +486,6 @@ state_base = state.add()
 	if input.dash_pressed buffer_dash = defs.buffer + 1;
 	
 	if place_meeting(x, y, obj_flag_stop) {
-		show_debug_message("e")
 		// lazy
 		var _names = struct_get_names(input);
 		for (var i = 0; i < array_length(_names); i++) {

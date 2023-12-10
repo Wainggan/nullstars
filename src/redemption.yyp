@@ -58,6 +58,7 @@
     {"id":{"name":"scr_camera","path":"scripts/scr_camera/scr_camera.yy",},},
     {"id":{"name":"tl_debug","path":"tilesets/tl_debug/tl_debug.yy",},},
     {"id":{"name":"spr_pixel","path":"sprites/spr_pixel/spr_pixel.yy",},},
+    {"id":{"name":"mus_wind","path":"sounds/mus_wind/mus_wind.yy",},},
     {"id":{"name":"obj_treadmill","path":"objects/obj_treadmill/obj_treadmill.yy",},},
     {"id":{"name":"scr_file","path":"scripts/scr_file/scr_file.yy",},},
     {"id":{"name":"spd_debug_marker","path":"sprites/spd_debug_marker/spd_debug_marker.yy",},},
