@@ -11,6 +11,8 @@ surf_blur_ping = -1;
 
 surf_background_lights = -1;
 
+surf_app = -1;
+
 background_mode = 0;
 background_from = 0;
 background_anim = 0;

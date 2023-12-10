@@ -6,3 +6,8 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 
 if !surface_exists(surf_blur_ping)
 	surf_blur_ping = surface_create(_cam_w, _cam_h);
+	
+if !surface_exists(surf_app)
+	surf_app = surface_create(_cam_w, _cam_h)
+
+

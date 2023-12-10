@@ -19,6 +19,8 @@ switch _bgm {
 		break;
 }
 
+if MUSIC_PLAY _bgm_asset = -1;
+
 if _bgm_asset != bgm_asset {
 	bgm_from = bgm_asset;
 	bgm_asset = _bgm_asset;

@@ -14,4 +14,4 @@ instance_create_layer(0, 0, layer, music);
 
 room_goto(rm_game);
 
-show_debug_overlay(true, true);
+//show_debug_overlay(true, true);
