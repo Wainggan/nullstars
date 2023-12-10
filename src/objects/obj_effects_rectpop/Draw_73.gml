@@ -2,6 +2,7 @@
 var _a = lerp(0, 1, anim) * pad;
 
 draw_set_alpha(herp(1, 0, anim));
+draw_set_color(color)
 
 draw_roundrect(
 	x - _a, y - _a,
@@ -11,3 +12,4 @@ draw_roundrect(
 );
 
 draw_set_alpha(1)
+draw_set_color(c_white)
