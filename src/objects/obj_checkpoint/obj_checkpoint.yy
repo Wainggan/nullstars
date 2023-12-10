@@ -32,8 +32,8 @@
   ],
   "solid": false,
   "spriteId": {
-    "name": "spr_debug_checkpoint",
-    "path": "sprites/spr_debug_checkpoint/spr_debug_checkpoint.yy",
+    "name": "spr_checkpoint",
+    "path": "sprites/spr_checkpoint/spr_checkpoint.yy",
   },
   "spriteMaskId": null,
   "visible": true,

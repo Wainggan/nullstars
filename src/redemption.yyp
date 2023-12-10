@@ -133,6 +133,7 @@
     {"id":{"name":"ps_ambient_rain","path":"particles/ps_ambient_rain/ps_ambient_rain.yy",},},
     {"id":{"name":"spr_debug_wall","path":"sprites/spr_debug_wall/spr_debug_wall.yy",},},
     {"id":{"name":"obj_camera_room","path":"objects/obj_camera_room/obj_camera_room.yy",},},
+    {"id":{"name":"spr_checkpoint","path":"sprites/spr_checkpoint/spr_checkpoint.yy",},},
     {"id":{"name":"obj_Entity","path":"objects/obj_Entity/obj_Entity.yy",},},
     {"id":{"name":"obj_box","path":"objects/obj_box/obj_box.yy",},},
     {"id":{"name":"obj_levelreset","path":"objects/obj_levelreset/obj_levelreset.yy",},},
