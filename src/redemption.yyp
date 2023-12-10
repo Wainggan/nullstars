@@ -22,6 +22,8 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"graphics","folderPath":"folders/graphics.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"debug","folderPath":"folders/graphics/debug.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"fonts","folderPath":"folders/graphics/fonts.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"particles","folderPath":"folders/graphics/particles.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"ambient","folderPath":"folders/graphics/particles/ambient.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"player","folderPath":"folders/graphics/player.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"shaders","folderPath":"folders/graphics/shaders.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"background","folderPath":"folders/graphics/shaders/background.yy",},
@@ -33,8 +35,6 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"timer","folderPath":"folders/objects/timer.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"rooms","folderPath":"folders/rooms.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"sounds","folderPath":"folders/sounds.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"particles","folderPath":"folders/graphics/particles.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"ambient","folderPath":"folders/graphics/particles/ambient.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles",},

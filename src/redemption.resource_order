@@ -11,6 +11,8 @@
     {"name":"graphics","order":2,"path":"folders/graphics.yy",},
     {"name":"debug","order":4,"path":"folders/graphics/debug.yy",},
     {"name":"fonts","order":26,"path":"folders/graphics/fonts.yy",},
+    {"name":"particles","order":27,"path":"folders/graphics/particles.yy",},
+    {"name":"ambient","order":1,"path":"folders/graphics/particles/ambient.yy",},
     {"name":"player","order":9,"path":"folders/graphics/player.yy",},
     {"name":"shaders","order":22,"path":"folders/graphics/shaders.yy",},
     {"name":"background","order":1,"path":"folders/graphics/shaders/background.yy",},
@@ -22,8 +24,6 @@
     {"name":"timer","order":12,"path":"folders/objects/timer.yy",},
     {"name":"rooms","order":3,"path":"folders/rooms.yy",},
     {"name":"sounds","order":7,"path":"folders/sounds.yy",},
-    {"name":"particles","order":27,"path":"folders/graphics/particles.yy",},
-    {"name":"ambient","order":1,"path":"folders/graphics/particles/ambient.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"obj_areaname","order":18,"path":"objects/obj_areaname/obj_areaname.yy",},
