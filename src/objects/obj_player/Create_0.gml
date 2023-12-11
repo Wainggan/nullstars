@@ -314,7 +314,7 @@ jump = function(){
 	
 	dash_left = defs.dash_total;
 
-	y_vel = defs.jump_vel;
+	y_vel = min(defs.jump_vel, y_vel);
 	x_vel += (defs.jump_move_boost + defs.move_accel) * sign(x_vel);
 	
 	if x_lift == 0 && y_lift == 0 {
@@ -545,15 +545,11 @@ state_base = state.add()
 	}
 	
 	actor_move_y(y_vel, function(){
-		if !state.is(state_swim) {
-			if y_vel > 1.5 {
-				scale_x = 1.2;
-				scale_y = 0.8;
-			}
-			y_vel = 0;
-		} else {
-			swim_dir += 90 * sign(x_vel);
+		if y_vel > 1.5 {
+			scale_x = 1.2;
+			scale_y = 0.8;
 		}
+		y_vel = 0;
 	});
 	
 	
@@ -954,7 +950,13 @@ state_swim = state_base.add()
 	
 	swim_bullet = false;
 	if dash_grace > 0 {
+		dash_grace = 0;
 		swim_bullet = true;
+		
+	} else {
+		if swim_spd > 5 {
+			swim_spd = max(5, swim_spd * 0.8)
+		}
 	}
 })
 .set("step", function(){
@@ -979,7 +981,7 @@ state_swim = state_base.add()
 		} else {
 			swim_spd = approach(swim_spd, 5, swim_spd > 5 ? 0.02 : 0.8)
 		}
-		_dir_accel = 1 - clamp(swim_spd / 5, 0, 0.8)
+		_dir_accel = 1 - clamp(swim_spd / 5, 0, 0.70)
 	} else {
 		swim_spd = approach(swim_spd, max(swim_spd, 8), 1)
 		_dir_accel = 0.06
