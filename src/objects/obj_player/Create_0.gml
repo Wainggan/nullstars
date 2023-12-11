@@ -545,11 +545,15 @@ state_base = state.add()
 	}
 	
 	actor_move_y(y_vel, function(){
-		if y_vel > 1.5 {
-			scale_x = 1.2;
-			scale_y = 0.8;
+		if !state.is(state_swim) {
+			if y_vel > 1.5 {
+				scale_x = 1.2;
+				scale_y = 0.8;
+			}
+			y_vel = 0;
+		} else {
+			swim_dir += 90 * sign(x_vel);
 		}
-		y_vel = 0;
 	});
 	
 	
@@ -781,6 +785,10 @@ state_free = state_base.add()
 		return;
 	}
 	
+	if place_meeting(x, y, obj_water) {
+		state.change(state_swim);
+	}
+	
 })
 
 state_throw = state_base.add()
@@ -937,6 +945,81 @@ state_dash = state_base.add()
 		return;
 	}
 	
+})
+
+state_swim = state_base.add()
+.set("enter", function(){
+	swim_dir = point_direction(0, 0, x_vel, y_vel);
+	swim_spd = point_distance(0, 0, x_vel, y_vel);
+	
+	swim_bullet = false;
+	if dash_grace > 0 {
+		swim_bullet = true;
+	}
+})
+.set("step", function(){
+	
+	var _push_x = place_meeting(x + 16, y, obj_water) - place_meeting(x - 16, y, obj_water);
+	var _push_y = place_meeting(x, y + 24, obj_water) - place_meeting(x, y - 24, obj_water);
+	
+	var _kh = input.right - input.left;
+	var _kv = input.down - input.up;
+	
+	var _dir_target = point_direction(0, 0, _kh, _kv);
+	if _kh == 0 && _kv == 0 _dir_target = swim_dir;
+	var _dir_diff = angle_difference(swim_dir, _dir_target)
+	
+	
+	var _spd_target_normal = point_distance(0, 0, _kh, _kv);
+	var _dir_accel;
+	
+	if !swim_bullet {
+		if _spd_target_normal == 0 {
+			swim_spd = approach(swim_spd, 0, 0.3)
+		} else {
+			swim_spd = approach(swim_spd, 5, swim_spd > 5 ? 0.02 : 0.8)
+		}
+		_dir_accel = 1 - clamp(swim_spd / 5, 0, 0.8)
+	} else {
+		swim_spd = approach(swim_spd, max(swim_spd, 8), 1)
+		_dir_accel = 0.06
+	}
+	
+	swim_dir -= round(_dir_diff * _dir_accel);
+	
+	x_vel = lengthdir_x(swim_spd, swim_dir) + _push_x
+	y_vel = lengthdir_y(swim_spd, swim_dir) + _push_y
+	
+	dash_left = defs.dash_total
+	
+	if buffer_dash >= 0 {
+		buffer_dash = 0;
+		swim_spd = max(swim_spd, 8);
+		
+		swim_dir = point_direction(0, 0, _kh, _kv);
+		if _kh == 0 && _kv == 0 swim_dir = point_direction(0, 0, dir, 0);
+		
+		swim_bullet = true;
+	}
+	
+	if !place_meeting(x, y, obj_water) {
+		grace = defs.grace;
+		gravity_hold = 9;
+		y_vel += -1;
+		
+		if swim_bullet {
+			x_vel *= 1.2;
+			y_vel *= 1.2;
+			swim_bullet = false;
+		}
+		
+		state.change(state_free);
+	}
+	
+	//x_vel = _push_x;
+	//y_vel = _push_y;
+	
+
 })
 
 state.change(state_free);

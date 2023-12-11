@@ -1,11 +1,9 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_speed_dir",
+  "name": "obj_speed_right",
   "eventList": [
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,},
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,},
   ],
   "managed": true,
   "overriddenProperties": [],
@@ -14,8 +12,8 @@
     "path": "folders/objects.yy",
   },
   "parentObjectId": {
-    "name": "obj_Solid",
-    "path": "objects/obj_Solid/obj_Solid.yy",
+    "name": "obj_speed_base",
+    "path": "objects/obj_speed_base/obj_speed_base.yy",
   },
   "persistent": false,
   "physicsAngularDamping": 0.1,

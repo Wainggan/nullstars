@@ -7,8 +7,8 @@
     "path": "audiogroups/audiogroup_default",
   },
   "bitDepth": 1,
-  "bitRate": 128,
-  "compression": 0,
+  "bitRate": 112,
+  "compression": 1,
   "conversionMode": 0,
   "duration": 54.79018,
   "parent": {
@@ -18,6 +18,6 @@
   "preload": false,
   "sampleRate": 44100,
   "soundFile": "mus_wind.ogg",
-  "type": 0,
+  "type": 1,
   "volume": 1.0,
 }
