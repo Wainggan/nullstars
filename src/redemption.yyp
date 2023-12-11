@@ -98,7 +98,7 @@
     {"id":{"name":"obj_player_death","path":"objects/obj_player_death/obj_player_death.yy",},},
     {"id":{"name":"scr_checkpoints","path":"scripts/scr_checkpoints/scr_checkpoints.yy",},},
     {"id":{"name":"music","path":"objects/music/music.yy",},},
-    {"id":{"name":"obj_speed_lr","path":"objects/obj_speed_lr/obj_speed_lr.yy",},},
+    {"id":{"name":"obj_speed_any","path":"objects/obj_speed_any/obj_speed_any.yy",},},
     {"id":{"name":"obj_oo_block","path":"objects/obj_oo_block/obj_oo_block.yy",},},
     {"id":{"name":"scr_anim","path":"scripts/scr_anim/scr_anim.yy",},},
     {"id":{"name":"spr_debug_flag_stop","path":"sprites/spr_debug_flag_stop/spr_debug_flag_stop.yy",},},
