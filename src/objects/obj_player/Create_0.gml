@@ -74,7 +74,8 @@ anim = new AnimController()
 .add("jab", new AnimLevel([11]))
 .add("longjump", new AnimLevel([8]))
 .add("swim", new AnimLevel([13, 14], 1 / 60))
-.add("swimbullet", new AnimLevel([16]))
+.add("swimming", new AnimLevel([15, 16], 1 / 60))
+.add("swimbullet", new AnimLevel([18]))
 
 .meta_default({
 	x: -2, y: -16,
@@ -103,7 +104,13 @@ anim = new AnimController()
 .meta_items([14], {
 	x: -5, y: -15
 })
+.meta_items([15], {
+	x: -4, y: -16
+})
 .meta_items([16], {
+	x: -4, y: -17
+})
+.meta_items([18, 19], {
 	x: 0, y: -16
 })
 
@@ -992,8 +999,6 @@ state_swim = state_base.add()
 		swim_bullet_check = false;
 	}
 	
-	show_debug_message(x_vel)
-	show_debug_message(swim_spd)
 })
 .set("step", function(){
 	
@@ -1016,17 +1021,17 @@ state_swim = state_base.add()
 	
 	if !swim_bullet {
 		if _spd_target_normal == 0 {
-			swim_spd = approach(swim_spd, 0, 0.3)
+			swim_spd = approach(swim_spd, 0, 0.4)
 		} else {
-			swim_spd = approach(swim_spd, 5, swim_spd > 5 ? 0.02 : 0.8)
+			swim_spd = approach(swim_spd, 5, swim_spd > 5 ? 0.02 : 0.3)
 		}
-		_dir_accel = 360 - round(360 * clamp(swim_spd / 5, 0, 0.70))
+		_dir_accel = 360 - round(360 * clamp(swim_spd / 5, 0, 0.98))
 	} else {
 		swim_spd = approach(swim_spd, max(swim_spd, 8), 1)
-		_dir_accel = 4
+		_dir_accel = 2
 	}
 	
-	swim_dir -= round(sign(_dir_diff) * _dir_accel);
+	swim_dir -= clamp(round(sign(_dir_diff) * _dir_accel), -abs(_dir_diff), abs(_dir_diff));
 	
 	x_vel = lengthdir_x(swim_spd, swim_dir) + _push_x
 	y_vel = lengthdir_y(swim_spd, swim_dir) + _push_y

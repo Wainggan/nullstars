@@ -9338,22 +9338,6 @@
 								"id": "V_String",
 								"params": ["jump"]
 							}] }]
-						},
-						{
-							"__identifier": "obj_water",
-							"__grid": [44,7],
-							"__pivot": [0,0],
-							"__tags": [ "SIZE_TILE", "water" ],
-							"__tile": null,
-							"__smartColor": "#50FAFF",
-							"__worldX": 704,
-							"__worldY": 112,
-							"iid": "b3e398f0-8990-11ee-8d28-db7571bf0b8c",
-							"width": 592,
-							"height": 432,
-							"defUid": 198,
-							"px": [704,112],
-							"fieldInstances": []
 						}
 					]
 				},

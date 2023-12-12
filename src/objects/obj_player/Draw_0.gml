@@ -19,8 +19,14 @@ if state.is(state_swim) {
 		_pos_x += -lengthdir_x(16, _angle + 90);
 		_pos_y += -16 - lengthdir_y(16, _angle + 90);
 	} else {
-		anim.extract("swim").speed = 1 / round(max(60 - abs(swim_spd) * 6, 8))
-		anim.set("swim")
+		if swim_spd < 1 {
+			anim.set("swim")
+		} else {
+			anim.extract("swimming").speed = 1 / round(max(20 - abs(swim_spd) * 2, 8))
+			anim.set("swimming")
+		}
+		
+		
 		_pos_y += wave(-2, 3, 8)
 		_tpos_y = _pos_y
 	}

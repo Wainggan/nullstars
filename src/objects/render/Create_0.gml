@@ -74,11 +74,11 @@ setup_lights = function(){
 				
 				_Quad(
 					_vb, 
-					_cx, _cy, _cx + TILESIZE, _cy + TILESIZE
+					_cx, _cy, _cx + TILESIZE, _cy + _h
 				);
 				_Quad(
 					_vb, 
-					_cx + TILESIZE, _cy, _cx, _cy + TILESIZE
+					_cx + TILESIZE, _cy, _cx, _cy + _h
 				);
 				
 				_count++;
