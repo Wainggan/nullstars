@@ -493,6 +493,71 @@ walljump = function(_dir){
 	
 };
 
+bounce = function(_dir = 0){
+	
+	endDash()
+	
+	state.change(state_free);
+	
+	grace = 0;
+	gravity_hold = 0;
+	gravity_hold_peak = 0;
+	
+	dash_left = defs.dash_total;
+	
+	if _dir == 0 {
+	
+		dash_grace = 0;
+	
+		if input.jump
+			y_vel = -8;
+		else
+			y_vel = -5
+	
+		scale_x = 0.6;
+		scale_y = 1.4;
+	
+		gravity_hold = 8;
+	
+	} else {
+		
+		x_vel = _dir * 6.5;
+		y_vel = -5;
+		
+		scale_x = 0.8;
+		scale_y = 1.2;
+	
+		gravity_hold = 8;
+		
+		key_hold = _dir;
+		key_hold_timer = 8;
+		
+	}
+	
+	
+	ledge_keybuffer = dir
+	
+	event.call("jump")
+
+}
+
+endDash = function(){
+	
+	if !state.is(state_dash) return;
+	
+	grace = 0;
+	gravity_hold_peak = 8
+		
+	if dash_dir_y == 0 {
+		x_vel = clamp(x_vel * 0.8, -4, 4);
+		y_vel = -0.25;
+	} else {
+		x_vel *= 0.9;
+	}
+	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+	
+}
+
 #endregion
 
 // state machine
@@ -1038,16 +1103,7 @@ state_dash = state_base.add()
 	
 	dash_timer -= 1;
 	if dash_timer <= 0 {
-		grace = 0;
-		gravity_hold_peak = 8
-		
-		if dash_dir_y == 0 {
-			x_vel = clamp(x_vel * 0.8, -4, 4);
-			y_vel = -0.25;
-		} else {
-			x_vel *= 0.9;
-		}
-		x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+		endDash()
 		
 		state.change(state_free);
 		return;
