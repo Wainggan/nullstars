@@ -11,3 +11,8 @@ function game_camera_get() {
 		h: camera_get_view_height(view_camera[0])
 	};
 }
+
+function game_camera_set_shake(_shake, _damp) {
+	camera.shake_time = max(camera.shake_time, _shake);
+	camera.shake_damp = _damp;
+}

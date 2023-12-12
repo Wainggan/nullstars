@@ -8,3 +8,6 @@ roomsnap_timer = 0
 roomsnap_last = noone;
 roomsnap_last_inside = false;
 roomsnap_cooldown = 0;
+
+shake_time = 0;
+shake_damp = 1;

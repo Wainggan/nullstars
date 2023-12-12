@@ -1,6 +1,7 @@
 
 function game_player_kill() {
 	game_set_pause(10);
+	game_camera_set_shake(6, 0.5)
 	
 	global.onoff = 1;
 	

@@ -1,6 +1,4 @@
 
-if game_paused() exit;
-
 var _cam_w = camera_get_view_width(view_camera[0]),
 	_cam_h = camera_get_view_height(view_camera[0])
 
@@ -82,5 +80,15 @@ _ty = clamp(_ty, _cam_h / 2, _h - _cam_h / 2);
 x = lerp(x, _tx, _ts);
 y = lerp(y, _ty, _ts);
 
-camera_set_view_pos(view_camera[0], floor(x - _cam_w / 2), floor(y - _cam_h / 2))
+var _shake_x = irandom_range(-shake_time, shake_time)
+var _shake_y = irandom_range(-shake_time, shake_time)
+
+camera_set_view_pos(
+	view_camera[0], 
+	floor(x - _cam_w / 2) + _shake_x, 
+	floor(y - _cam_h / 2) + _shake_y
+);
+
+
+shake_time = approach(shake_time, 0, shake_damp);
 
