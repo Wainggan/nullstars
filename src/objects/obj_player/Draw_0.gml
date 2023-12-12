@@ -1,6 +1,11 @@
 
 //draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, true);
 
+var _angle = 0, _sprite = sprite_index;
+var _dir = dir;
+var _pos_x = x, _pos_y = y;
+var _tpos_x = undefined, _tpos_y = undefined;
+
 anim_dive_timer -= 1;
 anim_jab_timer -= 1;
 anim_longjump_timer -= 1;
@@ -29,12 +34,30 @@ else if state.is(state_free) {
 		}
 	}
 }
+else if state.is(state_swim) {
+	
+	if swim_bullet {
+		anim.set("swimbullet")
+		_angle = swim_dir
+		_dir = 1
+		_pos_x += -lengthdir_x(16, _angle + 90);
+		_pos_y += -16 - lengthdir_y(16, _angle + 90);
+	} else {
+		anim.extract("swim").speed = 1 / round(max(60 - abs(swim_spd) * 6, 8))
+		anim.set("swim")
+		_pos_y += wave(-2, 3, 8)
+		_tpos_y = _pos_y
+	}
+	
+}
+
+
 
 anim.update();
 
 var _meta = anim.meta();
 
-tail.position(x + _meta.x * dir, y + _meta.y);
+tail.position((_tpos_x ?? x) + _meta.x * dir, (_tpos_y ?? y) + _meta.y);
 
 tail.update(,function(_p, i, _points){
 	var _len = array_length(_points)
@@ -77,10 +100,10 @@ if !_meta.front
 	draw_tail(_color, _mult);
 
 draw_sprite_ext(
-	sprite_index,
-	anim.get(), x, y,
-	scale_x * dir, scale_y,
-	0, _mult, image_alpha
+	_sprite,
+	anim.get(), _pos_x, _pos_y,
+	scale_x * _dir, scale_y,
+	_angle, _mult, image_alpha
 );
 //draw_sprite_ext(
 //	spr_player_eyes,

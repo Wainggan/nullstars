@@ -67,12 +67,14 @@ input = {
 
 anim = new AnimController()
 .add("idle", new AnimLevel([0]))
-.add("walk", new AnimLevel([3, 1, 4, 2], 12)) // todo: more frames. make subtle variations of these two
+.add("walk", new AnimLevel([3, 1, 4, 2], 12))
 .add("jump", new AnimLevel([5]))
 .add("fall", new AnimLevel([6]))
 .add("dive", new AnimLevel([7]))
 .add("jab", new AnimLevel([11]))
 .add("longjump", new AnimLevel([8]))
+.add("swim", new AnimLevel([13, 14], 1 / 60))
+.add("swimbullet", new AnimLevel([16]))
 
 .meta_default({
 	x: -2, y: -16,
@@ -94,6 +96,15 @@ anim = new AnimController()
 })
 .meta_items([11], {
 	x: 3, y: -11
+})
+.meta_items([13], {
+	x: -4, y: -17
+})
+.meta_items([14], {
+	x: -5, y: -15
+})
+.meta_items([16], {
+	x: 0, y: -16
 })
 
 
@@ -154,6 +165,11 @@ holding = noone;
 hold_cooldown = 0;
 hold_throw_x = 0;
 hold_throw_y = 0;
+
+swim_dir = 0;
+swim_spd = 0;
+swim_bullet_check = false;
+swim_bullet = false;
 
 anim_dive_timer = 0;
 anim_jab_timer = 0;
@@ -945,18 +961,22 @@ state_dash = state_base.add()
 
 state_swim = state_base.add()
 .set("enter", function(){
-	swim_dir = point_direction(0, 0, x_vel, y_vel);
-	swim_spd = point_distance(0, 0, x_vel, y_vel);
-	
-	swim_bullet = false;
-	if dash_grace > 0 {
-		dash_grace = 0;
-		swim_bullet = true;
+	if !swim_bullet_check {
+		swim_dir = point_direction(0, 0, x_vel, y_vel);
+		swim_spd = point_distance(0, 0, x_vel, y_vel);
+		swim_bullet = false;
+		if dash_grace > 0 {
+			game_set_pause(3)
+			dash_grace = 0;
+			swim_bullet = true;
 		
-	} else {
-		if swim_spd > 5 {
-			swim_spd = max(5, swim_spd * 0.8)
+		} else {
+			if swim_spd > 5 {
+				swim_spd = max(5, swim_spd * 0.8)
+			}
 		}
+	} else {
+		swim_bullet_check = false;
 	}
 })
 .set("step", function(){
@@ -971,6 +991,8 @@ state_swim = state_base.add()
 	if _kh == 0 && _kv == 0 _dir_target = swim_dir;
 	var _dir_diff = angle_difference(swim_dir, _dir_target)
 	
+	if _kh != 0 dir = _kh
+	
 	
 	var _spd_target_normal = point_distance(0, 0, _kh, _kv);
 	var _dir_accel;
@@ -984,7 +1006,7 @@ state_swim = state_base.add()
 		_dir_accel = 1 - clamp(swim_spd / 5, 0, 0.70)
 	} else {
 		swim_spd = approach(swim_spd, max(swim_spd, 8), 1)
-		_dir_accel = 0.06
+		_dir_accel = 0.03
 	}
 	
 	swim_dir -= round(_dir_diff * _dir_accel);
@@ -995,13 +1017,9 @@ state_swim = state_base.add()
 	dash_left = defs.dash_total
 	
 	if buffer_dash >= 0 {
-		buffer_dash = 0;
-		swim_spd = max(swim_spd, 8);
-		
-		swim_dir = point_direction(0, 0, _kh, _kv);
-		if _kh == 0 && _kv == 0 swim_dir = point_direction(0, 0, dir, 0);
-		
-		swim_bullet = true;
+		game_set_pause(3)
+		state.change(state_swimbulletset);
+		return;
 	}
 	
 	if !place_meeting(x, y, obj_water) {
@@ -1016,12 +1034,32 @@ state_swim = state_base.add()
 		}
 		
 		state.change(state_free);
+		
+		return;
 	}
 	
 	//x_vel = _push_x;
 	//y_vel = _push_y;
 	
 
+})
+
+state_swimbulletset = state_base.add()
+.set("step", function(){
+	var _kh = input.right - input.left;
+	var _kv = input.down - input.up;
+	
+	buffer_dash = 0;
+	
+	swim_spd = max(swim_spd, 8);
+	
+	swim_dir = point_direction(0, 0, _kh, _kv);
+	if _kh == 0 && _kv == 0 swim_dir = point_direction(0, 0, dir, 0);
+	
+	swim_bullet = true;
+	swim_bullet_check = true;
+	
+	state.change(state_swim);
 })
 
 state.change(state_free);

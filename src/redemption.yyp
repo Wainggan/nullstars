@@ -39,12 +39,6 @@
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles/level/backups/d5a16520-6280-11ee-ba61-ad454e9d2411_2023-12-11_01-30-33",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles/level/backups/d5a16520-6280-11ee-ba61-ad454e9d2411_2023-12-11_01-31-13",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles/level/backups/d5a16520-6280-11ee-ba61-ad454e9d2411_2023-12-11_01-36-10",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles/level/backups/d5a16520-6280-11ee-ba61-ad454e9d2411_2023-12-11_01-43-52",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles/level/backups/d5a16520-6280-11ee-ba61-ad454e9d2411_2023-12-11_01-44-44",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles/level/backups/d5a16520-6280-11ee-ba61-ad454e9d2411_2023-12-11_01-45-00",},
   ],
   "isEcma": false,
   "LibraryEmitters": [],
