@@ -51,7 +51,9 @@ defs = {
 
 input = {
 	left: false,
+	left_pressed: false,
 	right: false,
+	right_pressed: false,
 	up: false,
 	down: false,
 	jump: false,
@@ -76,6 +78,7 @@ anim = new AnimController()
 .add("swim", new AnimLevel([13, 14], 1 / 60))
 .add("swimming", new AnimLevel([15, 16], 1 / 60))
 .add("swimbullet", new AnimLevel([18]))
+.add("ledge", new AnimLevel([20]))
 
 .meta_default({
 	x: -2, y: -16,
@@ -112,6 +115,9 @@ anim = new AnimController()
 })
 .meta_items([18, 19], {
 	x: 0, y: -16
+})
+.meta_items([20], {
+	x: -4, y: -17
 })
 
 
@@ -177,6 +183,8 @@ swim_dir = 0;
 swim_spd = 0;
 swim_bullet_check = false;
 swim_bullet = false;
+
+ledge_keybuffer = 0;
 
 anim_dive_timer = 0;
 anim_jab_timer = 0;
@@ -352,6 +360,8 @@ jump = function(){
 	scale_x = 0.8;
 	scale_y = 1.2;
 	
+	ledge_keybuffer = dir
+	
 	event.call("jump")
 	
 	state.change(state_free);
@@ -473,6 +483,8 @@ walljump = function(_dir){
 	
 	gravity_hold = 9;
 	
+	ledge_keybuffer = dir
+	
 	event.call("jump")
 	
 	state.change(state_free);
@@ -489,7 +501,9 @@ state_base = state.add()
 .set("step", function(){
 	
 	input.left = keyboard_check(vk_left);
+	input.left_pressed = keyboard_check_pressed(vk_left);
 	input.right = keyboard_check(vk_right);
+	input.right_pressed = keyboard_check_pressed(vk_right);
 	input.up = keyboard_check(vk_up);
 	input.down = keyboard_check(vk_down);
 
@@ -818,6 +832,22 @@ state_free = state_base.add()
 	
 	if place_meeting(x, y, obj_water) {
 		state.change(state_swim);
+		return;
+	}
+	
+	var _kh_p = input.right_pressed - input.left_pressed
+	
+	if y_vel <= -1 && _kh_p != 0 {
+		ledge_keybuffer = _kh_p
+	}
+	
+	if y_vel > -1 && !actor_collision(x, y + 1) && actor_collision(x + _kh, y) && (_kh_p == dir || ledge_keybuffer == dir || (dash_grace > 0 && _kh == dir)) {
+		ledge_keybuffer = 0;
+		state.change(state_ledge)
+		return;
+	}
+	if y_vel > -1 {
+		ledge_keybuffer = 0;
 	}
 	
 })
@@ -874,6 +904,49 @@ state_throw = state_base.add()
 	grace_target = noone;
 	
 	state.change(state_free)
+})
+
+state_ledge = state_base.add()
+.set("step", function(){
+	
+	var _kh = input.right - input.left;
+	var _kv = input.down - input.up;
+	
+	x_vel = dir;
+	
+	y_vel = 0;
+	if !actor_collision(x + dir, y - 22) {
+		y_vel = 1
+	} else {
+		if !actor_collision(x + dir, y - 20) {
+			y_vel = -1
+		}
+	}
+	
+	dash_left = defs.dash_total
+	
+	if buffer > 0 {
+		walljump(dir);
+		return;
+	}
+	
+	
+	if !actor_collision(x + dir, y) {
+		state.change(state_free);
+		return;
+	}
+	
+	if actor_collision(x, y + 1) {
+		state.change(state_free);
+		return;
+	}
+	
+	if _kh != dir {
+		grace = defs.grace
+		state.change(state_free);
+		return;
+	}
+	
 })
 
 state_dashset = state_base.add()
@@ -966,10 +1039,12 @@ state_dash = state_base.add()
 		grace = 0;
 		gravity_hold_peak = 8
 		
-		if dash_dir_y == 0
+		if dash_dir_y == 0 {
 			x_vel = clamp(x_vel * 0.8, -4, 4);
-		else
+			y_vel = -0.25;
+		} else {
 			x_vel *= 0.9;
+		}
 		x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 		
 		state.change(state_free);

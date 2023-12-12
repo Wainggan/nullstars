@@ -75,7 +75,7 @@ var _u_s_z = shader_get_uniform(shd_light_shadow, "u_z")
 var _vb = lights_vb;
 
 gpu_set_ztestenable(true);
-gpu_set_zwriteenable(true);
+//gpu_set_zwriteenable(true);
 
 matrix_set(matrix_world, matrix_build(-_cam_x, -_cam_y, 0, 0, 0, 0, 1, 1, 1))
 
@@ -123,7 +123,7 @@ with obj_light {
 matrix_set(matrix_world, matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1))
 
 gpu_set_ztestenable(false);
-gpu_set_zwriteenable(false);
+//gpu_set_zwriteenable(true);
 
 shader_reset();
 

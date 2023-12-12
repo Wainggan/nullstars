@@ -32,6 +32,11 @@ if state.is(state_swim) {
 	}
 	
 }
+else if state.is(state_ledge) {
+	
+	anim.set("ledge")
+	
+}
 else if state.is(state_dash) || anim_dive_timer || anim_jab_timer {
 	
 	if anim_jab_timer anim.set("jab")
