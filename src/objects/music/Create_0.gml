@@ -1,5 +1,5 @@
 
-#macro MUSIC_PLAY true
+#macro MUSIC_PLAY false
 
 bgm = -1;
 bgm_asset = -1;

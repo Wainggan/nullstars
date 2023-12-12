@@ -7,7 +7,7 @@ var _pos_x = _cam.x + 20,
 //draw_set_halign(fa_middle);
 draw_set_font(ft_timer);
 
-draw_text_ext_transformed(_pos_x, _pos_y, $"{name}", -1, -1, 1, 1, 0);
+//draw_text_ext_transformed(_pos_x, _pos_y, $"{name}", -1, -1, 1, 1, 0);
 
 //draw_set_halign(fa_left);
 

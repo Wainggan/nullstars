@@ -1020,13 +1020,13 @@ state_swim = state_base.add()
 		} else {
 			swim_spd = approach(swim_spd, 5, swim_spd > 5 ? 0.02 : 0.8)
 		}
-		_dir_accel = 1 - clamp(swim_spd / 5, 0, 0.70)
+		_dir_accel = 360 - round(360 * clamp(swim_spd / 5, 0, 0.70))
 	} else {
 		swim_spd = approach(swim_spd, max(swim_spd, 8), 1)
-		_dir_accel = 0.03
+		_dir_accel = 4
 	}
 	
-	swim_dir -= round(_dir_diff * _dir_accel);
+	swim_dir -= round(sign(_dir_diff) * _dir_accel);
 	
 	x_vel = lengthdir_x(swim_spd, swim_dir) + _push_x
 	y_vel = lengthdir_y(swim_spd, swim_dir) + _push_y

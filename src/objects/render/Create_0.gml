@@ -54,6 +54,8 @@ setup_lights = function(){
 		
 		var _vb = vertex_create_buffer();
 		
+		var _count = 0;
+		
 		vertex_begin(_vb, lights_vf);
 		
 		for (var _x = 0; _x < tilemap_get_width(_tiles); _x++) {
@@ -63,6 +65,12 @@ setup_lights = function(){
 				
 				var _cx = _x_off + _x * TILESIZE;
 				var _cy = _y_off + _y * TILESIZE;
+				var _h = TILESIZE;
+				
+				while _y < tilemap_get_height(_tiles) && tilemap_get(_tiles, _x, _y + 1) != 0 {
+					_h += TILESIZE;
+					_y++;
+				}
 				
 				_Quad(
 					_vb, 
@@ -73,10 +81,14 @@ setup_lights = function(){
 					_cx + TILESIZE, _cy, _cx, _cy + TILESIZE
 				);
 				
+				_count++;
+				
 			}
 		}
 		
 		vertex_end(_vb);
+		
+		show_debug_message($"{_count} shadow tiles")
 		
 		level.levels[i].vb = _vb;
 	}
