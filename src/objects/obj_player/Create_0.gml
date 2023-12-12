@@ -1163,7 +1163,7 @@ state.change(state_free);
 
 
 riding = function(_solid){
-	return place_meeting(x, y + 1, _solid)
+	return place_meeting(x, y + 1, _solid) || (state.is(state_ledge) && place_meeting(x + dir, y, _solid))
 }
 
 cam = function(){
