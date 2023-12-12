@@ -423,6 +423,8 @@ jumpdash = function(){
 	scale_x = 0.9;
 	scale_y = 1.1;
 	
+	ledge_keybuffer = dir
+	
 	event.call("jump")
 	event.call("jumpdash")
 	
@@ -841,7 +843,7 @@ state_free = state_base.add()
 		ledge_keybuffer = _kh_p
 	}
 	
-	if y_vel > -1 && !actor_collision(x, y + 1) && actor_collision(x + _kh, y) && (_kh_p == dir || ledge_keybuffer == dir || (dash_grace > 0 && _kh == dir)) {
+	if y_vel > -1 && !actor_collision(x, y + 1) && actor_collision(x + _kh, y) && (_kh_p == dir || ledge_keybuffer == dir || (dash_grace > 0 && dash_dir_y == 0 && _kh == dir)) {
 		ledge_keybuffer = 0;
 		state.change(state_ledge)
 		return;
