@@ -561,11 +561,17 @@ state_base = state.add()
 	}
 	
 	actor_move_y(y_vel, function(){
-		if y_vel > 1.5 {
-			scale_x = 1.2;
-			scale_y = 0.8;
+		if !state.is(state_swim) {
+			if y_vel > 1.5 {
+				scale_x = 1.2;
+				scale_y = 0.8;
+			}
+			y_vel = 0;
+		} else {
+			if swim_bullet {
+				swim_dir = point_direction(0, 0, x_vel, -y_vel);
+			}
 		}
-		y_vel = 0;
 	});
 	
 	
@@ -582,7 +588,13 @@ state_base = state.add()
 	}
 
 	actor_move_x(x_vel, function(){
-		x_vel = 0;
+		if !state.is(state_swim) {
+			x_vel = 0;
+		} else {
+			if swim_bullet {
+				swim_dir = point_direction(0, 0, -x_vel, y_vel);
+			}
+		}
 	});
 	
 	
@@ -969,6 +981,7 @@ state_swim = state_base.add()
 			game_set_pause(3)
 			dash_grace = 0;
 			swim_bullet = true;
+			swim_spd = max(swim_spd + 1, 8);
 		
 		} else {
 			if swim_spd > 5 {
@@ -978,6 +991,9 @@ state_swim = state_base.add()
 	} else {
 		swim_bullet_check = false;
 	}
+	
+	show_debug_message(x_vel)
+	show_debug_message(swim_spd)
 })
 .set("step", function(){
 	
@@ -996,6 +1012,7 @@ state_swim = state_base.add()
 	
 	var _spd_target_normal = point_distance(0, 0, _kh, _kv);
 	var _dir_accel;
+	
 	
 	if !swim_bullet {
 		if _spd_target_normal == 0 {
@@ -1028,7 +1045,7 @@ state_swim = state_base.add()
 		y_vel += -1;
 		
 		if swim_bullet {
-			x_vel *= 1.2;
+			x_vel *= 1;
 			y_vel *= 1.2;
 			swim_bullet = false;
 		}
@@ -1051,7 +1068,7 @@ state_swimbulletset = state_base.add()
 	
 	buffer_dash = 0;
 	
-	swim_spd = max(swim_spd, 8);
+	swim_spd = max(swim_spd + 1 * +!swim_bullet, 8);
 	
 	swim_dir = point_direction(0, 0, _kh, _kv);
 	if _kh == 0 && _kv == 0 swim_dir = point_direction(0, 0, dir, 0);

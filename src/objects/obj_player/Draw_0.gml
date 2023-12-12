@@ -10,7 +10,23 @@ anim_dive_timer -= 1;
 anim_jab_timer -= 1;
 anim_longjump_timer -= 1;
 
-if state.is(state_dash) || anim_dive_timer || anim_jab_timer {
+if state.is(state_swim) {
+	
+	if swim_bullet {
+		anim.set("swimbullet")
+		_angle = swim_dir
+		_dir = 1
+		_pos_x += -lengthdir_x(16, _angle + 90);
+		_pos_y += -16 - lengthdir_y(16, _angle + 90);
+	} else {
+		anim.extract("swim").speed = 1 / round(max(60 - abs(swim_spd) * 6, 8))
+		anim.set("swim")
+		_pos_y += wave(-2, 3, 8)
+		_tpos_y = _pos_y
+	}
+	
+}
+else if state.is(state_dash) || anim_dive_timer || anim_jab_timer {
 	
 	if anim_jab_timer anim.set("jab")
 	else anim.set("dive")
@@ -33,22 +49,6 @@ else if state.is(state_free) {
 				anim.set("fall")
 		}
 	}
-}
-else if state.is(state_swim) {
-	
-	if swim_bullet {
-		anim.set("swimbullet")
-		_angle = swim_dir
-		_dir = 1
-		_pos_x += -lengthdir_x(16, _angle + 90);
-		_pos_y += -16 - lengthdir_y(16, _angle + 90);
-	} else {
-		anim.extract("swim").speed = 1 / round(max(60 - abs(swim_spd) * 6, 8))
-		anim.set("swim")
-		_pos_y += wave(-2, 3, 8)
-		_tpos_y = _pos_y
-	}
-	
 }
 
 
@@ -86,7 +86,7 @@ tail.update(,function(_p, i, _points){
 		_p.weight = 1;
 		
 		var _d = sin(current_time / 1000 - i * 0.6)
-		_p.x_move = -dir * (_scale_inv * 0.4 + 0.3)
+		_p.x_move = -dir * (_scale_inv * 0.7 + 0.2)
 		_p.y_move = _d * (_scale_inv * 0.2 + 0.1) + 0.3 * _scale_inv
 		
 	}
@@ -115,5 +115,7 @@ draw_sprite_ext(
 if _meta.front
 	draw_tail(_color, _mult);
 
+
+draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, true)
 
 
