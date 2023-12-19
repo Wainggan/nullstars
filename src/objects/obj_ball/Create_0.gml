@@ -55,5 +55,10 @@ state_held = state_base.add()
 	
 })
 
+reset = function(){
+	x = xstart;
+	y = ystart;
+}
+
 
 state.change(state_free)

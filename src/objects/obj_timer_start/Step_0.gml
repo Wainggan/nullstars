@@ -14,6 +14,6 @@ if !game_timer_running() && place_meeting(x, y, obj_player) {
 		width: sprite_width,
 		height: sprite_height,
 		pad: 16,
-		spd: 0.08
+		spd: 0.04
 	})
 }

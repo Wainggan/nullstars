@@ -20,9 +20,8 @@ function mod_euclidean(_value, _by) {
 	return _value - abs(_by) * floor(_value / abs(_by))
 }
 
-function map(_val, _start1, _end1, _start2, _end2) {
-	var _prop = (_val - _start1)/(_end1-_start1);
-	return _prop*(_end2-_start2) + _start2;
+function map(_value, _start_low, _start_high, _target_low, _target_high) {
+    return (((_value - _start_low) / (_start_high - _start_low)) * (_target_high - _target_low)) + _target_low;
 }
 
 function wave(_from, _to, _duration, _offset = 0, _time = current_time * 0.001) {
@@ -30,9 +29,14 @@ function wave(_from, _to, _duration, _offset = 0, _time = current_time * 0.001) 
 	return _to + _a4 + sin(((_time + _duration) / _duration + _offset) * (pi*2)) * _a4;
 }
 
-function wrap(_value,_min,_max) {
-	var _mod = ( _value - _min ) mod ( _max - _min );
-	if ( _mod < 0 ) return _mod + _max; else return _mod + _min;
+
+function wrap(_value, _min, _max) {
+	_value = floor(_value);
+	var _low = floor(min(_min, _max));
+	var _high = floor(max(_min, _max));
+	var _range = _high - _low + 1;
+
+	return (((floor(_value) - _low) % _range) + _range) % _range + _low;
 }
 
 
@@ -82,8 +86,5 @@ function instance_place_array(_x, _y, _obj, _ordered) {
 }
 
 function multiply_color(_c1, _c2) {
-	var _c_r = (color_get_red(_c1) / 255) * (color_get_red(_c2) / 255)
-	var _c_g = (color_get_green(_c1) / 255) * (color_get_green(_c2) / 255)
-	var _c_b = (color_get_blue(_c1) / 255) * (color_get_blue(_c2) / 255)
-	return make_color_rgb(_c_r * 255, _c_g * 255, _c_b * 255);
+	return _c1 * _c2 / #ffffff;
 }

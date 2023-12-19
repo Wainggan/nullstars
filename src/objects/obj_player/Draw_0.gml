@@ -43,22 +43,25 @@ else if state.is(state_dash) || anim_dive_timer || anim_jab_timer {
 	else anim.set("dive")
 }
 else if state.is(state_free) {
-	if actor_collision(x, y + 1) {
+	if crouched && !anim_longjump_timer {
+		anim.set("crouch")
+	}
+	else if actor_collision(x, y + 1) {
 		if abs(x_vel) < 0.8
 			anim.set("idle")
 		else {
 			anim.extract("walk").speed = 1 / round(max(12 - abs(x_vel) * 2, 6))
 			anim.set("walk")
 		}
-	} else {
-		if anim_longjump_timer {
-			anim.set("longjump")
-		} else {
-			if y_vel < 0
-				anim.set("jump")
-			else
-				anim.set("fall")
-		}
+	}
+	else if anim_longjump_timer {
+		anim.set("longjump")
+	}
+	else {
+		if y_vel < 0
+			anim.set("jump")
+		else
+			anim.set("fall")
 	}
 }
 

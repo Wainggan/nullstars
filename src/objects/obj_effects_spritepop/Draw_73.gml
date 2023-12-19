@@ -1,6 +1,9 @@
 
+var _size = terp(1, 2, Tween.MidSlow, anim);
+var _alpha = herp(1, 0, anim);
+
 draw_sprite_ext(
 	sprite, index, 
-	x, y, lerp(1, 2, anim), lerp(1, 2, anim),
-	0, c_white, herp(1, 0, anim)
+	x, y, _size, _size,
+	0, c_white, _alpha
 );

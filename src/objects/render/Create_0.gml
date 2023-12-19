@@ -25,8 +25,6 @@ particles_ambient = part_system_create_layer("Instances", true)
 part_system_automatic_update(particles_ambient, false)
 part_system_automatic_draw(particles_ambient, false)
 
-mode = 0;
-
 vertex_format_begin();
 vertex_format_add_position_3d();
 lights_vf = vertex_format_end();

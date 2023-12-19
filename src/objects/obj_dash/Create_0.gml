@@ -29,6 +29,9 @@ state_recover = state_base.add()
 .set("enter", function(){
 	recover_timer = defs.recover_time;
 	anim_hit = 1;
+	
+	activate()
+	send()
 })
 .set("step", function(){
 	recover_timer -= 1;

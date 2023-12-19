@@ -1,5 +1,5 @@
 
-var _a = lerp(0, 1, anim) * pad;
+var _a = terp(0, 1, Tween.Circ, anim) * pad;
 
 draw_set_alpha(herp(1, 0, anim));
 draw_set_color(color)

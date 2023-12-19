@@ -7,7 +7,7 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 var _pos_x = _cam_x + _cam_w / 2,
 	_pos_y = _cam_y + 40;
 
-_pos_y -= herp(1, 0, anim) * 80;
+_pos_y -= terp(1, 0, Tween.Quart, anim) * 80;
 
 draw_set_halign(fa_middle);
 draw_set_font(ft_timer);

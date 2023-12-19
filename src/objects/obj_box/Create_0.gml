@@ -11,16 +11,16 @@ frame = function(){
 	
 	y_vel += _y_accel;
 
-	y_vel = min(y_vel, global.defs.terminal_vel)
-
-	if actor_collision(x, y + 1) {
-		x_vel = approach(x_vel, 0, 0.8)
-	}
-
+	y_vel = min(y_vel, global.defs.terminal_vel);
+	
 	actor_move_x(x_vel, function(){
 		if abs(x_vel) > 0.25 x_vel = -x_vel * 0.5;
 		else x_vel = 0;
 	});
+	
+	if actor_collision(x, y + 1) {
+		x_vel = approach(x_vel, 0, 0.8)
+	}
 
 	actor_move_y(y_vel, function(){
 		if abs(y_vel) > 2 {
@@ -56,6 +56,11 @@ state_held = state_base.add()
 .set("step", function(){
 	
 })
+
+reset = function(){
+	x = xstart;
+	y = ystart;
+}
 
 
 state.change(state_free)

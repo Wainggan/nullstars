@@ -49,24 +49,6 @@ defs = {
 	
 };
 
-input = {
-	left: false,
-	left_pressed: false,
-	right: false,
-	right_pressed: false,
-	up: false,
-	down: false,
-	jump: false,
-	jump_pressed: false,
-	jump_released: false,
-	dash: false,
-	dash_pressed: false,
-	dash_released: false,
-	hold: false,
-	hold_pressed: false,
-	hold_released: false,
-};
-
 anim = new AnimController()
 .add("idle", new AnimLevel([0]))
 .add("walk", new AnimLevel([3, 1, 4, 2], 12))
@@ -79,6 +61,7 @@ anim = new AnimController()
 .add("swimming", new AnimLevel([15, 16], 1 / 60))
 .add("swimbullet", new AnimLevel([18]))
 .add("ledge", new AnimLevel([20]))
+.add("crouch", new AnimLevel([22]))
 
 .meta_default({
 	x: -2, y: -16,
@@ -118,6 +101,9 @@ anim = new AnimController()
 })
 .meta_items([20], {
 	x: -4, y: -17
+})
+.meta_items([22], {
+	x: -5, y: -6
 })
 
 
@@ -159,6 +145,8 @@ gravity_hold = 0;
 key_hold = 0;
 key_hold_timer = 0;
 
+crouched = false;
+
 momentum_grace = 0;
 momentum_grace_amount = 0;
 
@@ -192,7 +180,6 @@ anim_longjump_timer = 0;
 
 cam_ground_x = x;
 cam_ground_y = y;
-
 
 depth -= 10;
 mask_index = spr_debug_player;
@@ -230,7 +217,6 @@ light = instance_create_layer(x, y, "Lights", obj_light, {
 	size: 60,
 	intensity: 0.5
 });
-
 
 checkWall = function(_dir){
 	return actor_collision(x + _dir * defs.wall_distance, y);
@@ -329,7 +315,7 @@ jump = function(){
 	buffer = 0
 	if grace && grace_target {
 		if grace_target.object_index == obj_box {
-			grace_target.x_vel += sign(x_vel)
+			grace_target.x_vel = 0
 			grace_target.y_vel = 4;
 		}
 		if grace_target.object_index == obj_ball {
@@ -356,6 +342,7 @@ jump = function(){
 	}
 	x_vel += x_lift;
 	y_vel += y_lift;
+	lifter = noone;
 	
 	scale_x = 0.8;
 	scale_y = 1.2;
@@ -370,8 +357,8 @@ jump = function(){
 
 jumpdash = function(){
 	
-	var _kh = input.right - input.left;
-	var _kv = input.down - input.up;
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	if grace && grace_target {
 		if grace_target.object_index == obj_box {
@@ -509,7 +496,7 @@ bounce = function(_dir = 0){
 	
 		dash_grace = 0;
 	
-		if input.jump
+		if INPUT.check("jump")
 			y_vel = -8;
 		else
 			y_vel = -5
@@ -558,6 +545,14 @@ endDash = function(){
 	
 }
 
+canUncrouch = function(){
+	var _last = mask_index;
+	mask_index = spr_debug_player;
+	var _check = actor_collision(x, y)
+	mask_index = _last
+	return !_check;
+}
+
 #endregion
 
 // state machine
@@ -567,36 +562,11 @@ state = new State();
 state_base = state.add()
 .set("step", function(){
 	
-	input.left = keyboard_check(vk_left);
-	input.left_pressed = keyboard_check_pressed(vk_left);
-	input.right = keyboard_check(vk_right);
-	input.right_pressed = keyboard_check_pressed(vk_right);
-	input.up = keyboard_check(vk_up);
-	input.down = keyboard_check(vk_down);
-
-	input.jump = keyboard_check(ord("X"));
-	input.jump_pressed = keyboard_check_pressed(ord("X"));
-	input.jump_released = keyboard_check_released(ord("X"));
+	if INPUT.check_pressed("jump") buffer = defs.buffer + 1;
+	if INPUT.check_pressed("dash") buffer_dash = defs.buffer + 1;
 	
-	input.dash = keyboard_check(ord("Z"));
-	input.dash_pressed = keyboard_check_pressed(ord("Z"));
-	input.dash_released = keyboard_check_released(ord("Z"));
-	
-	input.hold = keyboard_check(vk_shift);
-	input.hold_pressed = keyboard_check_pressed(vk_shift);
-	input.hold_released = keyboard_check_released(vk_shift);
-	
-	if input.jump_pressed buffer = defs.buffer + 1;
-	if input.dash_pressed buffer_dash = defs.buffer + 1;
-	
-	if place_meeting(x, y, obj_flag_stop) {
-		// lazy
-		var _names = struct_get_names(input);
-		for (var i = 0; i < array_length(_names); i++) {
-			input[$ _names[i]] = false;
-		}
-		buffer = 0;
-		buffer_dash = 0;
+	if place_meeting(x, y, obj_flag_stop) && !state.is(state_stuck) {
+		state.change(state_stuck)
 	}
 	
 	if game_paused() {
@@ -624,6 +594,12 @@ state_base = state.add()
 	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
 	
 	state.child();
+	
+	if crouched {
+		mask_index = spr_debug_player_crouch;
+	} else {
+		mask_index = spr_debug_player;
+	}
 	
 	var _d = 0, _amount = 0;
 	
@@ -715,7 +691,7 @@ state_base = state.add()
 		}
 		
 		var _inst = collision_circle(x, y, 32, [obj_box, obj_ball], false, true);
-		if _inst && !holding && input.hold && !hold_cooldown {
+		if _inst && !holding && INPUT.check("grab") && !hold_cooldown {
 			game_set_pause(5);
 			hold_begin(_inst)
 		}
@@ -759,16 +735,27 @@ state_base = state.add()
 	
 })
 
+state_stuck = state_base.add()
+.set("step", function(){
+	x_vel = approach(x_vel, 0, 0.5)
+	y_vel += defs.gravity;
+	y_vel = min(y_vel, defs.terminal_vel);
+	if !place_meeting(x, y, obj_flag_stop) {
+		state.change(state_free);
+	}
+})
+
 state_free = state_base.add()
 .set("step", function(){
 
-	var _kh = input.right - input.left;
-	var _kv = input.down - input.up;
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	// x direction logic
 	
 	var _kh_move = _kh;
 	if key_hold_timer _kh_move = key_hold;
+	if actor_collision(x, y + 1) && crouched _kh_move = 0;
 	
 	var _x_accel = 0;
 	if abs(x_vel) > defs.move_speed && _kh_move == sign(x_vel) {
@@ -779,6 +766,7 @@ state_free = state_base.add()
 		}
 	} else {
 		_x_accel = defs.move_accel;
+		if crouched _x_accel = 0.2
 	}
 	momentum_grace -= 1;
 	if momentum_grace && _kh_move != sign(x_vel) {
@@ -793,7 +781,7 @@ state_free = state_base.add()
 	
 	var _y_accel = 0;
 
-	if input.jump {
+	if INPUT.check("jump") {
 		if abs(y_vel) < defs.gravity_peak_thresh {
 			// peak jump
 			_y_accel = defs.gravity_peak;
@@ -813,7 +801,7 @@ state_free = state_base.add()
 		_y_accel = defs.gravity_term;
 	}
 
-	if input.jump_released && y_vel < 0 {
+	if INPUT.check_released("jump") && y_vel < 0 {
 		// release jump damping
 		y_vel *= defs.gravity_damp;
 	}
@@ -843,6 +831,29 @@ state_free = state_base.add()
 			dash_left = defs.dash_total;
 		
 		event.call("ground")
+	}
+	
+	if dash_grace <= 0 && actor_collision(x, y + 1) {
+		if INPUT.check("down") {
+			if INPUT.check_pressed("down") {
+				scale_x = 1.2;
+				scale_y = 0.8;
+			}
+			crouched = true;
+		} else {
+			if INPUT.check_released("down") {
+				scale_x = 0.8;
+				scale_y = 1.2;
+			}
+			crouched = false;
+		}
+	}
+	if crouched && y_vel >= 0 {
+		if !INPUT.check("down") && canUncrouch() {
+			crouched = false;
+			scale_x = 0.8;
+			scale_y = 1.2;
+		}
 	}
 	
 	
@@ -891,7 +902,7 @@ state_free = state_base.add()
 		return;
 	}
 	
-	if holding && !input.hold {
+	if holding && !INPUT.check("grab") {
 		game_set_pause(5);
 		state.change(state_throw)
 		return;
@@ -902,13 +913,13 @@ state_free = state_base.add()
 		return;
 	}
 	
-	var _kh_p = input.right_pressed - input.left_pressed
+	var _kh_p = INPUT.check_pressed("right") - INPUT.check_pressed("left")
 	
 	if y_vel <= -1 && _kh_p != 0 {
 		ledge_keybuffer = _kh_p
 	}
 	
-	if y_vel > -1 && !actor_collision(x, y + 1) && actor_collision(x + _kh, y) && (_kh_p == dir || ledge_keybuffer == dir || (dash_grace > 0 && dash_dir_y == 0 && _kh == dir)) {
+	if y_vel > -1 && !actor_collision(x, y + 1) && actor_collision(x + _kh, y) && (_kh_p == dir || ledge_keybuffer == dir || (dash_grace > 0 && dash_dir_y == 0 && _kh == dir)) && !crouched {
 		ledge_keybuffer = 0;
 		state.change(state_ledge)
 		return;
@@ -922,8 +933,8 @@ state_free = state_base.add()
 state_throw = state_base.add()
 .set("enter", function(){
 	
-	var _kh = input.right - input.left;
-	var _kv = input.down - input.up;
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	key_hold = _kh;
 	key_hold_timer = 6;
@@ -933,8 +944,8 @@ state_throw = state_base.add()
 })
 .set("step", function(){
 	
-	var _kh = input.right - input.left;
-	var _kv = input.down - input.up;
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	_kh = hold_throw_x;
 	_kv = hold_throw_y;
@@ -976,8 +987,8 @@ state_throw = state_base.add()
 state_ledge = state_base.add()
 .set("step", function(){
 	
-	var _kh = input.right - input.left;
-	var _kv = input.down - input.up;
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	x_vel = dir;
 	
@@ -1020,8 +1031,8 @@ state_dashset = state_base.add()
 .set("step", function(){
 	buffer_dash = 0;
 	
-	var _kh = input.right - input.left;
-	var _kv = input.down - input.up;
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	if _kh == 0
 		dash_dir_x = dir;
@@ -1069,11 +1080,14 @@ state_dash = state_base.add()
 .set("leave", function(){
 	dash_grace = 8;
 	dash_recover = 1;
+	if canUncrouch() {
+		crouched = false
+	}
 })
 .set("step", function(){
 	
-	var _kh = input.right - input.left;
-	var _kv = input.down - input.up;
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	if actor_collision(x, y + 1) {
 		grace = defs.grace;
@@ -1138,22 +1152,32 @@ state_swim = state_base.add()
 	var _push_x = place_meeting(x + 16, y, obj_water) - place_meeting(x - 16, y, obj_water);
 	var _push_y = place_meeting(x, y + 24, obj_water) - place_meeting(x, y - 24, obj_water);
 	
-	var _kh = input.right - input.left;
-	var _kv = input.down - input.up;
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
-	var _dir_target = point_direction(0, 0, _kh, _kv);
+	var _kh_r = INPUT.check_raw("horizontal");
+	var _kv_r = INPUT.check_raw("vertical");
+	show_debug_message($"{_kh_r} {_kv_r}")
+	
+	var _k_dir = point_direction(0, 0, _kh_r, _kv_r)
+	
+	var _dir_target = _k_dir;
 	if _kh == 0 && _kv == 0 _dir_target = swim_dir;
 	var _dir_diff = angle_difference(swim_dir, _dir_target)
 	
 	if _kh != 0 dir = _kh
 	
 	
-	var _spd_target_normal = point_distance(0, 0, _kh, _kv);
+	var _spd_target_normal = point_distance(0, 0, _kh_r, _kv_r);
 	var _dir_accel;
+	
+	if canUncrouch() {
+		crouched = false
+	}
 	
 	
 	if !swim_bullet {
-		if _spd_target_normal == 0 {
+		if _spd_target_normal < 0.1 {
 			swim_spd = approach(swim_spd, 0, 0.4)
 		} else {
 			swim_spd = approach(swim_spd, 5, swim_spd > 5 ? 0.02 : 0.3)
@@ -1201,8 +1225,8 @@ state_swim = state_base.add()
 
 state_swimbulletset = state_base.add()
 .set("step", function(){
-	var _kh = input.right - input.left;
-	var _kv = input.down - input.up;
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	buffer_dash = 0;
 	
@@ -1219,6 +1243,9 @@ state_swimbulletset = state_base.add()
 
 state.change(state_free);
 
+squish = function(){
+	game_player_kill()
+}
 
 riding = function(_solid){
 	return place_meeting(x, y + 1, _solid) || (state.is(state_ledge) && place_meeting(x + dir, y, _solid))

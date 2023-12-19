@@ -32,7 +32,7 @@ if _cond {
 			width: sprite_width,
 			height: sprite_height,
 			pad: 16,
-			spd: 0.08
+			spd: 0.04
 		})
 	}
 	

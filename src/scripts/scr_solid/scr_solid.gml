@@ -75,14 +75,14 @@ function solid_move(_xv, _yv) {
 	
 }
 
-function solid_sim(_xv, _yv) {
+function solid_sim(_xv, _yv, _target = obj_Actor) {
 
 	var _riding = [];
-	with obj_Actor {
+	with _target {
 		if riding(other) array_push(_riding, self);
 	}
 	
-	with obj_Actor {
+	with _target {
 		if array_get_index(_riding, self) != -1 {
 			actor_move_x(_xv);
 			actor_move_y(_yv);
