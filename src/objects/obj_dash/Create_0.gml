@@ -21,7 +21,7 @@ state_base = state.add()
 	dir += 1;
 	dir += recover_timer / defs.recover_time * defs.spin_speed
 	
-	anim_hit = approach(anim_hit, 0, 0.2)
+	anim_hit = approach(anim_hit, 0, 0.1)
 })
 
 state_active = state_base.add()
