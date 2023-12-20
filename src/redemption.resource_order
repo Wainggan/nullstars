@@ -43,6 +43,7 @@
     {"name":"spr_speed_base","order":29,"path":"sprites/spr_speed_base/spr_speed_base.yy",},
     {"name":"scr_globals","order":7,"path":"scripts/scr_globals/scr_globals.yy",},
     {"name":"spr_tiles_debug","order":1,"path":"sprites/spr_tiles_debug/spr_tiles_debug.yy",},
+    {"name":"spr_eye_chain","order":41,"path":"sprites/spr_eye_chain/spr_eye_chain.yy",},
     {"name":"obj_speed_base","order":17,"path":"objects/obj_speed_base/obj_speed_base.yy",},
     {"name":"spr_sign","order":39,"path":"sprites/spr_sign/spr_sign.yy",},
     {"name":"spr_debug_spiketiles","order":6,"path":"sprites/spr_debug_spiketiles/spr_debug_spiketiles.yy",},

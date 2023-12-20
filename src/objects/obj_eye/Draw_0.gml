@@ -1,5 +1,7 @@
 
+if state.is(state_idle)
+	draw_rectangle(scan.x1 + 4, scan.y1 + 4, scan.x2 - 4, scan.y2 - 4, true)
+
 draw_self()
 
-draw_rectangle(scan.x1, scan.y1, scan.x2, scan.y2, true)
-draw_rectangle(chain_x, chain_y, chain_x + sprite_width, chain_y + sprite_height, true)
+

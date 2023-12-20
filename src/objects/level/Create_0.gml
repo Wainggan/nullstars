@@ -231,10 +231,18 @@ for (var i = 0; i < array_length(file.levels); i++) {
 						
 					}
 					
+					var _pos_x = _e.__worldX,
+						_pos_y = _e.__worldY;
+					
+					if array_contains(_e.__tags, "CENTERED") {
+						_pos_x += 8;
+						_pos_y += 8;
+					}
+					
 					var _object_index = asset_get_index(_e.__identifier);
 					
 					var _inst = instance_create_layer(
-						_e.__worldX, _e.__worldY, 
+						_pos_x, _pos_y, 
 						_layer.__identifier,
 						_object_index,
 						_field

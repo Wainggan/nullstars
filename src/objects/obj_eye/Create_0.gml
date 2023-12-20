@@ -3,10 +3,12 @@ event_inherited()
 
 pet_wall = instance_create_layer(x, y, layer, obj_blank, {
 	image_xscale: sprite_width, image_yscale: sprite_height, visible: false
-})
+});
 pet_chain = instance_create_layer(x + 8, y + 8, layer, obj_blank, {
-	image_xscale: sprite_width / 2, image_yscale: sprite_height / 2, visible: true
-})
+	image_xscale: 0, image_yscale: 0,
+	sprite_index: spr_eye_chain,
+	image_speed: 0
+});
 //pet_spike = instance_create_layer(x, y, layer, obj_blank, {
 //	image_xscale: sprite_width, image_yscale: sprite_height, visible: true, collidable: false
 //})
@@ -103,12 +105,38 @@ state_attack = state.add()
 	pet_wall.collidable = true;
 	with pet_chain {
 		solid_move(_x_vel, _y_vel);
-		actor_stretch(
-			min(other.x, other.chain_x) + 8,
-			min(other.y, other.chain_y) + 8,
-			max(other.x + 32, other.chain_x + 32) - 8,
-			max(other.y + 32, other.chain_y + 32) - 8,
-		)
+		
+		var _x1 = min(other.x, other.chain_x) + 8,
+			_y1 = min(other.y, other.chain_y) + 8,
+			_x2 = max(other.x + 32, other.chain_x + 32) - 8,
+			_y2 = max(other.y + 32, other.chain_y + 32) - 8;
+		
+		switch other.attack_dir % 360 {
+			case 0:
+				x = _x2;
+				y = _y2;
+				image_angle = 180;
+				break;
+			case 90:
+				x = _x1 + 16;
+				y = _y1;
+				image_angle = 270;
+				break;
+			case 180:
+				x = _x1;
+				y = _y1;
+				image_angle = 0;
+				break;
+			case 270:
+				x = _x2 - 16;
+				y = _y2;
+				image_angle = 90;
+				break;
+		}
+		
+		var _dist = point_distance(_x1, _y1, _x2, _y2);
+		image_xscale = _dist / 32
+		image_yscale = 1;
 	}
 	
 	
@@ -149,12 +177,38 @@ state_retract = state.add()
 	pet_chain.collidable = true;
 	with pet_chain {
 		solid_move(_x_vel, _y_vel);
-		actor_stretch(
-			min(other.x, other.chain_x) + 8,
-			min(other.y, other.chain_y) + 8,
-			max(other.x + 32, other.chain_x + 32) - 8,
-			max(other.y + 32, other.chain_y + 32) - 8,
-		)
+		
+		var _x1 = min(other.x, other.chain_x) + 8,
+			_y1 = min(other.y, other.chain_y) + 8,
+			_x2 = max(other.x + 32, other.chain_x + 32) - 8,
+			_y2 = max(other.y + 32, other.chain_y + 32) - 8;
+		
+		switch other.attack_dir % 360 {
+			case 0:
+				x = _x2;
+				y = _y2;
+				image_angle = 180;
+				break;
+			case 90:
+				x = _x1 + 16;
+				y = _y1;
+				image_angle = 270;
+				break;
+			case 180:
+				x = _x1;
+				y = _y1;
+				image_angle = 0;
+				break;
+			case 270:
+				x = _x2 - 16;
+				y = _y2;
+				image_angle = 90;
+				break;
+		}
+		
+		var _dist = point_distance(_x1, _y1, _x2, _y2);
+		image_xscale = _dist / 32
+		image_yscale = 1;
 	}
 	
 	if _x_vel == 0 && _y_vel == 0 {

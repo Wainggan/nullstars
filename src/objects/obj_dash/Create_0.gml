@@ -1,4 +1,6 @@
 
+event_inherited()
+
 defs = {
 	recover_time: 100,
 	spin_speed: 12,

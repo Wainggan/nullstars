@@ -63,6 +63,7 @@
     {"id":{"name":"spr_speed_base","path":"sprites/spr_speed_base/spr_speed_base.yy",},},
     {"id":{"name":"scr_globals","path":"scripts/scr_globals/scr_globals.yy",},},
     {"id":{"name":"spr_tiles_debug","path":"sprites/spr_tiles_debug/spr_tiles_debug.yy",},},
+    {"id":{"name":"spr_eye_chain","path":"sprites/spr_eye_chain/spr_eye_chain.yy",},},
     {"id":{"name":"obj_speed_base","path":"objects/obj_speed_base/obj_speed_base.yy",},},
     {"id":{"name":"spr_sign","path":"sprites/spr_sign/spr_sign.yy",},},
     {"id":{"name":"spr_debug_spiketiles","path":"sprites/spr_debug_spiketiles/spr_debug_spiketiles.yy",},},
