@@ -31,7 +31,7 @@ function actor_stretch(_x1, _y1, _x2, _y2, _inst = self) {
 	with _inst {
 		x = _x1;
 		y = _y1;
-		image_xscale = abs(_x2 - _x1) / sprite_width;
-		image_yscale = abs(_y2 - _y1) / sprite_height;
+		image_xscale = abs(_x2 - _x1) / sprite_get_width(sprite_index);
+		image_yscale = abs(_y2 - _y1) / sprite_get_height(sprite_index);
 	}
 }
