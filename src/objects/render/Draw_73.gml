@@ -9,7 +9,7 @@ game_render_refresh()
 game_render_blendmode_set(shd_blend_fog)
 
 if !keyboard_check(vk_space)
-draw_sprite_tiled_ext(spr_atmosphere_overlay, 0, -_cam.x * 1.1 - (current_time / 100), -_cam.y * 1.1, 8, 8, c_white, 0.2);
+draw_sprite_tiled_ext(spr_atmosphere_overlay, 0, -_cam.x * 0.4 - (current_time / 100), -_cam.y * 0.4, 9, 9, c_white, 0.2);
 
 game_render_blendmode_reset()
 
