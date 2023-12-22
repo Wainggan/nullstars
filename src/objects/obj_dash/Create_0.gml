@@ -8,6 +8,7 @@ defs = {
 
 recover_timer = 0;
 dir = 0;
+dir_dir = 1;
 
 anim_hit = 0;
 
@@ -31,6 +32,7 @@ state_recover = state_base.add()
 .set("enter", function(){
 	recover_timer = defs.recover_time;
 	anim_hit = 1;
+	dir_dir = -dir_dir;
 	
 	activate()
 	send()

@@ -62,6 +62,7 @@ anim = new AnimController()
 .add("swimbullet", new AnimLevel([18]))
 .add("ledge", new AnimLevel([20]))
 .add("crouch", new AnimLevel([22]))
+.add("flip", new AnimLevel([24, 25], 1 / 14, 0))
 
 .meta_default({
 	x: -2, y: -16,
@@ -110,13 +111,22 @@ anim = new AnimController()
 event = new Event()
 .add("ground", function(){
 	anim_longjump_timer = 0;
+	anim_flip_timer = 0;
+})
+.add("ledge", function(){
+	anim_longjump_timer = 0;
+	anim_flip_timer = 0;
 })
 .add("jump", function(){
 	anim_dive_timer = 0;
 	anim_jab_timer = 0;
+	anim_flip_timer = 0;
 })
 .add("jumpdash", function(){
 	anim_longjump_timer = defs.anim_longjump_time;
+})
+.add("jumpbounce", function(){
+	anim_flip_timer = 30//defs.anim_longjump_time;
 })
 .add("dive", function(){
 	if y_vel > 0
@@ -159,6 +169,7 @@ dash_dir_y_vel = 0;
 dash_timer = 0;
 dash_grace = 0;
 dash_recover = 0;
+dash_kick_buffer = 0;
 
 dash_left = 0;
 
@@ -177,6 +188,7 @@ ledge_keybuffer = 0;
 anim_dive_timer = 0;
 anim_jab_timer = 0;
 anim_longjump_timer = 0;
+anim_flip_timer = 0;
 
 cam_ground_x = x;
 cam_ground_y = y;
@@ -350,6 +362,48 @@ jump = function(){
 	ledge_keybuffer = dir
 	
 	event.call("jump")
+	
+	state.change(state_free);
+	
+}
+
+jumpbounce = function(_dir){
+	
+	buffer = 0
+	grace = 0;
+	grace_target = noone;
+	gravity_hold = 0;
+	gravity_hold_peak = 0;
+	//actor_move_y(grace_y - y)
+	
+	if dash_recover < 0 {
+		dash_left = defs.dash_total;
+	}
+	
+	y_vel = min(-6.5, y_vel);
+	x_vel = -_dir * 2
+	
+	key_hold = -_dir;
+	key_hold_timer = 9;
+	
+	if x_lift == 0 && y_lift == 0 {
+		with instance_place(x + _dir * defs.wall_distance, y, obj_Solid) {
+			other.x_lift = x_lift;
+			other.y_lift = y_lift;
+		}
+	}
+	x_vel += x_lift;
+	y_vel += y_lift;
+	lifter = noone;
+	
+	scale_x = 0.8;
+	scale_y = 1.2;
+	
+	ledge_keybuffer = _dir
+	dir = -_dir;
+	
+	event.call("jump")
+	event.call("jumpbounce")
 	
 	state.change(state_free);
 	
@@ -581,6 +635,7 @@ state_base = state.add()
 	key_hold_timer -= 1;
 	dash_grace -= 1;
 	dash_recover -= 1;
+	dash_kick_buffer -= 1;
 	hold_cooldown -= 1;
 	
 	if !grace {
@@ -774,8 +829,8 @@ state_free = state_base.add()
 	}
 	
 	x_vel = approach(x_vel, _kh_move * defs.move_speed, _x_accel);
-	if _kh != 0
-		dir = _kh;
+	if _kh_move != 0
+		dir = _kh_move;
 	
 	// y direction logic
 	
@@ -859,7 +914,6 @@ state_free = state_base.add()
 	
 	// hell
 	if buffer > 0 {
-		
 		if grace > 0 {
 			if dash_grace > 0 {
 				jumpdash()
@@ -874,8 +928,12 @@ state_free = state_base.add()
 			}
 			if dash_grace > 0 && ((_close && grace > 0) || !_close || dash_dir_y == 0) && !checkWall(sign(x_vel)) {
 				jumpdash()
+			} else if dash_kick_buffer > 0 {
+				if checkWall(1)
+					jumpbounce(1)
+				else if checkWall(-1)
+					jumpbounce(-1)
 			} else {
-				
 				if checkWall(1) {
 					if dash_grace > 0 && _kh != dir {
 						wallbounce(-1);
@@ -1001,6 +1059,8 @@ state_ledge = state_base.add()
 		}
 	}
 	
+	event.call("ledge");
+	
 	dash_left = defs.dash_total
 	
 	if buffer > 0 {
@@ -1008,6 +1068,11 @@ state_ledge = state_base.add()
 		return;
 	}
 	
+	if buffer_dash > 0 && dash_left > 0 {
+		game_set_pause(3);
+		state.change(state_dashset);
+		return;
+	}
 	
 	if !actor_collision(x + dir, y) {
 		state.change(state_free);
@@ -1048,6 +1113,9 @@ state_dashset = state_base.add()
 		gravity_hold = 9;
 		key_hold_timer = 14;
 		key_hold = dash_dir_x;
+		
+		dash_kick_buffer = 16;
+		dash_recover = 8
 		
 		dash_left -= 1;
 		
@@ -1110,6 +1178,10 @@ state_dash = state_base.add()
 					wallbounce(-dir);
 				else
 					walljump(-dir);
+				return;
+			}
+			if _kh != dir {
+				jumpdash();
 				return;
 			}
 		}

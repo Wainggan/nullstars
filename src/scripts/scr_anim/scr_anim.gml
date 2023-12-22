@@ -1,7 +1,8 @@
 
-function AnimLevel(_frames = [], _speed = 0) constructor {
+function AnimLevel(_frames = [], _speed = 0, _loop = -1) constructor {
 	frames = _frames;
 	speed = _speed;
+	loop = _loop
 }
 
 function AnimController() constructor {
@@ -36,6 +37,11 @@ function AnimController() constructor {
 	static get = function(){
 		var _current = animations[$ current];
 		var _frames = _current.frames;
+		if _current.loop != -1 {
+			if floor(floor(timer) / array_length(_frames)) > _current.loop * array_length(_frames)  {
+				return _frames[array_length(_frames) - 1]
+			}
+		}
 		return _frames[floor(timer) % array_length(_frames)];
 	}
 	

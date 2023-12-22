@@ -9,6 +9,7 @@ var _tpos_x = undefined, _tpos_y = undefined;
 anim_dive_timer -= 1;
 anim_jab_timer -= 1;
 anim_longjump_timer -= 1;
+anim_flip_timer -= 1;
 
 if state.is(state_swim) {
 	
@@ -37,7 +38,7 @@ else if state.is(state_ledge) {
 	anim.set("ledge")
 	
 }
-else if state.is(state_dash) || anim_dive_timer || anim_jab_timer {
+else if state.is(state_dash) || anim_dive_timer || anim_jab_timer  {
 	
 	if anim_jab_timer anim.set("jab")
 	else anim.set("dive")
@@ -56,6 +57,9 @@ else if state.is(state_free) {
 	}
 	else if anim_longjump_timer {
 		anim.set("longjump")
+	}
+	else if anim_flip_timer && y_vel < 0 {
+		anim.set("flip")
 	}
 	else {
 		if y_vel < 0
