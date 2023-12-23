@@ -56,7 +56,9 @@ draw_clear_alpha(#444455, 1);
 
 gpu_set_blendmode(bm_add);
 
-draw_surface(surf_background_lights, 0, 0)
+draw_surface(surf_background_lights, 0, 0);
+
+draw_surface(surf_bubbles, 0, 0);
 
 gpu_set_blendmode(bm_normal)
 
@@ -141,6 +143,11 @@ surface_reset_target();
 
 
 draw_surface_ext(surf_lights, _cam_x, _cam_y, 1, 1, 0, c_white, 1);
+
+
+// draw bubbles
+
+draw_surface(surf_bubbles, _cam_x, _cam_y)
 
 
 // level mask

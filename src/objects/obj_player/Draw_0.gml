@@ -21,8 +21,14 @@ if state.is(state_swim) {
 		_pos_y += -16 - lengthdir_y(16, _angle + 90);
 	} else {
 		if swim_spd < 1 {
+			anim.extract("swim").speed = 1 / 60
 			anim.set("swim")
-		} else {
+		}
+		else if abs(swim_dir % 360 - 90) < 10 || (abs(swim_dir % 360 - 270) < 10 && false) {
+			anim.extract("swim").speed = 1 / round(max(20 - abs(swim_spd) * 2, 8))
+			anim.set("swim")
+		}
+		else {
 			anim.extract("swimming").speed = 1 / round(max(20 - abs(swim_spd) * 2, 8))
 			anim.set("swimming")
 		}
