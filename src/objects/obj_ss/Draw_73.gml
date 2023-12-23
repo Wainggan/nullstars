@@ -1,0 +1,1 @@
+draw_sprite_stretched(spr_ss, dir, bbox_left, bbox_top, sprite_width, sprite_height)

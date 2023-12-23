@@ -773,7 +773,7 @@ state_base = state.add()
 	}
 	
 	light.x = x;
-	light.y = y - 20;
+	light.y = y - (crouched ? 8 : 20);
 	
 	if checkDeath(x, y) {
 		game_player_kill()
@@ -878,7 +878,7 @@ state_free = state_base.add()
 		grace = defs.grace;
 		grace_target = _inst;
 	}
-	if actor_collision(x, y + 1) {
+	if actor_collision(x, y + 1) && y_vel >= -1 {
 		grace = defs.grace;
 		grace_target = noone;
 		grace_y = y;
@@ -896,7 +896,7 @@ state_free = state_base.add()
 				scale_y = 0.8;
 			}
 			crouched = true;
-		} else {
+		} else if canUncrouch() {
 			if INPUT.check_released("down") {
 				scale_x = 0.8;
 				scale_y = 1.2;
