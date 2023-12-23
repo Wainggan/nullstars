@@ -162,6 +162,7 @@ for (var i = 0; i < array_length(file.levels); i++) {
 				
 				break;
 			
+			case "Bubbles":
 			case "Lights":
 			case "Meta":
 			case "Instances":
