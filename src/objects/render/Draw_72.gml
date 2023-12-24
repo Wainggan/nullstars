@@ -100,7 +100,15 @@ draw_clear_alpha(c_black, 0)
 with obj_spike_bubble {
 	var _size = round_ext(wave(0.95, 1.1, 8, offset), 0.05)
 
-	draw_sprite_ext(spr_spike_bubble, 0, x - _cam_x, y - _cam_y, _size, _size, 0, c_black, 1)
+	draw_sprite_ext(spr_spike_bubble, 0, x - _cam_x, y - _cam_y, _size, _size, 0, c_black, 1);
+	
+	if instance_exists(obj_player) {
+		var _dist = distance_to_point(obj_player.x, obj_player.y - 16);
+		var _dist_size = clamp(1 - (_dist) / 256, 0, 1) * 1.5;
+		
+		draw_sprite_ext(spr_spike_bubble, 1, x - _cam_x, y - _cam_y, _dist_size, _dist_size, offset % 360, c_black, 1);
+		
+	}
 }
 
 gpu_set_colorwriteenable(true, true, true, false)

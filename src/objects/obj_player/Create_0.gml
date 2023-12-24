@@ -1328,13 +1328,13 @@ cam = function(){
 	
 	if (state.is(state_free) && actor_collision(x, y + 1)) {
 		cam_ground_x = x + dir * 32;
-		cam_ground_y = y;
+		cam_ground_y = y - 32;
 	}
 	
 	var _dist = point_distance(cam_ground_x, cam_ground_y, x, y);
 	
-	camera.target_x = lerp(cam_ground_x, x, 1 - max(0, 1 - power(_dist / 64, 2)) * 0.2);
-	camera.target_y = lerp(cam_ground_y, y, 1 - max(0, 1 - power(_dist / 128, 2)) * 0.8);
+	camera.target_x = lerp(cam_ground_x, x, 1 - max(0, 1 - power(_dist / 64, 2)) * 0.0);
+	camera.target_y = lerp(cam_ground_y, y - 32, 1 - max(0, 1 - power(_dist / 128, 2)) * 0.8);
 	
 }
 

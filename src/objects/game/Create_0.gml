@@ -6,7 +6,7 @@ timer_active = false;
 timer_target = undefined;
 
 checkpoint_list = {};
-checkpoint = 0;
+checkpoint = "area-split-cont";
 
 instance_create_layer(0, 0, layer, input);
 instance_create_layer(0, 0, layer, camera);

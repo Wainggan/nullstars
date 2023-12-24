@@ -32,31 +32,41 @@ with _weights
 		y + sprite_height - crop_y2 * TILESIZE
 	) _inside = false;
 
+var _changed = false;
+
 if _weights != noone {
 	
 	
-	if _inside || (!_inside && !_weights.unlock_x)
+	if _inside || (!_inside && !_weights.unlock_x) {
 		if _weights.sprite_width <= _cam_w {
 			_tx = _weights.x + _weights.sprite_width / 2;
 		} else {
 			_tx = clamp(_tx, _weights.x + _cam_w / 2, _weights.x + _weights.sprite_width - _cam_w / 2)
 		}
+		_changed = true;
+	}
 	
-	if _inside || (!_inside && !_weights.unlock_y)
+	if _inside || (!_inside && !_weights.unlock_y) {
 		if _weights.sprite_height <= _cam_h {
 			_ty = _weights.y + _weights.sprite_height / 2;
 		} else {
 			_ty = clamp(_ty, _weights.y + _cam_h / 2, _weights.y + _weights.sprite_height - _cam_h / 2)
 		}
+		_changed = true;
+	} 
 	
 }
 
+if !_changed {
+	_weights = noone;
+}
+
 roomsnap_cooldown -= 1;
-if roomsnap_last != _weights || roomsnap_last_inside != _inside {
+if roomsnap_last != _weights || roomsnap_last_inside != _changed {
 	roomsnap_timer = 1;
 }
 roomsnap_last = _weights
-roomsnap_last_inside = _inside;
+roomsnap_last_inside = _changed;
 	
 roomsnap_timer = approach(roomsnap_timer, 0, 0.05)
 _ts = lerp(_ts, 0, roomsnap_timer)

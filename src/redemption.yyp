@@ -143,6 +143,7 @@
     {"id":{"name":"scr_actor_util","path":"scripts/scr_actor_util/scr_actor_util.yy",},},
     {"id":{"name":"spr_atmoshpere","path":"sprites/spr_atmoshpere/spr_atmoshpere.yy",},},
     {"id":{"name":"spr_spike_bubble","path":"sprites/spr_spike_bubble/spr_spike_bubble.yy",},},
+    {"id":{"name":"scr_sod","path":"scripts/scr_sod/scr_sod.yy",},},
     {"id":{"name":"shd_back_3","path":"shaders/shd_back_3/shd_back_3.yy",},},
     {"id":{"name":"obj_timer_start","path":"objects/obj_timer_start/obj_timer_start.yy",},},
     {"id":{"name":"obj_oo_on","path":"objects/obj_oo_on/obj_oo_on.yy",},},
