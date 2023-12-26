@@ -1327,7 +1327,7 @@ riding = function(_solid){
 cam = function(){
 	
 	if (state.is(state_free) && actor_collision(x, y + 1)) {
-		cam_ground_x = x + dir * 32;
+		cam_ground_x = x + dir * 64;
 		cam_ground_y = y - 32;
 	}
 	

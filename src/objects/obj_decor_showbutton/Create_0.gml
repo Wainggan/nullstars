@@ -7,23 +7,35 @@ switch button {
 	case "right":
 		index = 1;
 		break;
-	case "up":
+	case "right_up":
 		index = 2;
 		break;
-	case "left":
+	case "up":
 		index = 3;
 		break;
-	case "down":
+	case "left_up":
 		index = 4;
 		break;
-	case "jump":
+	case "left":
 		index = 5;
 		break;
-	case "dash":
+	case "left_down":
 		index = 6;
 		break;
-	case "grab":
+	case "down":
 		index = 7;
+		break;
+	case "right_down":
+		index = 8;
+		break;
+	case "jump":
+		index = 9;
+		break;
+	case "dash":
+		index = 10;
+		break;
+	case "grab":
+		index = 11;
 		break;
 }
 

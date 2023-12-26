@@ -127,6 +127,7 @@
     {"name":"spr_debug_checkpoint","order":18,"path":"sprites/spr_debug_checkpoint/spr_debug_checkpoint.yy",},
     {"name":"spr_debug_eye","order":36,"path":"sprites/spr_debug_eye/spr_debug_eye.yy",},
     {"name":"shd_back_2","order":1,"path":"shaders/shd_back_2/shd_back_2.yy",},
+    {"name":"mus_yearsago","order":2,"path":"sounds/mus_yearsago/mus_yearsago.yy",},
     {"name":"camera","order":2,"path":"objects/camera/camera.yy",},
     {"name":"ac_tweens","order":1,"path":"animcurves/ac_tweens/ac_tweens.yy",},
     {"name":"spr_timer_pop","order":22,"path":"sprites/spr_timer_pop/spr_timer_pop.yy",},
