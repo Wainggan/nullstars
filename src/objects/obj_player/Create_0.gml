@@ -1174,7 +1174,7 @@ state_dash = state_base.add()
 	var _kh = INPUT.check("right") - INPUT.check("left");
 	var _kv = INPUT.check("down") - INPUT.check("up");
 	
-	if (_kv == 0 && actor_collision(x, y + 16)) || actor_collision(x, y + 1) {
+	if actor_collision(x, y + 1) {
 		grace = defs.grace;
 		grace_y = y;
 	}
