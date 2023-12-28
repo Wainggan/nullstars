@@ -455,8 +455,12 @@ jumpdash = function(){
 		
 	} else {
 		y_vel = -3
-		x_vel = abs(dash_dir_x_vel) * 0.7 * sign(_kh == 0 ? sign(x_vel) : _kh)
-		x_vel += (_kh == 0 ? dir : _kh) * 4
+		var _test = abs(dash_dir_x_vel) * 0.7 + 4;
+		x_vel = max(abs(x_vel), _test);
+		x_vel *= sign(_kh == 0 ? sign(x_vel) : _kh)
+		
+		key_hold = sign(x_vel);
+		key_hold_timer = 6;
 	}
 	
 	if x_lift == 0 && y_lift == 0 {
@@ -701,9 +705,9 @@ state_base = state.add()
 	});
 	
 	
-	if state.is(state_dash) {
+	if true {
 		_d = 0;
-		_amount = 8;
+		_amount = state.is(state_dash) ? 16 : 4;
 		if actor_collision(x + x_vel, y)
 			for (_d = 1; _d < _amount; _d++) {
 				if actor_collision(x + x_vel, y + _d) {
@@ -713,7 +717,7 @@ state_base = state.add()
 			actor_move_y(_d)
 			
 		_d = 0;
-		_amount = 16;
+		_amount = state.is(state_dash) ? 10 : 2;
 		if actor_collision(x + x_vel, y)
 			for (_d = 1; _d < _amount; _d++) {
 				if actor_collision(x + x_vel, y - _d) {
@@ -858,7 +862,7 @@ state_free = state_base.add()
 		_jump = true;
 	}
 
-	if INPUT.check("jump") {
+	if _jump {
 		if abs(y_vel) < defs.gravity_peak_thresh {
 			// peak jump
 			_y_accel = defs.gravity_peak;
@@ -1124,10 +1128,11 @@ state_dashset = state_base.add()
 	dash_dir_y = _kv;
 	
 	if _kv == -1 {
-		x_vel = dash_dir_x * max(6, 4 + min(abs(x_vel), 4));
-		y_vel = defs.jump_vel;
+		x_vel = max(abs(x_vel), 6, 4 + min(abs(x_vel), 4));
+		x_vel *= dash_dir_x
+		y_vel = -4;
 		
-		gravity_hold = 9;
+		gravity_hold = 24;
 		key_hold_timer = 14;
 		key_hold = dash_dir_x;
 		
@@ -1150,7 +1155,10 @@ state_dash = state_base.add()
 	dash_timer = 6;
 	dash_left -= 1;
 	
-	x_vel *= 0.5;
+	if dash_dir_x == sign(x_vel)
+		x_vel *= 0.6;
+	else 
+		x_vel = abs(x_vel) * dash_dir_x * 0.9;
 	y_vel = 0;
 	var _dir = point_direction(0, 0, dash_dir_x, dash_dir_y);
 	dash_dir_x_vel = lengthdir_x(7, _dir);
@@ -1244,8 +1252,7 @@ state_swim = state_base.add()
 	
 	var _kh_r = INPUT.check_raw("horizontal");
 	var _kv_r = INPUT.check_raw("vertical");
-	show_debug_message($"{_kh_r} {_kv_r}")
-	
+
 	var _k_dir = point_direction(0, 0, _kh_r, _kv_r)
 	
 	var _dir_target = _k_dir;
