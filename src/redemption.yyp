@@ -34,11 +34,11 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"effects","folderPath":"folders/objects/effects.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"oo","folderPath":"folders/objects/oo.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"player","folderPath":"folders/objects/player.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"semisolids","folderPath":"folders/objects/semisolids.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"spike","folderPath":"folders/objects/spike.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"timer","folderPath":"folders/objects/timer.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"rooms","folderPath":"folders/rooms.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"sounds","folderPath":"folders/sounds.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"semisolids","folderPath":"folders/objects/semisolids.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles",},

@@ -17,6 +17,10 @@ switch _bgm {
 		_bgm_asset = mus_questionthestars
 		_bgm_name = "\"question the stars\" ~ parchii"
 		break;
+	case "lava":
+		_bgm_asset = mus_yearsago
+		_bgm_name = "\"\" ~ parchii"
+		break;
 }
 
 if keyboard_check_pressed(ord("T")) play = !play

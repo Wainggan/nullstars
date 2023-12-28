@@ -14,9 +14,9 @@ draw_sprite_ext(
 	0, #000209, 1
 );
 
-draw_surface_ext(surf_background, 0, 0, _scale_w, _scale_h, 0, c_white, 1)
-
 gpu_set_colorwriteenable(true, true, true, false)
+
+draw_surface_ext(surf_background, 0, 0, _scale_w, _scale_h, 0, c_white, 1)
 
 draw_surface_ext(application_surface, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
 

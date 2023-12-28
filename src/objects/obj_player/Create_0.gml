@@ -106,6 +106,12 @@ anim = new AnimController()
 .meta_items([22], {
 	x: -5, y: -6
 })
+.meta_items([23], {
+	x: -2, y: -17
+})
+.meta_items([24, 25], {
+	x: -2, y: -15
+})
 
 
 event = new Event()
@@ -205,7 +211,7 @@ tail = yarn_create(tail_length, function(_p, i){
 	_p.y = y + i * 6
 		
 	_p.size = max(parabola_mid(3, 7, 6, i) + 3, 6)
-	_p.round = floor(clamp(i / (tail_length / 3), 1, 3))
+	_p.round = floor(clamp(i / (tail_length / 3), 1, 1))
 })
 
 draw_tail = function(_tip = #ff00ff, _blend = c_white){
@@ -705,6 +711,16 @@ state_base = state.add()
 			}
 		if _d != _amount
 			actor_move_y(_d)
+			
+		_d = 0;
+		_amount = 16;
+		if actor_collision(x + x_vel, y)
+			for (_d = 1; _d < _amount; _d++) {
+				if actor_collision(x + x_vel, y - _d) {
+				} else break;
+			}
+		if _d != _amount
+			actor_move_y(-_d)
 	}
 
 	actor_move_x(x_vel, function(){
@@ -836,6 +852,11 @@ state_free = state_base.add()
 	// y direction logic
 	
 	var _y_accel = 0;
+	
+	var _jump = INPUT.check("jump");
+	if gravity_hold > 0 {
+		_jump = true;
+	}
 
 	if INPUT.check("jump") {
 		if abs(y_vel) < defs.gravity_peak_thresh {
@@ -846,9 +867,6 @@ state_free = state_base.add()
 		}
 	} else {
 		_y_accel = defs.gravity;
-	}
-	if gravity_hold > 0 {
-		_y_accel = defs.gravity_hold;
 	}
 	if gravity_hold_peak > 0 {
 		_y_accel = defs.gravity_peak;
@@ -862,14 +880,12 @@ state_free = state_base.add()
 		y_vel *= defs.gravity_damp;
 	}
 
-	y_vel += _y_accel
-	
 	var _term_vel = defs.terminal_vel
 	if _kv == 1 {
 		_term_vel = defs.terminal_vel_fast
 	}
 	
-	y_vel = min(y_vel, _term_vel);
+	y_vel = approach(y_vel, _term_vel, _y_accel)
 	
 	var _wall = actor_collision(x + defs.wall_distance, y) - actor_collision(x - defs.wall_distance, y);
 	
@@ -1158,7 +1174,7 @@ state_dash = state_base.add()
 	var _kh = INPUT.check("right") - INPUT.check("left");
 	var _kv = INPUT.check("down") - INPUT.check("up");
 	
-	if actor_collision(x, y + 1) {
+	if (_kv == 0 && actor_collision(x, y + 16)) || actor_collision(x, y + 1) {
 		grace = defs.grace;
 		grace_y = y;
 	}
@@ -1169,10 +1185,8 @@ state_dash = state_base.add()
 	
 	if buffer > 0 {
 		if grace > 0 {
-			if _kh == dir {
-				jumpdash();
-				return;
-			}
+			jumpdash();
+			return;
 		} else {
 			if checkWall(dir) {
 				if _kh != dir

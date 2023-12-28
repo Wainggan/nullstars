@@ -23,11 +23,11 @@
     {"name":"effects","order":13,"path":"folders/objects/effects.yy",},
     {"name":"oo","order":8,"path":"folders/objects/oo.yy",},
     {"name":"player","order":14,"path":"folders/objects/player.yy",},
+    {"name":"semisolids","order":31,"path":"folders/objects/semisolids.yy",},
     {"name":"spike","order":5,"path":"folders/objects/spike.yy",},
     {"name":"timer","order":12,"path":"folders/objects/timer.yy",},
     {"name":"rooms","order":3,"path":"folders/rooms.yy",},
     {"name":"sounds","order":7,"path":"folders/sounds.yy",},
-    {"name":"semisolids","order":31,"path":"folders/objects/semisolids.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"obj_areaname","order":18,"path":"objects/obj_areaname/obj_areaname.yy",},
