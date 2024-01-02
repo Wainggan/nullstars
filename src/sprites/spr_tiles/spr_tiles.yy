@@ -2,8 +2,8 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_tiles",
-  "bbox_bottom": 207,
-  "bbox_left": 16,
+  "bbox_bottom": 383,
+  "bbox_left": 0,
   "bbox_right": 255,
   "bbox_top": 0,
   "bboxMode": 0,
@@ -13,14 +13,14 @@
   "edgeFiltering": false,
   "For3D": false,
   "frames": [
-    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"008a4f85-35fd-4f2d-8f78-328ff7af7a4f",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"595a751b-12b6-4f8d-8015-4bfb8513347e",},
   ],
   "gridX": 0,
   "gridY": 0,
-  "height": 256,
+  "height": 512,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"7cb0a0e9-4765-48c3-81fc-fb9ee53de064","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"5d01360d-0860-46c7-b8e3-d45210c1f4d2","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 0,
@@ -54,7 +54,7 @@
     "timeUnits": 1,
     "tracks": [
       {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"008a4f85-35fd-4f2d-8f78-328ff7af7a4f","path":"sprites/spr_tiles/spr_tiles.yy",},},},"Disabled":false,"id":"4daf3949-fb84-4b8c-ac95-b46d9e6f8ca1","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"595a751b-12b6-4f8d-8015-4bfb8513347e","path":"sprites/spr_tiles/spr_tiles.yy",},},},"Disabled":false,"id":"35160923-52b5-470d-bc55-f8f1be83bd92","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange": null,
@@ -70,5 +70,5 @@
   },
   "type": 0,
   "VTile": false,
-  "width": 256,
+  "width": 512,
 }

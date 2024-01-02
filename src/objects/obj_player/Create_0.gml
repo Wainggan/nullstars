@@ -1155,8 +1155,10 @@ state_dash = state_base.add()
 	dash_timer = 6;
 	dash_left -= 1;
 	
-	if dash_dir_x == sign(x_vel)
-		x_vel *= 0.6;
+	var _x_vel = x_vel;
+	
+	if dash_dir_x == sign(x_vel) || actor_collision(x, y + 1)
+		x_vel *= 0.50;
 	else 
 		x_vel = abs(x_vel) * dash_dir_x * 0.9;
 	y_vel = 0;
@@ -1165,6 +1167,8 @@ state_dash = state_base.add()
 	dash_dir_y_vel = lengthdir_y(6, _dir);
 	x_vel += dash_dir_x_vel;
 	y_vel += dash_dir_y_vel;
+	
+	x_vel = max(abs(x_vel), abs(_x_vel)) * sign(x_vel)
 	
 	dir = sign(x_vel)
 	
