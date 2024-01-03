@@ -376,6 +376,8 @@ jump = function(){
 
 jumpbounce = function(_dir){
 	
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	
 	buffer = 0
 	grace = 0;
 	grace_target = noone;
@@ -387,11 +389,18 @@ jumpbounce = function(_dir){
 		dash_left = defs.dash_total;
 	}
 	
-	y_vel = min(-6.5, y_vel);
-	x_vel = -_dir * 2
+	if _kh == _dir {
+		y_vel = min(-6.5, y_vel);
+		x_vel = -_dir * 2
+		key_hold_timer = 9;
+	} else {
+		y_vel = min(-6.2, y_vel);
+		x_vel = -_dir * 4
+		key_hold_timer = 5;
+	}
 	
 	key_hold = -_dir;
-	key_hold_timer = 9;
+	
 	
 	if x_lift == 0 && y_lift == 0 {
 		with instance_place(x + _dir * defs.wall_distance, y, obj_Solid) {

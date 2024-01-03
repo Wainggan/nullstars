@@ -3,6 +3,8 @@ application_surface_draw_enable(false);
 
 depth = 10;
 
+mode = 0
+
 surf_lights = -1;
 surf_mask = -1;
 surf_background = -1;
