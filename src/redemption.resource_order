@@ -9,6 +9,7 @@
     {"name":"meta","order":5,"path":"folders/game/meta.yy",},
     {"name":"util","order":6,"path":"folders/game/util.yy",},
     {"name":"graphics","order":2,"path":"folders/graphics.yy",},
+    {"name":"colorgrading","order":47,"path":"folders/graphics/colorgrading.yy",},
     {"name":"debug","order":3,"path":"folders/graphics/debug.yy",},
     {"name":"fonts","order":24,"path":"folders/graphics/fonts.yy",},
     {"name":"particles","order":25,"path":"folders/graphics/particles.yy",},
@@ -28,7 +29,6 @@
     {"name":"timer","order":12,"path":"folders/objects/timer.yy",},
     {"name":"rooms","order":3,"path":"folders/rooms.yy",},
     {"name":"sounds","order":7,"path":"folders/sounds.yy",},
-    {"name":"colorgrading","order":47,"path":"folders/graphics/colorgrading.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"obj_areaname","order":18,"path":"objects/obj_areaname/obj_areaname.yy",},

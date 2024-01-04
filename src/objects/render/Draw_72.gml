@@ -128,7 +128,7 @@ surface_reset_target()
 
 gpu_set_blendmode_ext(bm_one, bm_zero)
 
-surface_set_target(surf_blur_ping)
+surface_set_target(surf_ping)
 
 shader_set(shd_outline)
 
@@ -145,7 +145,7 @@ shader_reset()
 surface_reset_target()
 surface_set_target(surf_bubbles)
 
-draw_surface(surf_blur_ping, 0, 0);
+draw_surface(surf_ping, 0, 0);
 
 surface_reset_target()
 

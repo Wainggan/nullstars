@@ -5,9 +5,14 @@ global.defs = {
 	terminal_vel: 4
 }
 
-global.flags = {
-	graphics_post_grading: true,
+global.config = {
+	graphics_lights: true,
+	graphics_lights_shadow: true,
+	graphics_lights_rimblur: true,
+	graphics_atmosphere_particles: true,
+	graphics_atmosphere_overlay: true,
 	graphics_post_outline: true,
+	graphics_post_grading: true,
 }
 
 #macro WIDTH 960

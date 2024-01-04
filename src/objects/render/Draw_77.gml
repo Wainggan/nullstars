@@ -24,15 +24,23 @@ gpu_set_colorwriteenable(true, true, true, false);
 
 draw_surface_ext(surf_background, 0, 0, 1, 1, 0, c_white, 1);
 
-shader_set(shd_outline_post)
+if global.config.graphics_post_outline {
 
-var _u_texel = shader_get_uniform(shd_outline_post, "u_texel")
+	shader_set(shd_outline_post)
 
-shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);
+	var _u_texel = shader_get_uniform(shd_outline_post, "u_texel")
 
-draw_surface_ext(application_surface, 0, 0, 1, 1, 0, c_black, 1);
+	shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);
 
-shader_reset()
+	draw_surface_ext(application_surface, 0, 0, 1, 1, 0, c_black, 1);
+
+	shader_reset()
+
+} else {
+	
+	draw_surface_ext(application_surface, 0, 0, 1, 1, 0, c_white, 1);
+	
+}
 
 gpu_set_colorwriteenable(true, true, true, true);
 
@@ -56,26 +64,34 @@ var _p = [
 
 if keyboard_check_pressed(ord("Y")) mode = (mode + 1) % array_length(_p)
 
-if !surface_exists(surf_lut)
-	surf_lut = surface_create(256, 16)
+if global.config.graphics_post_grading {
 
-surface_set_target(surf_lut)
-draw_clear_alpha(c_black, 1)
-gpu_set_colorwriteenable(true, true, true, false);
-	draw_sprite(_p[mode], 0, 0, 0);
-gpu_set_colorwriteenable(true, true, true, true);
-surface_reset_target()
+	if !surface_exists(surf_lut)
+		surf_lut = surface_create(256, 16)
 
-var _u_strength = shader_get_uniform(shd_grade, "u_strength");
-var _u_lut = shader_get_sampler_index(shd_grade, "u_lut");
+	surface_set_target(surf_lut)
+	draw_clear_alpha(c_black, 1)
+	gpu_set_colorwriteenable(true, true, true, false);
+		draw_sprite(_p[mode], 0, 0, 0);
+	gpu_set_colorwriteenable(true, true, true, true);
+	surface_reset_target()
 
-gpu_set_tex_filter_ext(_u_lut, true)
-shader_set(shd_grade);
+	var _u_strength = shader_get_uniform(shd_grade, "u_strength");
+	var _u_lut = shader_get_sampler_index(shd_grade, "u_lut");
 
-	shader_set_uniform_f(_u_strength, 1)
-	texture_set_stage(_u_lut, surface_get_texture(surf_lut));
+	gpu_set_tex_filter_ext(_u_lut, true)
+	shader_set(shd_grade);
+
+		shader_set_uniform_f(_u_strength, 1)
+		texture_set_stage(_u_lut, surface_get_texture(surf_lut));
+
+		draw_surface_ext(surf_compose, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
+
+	shader_reset();
+	gpu_set_tex_filter(false)
+
+} else {
 
 	draw_surface_ext(surf_compose, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
-
-shader_reset();
-gpu_set_tex_filter(false)
+	
+}

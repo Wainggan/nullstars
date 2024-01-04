@@ -9,7 +9,7 @@ surf_lights = -1;
 surf_mask = -1;
 surf_background = -1;
 
-surf_blur_ping = -1;
+surf_ping = -1;
 
 surf_background_lights = -1;
 
