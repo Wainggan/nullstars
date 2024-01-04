@@ -1,7 +1,8 @@
 
-function game_timer_start(_length, _target = undefined) {
+function game_timer_start(_length, _start = undefined, _target = undefined) {
 	if !game.timer_active {
 		game.timer = _length;
+		game.timer_start = _start;
 		game.timer_target = _target;
 		game.timer_active = true;
 		
