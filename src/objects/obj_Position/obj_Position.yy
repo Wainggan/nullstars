@@ -26,8 +26,8 @@
   "properties": [],
   "solid": false,
   "spriteId": {
-    "name": "spd_debug_marker",
-    "path": "sprites/spd_debug_marker/spd_debug_marker.yy",
+    "name": "spr_debug_marker",
+    "path": "sprites/spr_debug_marker/spr_debug_marker.yy",
   },
   "spriteMaskId": null,
   "visible": false,

@@ -1392,7 +1392,7 @@ menu_page_none = new MenuPage()
 	show_debug_message("a")
 }))
 .add(new MenuButton("map", function(){
-	show_debug_message("a")
+	state.change(state_map)
 }))
 .add(new MenuButton("settings", function(){
 	menu.open(menu_page_settings)
@@ -1423,11 +1423,14 @@ menu_page_settings = new MenuPage()
 
 
 anim_menu_open = [];
+anim_menu_map_open = 0;
 
 state_menu = state_base.add()
 .set("enter", function(){
-	menu.current = 0;
-	menu.open(menu_page_none)
+	if array_length(menu.stack) == 0 {
+		menu.current = 0;
+		menu.open(menu_page_none)
+	}
 })
 .set("step", function(){
 	x_vel = approach(x_vel, 0, defs.move_accel);
@@ -1454,7 +1457,71 @@ state_menu = state_base.add()
 		return;
 	}
 	
+})
+
+menu_map_cam_x = 0;
+menu_map_cam_y = 0;
+menu_map_cam_scale = 1 / 24;
+
+state_map = state_base.add()
+.set("enter", function(){
+	menu_map_cam_x = x;
+	menu_map_cam_y = y;
+})
+.set("step", function(){ 
 	
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
+	
+	x_vel = approach(x_vel, 0, defs.move_accel);
+	y_vel = approach(y_vel, defs.terminal_vel, defs.gravity)
+	
+	var _dir = point_direction(0, 0, _kh, _kv);
+	
+	if _kh != 0 || _kv != 0 {
+		menu_map_cam_x += lengthdir_x(3 / menu_map_cam_scale, _dir)
+		menu_map_cam_y += lengthdir_y(3 / menu_map_cam_scale, _dir)
+	}
+	
+	var _c = noone;
+	with obj_checkpoint {
+		var _c_dist = point_distance(other.menu_map_cam_x, other.menu_map_cam_y, x, y);
+		var _c_dir = point_direction(other.menu_map_cam_x, other.menu_map_cam_y, x, y);
+
+		if _c_dist < 16 / other.menu_map_cam_scale {
+			other.menu_map_cam_x = approach(other.menu_map_cam_x, x, abs(lengthdir_x(1 / other.menu_map_cam_scale, _c_dir)))
+			other.menu_map_cam_y = approach(other.menu_map_cam_y, y, abs(lengthdir_y(1 / other.menu_map_cam_scale, _c_dir)))
+			_c = self;
+			break;
+		}
+	}
+	
+	buffer_dash = 0;
+	buffer = 0;
+	
+	if INPUT.check_pressed("dash") {
+		state.change(state_menu)
+		return;
+	}
+	
+	if INPUT.check_pressed("jump") && _c != noone {
+		menu.stop();
+		state.change(state_free)
+		
+		game_camera_set_shake(2, 0.5)
+		game_set_pause(2)
+		
+		x = _c.x;
+		y = _c.y;
+		
+		return;
+	}
+	
+	if !place_meeting(x, y, obj_checkpoint) {
+		menu.stop();
+		state.change(state_free);
+		return;
+	}
 })
 
 
