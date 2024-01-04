@@ -47,6 +47,13 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		_lv_w, _lv_h
 	);
 	layer_set_visible(_lvl.layer, false);
+	_lvl.decor_layer = layer_create(-1);
+	_lvl.decor_tiles = layer_tilemap_create(
+		_lvl.decor_layer,
+		_lv_x * TILESIZE, _lv_y * TILESIZE,
+		tl_tiles, 
+		_lv_w, _lv_h
+	);
 	_lvl.spikes_layer = layer_create(0);
 	_lvl.spikes_tiles = layer_tilemap_create(
 		_lvl.spikes_layer,
@@ -109,32 +116,24 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		
 		var _layer = _level.layerInstances[j];
 		
-		var _targetLayer = _lvl.tiles;
+		var _targetLayer = undefined;
+		var _targetTiles = undefined
 		
 		switch _layer.__identifier {
 			
+			case "Decor":
+				_targetTiles ??= _layer.gridTiles;
+			case "_Decor":
+				_targetLayer ??= _lvl.decor_tiles
 			case "Tiles":
-				_targetLayer = _lvl.tilemap_tiles;
-
-				for (var n = 0; n < array_length(_layer.autoLayerTiles); n++) {
-					
-					var _td = _layer.autoLayerTiles[n];
-					
-					var _tx = round(_td.px[0] / TILESIZE);
-					var _ty = round(_td.px[1] / TILESIZE);
-					var _t = _td.t;
-					
-					tilemap_set(_targetLayer, _t, _tx, _ty);
-					
-				}
-				
-				break;
+				_targetLayer ??= _lvl.tilemap_tiles;
 			case "Background":
-				_targetLayer = _lvl.background_tiles;
+				_targetLayer ??= _lvl.background_tiles;
+				_targetTiles ??= _layer.autoLayerTiles;
 
-				for (var n = 0; n < array_length(_layer.autoLayerTiles); n++) {
+				for (var n = 0; n < array_length(_targetTiles); n++) {
 					
-					var _td = _layer.autoLayerTiles[n];
+					var _td = _targetTiles[n];
 					
 					var _tx = round(_td.px[0] / TILESIZE);
 					var _ty = round(_td.px[1] / TILESIZE);
@@ -145,10 +144,11 @@ for (var i = 0; i < array_length(file.levels); i++) {
 				}
 				
 				break;
-				
+			
 			case "Spikes":
 				_targetLayer = _lvl.spikes_tiles;
 			case "Collisions":
+				_targetLayer ??= _lvl.tiles
 				
 				for (var n = 0; n < array_length(_layer.intGridCsv); n++) {
 					
