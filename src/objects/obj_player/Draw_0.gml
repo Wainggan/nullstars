@@ -10,6 +10,7 @@ anim_dive_timer -= 1;
 anim_jab_timer -= 1;
 anim_longjump_timer -= 1;
 anim_flip_timer -= 1;
+anim_runjump_timer -= 1;
 
 if state.is(state_swim) {
 	
@@ -56,6 +57,10 @@ else if state.is(state_free) {
 	else if actor_collision(x, y + 1) {
 		if abs(x_vel) < 0.8
 			anim.set("idle")
+		else if abs(x_vel) > defs.move_speed + 2 {
+			anim.extract("run").speed = 1 / round(max(7 - abs(x_vel) * 3, 3))
+			anim.set("run")
+		}
 		else {
 			anim.extract("walk").speed = 1 / round(max(12 - abs(x_vel) * 2, 6))
 			anim.set("walk")
@@ -68,10 +73,18 @@ else if state.is(state_free) {
 		anim.set("flip")
 	}
 	else {
-		if y_vel < 0
-			anim.set("jump")
-		else
-			anim.set("fall")
+		if y_vel < 0 {
+			if anim_runjump_timer > 0
+				anim.set("runjump")
+			else
+				anim.set("jump")
+		}
+		else {
+			if anim_runjump_timer > 0
+				anim.set("runfall")
+			else
+				anim.set("fall")
+		}
 	}
 }
 

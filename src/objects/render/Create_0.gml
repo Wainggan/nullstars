@@ -19,6 +19,8 @@ surf_app = -1;
 surf_compose = -1;
 surf_lut = -1;
 
+surface_resize(application_surface, WIDTH, HEIGHT)
+
 background_mode = 0;
 background_from = 0;
 background_anim = 0;

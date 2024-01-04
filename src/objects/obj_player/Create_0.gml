@@ -8,8 +8,8 @@ defs = {
 	
 	move_speed: 2,
 	move_accel: 0.5,
-	move_slowdown: 0.1,
-	move_slowdown_air: 0.05,
+	move_slowdown: 0.08,
+	move_slowdown_air: 0.04,
 	
 	boost_limit_x: 9,
 	boost_limit_y: 3,
@@ -63,6 +63,10 @@ anim = new AnimController()
 .add("ledge", new AnimLevel([20]))
 .add("crouch", new AnimLevel([22]))
 .add("flip", new AnimLevel([24, 25], 1 / 14, 0))
+.add("run", new AnimLevel([29, 29, 27, 27, 27, 28, 28], 1/12))
+.add("runjump", new AnimLevel([27]))
+.add("runfall", new AnimLevel([30]))
+.add("land", new AnimLevel([29]))
 
 .meta_default({
 	x: -2, y: -16,
@@ -112,12 +116,25 @@ anim = new AnimController()
 .meta_items([24, 25], {
 	x: -2, y: -15
 })
+.meta_items([27], {
+	x: -5, y: -13
+})
+.meta_items([28], {
+	x: -8, y: -16
+})
+.meta_items([29], {
+	x: -8, y: -16
+})
+.meta_items([30], {
+	x: -3, y: -15
+})
 
 
 event = new Event()
 .add("ground", function(){
 	anim_longjump_timer = 0;
 	anim_flip_timer = 0;
+	anim_runjump_timer = 0;
 })
 .add("ledge", function(){
 	anim_longjump_timer = 0;
@@ -127,6 +144,10 @@ event = new Event()
 	anim_dive_timer = 0;
 	anim_jab_timer = 0;
 	anim_flip_timer = 0;
+	anim_runjump_timer = 0;
+})
+.add("fall", function(){
+	anim_runjump = 0;
 })
 .add("jumpdash", function(){
 	anim_longjump_timer = defs.anim_longjump_time;
@@ -135,6 +156,7 @@ event = new Event()
 	anim_flip_timer = 30//defs.anim_longjump_time;
 })
 .add("dive", function(){
+	anim_runjump_timer = 0;
 	if y_vel > 0
 		anim_dive_timer = defs.anim_dive_time;
 	else
@@ -195,6 +217,7 @@ anim_dive_timer = 0;
 anim_jab_timer = 0;
 anim_longjump_timer = 0;
 anim_flip_timer = 0;
+anim_runjump_timer = 0;
 
 cam_ground_x = x;
 cam_ground_y = y;
@@ -369,6 +392,9 @@ jump = function(){
 	ledge_keybuffer = dir
 	
 	event.call("jump")
+	
+	if abs(x_vel) > defs.move_speed + 2
+		anim_runjump_timer = 120
 	
 	state.change(state_free);
 	
@@ -700,16 +726,16 @@ state_base = state.add()
 	}
 	
 	actor_move_y(y_vel, function(){
-		if !state.is(state_swim) {
+		if state.is(state_swim) {
+			if swim_bullet {
+				swim_dir = point_direction(0, 0, x_vel, -y_vel);
+			}
+		} else {
 			if y_vel > 1.5 {
 				scale_x = 1.2;
 				scale_y = 0.8;
 			}
 			y_vel = 0;
-		} else {
-			if swim_bullet {
-				swim_dir = point_direction(0, 0, x_vel, -y_vel);
-			}
 		}
 	});
 	
@@ -737,12 +763,12 @@ state_base = state.add()
 	}
 
 	actor_move_x(x_vel, function(){
-		if !state.is(state_swim) {
-			x_vel = 0;
-		} else {
+		if state.is(state_swim) {
 			if swim_bullet {
 				swim_dir = point_direction(0, 0, -x_vel, y_vel);
 			}
+		} else {
+			x_vel = 0;
 		}
 	});
 	

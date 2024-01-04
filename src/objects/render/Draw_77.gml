@@ -23,7 +23,18 @@ draw_sprite_ext(
 gpu_set_colorwriteenable(true, true, true, false);
 
 draw_surface_ext(surf_background, 0, 0, 1, 1, 0, c_white, 1);
-draw_surface_ext(application_surface, 0, 0, 1, 1, 0, c_white, 1);
+
+shader_set(shd_outline)
+
+var _u_kernel = shader_get_uniform(shd_outline, "u_kernel")
+var _u_texel = shader_get_uniform(shd_outline, "u_texel")
+
+shader_set_uniform_f(_u_kernel, 2);
+shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);
+
+draw_surface_ext(application_surface, 0, 0, 1, 1, 0, c_black, 1);
+
+shader_reset()
 
 gpu_set_colorwriteenable(true, true, true, true);
 

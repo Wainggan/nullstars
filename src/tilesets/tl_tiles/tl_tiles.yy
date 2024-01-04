@@ -1055,7 +1055,7 @@
     "SerialiseFrameCount": 1,
   },
   "tileAnimationFrames": [],
-  "tileAnimationSpeed": 15.0,
+  "tileAnimationSpeed": 16.0,
   "tileHeight": 16,
   "tilehsep": 0,
   "tilevsep": 0,
