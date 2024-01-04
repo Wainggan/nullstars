@@ -1,6 +1,4 @@
 
-//draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, true);
-
 var _angle = 0, _sprite = sprite_index;
 var _dir = dir;
 var _pos_x = x, _pos_y = y;
@@ -43,6 +41,11 @@ if state.is(state_swim) {
 else if state.is(state_ledge) {
 	
 	anim.set("ledge")
+	
+}
+else if state.is(state_menu) {
+	
+	anim.set("idle")
 	
 }
 else if state.is(state_dash) || anim_dive_timer || anim_jab_timer  {
@@ -153,6 +156,5 @@ if _meta.front
 	draw_tail(_color, _mult);
 
 
-// draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, true)
 
 

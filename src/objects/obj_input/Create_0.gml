@@ -1,5 +1,5 @@
 
-#macro INPUT input.manager
+#macro INPUT obj_input.manager
 
 manager = new InputManager(0, 0.2);
 

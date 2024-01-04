@@ -1042,6 +1042,11 @@ state_free = state_base.add()
 		ledge_keybuffer = 0;
 	}
 	
+	if INPUT.check_pressed("up") && !crouched && place_meeting(x, y, obj_checkpoint) {
+		state.change(state_menu)
+		return;
+	}
+	
 })
 
 state_throw = state_base.add()
@@ -1374,6 +1379,85 @@ state_swimbulletset = state_base.add()
 	state.change(state_swim);
 })
 
+menu = new Menu();
+
+menu_page_none = new MenuPage()
+.add(new MenuButton("close", function(){
+	menu.close()
+}))
+.add(new MenuSlider("map", 0, 1, 0, 0.1, function(){
+	show_debug_message("a")
+}))
+.add(new MenuRadio("map", ["none", "0.5", "1"], 0, function(){
+	show_debug_message("a")
+}))
+.add(new MenuButton("map", function(){
+	show_debug_message("a")
+}))
+.add(new MenuButton("settings", function(){
+	menu.open(menu_page_settings)
+}))
+.add(new MenuButton("test3", function(){
+	show_debug_message("c")
+}))
+.add(new MenuButton("exit", function(){
+	game_end()
+}))
+
+menu_page_settings = new MenuPage()
+.add(new MenuButton("back", function(){
+	menu.close();
+}))
+.add(new MenuButton("graphics", function(){
+	menu.open(menu_page_settings)
+}))
+.add(new MenuButton("test2", function(){
+	show_debug_message("b")
+}))
+.add(new MenuButton("test3", function(){
+	show_debug_message("c")
+}))
+.add(new MenuButton("test4", function(){
+	show_debug_message("d")
+}))
+
+
+anim_menu_open = [];
+
+state_menu = state_base.add()
+.set("enter", function(){
+	menu.current = 0;
+	menu.open(menu_page_none)
+})
+.set("step", function(){
+	x_vel = approach(x_vel, 0, defs.move_accel);
+	y_vel = approach(y_vel, defs.terminal_vel, defs.gravity)
+	
+	buffer_dash = 0;
+	buffer = 0;
+	
+	menu.update()
+	
+	if INPUT.check_pressed("dash") {
+		menu.close();
+	}
+	
+	if array_length(menu.stack) == 0 {
+		menu.stop();
+		state.change(state_free);
+		return;
+	}
+	
+	if !place_meeting(x, y, obj_checkpoint) {
+		menu.stop();
+		state.change(state_free);
+		return;
+	}
+	
+	
+})
+
+
 state.change(state_free);
 
 squish = function(){
@@ -1393,8 +1477,16 @@ cam = function(){
 	
 	var _dist = point_distance(cam_ground_x, cam_ground_y, x, y);
 	
-	camera.target_x = lerp(cam_ground_x, x, 1 - max(0, 1 - power(_dist / 64, 2)) * 0.0);
-	camera.target_y = lerp(cam_ground_y, y - 32, 1 - max(0, 1 - power(_dist / 128, 2)) * 0.8);
+	var _x = x;
+	var _y = y - 32;
+	
+	if state.is(state_menu) {
+		_x += 48 + (array_length(menu.stack) - 1) * 12;
+		_y += -4;
+	}
+	
+	camera.target_x = lerp(cam_ground_x, _x, 1 - max(0, 1 - power(_dist / 64, 2)) * 0.0);
+	camera.target_y = lerp(cam_ground_y, _y, 1 - max(0, 1 - power(_dist / 128, 2)) * 0.8);
 	
 }
 
