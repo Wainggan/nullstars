@@ -213,6 +213,8 @@ swim_bullet = false;
 
 ledge_keybuffer = 0;
 
+spike_buffer = 0;
+
 anim_dive_timer = 0;
 anim_jab_timer = 0;
 anim_longjump_timer = 0;
@@ -1197,7 +1199,7 @@ state_dash = state_base.add()
 	
 	var _x_vel = x_vel;
 	
-	if dash_dir_x == sign(x_vel) || actor_collision(x, y + 1)
+	if dash_dir_x == sign(x_vel)
 		x_vel *= 0.50;
 	else 
 		x_vel = abs(x_vel) * dash_dir_x * 0.9;
