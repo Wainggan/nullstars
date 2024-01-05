@@ -889,6 +889,13 @@ state_free = state_base.add()
 	x_vel = approach(x_vel, _kh_move * defs.move_speed, _x_accel);
 	if _kh_move != 0
 		dir = _kh_move;
+	if crouched && actor_collision(x, y + 1) && _kh != 0 {
+		if dir != _kh {
+			scale_x = 0.8;
+			scale_y = 1.2;
+		}
+		dir = _kh;
+	}
 	
 	// y direction logic
 	
@@ -1249,7 +1256,7 @@ state_dash = state_base.add()
 					walljump(-dir);
 				return;
 			}
-			if _kh != dir {
+			if _kh != dir && dash_timer <= 1 {
 				jumpdash();
 				return;
 			}

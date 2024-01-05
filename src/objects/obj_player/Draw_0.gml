@@ -61,7 +61,7 @@ else if state.is(state_free) {
 		if abs(x_vel) < 0.8
 			anim.set("idle")
 		else if abs(x_vel) > defs.move_speed + 2 {
-			anim.extract("run").speed = 1 / round(max(7 - abs(x_vel) * 3, 3))
+			anim.extract("run").speed = 1 / 3//round(max(3 - abs(x_vel) * 0.25, 2))
 			anim.set("run")
 		}
 		else {
