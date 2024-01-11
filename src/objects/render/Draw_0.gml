@@ -202,6 +202,47 @@ if global.config.graphics_lights {
 draw_surface(surf_bubbles, _cam_x, _cam_y)
 
 
+// reflections
+
+if global.config.graphics_reflectables {
+
+	if !surface_exists(surf_relection)
+		surf_relection = surface_create(_cam_w, _cam_h);
+
+	var _u_top = shader_get_uniform(shd_reflect, "u_top")
+	var _u_surf = shader_get_sampler_index(shd_reflect, "u_surf")
+	var _u_texel = shader_get_uniform(shd_reflect, "u_texel")
+
+	surface_set_target(surf_relection)
+	draw_clear_alpha(c_black, 0)
+
+	shader_set(shd_reflect)
+
+	texture_set_stage(_u_surf, surface_get_texture(application_surface))
+	shader_set_uniform_f(_u_texel, 1 / _cam_w, 1 / _cam_h);
+
+	with obj_decor_reflectable {
+		if !rectangle_in_rectangle(
+			_cam_x, _cam_y, _cam_x + _cam_w, _cam_y + _cam_h,
+			bbox_left, bbox_top, bbox_right, bbox_bottom
+		) continue;
+		var _top = (bbox_top - _cam_y) / _cam_h;
+		var _tr = floor_ext(_top, 0.01);
+		var _tg = floor_ext(frac(_top * 100), 0.01);
+		var _tb = floor_ext(frac(_top * 100 * 100), 0.01);
+		draw_sprite_stretched_ext(
+			sprite_index, 0, 
+			x - _cam_x, y - _cam_y, 
+			sprite_width, sprite_height,
+			make_color_rgb(floor(_tr * 256), floor(_tg * 256), floor(_tb * 256)), image_alpha
+		);
+	}
+
+	shader_reset()
+	surface_reset_target()
+
+}
+
 // level mask
 
 if !surface_exists(surf_mask)

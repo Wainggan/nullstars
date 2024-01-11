@@ -11,6 +11,7 @@ global.config = {
 	graphics_lights_rimblur: true,
 	graphics_atmosphere_particles: true,
 	graphics_atmosphere_overlay: true,
+	graphics_reflectables: true,
 	graphics_post_outline: true,
 	graphics_post_grading: true,
 	slow: false,

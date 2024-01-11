@@ -1,6 +1,17 @@
 
 var _cam = game_camera_get()
 
+// draw reflections
+
+if global.config.graphics_reflectables {
+
+	gpu_set_colorwriteenable(true, true, true, false);
+	draw_surface_ext(surf_relection, _cam.x, _cam.y, 1, 1, 0, #bbaaff, 0.5)
+	gpu_set_colorwriteenable(true, true, true, true);
+
+}
+
+
 if global.config.graphics_atmosphere_overlay {
 
 	gpu_set_tex_filter(true)

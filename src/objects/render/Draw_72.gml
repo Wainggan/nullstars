@@ -150,3 +150,4 @@ draw_surface(surf_ping, 0, 0);
 surface_reset_target()
 
 gpu_set_blendmode(bm_normal)
+

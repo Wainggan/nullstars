@@ -12,15 +12,15 @@ function game_level_get(_x, _y) {
 	}
 	return undefined;
 }
-function game_level_onscreen() {
+function game_level_onscreen(_pad = 0) {
 	var _cam = game_camera_get();
 	var _arr = []
 	
 	for (var i = 0; i < array_length(level.levels); i++) {
 		var _lvl = level.levels[i];
 		if rectangle_in_rectangle(
-				_cam.x, _cam.y,
-				_cam.x + _cam.w, _cam.y + _cam.h,
+				_cam.x - _pad, _cam.y - _pad,
+				_cam.x + _cam.w + _pad, _cam.y + _cam.h + _pad,
 				
 				_lvl.x, _lvl.y,
 				_lvl.x + _lvl.width,

@@ -11,7 +11,15 @@ function approach(_a, _b, _amount) {
 	    return max(_a - _amount, _b);
 }
 
-function round_ext(_value,_round) {
+function floor_ext(_value, _round) {
+	if _round <= 0 return _value;
+	return floor(_value / _round) * _round;
+}
+function ceil_ext(_value, _round) {
+	if _round <= 0 return _value;
+	return ceil(_value / _round) * _round;
+}
+function round_ext(_value, _round) {
 	if _round <= 0 return _value;
 	return round(_value / _round) * _round;
 }
