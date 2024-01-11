@@ -1,4 +1,10 @@
 
+if global.config.slow {
+	game_set_speed(10, gamespeed_fps)
+} else {
+	game_set_speed(60, gamespeed_fps)
+}
+
 var _k_cp = keyboard_check_pressed(ord("E")) - keyboard_check_pressed(ord("Q"));
 if _k_cp != 0 {
 	checkpoint += _k_cp;

@@ -1246,8 +1246,13 @@ state_dash = state_base.add()
 	
 	if buffer > 0 {
 		if grace > 0 {
-			jumpdash();
-			return;
+			if _kh != dir && dash_timer <= 3 {
+				jumpdash();
+				return;
+			} else if _kh == dir {
+				jumpdash();
+				return;
+			}
 		} else {
 			if checkWall(dir) {
 				if _kh != dir

@@ -13,6 +13,7 @@ global.config = {
 	graphics_atmosphere_overlay: true,
 	graphics_post_outline: true,
 	graphics_post_grading: true,
+	slow: false,
 }
 
 #macro WIDTH 960
