@@ -21,6 +21,7 @@
     {"name":"tweens","order":37,"path":"folders/graphics/tweens.yy",},
     {"name":"objects","order":5,"path":"folders/objects.yy",},
     {"name":"decor","order":30,"path":"folders/objects/decor.yy",},
+    {"name":"behaviour","order":3,"path":"folders/objects/decor/behaviour.yy",},
     {"name":"effects","order":13,"path":"folders/objects/effects.yy",},
     {"name":"oo","order":8,"path":"folders/objects/oo.yy",},
     {"name":"player","order":14,"path":"folders/objects/player.yy",},
@@ -29,7 +30,6 @@
     {"name":"timer","order":12,"path":"folders/objects/timer.yy",},
     {"name":"rooms","order":3,"path":"folders/rooms.yy",},
     {"name":"sounds","order":7,"path":"folders/sounds.yy",},
-    {"name":"behaviour","order":3,"path":"folders/objects/decor/behaviour.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"obj_areaname","order":18,"path":"objects/obj_areaname/obj_areaname.yy",},

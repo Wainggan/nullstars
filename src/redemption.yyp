@@ -32,6 +32,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"tweens","folderPath":"folders/graphics/tweens.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"objects","folderPath":"folders/objects.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"decor","folderPath":"folders/objects/decor.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"behaviour","folderPath":"folders/objects/decor/behaviour.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"effects","folderPath":"folders/objects/effects.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"oo","folderPath":"folders/objects/oo.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"player","folderPath":"folders/objects/player.yy",},
@@ -40,7 +41,6 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"timer","folderPath":"folders/objects/timer.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"rooms","folderPath":"folders/rooms.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"sounds","folderPath":"folders/sounds.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"behaviour","folderPath":"folders/objects/decor/behaviour.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles",},

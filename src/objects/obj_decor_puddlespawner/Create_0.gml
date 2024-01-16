@@ -1,3 +1,3 @@
 
-timer = 10000;
+timer = 60;
 schedule = 0;

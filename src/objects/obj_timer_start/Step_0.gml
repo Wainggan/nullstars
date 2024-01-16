@@ -13,6 +13,10 @@ if instance_exists(obj_player) {
 	}
 }
 
+if !_checkable {
+	last_check = false;
+}
+
 var _check = false;
 if instance_exists(obj_player) {
 	if dir == "right" {

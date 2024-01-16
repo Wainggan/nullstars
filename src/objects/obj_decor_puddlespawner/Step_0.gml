@@ -2,7 +2,7 @@
 var _cam = game_camera_get()
 var _pad = WIDTH;
 
-schedule += 20;
+schedule += 30;
 while schedule > 1 {
 	schedule--;
 	
