@@ -829,8 +829,10 @@ state_base = state.add()
 		
 	}
 	
-	light.x = x;
-	light.y = y - (crouched ? 8 : 20);
+	if instance_exists(light) {
+		light.x = x;
+		light.y = y - (crouched ? 8 : 20);
+	}
 	
 	if checkDeath(x, y) {
 		game_player_kill()
@@ -1525,8 +1527,10 @@ state_map = state_base.add()
 		game_camera_set_shake(2, 0.5)
 		game_set_pause(2)
 		
-		x = _c.x;
-		y = _c.y;
+		game_checkpoint_set(_c.index);
+		
+		instance_create_layer(obj_player.x, obj_player.y, "Instances", obj_player_death);
+		instance_destroy(obj_player);
 		
 		return;
 	}
