@@ -109,6 +109,7 @@
     {"id":{"name":"shd_back_4","path":"shaders/shd_back_4/shd_back_4.yy",},},
     {"id":{"name":"spr_tiles","path":"sprites/spr_tiles/spr_tiles.yy",},},
     {"id":{"name":"spr_grade_vaporwave","path":"sprites/spr_grade_vaporwave/spr_grade_vaporwave.yy",},},
+    {"id":{"name":"mus_hub_1","path":"sounds/mus_hub_1/mus_hub_1.yy",},},
     {"id":{"name":"scr_menu","path":"scripts/scr_menu/scr_menu.yy",},},
     {"id":{"name":"obj_spike_right","path":"objects/obj_spike_right/obj_spike_right.yy",},},
     {"id":{"name":"rm_game","path":"rooms/rm_game/rm_game.yy",},},
