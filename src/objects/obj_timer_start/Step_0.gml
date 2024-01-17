@@ -7,24 +7,24 @@ if instance_exists(obj_player) {
 			_checkable = true;
 	}
 	if dir == "up" || dir == "down" {
-		if obj_player.bbox_left > bbox_right 
-		&& obj_player.bbox_right < bbox_left
+		if obj_player.bbox_right > bbox_left
+		&& obj_player.bbox_left < bbox_right
 			_checkable = true;
 	}
 }
 
 var _check = false;
 if instance_exists(obj_player) {
-	if dir == "right" {
-		_check = bbox_left <= obj_player.bbox_left;
-	}
 	if dir == "left" {
 		_check = bbox_right >= obj_player.bbox_right;
 	}
-	if dir == "bottom" {
+	if dir == "right" {
+		_check = bbox_left <= obj_player.bbox_left;
+	}
+	if dir == "down" {
 		_check = bbox_top <= obj_player.bbox_top;
 	}
-	if dir == "top" {
+	if dir == "up" {
 		_check = bbox_bottom >= obj_player.bbox_bottom;
 	}
 }
