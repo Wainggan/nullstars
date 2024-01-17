@@ -29,11 +29,12 @@ if instance_exists(obj_player) {
 	}
 }
 
-var _start = !last_check && _check && _checkable;
-var _end = last_check && !_check && _checkable;
+var _start = !last_check && _check && _checkable && last_alive;
+var _end = last_check && !_check && _checkable && last_alive;
 
 last_check = _check;
 last_able = _checkable;
+last_alive = instance_exists(obj_player);
 
 if !game_timer_running() && _start {
 	game_timer_start(time * 60, self, ref);

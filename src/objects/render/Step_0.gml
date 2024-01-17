@@ -12,6 +12,8 @@ switch _biome {
 		break;
 	case "rain":
 		_amparts = ps_ambient_rain;
+		if !instance_exists(obj_decor_puddlespawner)
+			instance_create_layer(0, 0, "Instances", obj_decor_puddlespawner);
 		break;
 	case "smoke":
 		_amparts = ps_ambient_smoke;
