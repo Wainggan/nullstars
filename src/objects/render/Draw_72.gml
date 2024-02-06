@@ -12,62 +12,29 @@ draw_clear_alpha(c_black, 0);
 if !surface_exists(surf_background)
 	surf_background = surface_create(_cam_w, _cam_h);
 
-surface_set_target(surf_background);
+if background_anim < 1 {
+	surface_set_target(surf_background)
+	draw_clear_alpha(c_black, 1);
+	
+	var _from = game_background_get(background_from)
+	_from.draw()
 
-var _shader_list = [undefined, shd_back_glow, shd_back_boxes, shd_back_judge, shd_back_space, shd_back_soup, shd_back_blackhole];
-var _shader;
-
-_shader = _shader_list[background_from];
-
-if _shader == undefined || background_anim == 1 {
-	draw_sprite_ext(
-		spr_pixel, 0, 
-		0, 0, 
-		_cam_w, _cam_h, 
-		0, #000209, 1
-	);
-} else {
-	shader_set(_shader);
-
-	shader_set_uniform_f(shader_get_uniform(_shader, "u_offset"), _cam_x / 4, _cam_y / 4);
-	shader_set_uniform_f(shader_get_uniform(_shader, "u_resolution"), _cam_w, _cam_h);
-	shader_set_uniform_f(shader_get_uniform(_shader, "u_time"), current_time / 1000);
-
-	draw_sprite_ext(
-		spr_pixel, 0, 
-		0, 0, 
-		_cam_w, _cam_h, 
-		0, c_white, 1
-	);
+	surface_reset_target()
 }
 
-_shader = _shader_list[background_mode];
+surface_set_target(surf_ping)
+draw_clear_alpha(c_black, 1);
 
-if _shader == undefined {
-	draw_sprite_ext(
-		spr_pixel, 0, 
-		0, 0, 
-		_cam_w, _cam_h, 
-		0, #000209, background_anim
-	);
-} else {
-	shader_set(_shader);
+var _mode = game_background_get(background_mode)
+_mode.draw()
 
-	shader_set_uniform_f(shader_get_uniform(_shader, "u_offset"), _cam_x / 4, _cam_y / 4);
-	shader_set_uniform_f(shader_get_uniform(_shader, "u_resolution"), _cam_w, _cam_h);
-	shader_set_uniform_f(shader_get_uniform(_shader, "u_time"), current_time / 1000);
+surface_reset_target()
 
-	draw_sprite_ext(
-		spr_pixel, 0, 
-		0, 0, 
-		_cam_w, _cam_h, 
-		0, c_white, background_anim
-	);
-}
+surface_set_target(surf_background)
 
-shader_reset();
+draw_surface_ext(surf_ping, 0, 0, 1, 1, 0, c_white, background_anim)
 
-surface_reset_target();
+surface_reset_target()
 
 
 // background lights

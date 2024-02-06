@@ -95,3 +95,4 @@ if global.config.graphics_post_grading {
 	draw_surface_ext(surf_compose, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
 	
 }
+

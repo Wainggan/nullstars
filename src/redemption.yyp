@@ -41,6 +41,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"timer","folderPath":"folders/objects/timer.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"rooms","folderPath":"folders/rooms.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"sounds","folderPath":"folders/sounds.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"backgrounds","folderPath":"folders/graphics/backgrounds.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles",},
@@ -66,6 +67,7 @@
     {"id":{"name":"obj_spike_left","path":"objects/obj_spike_left/obj_spike_left.yy",},},
     {"id":{"name":"obj_lift_attack","path":"objects/obj_lift_attack/obj_lift_attack.yy",},},
     {"id":{"name":"obj_bounce_right","path":"objects/obj_bounce_right/obj_bounce_right.yy",},},
+    {"id":{"name":"spr_background_clouds","path":"sprites/spr_background_clouds/spr_background_clouds.yy",},},
     {"id":{"name":"spr_speed_base","path":"sprites/spr_speed_base/spr_speed_base.yy",},},
     {"id":{"name":"scr_globals","path":"scripts/scr_globals/scr_globals.yy",},},
     {"id":{"name":"spr_tiles_debug","path":"sprites/spr_tiles_debug/spr_tiles_debug.yy",},},
@@ -195,6 +197,7 @@
     {"id":{"name":"ac_tweens","path":"animcurves/ac_tweens/ac_tweens.yy",},},
     {"id":{"name":"spr_timer_pop","path":"sprites/spr_timer_pop/spr_timer_pop.yy",},},
     {"id":{"name":"shd_blend_overlay","path":"shaders/shd_blend_overlay/shd_blend_overlay.yy",},},
+    {"id":{"name":"spr_background_star","path":"sprites/spr_background_star/spr_background_star.yy",},},
     {"id":{"name":"obj_lift","path":"objects/obj_lift/obj_lift.yy",},},
     {"id":{"name":"ps_ambient_star","path":"particles/ps_ambient_star/ps_ambient_star.yy",},},
     {"id":{"name":"spr_none","path":"sprites/spr_none/spr_none.yy",},},
@@ -203,6 +206,7 @@
     {"id":{"name":"ft_timer","path":"fonts/ft_timer/ft_timer.yy",},},
     {"id":{"name":"scr_input","path":"scripts/scr_input/scr_input.yy",},},
     {"id":{"name":"spr_debug_oo_off","path":"sprites/spr_debug_oo_off/spr_debug_oo_off.yy",},},
+    {"id":{"name":"scr_background","path":"scripts/scr_background/scr_background.yy",},},
     {"id":{"name":"shd_light_shadow","path":"shaders/shd_light_shadow/shd_light_shadow.yy",},},
     {"id":{"name":"scr_player","path":"scripts/scr_player/scr_player.yy",},},
     {"id":{"name":"ps_ambient_dust","path":"particles/ps_ambient_dust/ps_ambient_dust.yy",},},
@@ -214,6 +218,7 @@
     {"id":{"name":"obj_camera_room","path":"objects/obj_camera_room/obj_camera_room.yy",},},
     {"id":{"name":"spr_checkpoint","path":"sprites/spr_checkpoint/spr_checkpoint.yy",},},
     {"id":{"name":"obj_Entity","path":"objects/obj_Entity/obj_Entity.yy",},},
+    {"id":{"name":"scr_draw","path":"scripts/scr_draw/scr_draw.yy",},},
     {"id":{"name":"spr_grade_solarization","path":"sprites/spr_grade_solarization/spr_grade_solarization.yy",},},
     {"id":{"name":"obj_box","path":"objects/obj_box/obj_box.yy",},},
     {"id":{"name":"spr_grade_saturate","path":"sprites/spr_grade_saturate/spr_grade_saturate.yy",},},
@@ -240,6 +245,6 @@
   ],
   "templateType": "game",
   "TextureGroups": [
-    {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"targets":-1,},
+    {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","autocrop":true,"border":8,"compressFormat":"bz2","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"targets":-1,},
   ],
 }
