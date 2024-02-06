@@ -19,6 +19,9 @@ var _shader;
 
 _shader = _shader_list[background_from];
 
+background_anim = 1
+
+
 if _shader == undefined || background_anim == 1 {
 	draw_sprite_ext(
 		spr_pixel, 0, 
@@ -42,6 +45,8 @@ if _shader == undefined || background_anim == 1 {
 }
 
 _shader = _shader_list[background_mode];
+
+_shader = shd_back_soup
 
 if _shader == undefined {
 	draw_sprite_ext(

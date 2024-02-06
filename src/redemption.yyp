@@ -51,6 +51,7 @@
     "IDEVersion": "2023.11.0.121",
   },
   "resources": [
+    {"id":{"name":"shd_back_soup","path":"shaders/shd_back_soup/shd_back_soup.yy",},},
     {"id":{"name":"obj_areaname","path":"objects/obj_areaname/obj_areaname.yy",},},
     {"id":{"name":"obj_decor_puddlespawner","path":"objects/obj_decor_puddlespawner/obj_decor_puddlespawner.yy",},},
     {"id":{"name":"obj_camera_parent","path":"objects/obj_camera_parent/obj_camera_parent.yy",},},
@@ -88,6 +89,7 @@
     {"id":{"name":"scr_file","path":"scripts/scr_file/scr_file.yy",},},
     {"id":{"name":"spr_debug_marker","path":"sprites/spr_debug_marker/spr_debug_marker.yy",},},
     {"id":{"name":"shd_light_compose","path":"shaders/shd_light_compose/shd_light_compose.yy",},},
+    {"id":{"name":"shd_back_blackhole","path":"shaders/shd_back_blackhole/shd_back_blackhole.yy",},},
     {"id":{"name":"scr_tweens","path":"scripts/scr_tweens/scr_tweens.yy",},},
     {"id":{"name":"obj_spike","path":"objects/obj_spike/obj_spike.yy",},},
     {"id":{"name":"render","path":"objects/render/render.yy",},},
