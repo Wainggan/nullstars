@@ -82,6 +82,6 @@ void main() {
     
     vec3 col = position(uv);
     
-    gl_FragColor = vec4(col,1.0);
+    gl_FragColor = vec4(col * v_color.rgb, v_color.a);
     
 }

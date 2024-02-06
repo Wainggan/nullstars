@@ -14,13 +14,10 @@ if !surface_exists(surf_background)
 
 surface_set_target(surf_background);
 
-var _shader_list = [undefined, shd_back_1, shd_back_2, shd_back_3, shd_back_4];
+var _shader_list = [undefined, shd_back_glow, shd_back_boxes, shd_back_judge, shd_back_space, shd_back_soup, shd_back_blackhole];
 var _shader;
 
 _shader = _shader_list[background_from];
-
-background_anim = 1
-
 
 if _shader == undefined || background_anim == 1 {
 	draw_sprite_ext(
@@ -45,8 +42,6 @@ if _shader == undefined || background_anim == 1 {
 }
 
 _shader = _shader_list[background_mode];
-
-_shader = shd_back_soup
 
 if _shader == undefined {
 	draw_sprite_ext(

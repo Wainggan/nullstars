@@ -51,6 +51,12 @@ switch _background {
 	case "space":
 		_background_mode = 4;
 		break
+	case "soup":
+		_background_mode = 5;
+		break
+	case "blackhole":
+		_background_mode = 6;
+		break
 }
 
 if background_mode != _background_mode {
