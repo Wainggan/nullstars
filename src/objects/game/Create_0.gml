@@ -24,4 +24,6 @@ for (var i = 0; i < array_length(_names); i++) {
 	dbg_checkbox(ref_create(global.config, _names[i]), _names[i])
 }
 
+gc_target_frame_time(1000)
+
 
