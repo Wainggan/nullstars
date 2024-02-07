@@ -58,7 +58,7 @@ vec3 position(vec2 uv) {
     col = pow(col, vec3(2.0));
     */
     
-    col = smoothstep(0.5, 0.52, col);
+    col = smoothstep(0.5, 0.5, col);
     
     return col;
 }

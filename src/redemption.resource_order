@@ -9,6 +9,7 @@
     {"name":"meta","order":5,"path":"folders/game/meta.yy",},
     {"name":"util","order":6,"path":"folders/game/util.yy",},
     {"name":"graphics","order":2,"path":"folders/graphics.yy",},
+    {"name":"backgrounds","order":50,"path":"folders/graphics/backgrounds.yy",},
     {"name":"colorgrading","order":47,"path":"folders/graphics/colorgrading.yy",},
     {"name":"debug","order":3,"path":"folders/graphics/debug.yy",},
     {"name":"fonts","order":24,"path":"folders/graphics/fonts.yy",},
@@ -30,7 +31,6 @@
     {"name":"timer","order":12,"path":"folders/objects/timer.yy",},
     {"name":"rooms","order":3,"path":"folders/rooms.yy",},
     {"name":"sounds","order":7,"path":"folders/sounds.yy",},
-    {"name":"backgrounds","order":50,"path":"folders/graphics/backgrounds.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"shd_back_soup","order":5,"path":"shaders/shd_back_soup/shd_back_soup.yy",},
