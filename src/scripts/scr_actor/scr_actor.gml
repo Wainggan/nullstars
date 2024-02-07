@@ -52,46 +52,45 @@ function actor_move_y(_amount, _callback = undefined) {
 
 function actor_collision(_x, _y) {
 	
+	static __list = ds_list_create()
+	
 	for (var i = 0; i < array_length(level.levels); i++) {
 		if place_meeting(_x, _y, level.levels[i].tiles) return true;
 	}
 	
-	var _list = ds_list_create();
+	ds_list_clear(__list)
 	
-	instance_place_list(_x, _y, obj_Solid, _list, false);
+	instance_place_list(_x, _y, obj_Solid, __list, false);
 	
-	for (var i = 0; i < ds_list_size(_list); i++) {
-		var _o = _list[| i];
+	for (var i = 0; i < ds_list_size(__list); i++) {
+		var _o = __list[| i];
 		if _o.collidable {
 			
 			if object_get_parent(_o.object_index) == obj_ss {
 				
 				if _o.object_index == obj_ss_up && _o.bbox_top >= bbox_bottom {
-					ds_list_destroy(_list)
+					ds_list_destroy(__list)
 					return true;
 				}
 				if _o.object_index == obj_ss_down && _o.bbox_bottom <= bbox_top {
-					ds_list_destroy(_list)
+					ds_list_destroy(__list)
 					return true;
 				}
 				if _o.object_index == obj_ss_left && _o.bbox_left >= bbox_right {
-					ds_list_destroy(_list)
+					ds_list_destroy(__list)
 					return true;
 				}
 				if _o.object_index == obj_ss_right && _o.bbox_right <= bbox_left {
-					ds_list_destroy(_list)
+					ds_list_destroy(__list)
 					return true;
 				}
 				
 			} else {
-				ds_list_destroy(_list)
 				return true;
 			}
 		}
 	}
 	
-	ds_list_destroy(_list)
-
 	return false;
 }
 
