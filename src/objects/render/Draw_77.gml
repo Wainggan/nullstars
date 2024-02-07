@@ -46,23 +46,9 @@ gpu_set_colorwriteenable(true, true, true, true);
 
 surface_reset_target();
 
-var _p = [
-	spr_grade_base,
-	spr_grade_decorrelation_1,
-	spr_grade_decorrelation_2,
-	spr_grade_decorrelation_3,
-	spr_grade_muddy,
-	spr_grade_snow,
-	spr_grade_saturate,
-	spr_grade_cracked,
-	spr_grade_meltingpot,
-	spr_grade_contrast_lightness,
-	spr_grade_bump_yellow,
-	spr_grade_mild,
-	spr_grade_waterfall,
-]
 
-if keyboard_check_pressed(ord("Y")) mode = (mode + 1) % array_length(_p)
+
+if keyboard_check_pressed(ord("Y")) mode = (mode + 1) % array_length(p)
 
 if global.config.graphics_post_grading {
 
@@ -72,7 +58,7 @@ if global.config.graphics_post_grading {
 	surface_set_target(surf_lut)
 	draw_clear_alpha(c_black, 1)
 	gpu_set_colorwriteenable(true, true, true, false);
-		draw_sprite(_p[mode], 0, 0, 0);
+		draw_sprite(p[mode], 0, 0, 0);
 	gpu_set_colorwriteenable(true, true, true, true);
 	surface_reset_target()
 

@@ -12,23 +12,35 @@ function game_level_get(_x, _y) {
 	}
 	return undefined;
 }
-function game_level_onscreen(_pad = 0) {
+function game_level_onscreen() {
 	var _cam = game_camera_get();
-	var _arr = []
 	
-	for (var i = 0; i < array_length(level.levels); i++) {
-		var _lvl = level.levels[i];
-		if rectangle_in_rectangle(
-				_cam.x - _pad, _cam.y - _pad,
-				_cam.x + _cam.w + _pad, _cam.y + _cam.h + _pad,
+	static _pad = 16
+	
+	static __out = []
+	static __cache_x = 0
+	static __cache_y = 0
+	
+	if __cache_x != _cam.x || __cache_y != _cam.y {
+		__out = []
+		__cache_x = _cam.x
+		__cache_y = _cam.y
+		
+		for (var i = 0; i < array_length(level.levels); i++) {
+			var _lvl = level.levels[i];
+			if rectangle_in_rectangle(
+					_cam.x - _pad, _cam.y - _pad,
+					_cam.x + _cam.w + _pad, _cam.y + _cam.h + _pad,
 				
-				_lvl.x, _lvl.y,
-				_lvl.x + _lvl.width,
-				_lvl.y + _lvl.height) {
-			array_push(_arr, _lvl)
+					_lvl.x, _lvl.y,
+					_lvl.x + _lvl.width,
+					_lvl.y + _lvl.height) {
+				array_push(__out, _lvl)
+			}
 		}
 	}
-	return _arr;
+	
+	return __out;
 }
 
 function game_level_get_biome(_x, _y) {

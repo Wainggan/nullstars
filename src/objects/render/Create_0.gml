@@ -102,3 +102,19 @@ setup_lights = function(){
 	}
 	
 }
+
+p = [
+	spr_grade_base,
+	spr_grade_decorrelation_1,
+	spr_grade_decorrelation_2,
+	spr_grade_decorrelation_3,
+	spr_grade_muddy,
+	spr_grade_snow,
+	spr_grade_saturate,
+	spr_grade_cracked,
+	spr_grade_meltingpot,
+	spr_grade_contrast_lightness,
+	spr_grade_bump_yellow,
+	spr_grade_mild,
+	spr_grade_waterfall,
+]

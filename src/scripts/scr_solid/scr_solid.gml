@@ -10,11 +10,6 @@ function solid_move(_xv, _yv) {
 	var _moveY = round(y_rem);
 	
 	if _moveX != 0 || _moveY != 0 {
-		// todo: optimize
-		var _riding = [];
-		with obj_Actor {
-			if riding(other) array_push(_riding, self);
-		}
 
 		collidable = false;
 
@@ -26,7 +21,7 @@ function solid_move(_xv, _yv) {
 					if place_meeting(x, y, other) {
 						actor_move_x(other.bbox_right - bbox_left, squish);
 						x_lift = _xv;
-					} else if array_get_index(_riding, self) != -1 {
+					} else if riding(other) {
 						actor_move_x(_moveX);
 						x_lift = _xv;
 					}
@@ -36,7 +31,7 @@ function solid_move(_xv, _yv) {
 					if place_meeting(x, y, other) {
 						actor_move_x(other.bbox_left - bbox_right, squish);
 						x_lift = _xv;
-					} else if array_get_index(_riding, self) != -1 {
+					} else if riding(other) {
 						actor_move_x(_moveX);
 						x_lift = _xv;
 					}
@@ -52,7 +47,7 @@ function solid_move(_xv, _yv) {
 					if place_meeting(x, y, other) {
 						actor_move_y(other.bbox_bottom - bbox_top, squish);
 						y_lift = _yv;
-					} else if array_get_index(_riding, self) != -1 {
+					} else if riding(other) {
 						actor_move_y(_moveY);
 						y_lift = _yv;
 					}
@@ -62,7 +57,7 @@ function solid_move(_xv, _yv) {
 					if place_meeting(x, y, other) {
 						actor_move_y(other.bbox_top - bbox_bottom, squish);
 						y_lift = _yv;
-					} else if array_get_index(_riding, self) != -1 {
+					} else if riding(other) {
 						actor_move_y(_moveY);
 						y_lift = _yv;
 					}
@@ -76,14 +71,9 @@ function solid_move(_xv, _yv) {
 }
 
 function solid_sim(_xv, _yv, _target = obj_Actor) {
-
-	var _riding = [];
-	with _target {
-		if riding(other) array_push(_riding, self);
-	}
 	
 	with _target {
-		if array_get_index(_riding, self) != -1 {
+		if riding(other) {
 			actor_move_x(_xv);
 			actor_move_y(_yv);
 			x_lift = _xv;

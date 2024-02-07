@@ -774,11 +774,12 @@ state_base = state.add()
 		}
 	});
 	
+	static __boxable = [obj_box, obj_ball] // @todo: need to change
 	
 	if state.is(state_free) || state.is(state_dash) {
 		
 		if anim_jab_timer && !buffer {		
-			var _inst = instance_place(x, y, [obj_box, obj_ball]);
+			var _inst = instance_place(x, y, __boxable);
 			if _inst {
 				game_set_pause(4)
 				
@@ -803,7 +804,7 @@ state_base = state.add()
 			_inst.state.change(_inst.state_recover);
 		}
 		
-		var _inst = collision_circle(x, y, 32, [obj_box, obj_ball], false, true);
+		var _inst = collision_circle(x, y, 32, __boxable, false, true);
 		if _inst && !holding && INPUT.check("grab") && !hold_cooldown {
 			game_set_pause(5);
 			hold_begin(_inst)
@@ -937,9 +938,11 @@ state_free = state_base.add()
 	
 	y_vel = approach(y_vel, _term_vel, _y_accel)
 	
-	var _wall = actor_collision(x + defs.wall_distance, y) - actor_collision(x - defs.wall_distance, y);
+	// var _wall = actor_collision(x + defs.wall_distance, y) - actor_collision(x - defs.wall_distance, y);
 	
-	var _inst = collision_circle(x, y, 14, [obj_box, obj_ball], false, true);
+	static __boxable = [obj_box, obj_ball] // @todo: need to change
+	
+	var _inst = collision_circle(x, y, 14, __boxable, false, true);
 	if _inst {
 		grace = defs.grace;
 		grace_target = _inst;

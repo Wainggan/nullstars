@@ -41,7 +41,7 @@ if _bgm_asset != bgm_asset {
 		audio_sound_gain(bgm, 1, 10000)
 		bgm_anim_state = 2;
 		
-		instance_create_layer(0, 0, "Meta", obj_musicname, { name: bgm_name })
+		//instance_create_layer(0, 0, "Meta", obj_musicname, { name: bgm_name })
 	}
 }
 
@@ -54,7 +54,7 @@ if bgm_anim_state == 1 {
 			audio_sound_gain(bgm, 1, 10000)
 			bgm_anim_state = 2;
 			
-			instance_create_layer(0, 0, "Meta", obj_musicname, { name: bgm_name })
+			//instance_create_layer(0, 0, "Meta", obj_musicname, { name: bgm_name })
 		}
 	}
 }

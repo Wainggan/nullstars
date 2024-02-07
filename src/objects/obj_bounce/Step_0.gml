@@ -6,7 +6,7 @@ if place_meeting(x, y, obj_player) {
 	}
 }
 
-var _inst = instance_place(x, y, [obj_ball, obj_box])
+var _inst = instance_place(x, y, boxable)
 if _inst {
 	with _inst {
 		actor_move_y(-abs(other.bbox_top - bbox_bottom));

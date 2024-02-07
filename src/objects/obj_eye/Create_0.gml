@@ -13,7 +13,7 @@ pet_chain = instance_create_layer(x + 8, y + 8, layer, obj_blank, {
 //	image_xscale: sprite_width, image_yscale: sprite_height, visible: true, collidable: false
 //})
 
-scan = undefined;
+scan = {};
 
 activate = function(){
 	state.change(state_attack)
@@ -46,12 +46,12 @@ state_idle = state.add()
 	
 	var _activate = false;
 	var _coords = actor_scan(x, y, _dir);
-	scan = {
-		x1: min(x, _coords.x), y1: min(y, _coords.y),
-		x2: max(x + sprite_width, _coords.x + sprite_width),
-		y2: max(y + sprite_height, _coords.y + sprite_height),
-		x: _coords.x, y: _coords.y
-	};
+	scan.x1 = min(x, _coords.x)
+	scan.y1 = min(y, _coords.y)
+	scan.x2 = max(x + sprite_width, _coords.x + sprite_width)
+	scan.y2 = max(y + sprite_height, _coords.y + sprite_height)
+	scan.x = _coords.x
+	scan.y = _coords.y
 	var _activate = rectangle_in_rectangle(
 		obj_player.bbox_left, obj_player.bbox_top,
 		obj_player.bbox_right, obj_player.bbox_bottom,
@@ -88,12 +88,12 @@ state_attack = state.add()
 	pet_wall.collidable = false;
 	
 	var _coords = actor_scan(x, y, attack_dir);
-	scan = {
-		x1: min(x, _coords.x), y1: min(y, _coords.y),
-		x2: max(x + sprite_width, _coords.x + sprite_width),
-		y2: max(y + sprite_height, _coords.y + sprite_height),
-		x: _coords.x, y: _coords.y
-	};
+	scan.x1 = min(x, _coords.x)
+	scan.y1 = min(y, _coords.y)
+	scan.x2 = max(x + sprite_width, _coords.x + sprite_width)
+	scan.y2 = max(y + sprite_height, _coords.y + sprite_height)
+	scan.x = _coords.x
+	scan.y = _coords.y
 	
 	var _x_vel = clamp(scan.x - chain_x, -spd, spd);
 	var _y_vel = clamp(scan.y - chain_y, -spd, spd);
