@@ -69,19 +69,15 @@ function actor_collision(_x, _y) {
 			if object_get_parent(_o.object_index) == obj_ss {
 				
 				if _o.object_index == obj_ss_up && _o.bbox_top >= bbox_bottom {
-					ds_list_destroy(__list)
 					return true;
 				}
 				if _o.object_index == obj_ss_down && _o.bbox_bottom <= bbox_top {
-					ds_list_destroy(__list)
 					return true;
 				}
 				if _o.object_index == obj_ss_left && _o.bbox_left >= bbox_right {
-					ds_list_destroy(__list)
 					return true;
 				}
 				if _o.object_index == obj_ss_right && _o.bbox_right <= bbox_left {
-					ds_list_destroy(__list)
 					return true;
 				}
 				
