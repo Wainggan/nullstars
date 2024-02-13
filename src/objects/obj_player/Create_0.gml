@@ -242,7 +242,7 @@ tail = yarn_create(tail_length, function(_p, i){
 draw_tail = function(_tip = #ff00ff, _blend = c_white){
 	self._tip = _tip;
 	self._blend = _blend;
-	tail.each_reverse(function(_p, j) {
+	static __drawer = method(self, function(_p, j) {
 		var _c = merge_color(c_white, _tip, clamp(j - 3, 0, tail_length) / tail_length);
 		_c = multiply_color(_c, _blend);
 		draw_sprite_ext(
@@ -253,6 +253,40 @@ draw_tail = function(_tip = #ff00ff, _blend = c_white){
 			0, _c, 1
 		);
 	})
+	tail.each_reverse(__drawer)
+}
+
+update_tail = function(_p, i, _points){
+	var _len = array_length(_points)
+	var _scale_inv = (_len - i) / _len;
+	
+	if holding {
+		_p.damp = 0.8
+		_p.weight = 6;
+		
+		var _t1 = floor(_len * 0.5)
+		var _t2 = floor(_len * 0.75)
+		
+		_p.direction = (90 + 80 * -dir)
+		if i > _t1 {
+			_p.direction += (i - _t1) * -30 * dir;
+			if i > _t2 {
+				_p.direction += (i - _t2) * 60 * dir;
+			}
+		} else {
+			
+		}
+		
+		
+	} else {
+		_p.damp = 0.8
+		_p.weight = 1;
+		
+		var _d = sin(current_time / 1000 - i * 0.6)
+		_p.x_move = -dir * (_scale_inv * 0.7 + 0.2)
+		_p.y_move = _d * (_scale_inv * 0.2 + 0.1) + 0.3 * _scale_inv
+		
+	}
 }
 
 light = instance_create_layer(x, y, "Lights", obj_light, {
@@ -727,7 +761,7 @@ state_base = state.add()
 			actor_move_x(_d)
 	}
 	
-	actor_move_y(y_vel, function(){
+	static __collide_x = function(){
 		if state.is(state_swim) {
 			if swim_bullet {
 				swim_dir = point_direction(0, 0, x_vel, -y_vel);
@@ -739,7 +773,8 @@ state_base = state.add()
 			}
 			y_vel = 0;
 		}
-	});
+	}
+	actor_move_y(y_vel, __collide_x);
 	
 	
 	if true {
@@ -764,7 +799,7 @@ state_base = state.add()
 			actor_move_y(-_d)
 	}
 
-	actor_move_x(x_vel, function(){
+	static __collide_y = function(){
 		if state.is(state_swim) {
 			if swim_bullet {
 				swim_dir = point_direction(0, 0, -x_vel, y_vel);
@@ -772,7 +807,8 @@ state_base = state.add()
 		} else {
 			x_vel = 0;
 		}
-	});
+	}
+	actor_move_x(x_vel, __collide_y);
 	
 	static __boxable = [obj_box, obj_ball] // @todo: need to change
 	

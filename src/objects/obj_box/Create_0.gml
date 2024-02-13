@@ -13,22 +13,24 @@ frame = function(){
 
 	y_vel = min(y_vel, global.defs.terminal_vel);
 	
-	actor_move_x(x_vel, function(){
+	static __collide_x = function(){
 		if abs(x_vel) > 0.25 x_vel = -x_vel * 0.5;
 		else x_vel = 0;
-	});
+	};
+	actor_move_x(x_vel, __collide_x);
 	
 	if actor_collision(x, y + 1) {
 		x_vel = approach(x_vel, 0, 0.8)
 	}
 
-	actor_move_y(y_vel, function(){
+	static __collide_y = function(){
 		if abs(y_vel) > 2 {
 			y_vel = -y_vel * 0.4;
 			x_vel *= 0.5;
 		}
 		else y_vel = 0;
-	});
+	};
+	actor_move_y(y_vel, __collide_y);
 }
 
 depth = -20;

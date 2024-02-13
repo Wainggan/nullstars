@@ -17,16 +17,18 @@ frame = function(){
 		x_vel = approach(x_vel, 4 * sign(x_vel), 0.2)
 	}
 
-	actor_move_x(x_vel, function(){
+	static __collide_x = function(){
 		x_vel = -x_vel * 1;
-	});
+	};
+	actor_move_x(x_vel, __collide_x);
 
-	actor_move_y(y_vel, function(){
+	static __collide_y = function(){
 		if abs(y_vel) > 2 {
 			y_vel = -y_vel * 0.4;
 		}
 		else y_vel = 0;
-	});
+	};
+	actor_move_y(y_vel, __collide_y);
 }
 
 depth = -20;
