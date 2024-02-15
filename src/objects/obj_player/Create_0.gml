@@ -198,6 +198,8 @@ dash_timer = 0;
 dash_grace = 0;
 dash_recover = 0;
 dash_kick_buffer = 0;
+dash_start_x_vel = x_vel;
+dash_start_y_vel = y_vel;
 
 dash_left = 0;
 
@@ -238,14 +240,6 @@ tail = yarn_create(tail_length, function(_p, i){
 	_p.size = max(parabola_mid(3, 7, 6, i) + 3, 6)
 	_p.round = floor(clamp(i / (tail_length / 3), 1, 1))
 })
-
-draw_tail = function(_tip = #ff00ff, _blend = c_white){
-	
-	//astatic __drawer = method(self, )
-	static __fuck = self
-	
-	tail.each_reverse(__drawer)
-}
 
 tail_draw = function(_p, j) {
 	var _c = merge_color(c_white, _tip, clamp(j - 3, 0, tail_length) / tail_length);
@@ -298,8 +292,8 @@ light = instance_create_layer(x, y, "Lights", obj_light, {
 	intensity: 0.5
 });
 
-checkWall = function(_dir){
-	return actor_collision(x + _dir * defs.wall_distance, y);
+checkWall = function(_dir, _dist = defs.wall_distance){
+	return actor_collision(x + _dir * _dist, y);
 }
 
 checkDeath_point = function(_x, _y, _xv = 0, _yv = 0) {
@@ -667,23 +661,6 @@ bounce = function(_dir = 0){
 
 }
 
-endDash = function(){
-	
-	if !state.is(state_dash) return;
-	
-	grace = 0;
-	gravity_hold_peak = 8
-		
-	if dash_dir_y == 0 {
-		x_vel = clamp(x_vel * 0.8, -4, 4);
-		y_vel = -0.25;
-	} else {
-		x_vel *= 0.9;
-	}
-	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
-	
-}
-
 canUncrouch = function(){
 	var _last = mask_index;
 	mask_index = spr_debug_player;
@@ -1031,7 +1008,7 @@ state_free = state_base.add()
 			}
 		} else {
 			
-			var _close = actor_collision(x, y + 32)
+			var _close = actor_collision(x, y + 32) || checkWall(-1, 20) || checkWall(1, 20)
 			if _close && dash_grace > 0 {
 				dash_grace = 2;
 			}
@@ -1220,7 +1197,7 @@ state_dashset = state_base.add()
 	
 	dash_dir_y = _kv;
 	
-	if _kv == -1 {
+	if false && _kv == -1 {
 		x_vel = max(abs(x_vel), 6, 4 + min(abs(x_vel), 4));
 		x_vel *= dash_dir_x
 		y_vel = -4;
@@ -1230,7 +1207,7 @@ state_dashset = state_base.add()
 		key_hold = dash_dir_x;
 		
 		dash_kick_buffer = 16;
-		dash_recover = 8
+		dash_recover = 8;
 		
 		dash_left -= 1;
 		
@@ -1243,10 +1220,40 @@ state_dashset = state_base.add()
 	state.change(state_dash);
 })
 
+endDash = function(){
+	
+	if !state.is(state_dash) return;
+	
+	grace = 0;
+	gravity_hold = 14
+	
+	
+	if dash_dir_y == 0 {
+		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.8) * sign(x_vel);
+		y_vel = -0.25;
+	} else if dash_dir_y == -1  {
+		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.5) * sign(x_vel);
+		key_hold_timer = 4;
+		key_hold = dash_dir_x;
+		
+		dash_kick_buffer = 20;
+		dash_recover = 4;
+	} else {
+		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.2) * sign(x_vel);
+		//x_vel *= 0.9;
+	}
+	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+	
+}
+
+
 state_dash = state_base.add()
 .set("enter", function(){
 	dash_timer = 6;
 	dash_left -= 1;
+	
+	dash_start_x_vel = x_vel;
+	dash_start_y_vel = y_vel;
 	
 	var _x_vel = x_vel;
 	
@@ -1263,13 +1270,23 @@ state_dash = state_base.add()
 	
 	x_vel = max(abs(x_vel), abs(_x_vel)) * sign(x_vel)
 	
+	if dash_dir_y == -1 {
+		y_vel *= 0.75
+	}
+	
 	dir = sign(x_vel)
+	
+	dash_recover = dash_timer
 	
 	event.call("dive")
 })
 .set("leave", function(){
-	dash_grace = 8;
-	dash_recover = 1;
+	
+	if dash_dir_y != -1 {
+		dash_recover = 2;
+		dash_grace = 8;
+	}
+	
 	if canUncrouch() {
 		crouched = false
 	}
@@ -1299,10 +1316,12 @@ state_dash = state_base.add()
 			}
 		} else {
 			if checkWall(dir) {
-				if _kh != dir
-					wallbounce(-dir);
-				else
-					walljump(-dir);
+				//if _kh != dir
+				//	wallbounce(-dir);
+				//else
+				if dash_dir_y == -1
+					jumpbounce(dir)
+				else walljump(-dir);
 				return;
 			}
 			if _kh != dir && dash_timer <= 1 {
