@@ -1,9 +1,9 @@
 
 /// @func approach(a, b, amount)
-/// @param {Real} _a
-/// @param {Real} _b
-/// @param {Real} _amount
-/// @returns {Real}
+/// @param {real} _a
+/// @param {real} _b
+/// @param {real} _amount
+/// @returns {real}
 function approach(_a, _b, _amount) {
 	if (_a < _b)
 	    return min(_a + _amount, _b); 

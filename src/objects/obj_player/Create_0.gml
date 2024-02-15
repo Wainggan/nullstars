@@ -240,20 +240,23 @@ tail = yarn_create(tail_length, function(_p, i){
 })
 
 draw_tail = function(_tip = #ff00ff, _blend = c_white){
-	self._tip = _tip;
-	self._blend = _blend;
-	static __drawer = method(self, function(_p, j) {
-		var _c = merge_color(c_white, _tip, clamp(j - 3, 0, tail_length) / tail_length);
-		_c = multiply_color(_c, _blend);
-		draw_sprite_ext(
-			spr_player_tail, 0, 
-			round_ext(_p.x, _p.round), round_ext(_p.y, _p.round), 
-			//round_ext(_p.x, 0), round_ext(_p.y, 0), 
-			_p.size / 16, _p.size / 16, 
-			0, _c, 1
-		);
-	})
+	
+	//astatic __drawer = method(self, )
+	static __fuck = self
+	
 	tail.each_reverse(__drawer)
+}
+
+tail_draw = function(_p, j) {
+	var _c = merge_color(c_white, _tip, clamp(j - 3, 0, tail_length) / tail_length);
+	_c = multiply_color(_c, _blend);
+	draw_sprite_ext(
+		spr_player_tail, 0, 
+		round_ext(_p.x, _p.round), round_ext(_p.y, _p.round), 
+		//round_ext(_p.x, 0), round_ext(_p.y, 0), 
+		_p.size / 16, _p.size / 16, 
+		0, _c, 1
+	);
 }
 
 update_tail = function(_p, i, _points){

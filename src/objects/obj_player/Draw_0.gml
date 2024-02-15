@@ -101,12 +101,14 @@ tail.position((_tpos_x ?? x) + _meta.x * dir, (_tpos_y ?? y) + _meta.y);
 
 tail.update(, update_tail)
 
-
 var _color = dash_left == 0 ? #00ffff : #ff00ff;
 var _mult = dash_left == 0 ? #ccbbcc : c_white;
 
+self._tip = _color;
+self._blend = _mult;
+
 if !_meta.front
-	draw_tail(_color, _mult);
+	tail.each_reverse(tail_draw)
 
 draw_sprite_ext(
 	_sprite,
@@ -122,7 +124,7 @@ draw_sprite_ext(
 //);
 
 if _meta.front
-	draw_tail(_color, _mult);
+	tail.each_reverse(tail_draw)
 
 
 
