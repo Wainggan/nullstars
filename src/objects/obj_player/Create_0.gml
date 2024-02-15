@@ -952,6 +952,10 @@ state_free = state_base.add()
 		_term_vel = defs.terminal_vel_fast
 	}
 	
+	if INPUT.check("jump") {
+		_term_vel -= 1
+	}
+	
 	y_vel = approach(y_vel, _term_vel, _y_accel)
 	
 	// var _wall = actor_collision(x + defs.wall_distance, y) - actor_collision(x - defs.wall_distance, y);
