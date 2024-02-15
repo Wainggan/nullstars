@@ -1012,7 +1012,7 @@ state_free = state_base.add()
 			}
 		} else {
 			
-			var _close = actor_collision(x, y + 32) || checkWall(-1, 20) || checkWall(1, 20)
+			var _close = actor_collision(x, y + 32) || checkWall(-1, 12) || checkWall(1, 12)
 			if _close && dash_grace > 0 {
 				dash_grace = 2;
 			}
