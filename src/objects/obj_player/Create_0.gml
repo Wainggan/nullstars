@@ -1231,22 +1231,23 @@ endDash = function(){
 	grace = 0;
 	gravity_hold = 14
 	
+	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 	
 	if dash_dir_y == 0 {
 		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.8) * sign(x_vel);
 		y_vel = -0.25;
 	} else if dash_dir_y == -1  {
-		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.5) * sign(x_vel);
+		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.4) * sign(x_vel);
 		key_hold_timer = 4;
 		key_hold = dash_dir_x;
 		
 		dash_kick_buffer = 20;
-		dash_recover = 4;
+		dash_recover = 3;
 	} else {
 		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.2) * sign(x_vel);
 		//x_vel *= 0.9;
 	}
-	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+	
 	
 }
 
