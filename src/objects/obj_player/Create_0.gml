@@ -1237,7 +1237,7 @@ endDash = function(){
 		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.8) * sign(x_vel);
 		y_vel = -0.25;
 	} else if dash_dir_y == -1  {
-		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.4) * sign(x_vel);
+		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.5) * sign(x_vel);
 		key_hold_timer = 4;
 		key_hold = dash_dir_x;
 		
@@ -1247,7 +1247,6 @@ endDash = function(){
 		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.2) * sign(x_vel);
 		//x_vel *= 0.9;
 	}
-	
 	
 }
 
@@ -1262,10 +1261,15 @@ state_dash = state_base.add()
 	
 	var _x_vel = x_vel;
 	
-	if dash_dir_x == sign(x_vel)
+	if dash_dir_x == sign(x_vel) {
 		x_vel *= 0.50;
-	else 
-		x_vel = abs(x_vel) * dash_dir_x * 0.9;
+	} else {
+		if dash_dir_y == -1 {
+			x_vel = abs(x_vel) * dash_dir_x * 0.75;
+		} else {
+			x_vel = abs(x_vel) * dash_dir_x * 0.9;
+		}
+	}
 	y_vel = 0;
 	var _dir = point_direction(0, 0, dash_dir_x, dash_dir_y);
 	dash_dir_x_vel = lengthdir_x(7, _dir);
