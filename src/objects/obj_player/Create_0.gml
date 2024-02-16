@@ -1237,7 +1237,7 @@ endDash = function(){
 		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.8) * sign(x_vel);
 		y_vel = -0.25;
 	} else if dash_dir_y == -1  {
-		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.5) * sign(x_vel);
+		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.6) * sign(x_vel);
 		key_hold_timer = 4;
 		key_hold = dash_dir_x;
 		
