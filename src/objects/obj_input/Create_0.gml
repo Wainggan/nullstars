@@ -29,12 +29,13 @@ manager.create_input("down")
 .add_gamepad_button(gp_padd)
 
 manager.create_input("jump")
-.add_keyboard_key(ord("X"))
+.add_keyboard_key(ord("Z"))
+.add_keyboard_key(ord("C"))
 .add_gamepad_button(gp_face1)
 .add_gamepad_button(gp_face4)
 
 manager.create_input("dash")
-.add_keyboard_key(ord("Z"))
+.add_keyboard_key(ord("X"))
 .add_gamepad_button(gp_face2)
 .add_gamepad_button(gp_face3)
 
