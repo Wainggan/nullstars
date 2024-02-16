@@ -1241,7 +1241,7 @@ endDash = function(){
 		key_hold_timer = 4;
 		key_hold = dash_dir_x;
 		
-		dash_kick_buffer = 20;
+		dash_kick_buffer = 8;
 		dash_recover = 3;
 	} else {
 		x_vel = lerp(abs(x_vel), abs(dash_start_x_vel), 0.2) * sign(x_vel);
