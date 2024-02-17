@@ -57,7 +57,7 @@ else if state.is(state_free) {
 	if crouched && !anim_longjump_timer {
 		anim.set("crouch")
 	}
-	else if actor_collision(x, y + 1) {
+	else if actor_collision(x, y + 1) && y_vel >= 0 {
 		if abs(x_vel) < 0.8
 			anim.set("idle")
 		else if abs(x_vel) > defs.move_speed + 2 {
