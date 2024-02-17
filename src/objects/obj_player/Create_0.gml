@@ -177,6 +177,9 @@ grace_solid = noone;
 buffer = 0;
 buffer_dash = 0;
 
+grace_vel = 0
+grace_vel_timer = 0
+
 gravity_hold_peak = 0;
 gravity_hold = 0;
 
@@ -449,11 +452,11 @@ jumpbounce = function(_dir){
 	}
 	
 	if _kh == _dir {
-		y_vel = min(-6.5, y_vel);
+		y_vel = min(-6.5, y_vel, -min(abs(x_vel) + 1, 8));
 		x_vel = -_dir * 2
 		key_hold_timer = 9;
 	} else {
-		y_vel = min(-6.2, y_vel);
+		y_vel = min(-6.2, y_vel, -min(max(abs(x_vel) + 1, grace_vel_timer > 0 ? abs(grace_vel) : 0), 10));
 		x_vel = -_dir * 4
 		key_hold_timer = 5;
 	}
@@ -699,6 +702,7 @@ state_base = state.add()
 	dash_recover -= 1;
 	dash_kick_buffer -= 1;
 	hold_cooldown -= 1;
+	grace_vel_timer -= 1;
 	
 	if !grace {
 		grace_target = noone;
@@ -785,6 +789,10 @@ state_base = state.add()
 				swim_dir = point_direction(0, 0, -x_vel, y_vel);
 			}
 		} else {
+			if abs(x_vel) > 2 {
+				grace_vel = x_vel
+				grace_vel_timer = 14
+			}
 			x_vel = 0;
 		}
 	}
@@ -914,6 +922,15 @@ state_free = state_base.add()
 			scale_y = 1.2;
 		}
 		dir = _kh;
+	}
+	
+	if abs(grace_vel) > 1 && (sign(x_vel) == 0 || sign(x_vel) == sign(grace_vel)) && grace_vel_timer > 0 {
+		if abs(x_vel) > 1 && sign(grace_vel) == _kh {
+			x_vel = grace_vel
+			grace_vel = 0
+		}
+	} else {
+		grace_vel = 0
 	}
 	
 	// y direction logic
