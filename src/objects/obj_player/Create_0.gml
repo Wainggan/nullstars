@@ -741,7 +741,7 @@ state_base = state.add()
 			actor_move_x(_d)
 	}
 	
-	static __collide_x = function(){
+	static __collide_y = function(){
 		if state.is(state_swim) {
 			if swim_bullet {
 				swim_dir = point_direction(0, 0, x_vel, -y_vel);
@@ -754,7 +754,7 @@ state_base = state.add()
 			y_vel = 0;
 		}
 	}
-	actor_move_y(y_vel, __collide_x);
+	actor_move_y(y_vel, __collide_y);
 	
 	
 	if true {
@@ -779,7 +779,7 @@ state_base = state.add()
 			actor_move_y(-_d)
 	}
 
-	static __collide_y = function(){
+	static __collide_x = function(){
 		if state.is(state_swim) {
 			if swim_bullet {
 				swim_dir = point_direction(0, 0, -x_vel, y_vel);
@@ -788,7 +788,7 @@ state_base = state.add()
 			x_vel = 0;
 		}
 	}
-	actor_move_x(x_vel, __collide_y);
+	actor_move_x(x_vel, __collide_x);
 	
 	static __boxable = [obj_box, obj_ball] // @todo: need to change
 	
