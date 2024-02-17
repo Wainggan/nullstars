@@ -456,7 +456,7 @@ jumpbounce = function(_dir){
 		x_vel = -_dir * 2
 		key_hold_timer = 9;
 	} else {
-		y_vel = min(-6.2, y_vel, -min(max(abs(x_vel) + 1, grace_vel_timer > 0 ? abs(grace_vel) : 0), 10));
+		y_vel = min(-6.2, y_vel, -min(abs(x_vel) + 1, 9));
 		x_vel = -_dir * 4
 		key_hold_timer = 5;
 	}
