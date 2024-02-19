@@ -68,6 +68,13 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		tl_tiles, 
 		_lv_w, _lv_h
 	);
+	_lvl.decor_back_layer = layer_create(109);
+	_lvl.decor_back_tiles = layer_tilemap_create(
+		_lvl.decor_back_layer,
+		_lv_x * TILESIZE, _lv_y * TILESIZE,
+		tl_tiles, 
+		_lv_w, _lv_h
+	);
 	_lvl.background_layer = layer_create(110);
 	_lvl.background_tiles = layer_tilemap_create(
 		_lvl.background_layer,
@@ -123,6 +130,9 @@ for (var i = 0; i < array_length(file.levels); i++) {
 			
 			case "Decor":
 				_targetTiles ??= _layer.gridTiles;
+			case "DecorUnder":
+				_targetTiles ??= _layer.gridTiles;
+				_targetLayer ??= _lvl.decor_back_tiles
 			case "_Decor":
 				_targetLayer ??= _lvl.decor_tiles
 			case "Tiles":
