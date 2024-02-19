@@ -6,6 +6,11 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 
 draw_clear_alpha(c_black, 0);
 
+if surface_exists(surf_background) {
+	gpu_set_blendmode_ext_sepalpha(bm_one, bm_zero, bm_zero, bm_one)
+	draw_surface_ext(surf_background, 0, 0, 1, 1, 0, c_white, 1)
+	gpu_set_blendmode(bm_normal)
+}
 
 // background
 
