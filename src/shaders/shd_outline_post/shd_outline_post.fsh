@@ -14,10 +14,10 @@ void main()
 	float collect = 0.0;
 	
 	collect += texture2D(gm_BaseTexture, v_vTexcoord + vec2(1.0, 0.0) * u_texel).a;
-	collect += texture2D(gm_BaseTexture, v_vTexcoord + vec2(0.0, 1.0) * u_texel).a; // uhh
+	collect += texture2D(gm_BaseTexture, v_vTexcoord + vec2(0.0, 1.0) * u_texel).a;
 	collect += texture2D(gm_BaseTexture, v_vTexcoord - vec2(1.0, 0.0) * u_texel).a;
 	collect += texture2D(gm_BaseTexture, v_vTexcoord - vec2(0.0, 1.0) * u_texel).a;
 	collect += texture2D(gm_BaseTexture, v_vTexcoord - vec2(0.0, 2.0) * u_texel).a;
 	
-	gl_FragColor = mix(vec4(v_vColour.rgb, min(collect, 1.0) * v_vColour.a), spot, spot.a);
+	gl_FragColor = mix(vec4(v_vColour.rgb, min(collect, 1.0) * v_vColour.a), spot, smoothstep(0.0, 0.02, spot.a));
 }
