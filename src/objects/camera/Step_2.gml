@@ -21,16 +21,24 @@ if _weights != noone {
 	}
 }
 
-_weights = collision_point(_tx, _ty, obj_camera_room, true, true);
+_weights = noone;
 var _inside = true;
 
-with _weights
+with obj_camera_room {
+	var _check = collision_point(_tx, _ty, self, true, false);
+	if _check != noone && (_weights == noone || _check.priority > _weights.priority) {
+		_weights = _check;
+		_inside = true;
+	} else {
+		continue;
+	}
 	if !point_in_rectangle(
 		_tx, _ty, 
 		x + crop_x1 * TILESIZE, y + crop_y1 * TILESIZE, 
 		x + sprite_width - crop_x2 * TILESIZE,
 		y + sprite_height - crop_y2 * TILESIZE
 	) _inside = false;
+}
 
 var _changed = false;
 
