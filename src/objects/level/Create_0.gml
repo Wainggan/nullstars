@@ -8,18 +8,6 @@ levels = [];
 max_width = room_width;
 max_height = room_height;
 
-// for the one time i need this
-function hex_to_dec(_hex) {
-    var _dec = 0;
- 
-    static _dig = "0123456789ABCDEF";
-    var _len = string_length(_hex);
-    for (var i = 1; i <= _len; i += 1) {
-        _dec = _dec << 4 | (string_pos(string_char_at(_hex, i), _dig) - 1);
-    }
- 
-    return _dec;
-}
 
 for (var i = 0; i < array_length(file.levels); i++) {
 	
