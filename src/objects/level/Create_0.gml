@@ -262,8 +262,9 @@ load = function (_base) {
 								_field.image_yscale = floor(_e.height / TILESIZE);
 							}
 						}
-						
 					}
+					
+					_field.uid = _e.iid;
 					
 					var _pos_x = _e.__worldX,
 						_pos_y = _e.__worldY;
