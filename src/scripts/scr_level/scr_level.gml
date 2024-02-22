@@ -7,7 +7,7 @@ function game_level_get(_x, _y) {
 				_lvl.x, _lvl.y,
 				_lvl.x + _lvl.width,
 				_lvl.y + _lvl.height) {
-			return _lvl;
+			return _lvl.part;
 		}
 	}
 	return undefined;
@@ -26,8 +26,8 @@ function game_level_onscreen() {
 		__cache_x = _cam.x
 		__cache_y = _cam.y
 		
-		for (var i = 0; i < array_length(level.levels); i++) {
-			var _lvl = level.levels[i];
+		for (var i = 0; i < array_length(level.loaded); i++) {
+			var _lvl = level.loaded[i];
 			if rectangle_in_rectangle(
 					_cam.x - _pad, _cam.y - _pad,
 					_cam.x + _cam.w + _pad, _cam.y + _cam.h + _pad,
@@ -35,7 +35,7 @@ function game_level_onscreen() {
 					_lvl.x, _lvl.y,
 					_lvl.x + _lvl.width,
 					_lvl.y + _lvl.height) {
-				array_push(__out, _lvl)
+				array_push(__out, _lvl.part)
 			}
 		}
 	}

@@ -5,12 +5,16 @@ file = game_json_open("level.ldtk");
 
 levels = [];
 
-max_width = room_width;
-max_height = room_height;
+loaded = [];
 
+x_min = 0;
+y_min = 0;
 
+x_max = room_width;
+y_max = room_height;
+
+// partition
 for (var i = 0; i < array_length(file.levels); i++) {
-	
 	var _level = file.levels[i];
 	
 	var _lv_x = floor(_level.worldX / TILESIZE),
@@ -18,8 +22,39 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		_lv_w = floor(_level.pxWid / TILESIZE),
 		_lv_h = floor(_level.pxHei / TILESIZE);
 	
-	max_width = max(max_width, (_lv_x + _lv_w) * TILESIZE);
-	max_height = max(max_height, (_lv_y + _lv_h) * TILESIZE);
+	var _lvl = {};
+	_lvl.x = _lv_x * TILESIZE;
+	_lvl.y = _lv_y * TILESIZE;
+	_lvl.width = _lv_w * TILESIZE;
+	_lvl.height = _lv_h * TILESIZE;
+	
+	_lvl.base = _level;
+	_lvl.loaded = false;
+	_lvl.part = -1;
+	
+	array_push(levels, _lvl)
+}
+
+load = function (_base) {
+	
+	if _base.loaded {
+		return;
+	}
+	_base.loaded = true;
+	array_push(loaded, _base)
+	
+	var _level = _base.base;
+	
+	var _lv_x = floor(_level.worldX / TILESIZE),
+		_lv_y = floor(_level.worldY / TILESIZE),
+		_lv_w = floor(_level.pxWid / TILESIZE),
+		_lv_h = floor(_level.pxHei / TILESIZE);
+	
+	x_min = max(x_min, _lv_x);
+	y_min = max(y_min, _lv_y);
+	
+	x_max = max(x_max, (_lv_x + _lv_w) * TILESIZE);
+	y_max = max(y_max, (_lv_y + _lv_h) * TILESIZE);
 	
 	var _lvl = {};
 	_lvl.x = _lv_x * TILESIZE;
@@ -101,8 +136,7 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		_lvl.fields[$ _f.__identifier] = _val;
 	}
 	
-	
-	array_push(levels, _lvl);
+	_base.part = _lvl
 	
 	var _entity_refs = {};
 	var _entity_ref_defer = [];
@@ -278,7 +312,73 @@ for (var i = 0; i < array_length(file.levels); i++) {
 		
 	}
 	
+	render.setup_light(_lvl)
+	
+}
+
+unload = function (_base) {
+	if !_base.loaded {
+		return;
+	}
+	_base.loaded = false;
+	
+	array_delete(loaded, array_get_index(loaded, _base), 1);
+	
+	if _base.part.vb vertex_delete_buffer(_base.part.vb)
+	
+	layer_destroy(_base.part.layer)
+	layer_tilemap_destroy(_base.part.tiles)
+	
+	layer_destroy(_base.part.decor_layer)
+	layer_tilemap_destroy(_base.part.decor_tiles)
+	
+	layer_destroy(_base.part.spikes_layer)
+	layer_tilemap_destroy(_base.part.spikes_tiles)
+	
+	layer_destroy(_base.part.tilemap_layer)
+	layer_tilemap_destroy(_base.part.tilemap_tiles)
+	
+	layer_destroy(_base.part.decor_back_layer)
+	layer_tilemap_destroy(_base.part.decor_back_tiles)
+	
+	layer_destroy(_base.part.background_layer)
+	layer_tilemap_destroy(_base.part.background_tiles)
+	
+	// instances get destroyed by cultural osmosis later
+	// (allows things like boxes to be moved outside an unloaded level without getting destroyed)
+	
+}
+
+check = function () {
+	
+	var _cam = game_camera_get()
+	
+	for (var i = 0; i < array_length(levels); i++) {
+		var _lvl = levels[i]
+		if _cam.x <= _lvl.x || _cam.x + _cam.w <= _lvl.x + _lvl.width
+		&& _cam.y <= _lvl.y || _cam.y + _cam.h <= _lvl.y + _lvl.height {
+			load(_lvl)
+		}
+	}
+	
+}
+
+// jesus christ
+update = function () {
+	
+	var _cam = game_camera_get()
+	
+	for (var i = 0; i < array_length(loaded); i++) {
+		var _lvl = loaded[i]
+		if _cam.x <= _lvl.x || _cam.x + _cam.w <= _lvl.x + _lvl.width
+		&& _cam.y <= _lvl.y || _cam.y + _cam.h <= _lvl.y + _lvl.height {
+			continue; // yeag
+		} else {
+			unload(_lvl)
+		}
+	}
+	
 }
 
 
-render.setup_lights()
+

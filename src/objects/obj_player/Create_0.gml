@@ -306,9 +306,9 @@ checkDeath_point = function(_x, _y, _xv = 0, _yv = 0) {
 	
 	static _size = 5;
 	
-	for (var i = 0; i < array_length(level.levels); i++) {
+	for (var i = 0; i < array_length(level.loaded); i++) {
 		
-		var _tm = level.levels[i].spikes_tiles;
+		var _tm = level.loaded[i].part.spikes_tiles;
 		var _tile = tilemap_get_at_pixel(_tm, _x, _y);
 		
 		if _tile == 0 continue;

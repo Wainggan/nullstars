@@ -54,8 +54,8 @@ function actor_collision(_x, _y) {
 	
 	static __list = ds_list_create()
 	
-	for (var i = 0; i < array_length(level.levels); i++) {
-		if place_meeting(_x, _y, level.levels[i].tiles) return true;
+	for (var i = 0; i < array_length(level.loaded); i++) {
+		if place_meeting(_x, _y, level.loaded[i].part.tiles) return true;
 	}
 	
 	ds_list_clear(__list)
