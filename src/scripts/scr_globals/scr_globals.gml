@@ -14,6 +14,9 @@ global.config = {
 	graphics_reflectables: true,
 	graphics_post_outline: true,
 	graphics_post_grading: true,
+	graphics_up_bubble_wobble: true,
+	graphics_up_bubble_outline: true,
+	graphics_up_bubble_spike: true,
 	slow: false,
 }
 

@@ -70,8 +70,10 @@ surface_set_target(surf_bubbles);
 draw_clear_alpha(c_black, 0)
 
 with obj_spike_bubble {
-	var _size = round_ext(wave(0.95, 1.1, 8, offset), 0.05)
-
+	var _size = 1
+	if global.config.graphics_up_bubble_wobble
+		_size = round_ext(wave(0.95, 1.1, 8, offset), 0.05)
+	
 	draw_sprite_ext(spr_spike_bubble, 0, x - _cam_x, y - _cam_y, _size, _size, 0, c_black, 1);
 	
 	draw_sprite_ext(spr_spike_bubble, 1, x - _cam_x, y - _cam_y, size, size, offset % 360, c_black, 1);
@@ -87,11 +89,17 @@ draw_sprite_tiled_ext(spr_spike_stars, 0, floor(- _cam_x / 4), floor(- _cam_y / 
 draw_sprite_tiled_ext(spr_spike_stars, 0, floor(- _cam_x / 8), floor(- _cam_y / 8), 2, 2, merge_color(c_white, _col, 0.25), 1)
 
 with obj_spike_bubble {
-	var _size = round_ext(wave(0.8, 2, 18, offset + 1000), 0.05)
-	var _off_x = round_ext(wave(-6, 6, 24, offset * 2), 1)
-	var _off_y = round_ext(wave(-6, 6, 24, offset * 3), 1)
-
-	draw_sprite_ext(spr_spike_x, 0, x + _off_x - _cam_x, y + _off_y - _cam_y, _size, _size, 0, #49f273, 1)
+	var _size = 1;
+	var _off_x = 0;
+	var _off_y = 0;
+	if global.config.graphics_up_bubble_wobble {
+		_size = round_ext(wave(0.8, 2, 18, offset + 1000), 0.05)
+		_off_x = round_ext(wave(-6, 6, 24, offset * 2), 1)
+		_off_y = round_ext(wave(-6, 6, 24, offset * 3), 1)
+	}
+	
+	if global.config.graphics_up_bubble_spike
+		draw_sprite_ext(spr_spike_x, 0, x + _off_x - _cam_x, y + _off_y - _cam_y, _size, _size, 0, #49f273, 1)
 }
 
 gpu_set_colorwriteenable(true, true, true, true)
@@ -102,17 +110,25 @@ gpu_set_blendmode_ext(bm_one, bm_zero)
 
 surface_set_target(surf_ping)
 
-shader_set(shd_outline)
+if global.config.graphics_up_bubble_outline {
 
-var _u_kernel = shader_get_uniform(shd_outline, "u_kernel")
-var _u_texel = shader_get_uniform(shd_outline, "u_texel")
+	shader_set(shd_outline)
 
-shader_set_uniform_f(_u_kernel, 2);
-shader_set_uniform_f(_u_texel, 1 / _cam_w, 1 / _cam_h);
+	var _u_kernel = shader_get_uniform(shd_outline, "u_kernel")
+	var _u_texel = shader_get_uniform(shd_outline, "u_texel")
 
-draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, #49f273, 1);
+	shader_set_uniform_f(_u_kernel, 2);
+	shader_set_uniform_f(_u_texel, 1 / _cam_w, 1 / _cam_h);
 
-shader_reset()
+	draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, #49f273, 1);
+
+	shader_reset()
+
+} else {
+	
+	draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, #49f273, 1);
+	
+}
 
 surface_reset_target()
 surface_set_target(surf_bubbles)
