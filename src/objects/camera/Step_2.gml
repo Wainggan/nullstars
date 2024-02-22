@@ -84,6 +84,7 @@ if target == obj_player_death {
 	_ts = 0.8
 }
 
+/*
 var _w = room_width, _h = room_height;
 
 if instance_exists(level) {
@@ -93,7 +94,7 @@ if instance_exists(level) {
 
 _tx = clamp(_tx, _cam_w / 2, _w - _cam_w / 2);
 _ty = clamp(_ty, _cam_h / 2, _h - _cam_h / 2);
-
+*/
 
 x = lerp(x, _tx, _ts);
 y = lerp(y, _ty, _ts);
