@@ -20,6 +20,7 @@ show_debug_overlay(true);
 dbg_view("config", false, 40, 40, 300, 300)
 
 var _names = struct_get_names(global.config);
+array_sort(_names, true)
 for (var i = 0; i < array_length(_names); i++) {
 	dbg_checkbox(ref_create(global.config, _names[i]), _names[i])
 }
