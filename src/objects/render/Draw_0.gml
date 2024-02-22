@@ -86,8 +86,6 @@ if global.config.graphics_lights {
 	var _u_s_position = shader_get_uniform(shd_light_shadow, "u_position")
 	var _u_s_z = shader_get_uniform(shd_light_shadow, "u_z")
 
-	var _vb = lights_vb;
-
 	gpu_set_ztestenable(true);
 	//gpu_set_zwriteenable(true);
 
