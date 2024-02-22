@@ -50,7 +50,7 @@ if _weights != noone {
 	
 }
 
-
+/*
 var _w = room_width, _h = room_height;
 
 if instance_exists(level) {
@@ -60,7 +60,7 @@ if instance_exists(level) {
 
 _tx = clamp(_tx, _cam_w / 2, _w - _cam_w / 2);
 _ty = clamp(_ty, _cam_h / 2, _h - _cam_h / 2);
-
+*/
 
 x = _tx;
 y = _ty;
