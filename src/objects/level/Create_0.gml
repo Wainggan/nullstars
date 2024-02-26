@@ -356,8 +356,8 @@ check = function () {
 	
 	for (var i = 0; i < array_length(levels); i++) {
 		var _lvl = levels[i]
-		if _cam.x <= _lvl.x || _cam.x + _cam.w <= _lvl.x + _lvl.width
-		&& _cam.y <= _lvl.y || _cam.y + _cam.h <= _lvl.y + _lvl.height {
+		if _lvl.x <= _cam.x || _cam.x + _cam.w <= _lvl.x + _lvl.width
+		&& _lvl.y <= _cam.y || _cam.y + _cam.h <= _lvl.y + _lvl.height {
 			load(_lvl)
 		}
 	}
@@ -371,8 +371,8 @@ update = function () {
 	
 	for (var i = 0; i < array_length(loaded); i++) {
 		var _lvl = loaded[i]
-		if _cam.x <= _lvl.x || _cam.x + _cam.w <= _lvl.x + _lvl.width
-		&& _cam.y <= _lvl.y || _cam.y + _cam.h <= _lvl.y + _lvl.height {
+		if _lvl.x <= _cam.x || _cam.x + _cam.w <= _lvl.x + _lvl.width
+		&& _lvl.y <= _cam.y || _cam.y + _cam.h <= _lvl.y + _lvl.height {
 			continue; // yeag
 		} else {
 			unload(_lvl)
