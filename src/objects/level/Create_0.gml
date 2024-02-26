@@ -200,6 +200,8 @@ load = function (_base) {
 			case "Meta":
 			case "Instances":
 			
+				break;
+			
 				var _entities = _layer.entityInstances;
 				
 				for (var n = 0; n < array_length(_entities); n++) {
