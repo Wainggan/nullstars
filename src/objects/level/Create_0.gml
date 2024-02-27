@@ -168,11 +168,13 @@ load = function (_base) {
 					
 					var _td = _targetTiles[n];
 					
-					var _tx = round(_td.px[0] / TILESIZE);
-					var _ty = round(_td.px[1] / TILESIZE);
+					var _t_x = round(_td.px[0] / TILESIZE);
+					var _t_y = round(_td.px[1] / TILESIZE);
+					var _t_off_x = abs(_t_x * TILESIZE - _td.px[0])
+					var _t_off_y = abs(_t_y * TILESIZE - _td.px[1])
 					var _t = _td.t;
 					
-					tilemap_set(_targetLayer, _t, _tx, _ty);
+					tilemap_set(_targetLayer, _t, _t_x, _t_y);
 					
 				}
 				

@@ -1,4 +1,53 @@
 
+// #macro TILE_SIZE 16
+#macro TILE_BIT_OFF_X 0b00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000
+#macro TILE_BIT_OFF_y 0b00000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000
+
+function tilemap_get_tileset_count_pot(tilemap) {
+	var tileset = tilemap_get_tileset(tilemap);
+	var tilecount = tileset_get_info(tileset).tile_count;
+	return power(2, ceil(log2(tilecount)));
+}
+
+function tilemap_setup_mask(_tilemap, _offset, _length = 0) {
+	var _count = tilemap_get_tileset_count_pot(_tilemap);
+	
+	tilemap_set_mask(_tilemap, tile_mirror | tile_flip | tile_rotate | (_count - 1));
+	
+	var _bitoffset = -1;
+	while floor(_count) > 0 {
+		_count = _count * 0.5;
+		_bitoffset += 1;
+	}
+	
+	return _bitoffset;
+}
+
+function mask_from(_length) {
+	return power(_length, 2) - 1
+}
+
+function mask_length(_mask) {
+	var _count = _mask
+	var _length = 0
+	while floor(_count) > 0 {
+		_count *= 0.5
+		_length++
+	}
+	return _length
+}
+
+function string_mask(_mask) {
+	var _str = ""
+	while floor(_mask) > 0 {
+		_str = (_mask & 1 ? "1" : "0") + _str
+		_mask *= 0.5
+	}
+	return string_repeat("0", abs(string_length(_str) - 31)) + _str
+}
+
+
+
 function game_level_get(_x, _y) {
 	for (var i = 0; i < array_length(level.levels); i++) {
 		var _lvl = level.levels[i];
