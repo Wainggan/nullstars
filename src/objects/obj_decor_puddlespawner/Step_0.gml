@@ -10,7 +10,7 @@ while schedule > 1 {
 		_y = irandom_range(_cam.y - _pad, _cam.y + _cam.h + _pad);
 	var _level = game_level_get(_x, _y);
 	
-	if !_level continue;
+	if !_level || !_level.loaded continue;
 	
 	if tilemap_get_at_pixel(_level.tiles, _x, _y) != 0 continue;
 	

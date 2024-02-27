@@ -136,6 +136,7 @@ load = function (_base) {
 		_lvl.fields[$ _f.__identifier] = _val;
 	}
 	
+	_lvl.loaded = true;
 	_base.part = _lvl
 	
 	var _entity_refs = {};
@@ -324,6 +325,7 @@ unload = function (_base) {
 		return;
 	}
 	_base.loaded = false;
+	_base.part.loaded = false;
 	
 	array_delete(loaded, array_get_index(loaded, _base), 1);
 	
