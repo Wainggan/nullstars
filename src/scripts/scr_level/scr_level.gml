@@ -47,6 +47,156 @@ function string_mask(_mask) {
 }
 
 
+// does not support entity defs. should be handled case by case instead
+function level_ldtk_field(_field) {
+	var _val = _field.__value;
+	switch _field.__type {
+		case "Point":
+								
+			_val = {
+				x: _val.cx * TILESIZE,
+				y: _val.cy * TILESIZE
+			};
+								
+			break;
+		case "Color":
+
+			var _r = string_copy(_val, 2, 2);
+			var _g = string_copy(_val, 2 + 2, 2);
+			var _b = string_copy(_val, 2 + 4, 2);
+			_r = hex_to_dec(_r);
+			_g = hex_to_dec(_g);
+			_b = hex_to_dec(_b);
+			_val = make_color_rgb(_r, _g, _b);
+			
+			break;
+		case "EntityRef":
+			throw "attempted to parse entityref with level_ldtk_field()"
+	}
+	return _val
+}
+
+function level_ldtk_intgrid(_data, _tilemap) {
+	for (var i = 0; i < array_length(_data.intGridCsv); i++) {
+
+		var _t = _data.intGridCsv[i];
+		var _t_x = i % _data.__cWid;
+		var _t_y = floor(i / _data.__cWid);
+
+		tilemap_set(_tilemap, _t, _t_x, _t_y);
+
+	}
+}
+
+function level_ldtk_tiles(_data, _tilemap) {
+	for (var i = 0; i < array_length(_data); i++) {
+
+		var _td = _data[i];
+
+		var _t_x = round(_td.px[0] / TILESIZE);
+		var _t_y = round(_td.px[1] / TILESIZE);
+		var _t = _td.t;
+
+		tilemap_set(_tilemap, _t, _t_x, _t_y);
+
+	}
+}
+
+function level_get_vf() {
+	static __out = -1;
+	if __out != -1 return __out
+	vertex_format_begin()
+	vertex_format_add_position()
+	vertex_format_add_texcoord()
+	__out = vertex_format_end()
+	return __out
+}
+
+function Level() constructor {
+	
+	loaded = false;
+	
+	x = 0;
+	y = 0;
+	width = 0;
+	height = 0;
+	
+	fields = {}
+	
+	// collisions
+	layer = -1;
+	tiles = -1;
+	
+	// front tiles
+	layer_front = -1;
+	tiles_front = -1;
+	
+	front_vb = -1;
+	
+	// background tiles
+	layer_back = -1;
+	tiles_back = -1;
+	
+	
+	shadow_vb = -1;
+	
+	// should only be run once, _level struct to be destroyed later
+	static init = function(_level) {
+		
+		var _lv_x = floor(_level.worldX / TILESIZE),
+			_lv_y = floor(_level.worldY / TILESIZE),
+			_lv_w = floor(_level.pxWid / TILESIZE),
+			_lv_h = floor(_level.pxHei / TILESIZE);
+	
+		x = _lv_x * TILESIZE;
+		y = _lv_y * TILESIZE;
+		width = _lv_w * TILESIZE;
+		height = _lv_h * TILESIZE;
+		
+		for (var i_field = 0; i_field < array_length(_level.fieldInstances); i_field++) {
+			var _f = _level.fieldInstances[i_field]
+			fields[$ _f.__identifier] = level_ldtk_field(_f);
+		}
+		
+		layer = layer_create(0)
+		tiles = layer_tilemap_create(layer, x, y, tl_debug, width / TILESIZE, height / TILESIZE);
+		
+		layer_front = layer_create(0)
+		tiles_front = layer_tilemap_create(layer_front, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
+				
+		layer_back = layer_create(110)
+		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
+		
+		for (var i_layer = 0; i_layer < array_length(_level.layerInstances); i_layer++) {
+			var _layer = _level.layerInstances[i_layer];
+
+			switch _layer.__identifier {
+				
+				case "Background": 
+					level_ldtk_tiles(_layer.autoLayerTiles, tiles_back);
+					break;
+				
+			}
+		}
+	}
+	
+	static load = function() {
+		
+		if loaded return;
+		loaded = true;
+		
+	}
+	
+	static unload = function() {
+		
+		if !loaded return;
+		loaded = false;
+	
+	}
+	
+	
+}
+
 
 function game_level_get(_x, _y) {
 	for (var i = 0; i < array_length(level.levels); i++) {
@@ -56,7 +206,7 @@ function game_level_get(_x, _y) {
 				_lvl.x, _lvl.y,
 				_lvl.x + _lvl.width,
 				_lvl.y + _lvl.height) {
-			return _lvl.part;
+			return _lvl;
 		}
 	}
 	return undefined;
@@ -75,8 +225,8 @@ function game_level_onscreen() {
 		__cache_x = _cam.x
 		__cache_y = _cam.y
 		
-		for (var i = 0; i < array_length(level.loaded); i++) {
-			var _lvl = level.loaded[i];
+		for (var i = 0; i < array_length(level.levels); i++) {
+			var _lvl = level.levels[i];
 			if rectangle_in_rectangle(
 					_cam.x - _pad, _cam.y - _pad,
 					_cam.x + _cam.w + _pad, _cam.y + _cam.h + _pad,
@@ -84,7 +234,7 @@ function game_level_onscreen() {
 					_lvl.x, _lvl.y,
 					_lvl.x + _lvl.width,
 					_lvl.y + _lvl.height) {
-				array_push(__out, _lvl.part)
+				array_push(__out, _lvl)
 			}
 		}
 	}

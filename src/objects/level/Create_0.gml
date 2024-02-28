@@ -15,27 +15,19 @@ y_max = room_height;
 
 // partition
 for (var i = 0; i < array_length(file.levels); i++) {
-	var _level = file.levels[i];
+	var _level = new Level()
 	
-	var _lv_x = floor(_level.worldX / TILESIZE),
-		_lv_y = floor(_level.worldY / TILESIZE),
-		_lv_w = floor(_level.pxWid / TILESIZE),
-		_lv_h = floor(_level.pxHei / TILESIZE);
+	_level.init(file.levels[i]);
 	
-	var _lvl = {};
-	_lvl.x = _lv_x * TILESIZE;
-	_lvl.y = _lv_y * TILESIZE;
-	_lvl.width = _lv_w * TILESIZE;
-	_lvl.height = _lv_h * TILESIZE;
-	
-	_lvl.base = _level;
-	_lvl.loaded = false;
-	_lvl.part = -1;
-	
-	array_push(levels, _lvl)
+	array_push(levels, _level);
 }
 
 load = function (_base) {
+	
+	_base.load()
+	
+	
+	return;
 	
 	if _base.loaded {
 		return;
@@ -321,6 +313,11 @@ load = function (_base) {
 }
 
 unload = function (_base) {
+	
+	_base.unload()
+	
+	return;
+	
 	if !_base.loaded {
 		return;
 	}
@@ -374,8 +371,8 @@ update = function () {
 	
 	var _cam = game_camera_get()
 	
-	for (var i = 0; i < array_length(loaded); i++) {
-		var _lvl = loaded[i]
+	for (var i = 0; i < array_length(levels); i++) {
+		var _lvl = levels[i]
 		if (_lvl.x <= _cam.x + _cam.w && _cam.x <= _lvl.x + _lvl.width)
 		&& (_lvl.y <= _cam.y + _cam.h && _cam.y <= _lvl.y + _lvl.height) {
 			continue; // yeag
