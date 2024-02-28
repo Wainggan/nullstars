@@ -172,6 +172,65 @@ function Level() constructor {
 
 			switch _layer.__identifier {
 				
+				case "Tiles":
+					// construct stupid vertex buffer stuff
+					// the things i do for 2 pixels
+
+					front_vb = vertex_create_buffer()
+					
+					vertex_begin(front_vb, level_get_vf())
+					
+					var _ts_info = tileset_get_info(tl_tiles);
+					var _ts_width = _ts_info.tile_width + 2 * _ts_info.tile_horizontal_separator;
+					var _ts_height = _ts_info.tile_height + 2 * _ts_info.tile_vertical_separator;
+					
+					var _tex_rx = texture_get_texel_width(_ts_info.texture)
+					var _tex_ry = texture_get_texel_height(_ts_info.texture)
+					
+					var _uv_x = tileset_get_uvs(tl_tiles)[0]
+					var _uv_y = tileset_get_uvs(tl_tiles)[1]
+					
+					for (var i = 0; i < array_length(_layer.autoLayerTiles); i++) {
+						var _td = _layer.autoLayerTiles[i];
+						
+						var _t = _td.t;
+						var _t_x = _td.px[0];
+						var _t_y = _td.px[1];
+						
+						var _ts_tile_x = (_t mod _ts_info.tile_columns) * _ts_width;
+						var _ts_tile_y = (_t div _ts_info.tile_columns) * _ts_height;
+						
+						var _uv_t_x = _uv_x + _ts_tile_x * _tex_rx
+						var _uv_t_y = _uv_y + _ts_tile_y * _tex_ry
+						
+						// tri 1
+						vertex_position(front_vb, _t_x, _t_y)
+						vertex_texcoord(front_vb, _uv_t_x, _uv_t_y)
+						
+						vertex_position(front_vb, _t_x + TILESIZE, _t_y)
+						vertex_texcoord(front_vb, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y)
+						
+						vertex_position(front_vb, _t_x + TILESIZE, _t_y + TILESIZE)
+						vertex_texcoord(front_vb, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y + TILESIZE * _tex_ry)
+						
+						// tri 2
+						vertex_position(front_vb, _t_x, _t_y)
+						vertex_texcoord(front_vb, _uv_t_x, _uv_t_y)
+						
+						vertex_position(front_vb, _t_x, _t_y + TILESIZE)
+						vertex_texcoord(front_vb, _uv_t_x, _uv_t_y + TILESIZE * _tex_ry)
+						
+						vertex_position(front_vb, _t_x + TILESIZE, _t_y + TILESIZE)
+						vertex_texcoord(front_vb, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y + TILESIZE * _tex_ry)
+						
+					}
+					
+					vertex_end(front_vb)
+					
+					show_debug_message("complete")
+					
+				
+					break;
 				case "Background": 
 					level_ldtk_tiles(_layer.autoLayerTiles, tiles_back);
 					break;

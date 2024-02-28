@@ -263,3 +263,17 @@ surface_reset_target()
 
 draw_surface(surf_mask, _cam_x, _cam_y);
 
+
+// draw tile layer
+
+shader_set(shd_tiles)
+
+for (var i = 0; i < array_length(_lvl_onscreen); i++) {
+	var _lvl = _lvl_onscreen[i]
+	matrix_set(matrix_world, matrix_build(_lvl.x,_lvl.y, 0, 0, 0, 0, 1, 1, 1))
+	vertex_submit(_lvl.front_vb, pr_trianglelist, tileset_get_texture(tl_tiles))
+}
+matrix_set(matrix_world, matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1))
+
+shader_reset()
+

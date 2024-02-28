@@ -79,6 +79,7 @@
     {"name":"obj_trigger_link","order":27,"path":"objects/obj_trigger_link/obj_trigger_link.yy",},
     {"name":"spr_player_tail","order":2,"path":"sprites/spr_player_tail/spr_player_tail.yy",},
     {"name":"obj_oo_off","order":3,"path":"objects/obj_oo_off/obj_oo_off.yy",},
+    {"name":"shd_tiles","order":10,"path":"shaders/shd_tiles/shd_tiles.yy",},
     {"name":"spr_grade_decorrelation_2","order":14,"path":"sprites/spr_grade_decorrelation_2/spr_grade_decorrelation_2.yy",},
     {"name":"obj_ss","order":1,"path":"objects/obj_ss/obj_ss.yy",},
     {"name":"shd_back_space","order":3,"path":"shaders/shd_back_space/shd_back_space.yy",},
