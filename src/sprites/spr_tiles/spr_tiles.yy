@@ -2,9 +2,9 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_tiles",
-  "bbox_bottom": 511,
+  "bbox_bottom": 447,
   "bbox_left": 0,
-  "bbox_right": 511,
+  "bbox_right": 335,
   "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
@@ -13,14 +13,14 @@
   "edgeFiltering": false,
   "For3D": false,
   "frames": [
-    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"7be581cd-a2cc-470f-b05c-6c573d7c9e51",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"c6635f5a-8fdb-41d0-98df-7b35cdd8f794",},
   ],
   "gridX": 0,
   "gridY": 0,
   "height": 512,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"75e60fec-fbfb-487b-8835-c02022d4a444","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"34fc8d96-2fa3-41a8-be51-afb9ae20ee62","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 0,
@@ -54,7 +54,7 @@
     "timeUnits": 1,
     "tracks": [
       {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"7be581cd-a2cc-470f-b05c-6c573d7c9e51","path":"sprites/spr_tiles/spr_tiles.yy",},},},"Disabled":false,"id":"fda02f61-09fd-47e5-8ad6-6276ad4df95f","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"c6635f5a-8fdb-41d0-98df-7b35cdd8f794","path":"sprites/spr_tiles/spr_tiles.yy",},},},"Disabled":false,"id":"dcd85443-3ebe-4848-a4bd-51467ef02de8","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange": null,
