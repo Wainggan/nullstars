@@ -23,3 +23,4 @@ global.config = {
 #macro WIDTH 960
 #macro HEIGHT 540
 
+#macro GAME_BUBBLE_PARITY 10

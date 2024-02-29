@@ -24,8 +24,13 @@ for (var i = 0; i < array_length(file.levels); i++) {
 
 load = function (_base) {
 	
+	if _base.loaded {
+		return;
+	}
+	
 	_base.load()
 	
+	array_push(loaded, _base)
 	
 	return;
 	
@@ -314,7 +319,13 @@ load = function (_base) {
 
 unload = function (_base) {
 	
+	if !_base.loaded {
+		return;
+	}
+	
 	_base.unload()
+	
+	array_delete(loaded, array_get_index(loaded, _base), 1);
 	
 	return;
 	

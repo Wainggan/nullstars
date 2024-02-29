@@ -163,6 +163,9 @@ function level_get_vf() {
 	return __out
 }
 
+global.level_toc = {}
+global.entities = {}
+
 function Level() constructor {
 	
 	loaded = false;
@@ -256,6 +259,9 @@ function Level() constructor {
 		layer_set_visible(layer_spike, false)
 		tiles_spike = layer_tilemap_create(layer_spike, x, y, tl_debug_spikes, width / TILESIZE, height / TILESIZE);
 		
+		
+		entities = []
+		
 		for (var i_layer = 0; i_layer < array_length(_level.layerInstances); i_layer++) {
 			var _layer = _level.layerInstances[i_layer];
 			
@@ -300,6 +306,37 @@ function Level() constructor {
 					
 					break;
 				
+				case "Bubbles":
+					
+					for (var i_entity = 0; i_entity < array_length(_layer.entityInstances); i_entity++) {
+						var _e = _layer.entityInstances[i_entity]
+						
+						var _object_index = asset_get_index(_e.__identifier);
+						
+						var _field = {};
+						
+						_field.uid = _e.iid;
+						
+						var _pos_x = _e.__worldX,
+							_pos_y = _e.__worldY;
+						
+						var _collect = {
+							id: _e.iid,
+							x: _pos_x,
+							y: _pos_y,
+							layer: _layer.__identifier,
+							object: _object_index,
+							field: _field,
+						};
+
+						global.entities[$ _e.iid] = noone;
+						
+						array_push(entities, _collect)
+						
+						
+						
+					}
+				
 			}
 		}
 	}
@@ -308,6 +345,31 @@ function Level() constructor {
 		
 		if loaded return;
 		loaded = true;
+		
+		for (var i_entity = 0; i_entity < array_length(entities); i_entity++) {
+			var _e = entities[i_entity]
+			
+			var _exists = false;
+
+			with _e.object {
+				if uid == _e.id {
+					_exists = true;
+					break;
+				}
+			}
+
+			if _exists continue;
+
+			var _inst = instance_create_layer(
+				_e.x, _e.y, 
+				_e.layer,
+				_e.object,
+				_e.field
+			);
+			
+		}
+		
+								
 		
 	}
 	
@@ -335,6 +397,20 @@ function game_level_get(_x, _y) {
 	}
 	return undefined;
 }
+function game_level_get_safe(_x, _y) {
+	for (var i = 0; i < array_length(level.loaded); i++) {
+		var _lvl = level.loaded[i];
+		if point_in_rectangle(
+				_x, _y, 
+				_lvl.x, _lvl.y,
+				_lvl.x + _lvl.width,
+				_lvl.y + _lvl.height) {
+			return _lvl;
+		}
+	}
+	return undefined;
+}
+
 function game_level_onscreen() {
 	var _cam = game_camera_get();
 	
@@ -349,8 +425,8 @@ function game_level_onscreen() {
 		__cache_x = _cam.x
 		__cache_y = _cam.y
 		
-		for (var i = 0; i < array_length(level.levels); i++) {
-			var _lvl = level.levels[i];
+		for (var i = 0; i < array_length(level.loaded); i++) {
+			var _lvl = level.loaded[i];
 			if rectangle_in_rectangle(
 					_cam.x - _pad, _cam.y - _pad,
 					_cam.x + _cam.w + _pad, _cam.y + _cam.h + _pad,

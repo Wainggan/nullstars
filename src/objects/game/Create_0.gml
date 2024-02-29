@@ -1,4 +1,6 @@
 
+frame = 0;
+
 global.onoff = 1;
 
 timer = 0;
