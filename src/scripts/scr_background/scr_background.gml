@@ -83,7 +83,7 @@ function Background_Clouds() : Background() constructor {
 		var _x = WIDTH / 2, _y = -32
 		var _col = merge_color(#ff1144, #4411ff, wave(0, 1, 24))
 		
-		draw_circle_sprite_outline(_x, _y, _len, 2, _col, 1, 48)
+		draw_circle_outline(_x, _y, _len, 2, _col, 1)
 		
 		for (var i = 0; i < _amount; i++) {
 			var _d = (_dir + i * 90 / _amount) % 90

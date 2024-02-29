@@ -8,7 +8,7 @@ while schedule > 1 {
 	
 	var _x = irandom_range(_cam.x - _pad, _cam.x + _cam.w + _pad), 
 		_y = irandom_range(_cam.y - _pad, _cam.y + _cam.h + _pad);
-	var _level = game_level_get(_x, _y);
+	var _level = game_level_get_safe(_x, _y);
 	
 	if !_level || !_level.loaded continue;
 	
