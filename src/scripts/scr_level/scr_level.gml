@@ -182,18 +182,30 @@ function Level() constructor {
 	layer_front = -1;
 	tiles_front = -1;
 	
-	front_vb = -1;
+	vb_front = -1;
 	
-	// decor above tiles
+	// decor tiles
 	layer_decor = -1;
 	tiles_decor = -1;
 	
+	// decor under tiles
+	layer_decor_under = -1;
+	tiles_decor_under = -1;
+	
+	// decor above tiles
+	layer_tiles_above = -1;
+	tiles_tiles_above = -1;
+	
 	// decor below tiles
-	decor_vb = -1;
+	vb_tiles_below = -1;
 	
 	// background tiles
 	layer_back = -1;
 	tiles_back = -1;
+	
+	// spike tiles
+	layer_spike = -1;
+	tiles_spike = -1;
 	
 	
 	shadow_vb = -1;
@@ -228,29 +240,51 @@ function Level() constructor {
 		layer_set_visible(layer_back, false)
 		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
 		
-		layer_decor = layer_create(-1)
+		layer_tiles_above = layer_create(109)
+		layer_set_visible(layer_tiles_above, false)
+		tiles_tiles_above = layer_tilemap_create(layer_tiles_above, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
+		
+		layer_decor = layer_create(109)
 		layer_set_visible(layer_decor, false)
-		tiles_decor = layer_tilemap_create(layer_back, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
+		tiles_decor = layer_tilemap_create(layer_decor, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
+		
+		layer_decor_under = layer_create(-1)
+		layer_set_visible(layer_decor_under, false)
+		tiles_decor_under = layer_tilemap_create(layer_decor_under, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
+		
+		layer_spike = layer_create(-1)
+		layer_set_visible(layer_spike, false)
+		tiles_spike = layer_tilemap_create(layer_spike, x, y, tl_debug_spikes, width / TILESIZE, height / TILESIZE);
 		
 		for (var i_layer = 0; i_layer < array_length(_level.layerInstances); i_layer++) {
 			var _layer = _level.layerInstances[i_layer];
+			
+			show_debug_message(_layer.__identifier)
 
 			switch _layer.__identifier {
 				
 				case "Tiles":
 					// construct stupid vertex buffer stuff
 					// the things i do for 2 pixels
-					front_vb = vertex_create_buffer()
-					level_ldtk_buffer(_layer.autoLayerTiles, front_vb)
+					vb_front = vertex_create_buffer()
+					level_ldtk_buffer(_layer.autoLayerTiles, vb_front)
 				
 					break;
-				case "DecorBelow":
-					decor_vb = vertex_create_buffer()
-					level_ldtk_buffer(_layer.autoLayerTiles, decor_vb)
+				case "TilesBelow":
+					vb_tiles_below = vertex_create_buffer()
+					level_ldtk_buffer(_layer.autoLayerTiles, vb_tiles_below)
 					
 					break;
-				case "DecorAbove":
-					level_ldtk_tiles(_layer.autoLayerTiles, tiles_decor);
+				case "TilesAbove":
+					level_ldtk_tiles(_layer.autoLayerTiles, tiles_tiles_above);
+					
+					break;
+				case "Decor":
+					level_ldtk_tiles(_layer.gridTiles, tiles_decor);
+					
+					break;
+				case "DecorUnder":
+					level_ldtk_tiles(_layer.gridTiles, tiles_decor_under);
 					
 					break;
 				case "Background": 
@@ -259,6 +293,10 @@ function Level() constructor {
 					break;
 				case "Collisions":
 					level_ldtk_intgrid(_layer, tiles)
+					
+					break;
+				case "Spikes":
+					level_ldtk_intgrid(_layer, tiles_spike)
 					
 					break;
 				

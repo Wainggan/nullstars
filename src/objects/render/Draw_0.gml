@@ -13,6 +13,11 @@ for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 		tilemap_get_x(_lvl.tiles_back),
 		tilemap_get_y(_lvl.tiles_back)
 	);
+	draw_tilemap(
+		_lvl.tiles_decor_under, 
+		tilemap_get_x(_lvl.tiles_decor_under),
+		tilemap_get_y(_lvl.tiles_decor_under)
+	);
 }
 
 
@@ -280,8 +285,8 @@ shader_set(shd_tiles)
 for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 	var _lvl = _lvl_onscreen[i]
 	matrix_set(matrix_world, matrix_build(_lvl.x,_lvl.y, 0, 0, 0, 0, 1, 1, 1))
-	vertex_submit(_lvl.front_vb, pr_trianglelist, tileset_get_texture(tl_tiles))
-	vertex_submit(_lvl.decor_vb, pr_trianglelist, tileset_get_texture(tl_tiles))
+	vertex_submit(_lvl.vb_tiles_below, pr_trianglelist, tileset_get_texture(tl_tiles))
+	vertex_submit(_lvl.vb_front, pr_trianglelist, tileset_get_texture(tl_tiles))
 }
 matrix_set(matrix_world, matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1))
 
@@ -290,9 +295,19 @@ shader_reset()
 for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 	var _lvl = _lvl_onscreen[i]
 	draw_tilemap(
+		_lvl.tiles_tiles_above, 
+		tilemap_get_x(_lvl.tiles_tiles_above),
+		tilemap_get_y(_lvl.tiles_tiles_above)
+	);
+	draw_tilemap(
 		_lvl.tiles_decor, 
 		tilemap_get_x(_lvl.tiles_decor),
 		tilemap_get_y(_lvl.tiles_decor)
+	);
+	draw_tilemap(
+		_lvl.tiles_spike, 
+		tilemap_get_x(_lvl.tiles_spike),
+		tilemap_get_y(_lvl.tiles_spike)
 	);
 }
 
