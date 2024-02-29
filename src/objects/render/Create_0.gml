@@ -93,7 +93,7 @@ setup_light = function(_level) {
 	
 	show_debug_message($"{_count} shadow tiles")
 	
-	_level.vb = _vb;
+	_level.shadow_vb = _vb;
 	
 }
 

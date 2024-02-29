@@ -131,8 +131,8 @@ if global.config.graphics_lights {
 			shader_set_uniform_f(_u_s_z, _z);
 	
 			for (var i = 0; i < array_length(_lvl_onscreen); i++) {
-				if _lvl_onscreen[i].vb != -1
-					vertex_submit(_lvl_onscreen[i].vb, pr_trianglelist, -1);
+				if _lvl_onscreen[i].shadow_vb != -1
+					vertex_submit(_lvl_onscreen[i].shadow_vb, pr_trianglelist, -1);
 			}
 	
 			shader_set(shd_light_color);

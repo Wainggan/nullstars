@@ -207,7 +207,7 @@ function Level() constructor {
 	layer_spike = -1;
 	tiles_spike = -1;
 	
-	
+	// shadows
 	shadow_vb = -1;
 	
 	// should only be run once, _level struct to be destroyed later
