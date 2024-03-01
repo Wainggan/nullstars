@@ -11,3 +11,4 @@ var _checkpoint = game_checkpoint_ref()
 x_target = _checkpoint.x;
 y_target = _checkpoint.y - 32;
 
+outside = function(){ return false; };

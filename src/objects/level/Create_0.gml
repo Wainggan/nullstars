@@ -17,7 +17,7 @@ y_max = room_height;
 for (var i = 0; i < array_length(file.levels); i++) {
 	var _level = new Level()
 	
-	_level.init(file.levels[i]);
+	_level.init(file.levels[i], file.defs);
 	
 	array_push(levels, _level);
 }

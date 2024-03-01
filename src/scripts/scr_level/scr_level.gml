@@ -222,7 +222,7 @@ function Level() constructor {
 	shadow_vb = -1;
 	
 	// should only be run once, _level struct to be destroyed later
-	static init = function(_level) {
+	static init = function(_level, _defs) {
 		
 		var _lv_x = floor(_level.worldX / TILESIZE),
 			_lv_y = floor(_level.worldY / TILESIZE),
@@ -313,6 +313,10 @@ function Level() constructor {
 					break;
 				
 				case "Bubbles":
+				case "Walls":
+				case "Lights":
+				case "Meta":
+				case "Instances":
 					
 					for (var i_entity = 0; i_entity < array_length(_layer.entityInstances); i_entity++) {
 						var _e = _layer.entityInstances[i_entity]
@@ -327,8 +331,40 @@ function Level() constructor {
 						
 						_field.uid = _e.iid;
 						
+						for (var i_field = 0; i_field < array_length(_e.fieldInstances); i_field++) {
+							var _f = _e.fieldInstances[i_field];
+							_field[$ _f.__identifier] = level_ldtk_field(_f);
+						}
+						
+						// @todo: rewrite
+						if array_contains(_e.__tags, "SIZE_TILE") {
+							_field.image_xscale = floor(_e.width / TILESIZE);
+							_field.image_yscale = floor(_e.height / TILESIZE);
+						} else {
+							// find the entity definition for some reason ???
+							var _def = array_find_index(_defs.entities, method({_e}, function(_i){
+								return _i.identifier == _e.__identifier;
+							}))
+							if _def != -1 {
+								_def = _defs.entities[_def];
+							} else {
+								if _def {
+									_field.image_xscale = floor(_e.width / _def.width);
+									_field.image_yscale = floor(_e.height / _def.height);
+								} else {
+									_field.image_xscale = floor(_e.width / TILESIZE);
+									_field.image_yscale = floor(_e.height / TILESIZE);
+								}
+							}
+						}
+						
 						var _pos_x = _e.__worldX,
 							_pos_y = _e.__worldY;
+						
+						if array_contains(_e.__tags, "CENTERED") {
+							_pos_x += 8;
+							_pos_y += 8;
+						}
 						
 						var _collect = {
 							id: _e.iid,
@@ -343,9 +379,9 @@ function Level() constructor {
 						
 						array_push(entities, _collect)
 						
-						
-						
 					}
+					
+					break;
 				
 			}
 		}
@@ -362,6 +398,7 @@ function Level() constructor {
 			var _exists = false;
 
 			with _e.object {
+				if !variable_instance_exists(self, "uid") continue;
 				if uid == _e.id {
 					_exists = true;
 					break;
