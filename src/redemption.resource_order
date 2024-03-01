@@ -148,6 +148,7 @@
     {"name":"spr_debug_player_crouch","order":4,"path":"sprites/spr_debug_player_crouch/spr_debug_player_crouch.yy",},
     {"name":"ps_ambient_drip","order":4,"path":"particles/ps_ambient_drip/ps_ambient_drip.yy",},
     {"name":"spr_debug_showcontrol","order":27,"path":"sprites/spr_debug_showcontrol/spr_debug_showcontrol.yy",},
+    {"name":"obj_Exists","order":7,"path":"objects/obj_Exists/obj_Exists.yy",},
     {"name":"tl_debug_spikes","order":7,"path":"tilesets/tl_debug_spikes/tl_debug_spikes.yy",},
     {"name":"spr_debug_checkpoint","order":18,"path":"sprites/spr_debug_checkpoint/spr_debug_checkpoint.yy",},
     {"name":"spr_debug_eye","order":36,"path":"sprites/spr_debug_eye/spr_debug_eye.yy",},

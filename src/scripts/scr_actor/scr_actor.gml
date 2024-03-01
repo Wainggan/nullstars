@@ -55,11 +55,10 @@ function actor_collision(_x, _y) {
 	static __list = ds_list_create()
 	
 	for (var i = 0; i < array_length(level.loaded); i++) {
-		if place_meeting(_x, _y, level.loaded[i].part.tiles) return true;
+		if place_meeting(_x, _y, level.loaded[i].tiles) return true;
 	}
 	
 	ds_list_clear(__list)
-	
 	instance_place_list(_x, _y, obj_Solid, __list, false);
 	
 	for (var i = 0; i < ds_list_size(__list); i++) {

@@ -6,20 +6,6 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 
 var _lvl_onscreen = game_level_onscreen()
 
-for (var i = 0; i < array_length(_lvl_onscreen); i++) {
-	var _lvl = _lvl_onscreen[i]
-	draw_tilemap(
-		_lvl.tiles_back, 
-		tilemap_get_x(_lvl.tiles_back),
-		tilemap_get_y(_lvl.tiles_back)
-	);
-	draw_tilemap(
-		_lvl.tiles_decor_under, 
-		tilemap_get_x(_lvl.tiles_decor_under),
-		tilemap_get_y(_lvl.tiles_decor_under)
-	);
-}
-
 
 // finish surf_background_lights
 

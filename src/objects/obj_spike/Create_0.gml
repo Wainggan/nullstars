@@ -1,4 +1,6 @@
 
+event_inherited()
+
 parent = noone;
 
 x_off = 0;

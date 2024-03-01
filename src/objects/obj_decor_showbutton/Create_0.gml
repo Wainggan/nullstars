@@ -1,4 +1,6 @@
 
+event_inherited()
+
 x_pos = x;
 y_pos = y;
 index = 0;

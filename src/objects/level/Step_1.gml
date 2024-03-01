@@ -3,7 +3,7 @@ update()
 
 var _cam = game_camera_get()
 
-with obj_Entity {
+with obj_Exists {
 	if outside(_cam) instance_destroy()
 }
 

@@ -1,4 +1,6 @@
 
+event_inherited()
+
 target = [obj_player, obj_box, obj_ball]
 
 hit = false;

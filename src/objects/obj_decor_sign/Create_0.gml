@@ -1,4 +1,6 @@
 
+event_inherited()
+
 light = instance_create_layer(x + 16, y + 16, "Lights", obj_light, {
 	color: #8855ff,
 	intensity: 0.9,

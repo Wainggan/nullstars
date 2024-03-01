@@ -187,6 +187,7 @@
     {"id":{"name":"mus_questionthestars","path":"sounds/mus_questionthestars/mus_questionthestars.yy",},},
     {"id":{"name":"ps_ambient_drip","path":"particles/ps_ambient_drip/ps_ambient_drip.yy",},},
     {"id":{"name":"spr_debug_showcontrol","path":"sprites/spr_debug_showcontrol/spr_debug_showcontrol.yy",},},
+    {"id":{"name":"obj_Exists","path":"objects/obj_Exists/obj_Exists.yy",},},
     {"id":{"name":"tl_debug_spikes","path":"tilesets/tl_debug_spikes/tl_debug_spikes.yy",},},
     {"id":{"name":"spr_debug_checkpoint","path":"sprites/spr_debug_checkpoint/spr_debug_checkpoint.yy",},},
     {"id":{"name":"spr_debug_eye","path":"sprites/spr_debug_eye/spr_debug_eye.yy",},},

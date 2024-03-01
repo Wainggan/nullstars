@@ -308,7 +308,7 @@ checkDeath_point = function(_x, _y, _xv = 0, _yv = 0) {
 	
 	for (var i = 0; i < array_length(level.loaded); i++) {
 		
-		var _tm = level.loaded[i].part.spikes_tiles;
+		var _tm = level.loaded[i].tiles_spike;
 		var _tile = tilemap_get_at_pixel(_tm, _x, _y);
 		
 		if _tile == 0 continue;
@@ -1661,6 +1661,8 @@ cam = function(){
 	camera.target_y = lerp(cam_ground_y, _y, 1 - max(0, 1 - power(_dist / 128, 2)) * 0.8);
 	
 }
+
+outside = function() { return false; };
 
 
 

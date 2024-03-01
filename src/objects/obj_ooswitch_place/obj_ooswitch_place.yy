@@ -14,7 +14,10 @@
     "name": "oo",
     "path": "folders/objects/oo.yy",
   },
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "obj_Exists",
+    "path": "objects/obj_Exists/obj_Exists.yy",
+  },
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
