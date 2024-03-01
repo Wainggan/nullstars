@@ -46,11 +46,12 @@ function string_mask(_mask) {
 	return string_repeat("0", abs(string_length(_str) - 31)) + _str
 }
 
+function level_get_instance(_uid) {
+	return global.entities[$ _uid]
+}
 
-// does not support entity defs. should be handled case by case instead
-function level_ldtk_field(_field) {
-	var _val = _field.__value;
-	switch _field.__type {
+function level_ldtk_field_item(_val, _type) {
+	switch _type {
 		case "Point":
 								
 			_val = {
@@ -71,9 +72,16 @@ function level_ldtk_field(_field) {
 			
 			break;
 		case "EntityRef":
-			throw "attempted to parse entityref with level_ldtk_field()"
+			_val = _val.entityIid
+			break;
 	}
-	return _val
+	return _val;
+}
+
+// does not support entity defs. should be handled case by case instead
+function level_ldtk_field(_field) {
+	var _val = _field.__value;
+	return level_ldtk_field_item(_val, _field.__type)
 }
 
 function level_ldtk_intgrid(_data, _tilemap) {
@@ -163,7 +171,7 @@ function level_get_vf() {
 	return __out
 }
 
-global.level_toc = {}
+global.entities_toc = {}
 global.entities = {}
 
 function Level() constructor {
@@ -264,8 +272,6 @@ function Level() constructor {
 		
 		for (var i_layer = 0; i_layer < array_length(_level.layerInstances); i_layer++) {
 			var _layer = _level.layerInstances[i_layer];
-			
-			show_debug_message(_layer.__identifier)
 
 			switch _layer.__identifier {
 				
@@ -310,6 +316,10 @@ function Level() constructor {
 					
 					for (var i_entity = 0; i_entity < array_length(_layer.entityInstances); i_entity++) {
 						var _e = _layer.entityInstances[i_entity]
+						
+						if global.entities_toc[$ _e.iid] != undefined {
+							continue;
+						}
 						
 						var _object_index = asset_get_index(_e.__identifier);
 						

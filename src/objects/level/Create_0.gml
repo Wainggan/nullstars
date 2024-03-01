@@ -22,6 +22,47 @@ for (var i = 0; i < array_length(file.levels); i++) {
 	array_push(levels, _level);
 }
 
+
+for (var i_table = 0; i_table < array_length(file.toc); i_table++) {
+	
+	var _item = file.toc[i_table]
+	
+	for (var i_inst = 0; i_inst < array_length(_item.instancesData); i_inst++) {
+		
+		var _ent = _item.instancesData[i_inst]
+		var _field = {}
+		
+		var _val = _ent.fields;
+		
+		switch _item.identifier {
+			case nameof(obj_checkpoint):
+				_field.index = level_ldtk_field_item(_val.index, "String");
+				break;
+			case nameof(obj_timer_start):
+				_field.time = level_ldtk_field_item(_val.time, "Float")
+				_field.dir = level_ldtk_field_item(_val.dir, "Enum")
+				_field.ref = level_ldtk_field_item(_val.ref, "EntityRef")
+				break;
+		}
+		
+		_field.uid = _ent.iids.entityIid;
+		
+		var _inst = instance_create_layer(
+			_ent.worldX, _ent.worldY,
+			"Instances",
+			asset_get_index(_item.identifier),
+			_field
+		)
+		
+		global.entities[$ _ent.iids.entityIid] = _inst
+		global.entities_toc[$ _ent.iids.entityIid] = _inst
+		
+		
+	}
+	
+}
+
+
 load = function (_base) {
 	
 	if _base.loaded {
