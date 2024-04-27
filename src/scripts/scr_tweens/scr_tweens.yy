@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_tweens",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "tweens",
-    "path": "folders/graphics/tweens.yy",
+  "$GMScript":"",
+  "%Name":"scr_tweens",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_tweens",
+  "parent":{
+    "name":"tweens",
+    "path":"folders/graphics/tweens.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,5 +1,5 @@
 {
-  "FolderOrderSettings": [
+  "FolderOrderSettings":[
     {"name":"entities","order":6,"path":"folders/entities.yy",},
     {"name":"scripts","order":5,"path":"folders/entities/scripts.yy",},
     {"name":"game","order":4,"path":"folders/game.yy",},
@@ -32,7 +32,7 @@
     {"name":"rooms","order":3,"path":"folders/rooms.yy",},
     {"name":"sounds","order":7,"path":"folders/sounds.yy",},
   ],
-  "ResourceOrderSettings": [
+  "ResourceOrderSettings":[
     {"name":"shd_back_soup","order":5,"path":"shaders/shd_back_soup/shd_back_soup.yy",},
     {"name":"obj_areaname","order":18,"path":"objects/obj_areaname/obj_areaname.yy",},
     {"name":"obj_camera_parent","order":1,"path":"objects/obj_camera_parent/obj_camera_parent.yy",},

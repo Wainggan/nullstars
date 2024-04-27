@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_camera",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "game",
-    "path": "folders/game.yy",
+  "$GMScript":"",
+  "%Name":"scr_camera",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_camera",
+  "parent":{
+    "name":"game",
+    "path":"folders/game.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

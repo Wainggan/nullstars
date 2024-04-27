@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_file",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "meta",
-    "path": "folders/game/meta.yy",
+  "$GMScript":"",
+  "%Name":"scr_file",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_file",
+  "parent":{
+    "name":"meta",
+    "path":"folders/game/meta.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

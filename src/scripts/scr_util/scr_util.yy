@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_util",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "redemption",
-    "path": "redemption.yyp",
+  "$GMScript":"",
+  "%Name":"scr_util",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_util",
+  "parent":{
+    "name":"redemption",
+    "path":"redemption.yyp",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

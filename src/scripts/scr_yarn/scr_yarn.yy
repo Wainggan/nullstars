@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_yarn",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "util",
-    "path": "folders/game/util.yy",
+  "$GMScript":"",
+  "%Name":"scr_yarn",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_yarn",
+  "parent":{
+    "name":"util",
+    "path":"folders/game/util.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

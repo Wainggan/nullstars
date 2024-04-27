@@ -5,32 +5,32 @@ function InputManager(_gamepad = 0, _deadzone = 0.3) constructor {
 	
 	inputs = {}
 	
-	update = function() {
+	static update = function() {
 		var _inputs = variable_struct_get_names(inputs)
 		for (var i = 0; i < array_length(_inputs); i++) {
 			inputs[$ _inputs[i]].update()
 		}
 	}
 	
-	create_input = function(_name) {
+	static create_input = function(_name) {
 		var _input = new Input(self);
 		inputs[$ _name] = _input;
 		return _input;
 	}
 	
-	check = function(_name) {
+	static check = function(_name) {
 		return inputs[$ _name].check();
 	}
-	check_pressed = function(_name, _buffered = undefined) {
+	static check_pressed = function(_name, _buffered = undefined) {
 		return inputs[$ _name].check_pressed(_buffered);
 	}
-	check_released = function(_name, _buffered = undefined) {
+	static check_released = function(_name, _buffered = undefined) {
 		return inputs[$ _name].check_released(_buffered);
 	}
-	check_stutter = function(_name, _initial_delay = undefined, _interval = undefined) {
+	static check_stutter = function(_name, _initial_delay = undefined, _interval = undefined) {
 		return inputs[$ _name].check_stutter(_initial_delay, _interval);
 	}
-	check_raw = function(_name) {
+	static check_raw = function(_name) {
 		return inputs[$ _name].check_raw();
 	}
 	
@@ -44,7 +44,7 @@ function Input(_manager) constructor {
 	buffer = 1;
 	
 	
-	update = function() {
+	static update = function() {
 		var active = false;
 
 		for (var i = 0; i < array_length(keys); i++) {
@@ -62,12 +62,12 @@ function Input(_manager) constructor {
 			time = min(time + 1, 0);
 	}
 	
-	set_buffer = function(_buffer) {
+	static set_buffer = function(_buffer) {
 		buffer = _buffer;
 		return self;
 	}
 	
-	add_keyboard_key = function(_key) {
+	static add_keyboard_key = function(_key) {
 		var key = {
 			button : _key
 		}
@@ -78,7 +78,7 @@ function Input(_manager) constructor {
 		array_push(keys, key);
 		return self;
 	}
-	add_keyboard_axis = function(_key_l, _key_r) {
+	static add_keyboard_axis = function(_key_l, _key_r) {
 		var key = {
 			button_left : _key_l,
 			button_right : _key_r,
@@ -90,7 +90,7 @@ function Input(_manager) constructor {
 		array_push(keys, key);
 		return self;
 	}
-	add_gamepad_button = function(_button) {
+	static add_gamepad_button = function(_button) {
 		var key = {
 			creator: other,
 			button: _button
@@ -102,7 +102,7 @@ function Input(_manager) constructor {
 		array_push(keys, key);
 		return self;
     }
-	add_gamepad_stick_virtual = function(_stick, _direction, _deadzone = 0) {
+	static add_gamepad_stick_virtual = function(_stick, _direction, _deadzone = 0) {
 		var key = {
 		    creator: other,
 		    axis: _stick,
@@ -116,7 +116,7 @@ function Input(_manager) constructor {
 		array_push(keys, key);
 		return self;
     }
-	add_gamepad_stick = function(_stick) {
+	static add_gamepad_stick = function(_stick) {
 		var key = {
 		    creator: other,
 		    axis: _stick,
@@ -131,7 +131,7 @@ function Input(_manager) constructor {
 		array_push(keys, key);
 		return self;
     }
-	add_gamepad_shoulder_virtual = function(_button, _direction) {
+	static add_gamepad_shoulder_virtual = function(_button, _direction) {
 		var key = {
 		    creator: other,
 		    button: _button
@@ -143,7 +143,7 @@ function Input(_manager) constructor {
 		array_push(keys, key);
 		return self;
     }
-	add_gamepad_shoulder = function(_button, _direction) {
+	static add_gamepad_shoulder = function(_button, _direction) {
 		var key = {
 		    creator: other,
 		    button: _button
@@ -159,25 +159,25 @@ function Input(_manager) constructor {
 		return self;
     }
 	
-	check = function() {
+	static check = function() {
 		return time > 0;
 	}
-	check_pressed = function(_buffered = false) {
+	static check_pressed = function(_buffered = false) {
 		if (_buffered)
 			return time > 0 && time <= buffer;
 		return time == 1;
 	}
-	check_released = function(_buffered = false) {
+	static check_released = function(_buffered = false) {
 		if (_buffered)
 			return time < 0;
 		return time == -buffer;
 	}
-	check_stutter = function(_initial_delay, _interval) {
+	static check_stutter = function(_initial_delay, _interval) {
 		if (time == 1)
 			return true;
 		return time - _initial_delay > 0 && (time - _initial_delay) % _interval == 0;
 	}
-	check_raw = function(){
+	static check_raw = function(){
 		for (var i = 0; i < array_length(keys); i++) {
 			var _value = keys[i].check();
 			if (_value != 0) {

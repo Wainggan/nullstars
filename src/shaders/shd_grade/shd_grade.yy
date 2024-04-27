@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shd_grade",
-  "parent": {
-    "name": "colorgrading",
-    "path": "folders/graphics/colorgrading.yy",
+  "$GMShader":"",
+  "%Name":"shd_grade",
+  "name":"shd_grade",
+  "parent":{
+    "name":"colorgrading",
+    "path":"folders/graphics/colorgrading.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_sod",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "graphics",
-    "path": "folders/graphics.yy",
+  "$GMScript":"",
+  "%Name":"scr_sod",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_sod",
+  "parent":{
+    "name":"graphics",
+    "path":"folders/graphics.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

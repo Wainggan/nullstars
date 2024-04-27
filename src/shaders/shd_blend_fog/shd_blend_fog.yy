@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shd_blend_fog",
-  "parent": {
-    "name": "blendmodes",
-    "path": "folders/graphics/shaders/blendmodes.yy",
+  "$GMShader":"",
+  "%Name":"shd_blend_fog",
+  "name":"shd_blend_fog",
+  "parent":{
+    "name":"blendmodes",
+    "path":"folders/graphics/shaders/blendmodes.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

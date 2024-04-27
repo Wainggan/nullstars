@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shd_blur",
-  "parent": {
-    "name": "shaders",
-    "path": "folders/graphics/shaders.yy",
+  "$GMShader":"",
+  "%Name":"shd_blur",
+  "name":"shd_blur",
+  "parent":{
+    "name":"shaders",
+    "path":"folders/graphics/shaders.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

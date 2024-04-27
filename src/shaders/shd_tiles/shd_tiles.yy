@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shd_tiles",
-  "parent": {
-    "name": "shaders",
-    "path": "folders/graphics/shaders.yy",
+  "$GMShader":"",
+  "%Name":"shd_tiles",
+  "name":"shd_tiles",
+  "parent":{
+    "name":"shaders",
+    "path":"folders/graphics/shaders.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_state",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "scripts",
-    "path": "folders/entities/scripts.yy",
+  "$GMScript":"",
+  "%Name":"scr_state",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_state",
+  "parent":{
+    "name":"scripts",
+    "path":"folders/entities/scripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

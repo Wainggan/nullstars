@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_actor",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "entities",
-    "path": "folders/entities.yy",
+  "$GMScript":"",
+  "%Name":"scr_actor",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_actor",
+  "parent":{
+    "name":"entities",
+    "path":"folders/entities.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }
