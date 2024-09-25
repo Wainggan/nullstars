@@ -5,7 +5,7 @@
   "managed":true,
   "name":"obj_ss_up",
   "overriddenProperties":[
-    {"$GMOverriddenProperty":"","%Name":"","name":"","objectId":{"name":"obj_ss","path":"objects/obj_ss/obj_ss.yy",},"propertyId":{"name":"dir","path":"objects/obj_ss/obj_ss.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"1",},
+    {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_ss","path":"objects/obj_ss/obj_ss.yy",},"propertyId":{"name":"dir","path":"objects/obj_ss/obj_ss.yy",},"resource":null,"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"1",},
   ],
   "parent":{
     "name":"semisolids",
