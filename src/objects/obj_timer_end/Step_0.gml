@@ -1,7 +1,7 @@
 
 var _cond = place_meeting(x, y, obj_player) && !lastTouch;
 
-if game_timer_running() && game.timer_target != self.id {
+if game_timer_running() && self.id != level_get_instance(game.timer_target) {
 	_cond = false;
 }
 

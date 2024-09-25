@@ -1,0 +1,2 @@
+instance_destroy(pet_chain)
+instance_destroy(pet_wall)

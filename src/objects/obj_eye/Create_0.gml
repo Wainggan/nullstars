@@ -217,5 +217,10 @@ state_retract = state.add()
 	
 })
 
-
 state.change(state_idle)
+
+outside_self = outside;
+outside_chain = pet_chain.outside;
+outside = function(_cam = game_camera_get()) {
+	return outside_self() || outside_chain();
+}

@@ -47,7 +47,7 @@ function string_mask(_mask) {
 }
 
 function level_get_instance(_uid) {
-	return global.entities[$ _uid]
+	return global.entities[$ _uid];
 }
 
 function level_ldtk_field_item(_val, _type) {
@@ -414,6 +414,8 @@ function Level() constructor {
 				_e.field
 			);
 			
+			global.entities[$ _e.id] = _inst;
+			
 		}
 		
 								
@@ -444,11 +446,11 @@ function game_level_get(_x, _y) {
 	}
 	return undefined;
 }
-function game_level_get_safe(_x, _y) {
+function game_level_get_safe_rect(_x1, _y1, _x2, _y2) {
 	for (var i = 0; i < array_length(level.loaded); i++) {
 		var _lvl = level.loaded[i];
-		if point_in_rectangle(
-				_x, _y, 
+		if rectangle_in_rectangle(
+				_x1, _y1, _x2, _y2,
 				_lvl.x, _lvl.y,
 				_lvl.x + _lvl.width,
 				_lvl.y + _lvl.height) {
@@ -456,6 +458,9 @@ function game_level_get_safe(_x, _y) {
 		}
 	}
 	return undefined;
+}
+function game_level_get_safe(_x, _y) {
+	return game_level_get_safe_rect(_x, _y, _x + 1, _y + 1)
 }
 
 function game_level_onscreen() {

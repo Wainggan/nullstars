@@ -1,4 +1,11 @@
 
+// if the player dies, their uid system is broken
+// oops
+if instance_number(obj_player) > 1 {
+	instance_destroy();
+	exit;
+}
+
 event_inherited();
 
 
