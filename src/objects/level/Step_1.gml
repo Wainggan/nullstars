@@ -13,8 +13,9 @@ with obj_spike_bubble {
 	if (game.frame + parity) % GAME_BUBBLE_PARITY > 0 continue;
 	var _lvl = game_level_get_safe(x, y)
 	if (_lvl == undefined || !_lvl.loaded)
-	&& (x - 64 < _cam.x || _cam.x + _cam.w < x + 64
-	|| y - 64 < _cam.y || _cam.y + _cam.h < y + 64) {
+	&& rectangle_in_rectangle(
+		x - 64, y - 64, x + 64, y + 64,
+		_cam.x, _cam.y, _cam.x + _cam.w, _cam.y + _cam.h) {
 		instance_destroy()
 	}
 }
