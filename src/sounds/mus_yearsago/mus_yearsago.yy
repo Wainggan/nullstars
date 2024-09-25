@@ -6,9 +6,9 @@
     "path":"audiogroups/audiogroup_default",
   },
   "bitDepth":1,
-  "bitRate":112,
+  "bitRate":192,
   "compression":3,
-  "conversionMode":0,
+  "conversionMode":1,
   "duration":309.67743,
   "name":"mus_yearsago",
   "parent":{

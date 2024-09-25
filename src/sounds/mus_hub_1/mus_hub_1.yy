@@ -6,9 +6,9 @@
     "path":"audiogroups/audiogroup_default",
   },
   "bitDepth":1,
-  "bitRate":112,
+  "bitRate":192,
   "compression":3,
-  "conversionMode":0,
+  "conversionMode":1,
   "duration":88.235306,
   "name":"mus_hub_1",
   "parent":{
