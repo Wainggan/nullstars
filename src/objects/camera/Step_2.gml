@@ -48,7 +48,7 @@ var _changed = false;
 if _weights != noone {
 	
 	
-	if _inside || (!_inside && !_weights.unlock_x) {
+	if _inside || !_weights.unlock_x {
 		if _weights.sprite_width <= _cam_w {
 			_tx = _weights.x + _weights.sprite_width / 2;
 		} else {
@@ -57,7 +57,7 @@ if _weights != noone {
 		_changed = true;
 	}
 	
-	if _inside || (!_inside && !_weights.unlock_y) {
+	if _inside || !_weights.unlock_y {
 		if _weights.sprite_height <= _cam_h {
 			_ty = _weights.y + _weights.sprite_height / 2;
 		} else {
