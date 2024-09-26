@@ -183,5 +183,5 @@ update = function () {
 	
 }
 
-
-
+// superstition
+delete _file;
