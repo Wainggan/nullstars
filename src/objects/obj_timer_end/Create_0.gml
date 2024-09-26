@@ -1,3 +1,5 @@
 
 lastTouch = false;
 
+pet = noone;
+

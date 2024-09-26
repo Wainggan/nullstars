@@ -1,11 +1,11 @@
 
 event_inherited()
 
-pet_wall = instance_create_layer(x, y, layer, obj_blank, {
-	image_xscale: sprite_width, image_yscale: sprite_height, visible: false
+pet_wall = instance_create_layer(x, y, layer, obj_Solid, {
+	image_xscale: sprite_width, image_yscale: sprite_height
 });
-pet_chain = instance_create_layer(x + 8, y + 8, layer, obj_blank, {
-	image_xscale: 0, image_yscale: 0,
+pet_chain = instance_create_layer(x + 8, y + 8, layer, obj_Solid, {
+	image_xscale: 0, image_yscale: 0, visible: true,
 	sprite_index: spr_eye_chain,
 	image_speed: 0
 });

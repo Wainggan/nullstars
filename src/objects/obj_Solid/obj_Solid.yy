@@ -33,9 +33,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_debug_wall",
-    "path":"sprites/spr_debug_wall/spr_debug_wall.yy",
+    "name":"spr_pixel",
+    "path":"sprites/spr_pixel/spr_pixel.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }
