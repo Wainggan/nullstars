@@ -1087,17 +1087,19 @@ state_free = state_base.add()
 	
 	var _kh_p = INPUT.check_pressed("right") - INPUT.check_pressed("left")
 	
-	if y_vel <= -1 && _kh_p != 0 {
-		ledge_keybuffer = _kh_p
+	if y_vel <= -1 && _kh != 0 {
+		ledge_keybuffer = _kh
 	}
 	
-	if y_vel > -1 && !actor_collision(x, y + 1) && actor_collision(x + _kh, y) && (_kh_p == dir || ledge_keybuffer == dir || (dash_grace > 0 && dash_dir_y == 0 && _kh == dir)) && !crouched {
-		ledge_keybuffer = 0;
-		state.change(state_ledge)
-		return;
-	}
 	if y_vel > -1 {
-		ledge_keybuffer = 0;
+		if !actor_collision(x, y + 1) && actor_collision(x + _kh, y) && !crouched &&
+			(_kh_p == dir || ledge_keybuffer == dir || (dash_grace > 0 && dash_dir_y == 0 && _kh == dir)) {
+			ledge_keybuffer = 0;
+			state.change(state_ledge)
+			return;
+		}
+		if y_vel > 3
+			ledge_keybuffer = 0;
 	}
 	
 	if INPUT.check_pressed("up") && !crouched && place_meeting(x, y, obj_checkpoint) {
