@@ -23,7 +23,8 @@ function game_timer_update() {
 	if game.timer_active {
 		game.timer -= 1;
 		if game.timer <= 0 {
-			game_player_kill()
+			game_timer_stop()
+			//game_player_kill()
 		}
 	}
 }
