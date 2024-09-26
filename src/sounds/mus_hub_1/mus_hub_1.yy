@@ -8,7 +8,7 @@
   "bitDepth":1,
   "bitRate":192,
   "compression":3,
-  "conversionMode":1,
+  "conversionMode":0,
   "duration":88.235306,
   "name":"mus_hub_1",
   "parent":{

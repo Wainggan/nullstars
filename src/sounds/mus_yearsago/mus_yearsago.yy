@@ -8,7 +8,7 @@
   "bitDepth":1,
   "bitRate":192,
   "compression":3,
-  "conversionMode":1,
+  "conversionMode":0,
   "duration":309.67743,
   "name":"mus_yearsago",
   "parent":{

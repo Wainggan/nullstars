@@ -8,7 +8,7 @@
   "bitDepth":1,
   "bitRate":80,
   "compression":3,
-  "conversionMode":1,
+  "conversionMode":0,
   "duration":54.79018,
   "name":"mus_wind",
   "parent":{

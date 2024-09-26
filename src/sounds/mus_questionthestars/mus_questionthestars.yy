@@ -8,7 +8,7 @@
   "bitDepth":1,
   "bitRate":192,
   "compression":3,
-  "conversionMode":1,
+  "conversionMode":0,
   "duration":221.53845,
   "name":"mus_questionthestars",
   "parent":{
