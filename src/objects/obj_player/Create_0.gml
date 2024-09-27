@@ -1669,7 +1669,7 @@ cam = function(){
 	
 	var _dist = point_distance(cam_ground_x, cam_ground_y, x, y);
 	
-	var _x = x;
+	var _x = x + power(abs(x_vel), 1.4) * sign(x_vel);
 	var _y = y - 32;
 	
 	if state.is(state_menu) {
