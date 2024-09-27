@@ -10,6 +10,10 @@ function game_timer_start(_length, _start = undefined, _target = undefined) {
 	}
 }
 
+function game_timer_get() {
+	return game.timer;
+}
+
 function game_timer_stop() {
 	game.timer = 0;
 	game.timer_active = false;

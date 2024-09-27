@@ -72,3 +72,68 @@ if game_timer_running() && game.timer_start == self && _end {
 		spd: 0.04
 	})
 }
+
+
+with level_get_instance(ref) {
+	
+	if !other.collected && game_level_get_safe(x, y) {
+		if game_timer_running() {
+			if instance_exists(other.pet) instance_destroy(other.pet)
+		} else {
+			if !instance_exists(other.pet) {
+				other.pet = instance_create_layer(x, y, layer, obj_Solid, {
+					image_xscale: sprite_width,
+					image_yscale: sprite_height
+				});
+			}
+		}
+	} else {
+		if instance_exists(other.pet) instance_destroy(other.pet)
+	}
+	
+	var _touch = place_meeting(x, y, obj_player)
+	var _cond = _touch && !lastTouch;
+	lastTouch = _touch
+
+	if game_timer_running() && self.id != level_get_instance(game.timer_target) {
+		_cond = false;
+	}
+
+	if _cond {
+		var _pop = false;
+	
+		if game_timer_running() {
+			other.collected = true;
+			other.collected_time = game_timer_get()
+			
+			game_timer_stop();
+		
+			instance_create_layer(x + sprite_width / 2, y + sprite_height / 2, layer, obj_effects_spritepop, {
+				sprite: spr_timer_pop,
+				index: 1,
+				spd: 0.02
+			})
+		
+			_pop = true;
+		}
+
+		if global.onoff == false {
+			global.onoff = true;
+			_pop = true;
+		}
+	
+		if _pop {
+			game_set_pause(4)
+	
+			instance_create_layer(x, y, layer, obj_effects_rectpop, {
+				width: sprite_width,
+				height: sprite_height,
+				pad: 16,
+				spd: 0.04
+			})
+		}
+	
+	}
+
+}
+
