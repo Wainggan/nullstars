@@ -56,6 +56,7 @@ if !game_timer_running() && _start {
 }
 
 if game_timer_running() && game.timer_start == self && _end {
+	global.onoff = true;
 	game_timer_stop()
 	
 	game_set_pause(4)
