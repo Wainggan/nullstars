@@ -224,6 +224,7 @@ swim_bullet_check = false;
 swim_bullet = false;
 
 ledge_keybuffer = 0;
+ledge_stick = 0;
 
 spike_buffer = 0;
 
@@ -1164,6 +1165,12 @@ state_throw = state_base.add()
 })
 
 state_ledge = state_base.add()
+.set("enter", function(){
+	ledge_stick = 1;
+})
+.set("leave", function(){
+	ledge_stick = 0;
+})
 .set("step", function(){
 	
 	var _kh = INPUT.check("right") - INPUT.check("left");
@@ -1199,13 +1206,17 @@ state_ledge = state_base.add()
 		state.change(state_free);
 		return;
 	}
-	
 	if actor_collision(x, y + 1) {
 		state.change(state_free);
 		return;
 	}
 	
 	if _kh != dir {
+		ledge_stick -= 1;
+	} else {
+		ledge_stick = 4;
+	}
+	if _kh != dir && ledge_stick <= 0 {
 		grace = defs.grace
 		state.change(state_free);
 		return;
