@@ -1,5 +1,4 @@
 check()
-update()
 
 var _cam = game_camera_get()
 

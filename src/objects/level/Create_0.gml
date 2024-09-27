@@ -129,6 +129,8 @@ unload = function (_base) {
 
 check = function () {
 	
+	static __pad = 64;
+	
 	var _cam = game_camera_get()
 	
 	for (var i = 0; i < array_length(levels); i++) {
@@ -138,7 +140,8 @@ check = function () {
 		_condition = _condition ||
 			rectangle_in_rectangle(
 				_lvl.x, _lvl.y, _lvl.x + _lvl.width, _lvl.y + _lvl.height,
-				_cam.x, _cam.y, _cam.x + _cam.w, _cam.y + _cam.h
+				_cam.x - __pad, _cam.y - __pad,
+				_cam.x + _cam.w + __pad, _cam.y + _cam.h + __pad
 			);
 		if instance_exists(obj_player) _condition = _condition ||
 			point_in_rectangle(
@@ -148,40 +151,14 @@ check = function () {
 		
 		if _condition {
 			load(_lvl)
+		} else {
+			unload(_lvl)
 		}
 		
 	}
 	
 }
 
-// jesus christ
-update = function () {
-	
-	var _cam = game_camera_get()
-	
-	for (var i = 0; i < array_length(levels); i++) {
-		var _lvl = levels[i]
-		
-		var _condition = false;
-		_condition = _condition ||
-			rectangle_in_rectangle(
-				_lvl.x, _lvl.y, _lvl.x + _lvl.width, _lvl.y + _lvl.height,
-				_cam.x, _cam.y, _cam.x + _cam.w, _cam.y + _cam.h
-			);
-		if instance_exists(obj_player) _condition = _condition ||
-			point_in_rectangle(
-				obj_player.x, obj_player.y, 
-				_lvl.x, _lvl.y, _lvl.x + _lvl.width, _lvl.y + _lvl.height
-			);
-		
-		if _condition {
-			continue; // yeag
-		} else {
-			unload(_lvl)
-		}
-	}
-	
-}
 
 // superstition
 delete _file;

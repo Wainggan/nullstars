@@ -304,11 +304,11 @@ function Level() constructor {
 					
 					break;
 				case "Collisions":
-					level_ldtk_intgrid(_layer, tiles)
+					level_ldtk_intgrid(_layer, tiles);
 					
 					break;
 				case "Spikes":
-					level_ldtk_intgrid(_layer, tiles_spike)
+					level_ldtk_intgrid(_layer, tiles_spike);
 					
 					break;
 				
@@ -377,7 +377,7 @@ function Level() constructor {
 
 						global.entities[$ _e.iid] = noone;
 						
-						array_push(entities, _collect)
+						array_push(entities, _collect);
 						
 					}
 					
@@ -418,7 +418,9 @@ function Level() constructor {
 			
 		}
 		
-								
+		if shadow_vb == -1 && global.config.graphics_lights_shadow {
+			render.setup_light(self);
+		}
 		
 	}
 	
@@ -426,6 +428,11 @@ function Level() constructor {
 		
 		if !loaded return;
 		loaded = false;
+		
+		if shadow_vb != -1 {
+			vertex_delete_buffer(shadow_vb);
+			shadow_vb = -1;
+		}
 	
 	}
 	
