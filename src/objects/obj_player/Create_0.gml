@@ -1093,7 +1093,7 @@ state_free = state_base.add()
 	}
 	
 	if y_vel > -1 {
-		if !actor_collision(x, y + 1) && actor_collision(x + _kh, y) && !crouched &&
+		if !actor_collision(x, y + 1) && actor_collision(x + _kh, y) && !crouched && !INPUT.check("down") &&
 			(_kh_p == dir || ledge_keybuffer == dir || (dash_grace > 0 && dash_dir_y == 0 && _kh == dir)) {
 			ledge_keybuffer = 0;
 			state.change(state_ledge)
