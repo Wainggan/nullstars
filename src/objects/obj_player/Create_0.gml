@@ -932,8 +932,8 @@ state_free = state_base.add()
 		dir = _kh;
 	}
 	
-	if abs(grace_vel) > 1 && (sign(x_vel) == 0 || sign(x_vel) == sign(grace_vel)) && grace_vel_timer > 0 {
-		if abs(x_vel) > 1 && sign(grace_vel) == _kh {
+	if abs(grace_vel) > 1 && _kh == sign(grace_vel) && grace_vel_timer > 0 {
+		if !actor_collision(x + _kh, y) {
 			x_vel = grace_vel
 			grace_vel = 0
 		}
