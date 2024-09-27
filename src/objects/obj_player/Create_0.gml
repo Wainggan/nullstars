@@ -21,7 +21,7 @@ defs = {
 	boost_limit_x: 9,
 	boost_limit_y: 3,
 	
-	jump_vel: -4.5,
+	jump_vel: -4.7,
 	jump_move_boost: 0.2,
 	terminal_vel: global.defs.terminal_vel,
 	terminal_vel_fast: 6,
@@ -29,12 +29,12 @@ defs = {
 	jump_short_vel: -3,
 	
 	gravity: 0.45,
-	gravity_hold: 0.2,
+	gravity_hold: 0.22,
 	gravity_peak: 0.12,
 	gravity_peak_thresh: 0.36,
 	gravity_term: 0.12,
 	
-	gravity_damp: 0.75,
+	gravity_damp: 0.6,
 	
 	wall_distance: 4,
 	
