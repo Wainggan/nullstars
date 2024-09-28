@@ -55,9 +55,18 @@ if !game_timer_running() && _start {
 	})
 }
 
-if game_timer_running() && game.timer_start == self && _end {
-	global.onoff = true;
-	game_timer_stop()
+if _end {
+	var _cond = false;
+	
+	if game_timer_running() && game.timer_start == self {
+		game_timer_stop()
+		_cond = true;
+	}
+	
+	if global.onoff == false {
+		global.onoff = true;
+		_cond = true;
+	}
 	
 	game_set_pause(4)
 	
@@ -72,6 +81,7 @@ if game_timer_running() && game.timer_start == self && _end {
 		pad: 16,
 		spd: 0.04
 	})
+	
 }
 
 
