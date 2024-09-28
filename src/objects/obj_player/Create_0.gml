@@ -579,6 +579,7 @@ wallbounce = function(_dir){
 	x_vel += _dir * 4
 	key_hold = sign(x_vel);
 	key_hold_timer = 5
+	dir = _dir
 	
 	x_vel += x_lift;
 	y_vel += y_lift;
@@ -930,6 +931,11 @@ state_free = state_base.add()
 			scale_y = 1.2;
 		}
 		dir = _kh;
+	}
+	
+	if sign(x_vel) != 0 && sign(x_vel) == -sign(grace_vel) {
+		grace_vel = 0;
+		grace_vel_timer = 0;
 	}
 	
 	if abs(grace_vel) > 1 && _kh == sign(grace_vel) && grace_vel_timer > 0 {
