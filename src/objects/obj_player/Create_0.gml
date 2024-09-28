@@ -516,6 +516,7 @@ jumpdash = function(){
 	grace_target = noone;
 	dash_grace = 0;
 	buffer = 0;
+	buffer_dash = 0;
 	gravity_hold = 0;
 	gravity_hold_peak = 0;
 			
@@ -1036,7 +1037,7 @@ state_free = state_base.add()
 	// hell
 	if buffer > 0 {
 		if grace > 0 {
-			if dash_grace > 0 {
+			if dash_grace > 0 || buffer_dash > 0 {
 				jumpdash()
 			} else {
 				jump()
