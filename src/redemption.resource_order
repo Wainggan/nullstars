@@ -99,6 +99,7 @@
     {"name":"scr_background","order":1,"path":"scripts/scr_background/scr_background.yy",},
     {"name":"scr_camera","order":10,"path":"scripts/scr_camera/scr_camera.yy",},
     {"name":"scr_checkpoints","order":9,"path":"scripts/scr_checkpoints/scr_checkpoints.yy",},
+    {"name":"scr_data_music","order":24,"path":"scripts/scr_data_music/scr_data_music.yy",},
     {"name":"scr_draw","order":1,"path":"scripts/scr_draw/scr_draw.yy",},
     {"name":"scr_event","order":2,"path":"scripts/scr_event/scr_event.yy",},
     {"name":"scr_globals","order":7,"path":"scripts/scr_globals/scr_globals.yy",},

@@ -5,21 +5,15 @@ var _bgm_name = "";
 
 switch _bgm {
 	case undefined:
-		_bgm_asset = bgm_asset
+		_bgm_asset = bgm_asset;
 		break;
 	case "none":
 		_bgm_asset = -1;
 		break;
-	case "wind":
-		_bgm_asset = mus_wind
-		break;
-	case "stars":
-		_bgm_asset = mus_questionthestars
-		_bgm_name = "\"question the stars\" ~ parchii"
-		break;
-	case "lava":
-		_bgm_asset = mus_yearsago
-		_bgm_name = "\"\" ~ parchii"
+	default:
+		var _asset = global.data_music_refs[$ _bgm];
+		_bgm_asset = asset_get_index(_asset);
+		_bgm_name = global.data_music[$ _asset].name;
 		break;
 }
 
@@ -38,7 +32,7 @@ if _bgm_asset != bgm_asset {
 		audio_sound_gain(bgm, 0, 10000)
 	} else {
 		bgm = audio_play_sound(bgm_asset, 0, true, 0);
-		audio_sound_gain(bgm, 1, 10000)
+		audio_sound_gain(bgm, 1, 10000);
 		bgm_anim_state = 2;
 		
 		//instance_create_layer(0, 0, "Meta", obj_musicname, { name: bgm_name })

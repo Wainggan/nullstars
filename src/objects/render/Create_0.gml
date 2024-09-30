@@ -97,6 +97,11 @@ setup_light = function(_level) {
 	
 }
 
+lut_mode_grade = new Mode(spr_grade_base);
+lut_mode_mix = new Mode(1);
+
+
+
 p = [
 	spr_grade_base,
 	spr_grade_decorrelation_1,

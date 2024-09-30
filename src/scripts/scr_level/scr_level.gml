@@ -501,19 +501,41 @@ function game_level_onscreen() {
 	return __out;
 }
 
-function game_level_get_biome(_x, _y) {
+function game_level_get_data(_x, _y) {
 	var _lvl = game_level_get(_x, _y);
-	if _lvl == undefined return "";
-	return _lvl.fields.biome;
+	
+	static __return = {};
+	
+	if !_lvl return __return;
+	
+	__return.preset = _lvl.fields.preset;
+	__return.biome = _lvl.fields.biome;
+	__return.background = _lvl.fields.background;
+	__return.music = _lvl.fields.music == pointer_null ? undefined : _lvl.fields.music;
+	__return.lut_grade = _lvl.fields.lut_grade;
+	__return.lut_mix = _lvl.fields.lut_mix;
+	
+	return __return;
+}
+
+function game_level_get_preset(_x, _y) {
+	return game_level_get_data(_x, _y).preset;
+}
+function game_level_get_biome(_x, _y) {
+	return game_level_get_data(_x, _y).biome;
 }
 function game_level_get_background(_x, _y) {
-	var _lvl = game_level_get(_x, _y);
-	if _lvl == undefined return "";
-	return _lvl.fields.background;
+	return game_level_get_data(_x, _y).background;
 }
 function game_level_get_music(_x, _y) {
-	var _lvl = game_level_get(_x, _y);
-	if _lvl == undefined return undefined;
-	if _lvl.fields.music == pointer_null return undefined;
-	return _lvl.fields.music;
+	var _out = game_level_get_data(_x, _y);
+	if !_out return undefined;
+	return _out.music;
+}
+function game_level_get_lut(_x, _y) {
+	static __return = {}
+	var _data = game_level_get_data(_x, _y);
+	__return.grade = _data.lut_grade;
+	__return.mix = _data.lut_mix;
+	return __return;
 }

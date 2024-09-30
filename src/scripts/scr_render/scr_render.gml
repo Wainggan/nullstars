@@ -14,3 +14,44 @@ function game_render_refresh() {
 	surface_reset_target()
 }
 
+
+function Mode(_init) constructor {
+	
+	side_0 = _init;
+	side_1 = _init;
+	progress = 1;
+	speed = 1;
+	
+	static update = function() {
+		progress = clamp(progress + speed, 0, 1);
+	};
+	
+	static set = function(_name, _speed = 0.01) {
+		
+		if _name == side_0 {
+			speed = -_speed;
+		} else if _name == side_1 {
+			speed = _speed;
+		} else{
+			side_0 = side_1;
+			side_1 = _name;
+			progress = 0;
+			speed = _speed;
+		}
+		
+	};
+	
+	__return = {
+		current: undefined,
+		target: undefined,
+		progress: undefined,
+	};
+	
+	static get = function() {
+		__return.current = side_0;
+		__return.target = side_1;
+		__return.progress = progress
+		return __return;
+	};
+	
+}

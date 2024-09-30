@@ -58,7 +58,18 @@ if global.config.graphics_post_grading {
 	surface_set_target(surf_lut)
 	draw_clear_alpha(c_black, 1)
 	gpu_set_colorwriteenable(true, true, true, false);
-		draw_sprite(p[mode], 0, 0, 0);
+		var _lut_grade = lut_mode_grade.get()
+		var _lut_mix = lut_mode_mix.get()
+		var _lut_mix_value = lerp(_lut_mix.current, _lut_mix.target, _lut_mix.progress);
+		draw_sprite(spr_grade_base, 0, 0, 0);
+		draw_sprite_ext(
+			_lut_grade.current, 0, 0, 0, 1, 1, 0, c_white, 
+			_lut_mix_value * (1 - _lut_grade.progress)
+		);
+		draw_sprite_ext(
+			_lut_grade.target, 0, 0, 0, 1, 1, 0, c_white, 
+			_lut_mix_value * _lut_grade.progress
+		);
 	gpu_set_colorwriteenable(true, true, true, true);
 	surface_reset_target()
 

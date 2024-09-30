@@ -133,6 +133,7 @@
     {"id":{"name":"scr_background","path":"scripts/scr_background/scr_background.yy",},},
     {"id":{"name":"scr_camera","path":"scripts/scr_camera/scr_camera.yy",},},
     {"id":{"name":"scr_checkpoints","path":"scripts/scr_checkpoints/scr_checkpoints.yy",},},
+    {"id":{"name":"scr_data_music","path":"scripts/scr_data_music/scr_data_music.yy",},},
     {"id":{"name":"scr_draw","path":"scripts/scr_draw/scr_draw.yy",},},
     {"id":{"name":"scr_event","path":"scripts/scr_event/scr_event.yy",},},
     {"id":{"name":"scr_file","path":"scripts/scr_file/scr_file.yy",},},
