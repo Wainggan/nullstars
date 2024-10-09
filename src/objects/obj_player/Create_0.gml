@@ -1338,6 +1338,8 @@ state_dash = state_base.add()
 	if dash_dir_y != -1 {
 		dash_recover = 2;
 		dash_grace = 8;
+	} else {
+		dash_grace = 4;
 	}
 	
 	if canUncrouch() {
@@ -1448,9 +1450,9 @@ state_swim = state_base.add()
 		if _spd_target_normal < 0.1 {
 			swim_spd = approach(swim_spd, 0, 0.4)
 		} else {
-			swim_spd = approach(swim_spd, 5, swim_spd > 5 ? 0.02 : 0.3)
+			swim_spd = approach(swim_spd, 4, swim_spd > 4 ? 0.02 : 0.3)
 		}
-		_dir_accel = 360 - round(360 * clamp(swim_spd / 5, 0, 0.98))
+		_dir_accel = 360 - round(360 * clamp(swim_spd / 4, 0, 0.98))
 	} else {
 		swim_spd = approach(swim_spd, max(swim_spd, 8), 1)
 		_dir_accel = 2
