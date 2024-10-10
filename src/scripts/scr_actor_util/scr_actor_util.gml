@@ -1,5 +1,7 @@
 
 function actor_scan(_x, _y, _dir, _cap = 30) {
+	static __return = {};
+	
 	var _check_x = _x;
 	var _check_y = _y;
 	var _check = _cap;
@@ -22,9 +24,29 @@ function actor_scan(_x, _y, _dir, _cap = 30) {
 		_check--;
 	}
 	
-	return {
-		x: _check_x, y: _check_y
-	};
+	__return.x = _check_x;
+	__return.y = _check_y;
+	
+	return __return;
+}
+
+function actor_check(_x, _y, _dir, _target, _cap = undefined) {
+	var _ = actor_scan(_x, _y, _dir, _cap);
+	
+	var _x1 = min(_x, _.x) + 1;
+	var _y1 = min(_y, _.y) + 1;
+	var _x2 = max(_x + sprite_width, _.x + sprite_width) - 1;
+	var _y2 = max(_y + sprite_height, _.y + sprite_height) - 1;
+
+	with _target {
+		if rectangle_in_rectangle(
+			bbox_left, bbox_top,
+			bbox_right, bbox_bottom,
+			_x1, _y1, _x2, _y2
+		) return true;
+	}
+	
+	return false;
 }
 
 function actor_stretch(_x1, _y1, _x2, _y2, _inst = self) {

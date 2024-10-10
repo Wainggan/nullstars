@@ -60,7 +60,7 @@ state_idle = state.add()
 	pet.mask_index = spr_none;
 	mask_index = sprite_index;
 	
-	_activate = actor_scan(x, y, dir, obj_player)
+	_activate = actor_check(x, y, dir, obj_player)
 	
 	pet.mask_index = pet.sprite_index;
 	mask_index = spr_none;
