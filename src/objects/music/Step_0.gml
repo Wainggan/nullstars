@@ -3,6 +3,10 @@ var _bgm = game_level_get_music(camera.x, camera.y);
 var _bgm_asset = -1;
 var _bgm_name = "";
 
+if array_contains(game_level_get_flags(camera.x, camera.y), "hub") {
+	_bgm = "hub";
+}
+
 switch _bgm {
 	case undefined:
 		_bgm_asset = bgm_asset;

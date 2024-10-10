@@ -517,6 +517,7 @@ function game_level_get_data(_x, _y) {
 		music: undefined,
 		lut_grade: "base",
 		lut_mix: 1,
+		flags: [],
 	};
 	
 	if !_lvl return __return;
@@ -527,6 +528,7 @@ function game_level_get_data(_x, _y) {
 	__return.music = _lvl.fields.music == pointer_null ? undefined : _lvl.fields.music;
 	__return.lut_grade = _lvl.fields.lut_grade;
 	__return.lut_mix = _lvl.fields.lut_mix;
+	__return.flags = _lvl.fields.flags;
 	
 	return __return;
 }
@@ -551,4 +553,7 @@ function game_level_get_lut(_x, _y) {
 	__return.grade = _data.lut_grade;
 	__return.mix = _data.lut_mix;
 	return __return;
+}
+function game_level_get_flags(_x, _y) {
+	return game_level_get_data(_x, _y).flags;
 }

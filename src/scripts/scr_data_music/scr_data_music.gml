@@ -14,4 +14,5 @@ function data_music_add(_asset = "", _name = "", _ref = "", _artist = "", _descr
 data_music_add(nameof(mus_wind), "wind", "wind", "", "");
 data_music_add(nameof(mus_questionthestars), "center of the universe", "stars", "parchment", "");
 data_music_add(nameof(mus_wind), "years ago", "lava", "parchment", "");
+data_music_add(nameof(mus_hub_1), "hub", "hub", "parchment", "");
 
