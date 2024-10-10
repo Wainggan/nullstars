@@ -47,8 +47,10 @@ background_anim = approach(background_anim, 1, 1 / 120)
 
 var _lut = game_level_get_lut(camera.x, camera.y);
 
-lut_mode_grade.set(asset_get_index("spr_grade_" + _lut.grade));
-lut_mode_mix.set(_lut.mix);
+if _lut {
+	lut_mode_grade.set(asset_get_index("spr_grade_" + _lut.grade));
+	lut_mode_mix.set(_lut.mix);
+}
 
 lut_mode_grade.update();
 lut_mode_mix.update();
