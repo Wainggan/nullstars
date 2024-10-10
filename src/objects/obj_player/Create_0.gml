@@ -1224,7 +1224,7 @@ state_ledge = state_base.add()
 		state.change(state_free);
 		return;
 	}
-	if actor_collision(x, y + 1) {
+	if y_delta == 0 && actor_collision(x, y + 1) {
 		state.change(state_free);
 		return;
 	}
