@@ -176,6 +176,12 @@ event = new Event()
 scale_x = 0;
 scale_y = 0;
 
+x_last = xstart;
+y_last = ystart;
+
+x_delta = 0;
+y_delta = 0;
+
 dir = 1;
 
 grace = 0;
@@ -880,6 +886,11 @@ state_base = state.add()
 	x_lift = 0;
 	y_lift = 0;
 	
+	x_delta = x - x_last;
+	y_delta = y - y_last;
+	
+	x_last = x;
+	y_last = y;
 	
 	
 	
