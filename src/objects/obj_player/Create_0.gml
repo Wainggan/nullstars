@@ -898,10 +898,9 @@ state_base = state.add()
 
 state_stuck = state_base.add()
 .set("step", function(){
-	x_vel = approach(x_vel, 0, 0.5)
-	y_vel += defs.gravity;
-	y_vel = min(y_vel, defs.terminal_vel);
-	if !place_meeting(x, y, obj_flag_stop) {
+	x_vel = approach(x_vel, 0, 0.5);
+	y_vel = approach(y_vel, defs.terminal_vel, defs.gravity);
+	if actor_collision(x, y + 1) {
 		state.change(state_free);
 	}
 })
