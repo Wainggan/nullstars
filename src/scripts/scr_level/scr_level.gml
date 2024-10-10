@@ -79,9 +79,15 @@ function level_ldtk_field_item(_val, _type) {
 }
 
 // does not support entity defs. should be handled case by case instead
-function level_ldtk_field(_field) {
+function level_ldtk_field(_field, _x = 0, _y = 0) {
 	var _val = _field.__value;
-	return level_ldtk_field_item(_val, _field.__type)
+	var _item =  level_ldtk_field_item(_val, _field.__type);
+	// messy hack
+	if _field.__type == "Point" {
+		_item.x += _x;
+		_item.y += _y;
+	}
+	return _item;
 }
 
 function level_ldtk_intgrid(_data, _tilemap) {
@@ -236,7 +242,7 @@ function Level() constructor {
 		
 		for (var i_field = 0; i_field < array_length(_level.fieldInstances); i_field++) {
 			var _f = _level.fieldInstances[i_field]
-			fields[$ _f.__identifier] = level_ldtk_field(_f);
+			fields[$ _f.__identifier] = level_ldtk_field(_f, x, y);
 		}
 		
 		layer = layer_create(0)
@@ -333,7 +339,7 @@ function Level() constructor {
 						
 						for (var i_field = 0; i_field < array_length(_e.fieldInstances); i_field++) {
 							var _f = _e.fieldInstances[i_field];
-							_field[$ _f.__identifier] = level_ldtk_field(_f);
+							_field[$ _f.__identifier] = level_ldtk_field(_f, x, y);
 						}
 						
 						// @todo: rewrite
@@ -504,7 +510,14 @@ function game_level_onscreen() {
 function game_level_get_data(_x, _y) {
 	var _lvl = game_level_get(_x, _y);
 	
-	static __return = {};
+	static __return = {
+		preset: undefined,
+		biome: undefined,
+		background: undefined,
+		music: undefined,
+		lut_grade: "base",
+		lut_mix: 1,
+	};
 	
 	if !_lvl return __return;
 	
