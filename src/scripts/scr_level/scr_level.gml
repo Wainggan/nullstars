@@ -87,6 +87,21 @@ function level_ldtk_field(_field, _x = 0, _y = 0) {
 		_item.x += _x;
 		_item.y += _y;
 	}
+	// this fucking sucks
+	// what the fuck is wrong with you?
+	if string_starts_with(_field.__type, "Array") {
+		var _innertype = string_trim(_field.__type, ["Array<", ">"]);
+		var _arr = [];
+		for (var i = 0; i < array_length(_field.__value); i++) {
+			var _item_arr = level_ldtk_field_item(_field.__value[i], _innertype);
+			if _innertype == "Point" {
+				_item_arr.x += _x;
+				_item_arr.y += _y;
+			}
+			array_push(_arr, _item_arr);
+		}
+		_item = _arr;
+	}
 	return _item;
 }
 

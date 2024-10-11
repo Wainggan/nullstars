@@ -1,5 +1,7 @@
 
-event_inherited()
+event_inherited();
+
+trigger_setup();
 
 defs = {
 	recover_time: 100,
@@ -34,8 +36,8 @@ state_recover = state_base.add()
 	anim_hit = 1;
 	dir_dir = -dir_dir;
 	
-	activate()
-	send()
+	trigger_run();
+	trigger_send();
 })
 .set("step", function(){
 	recover_timer -= 1;

@@ -1,7 +1,7 @@
 
 event_inherited()
 
-trigger_setup()
+trigger_setup();
 
 alarm[0] = 1;
 

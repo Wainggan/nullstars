@@ -16,7 +16,7 @@ function trigger_set(_callback, _target = self) {
 function trigger_send(_target = self) {
 	with _target {
 		if link != undefined {
-			link.trigger_activate(self);
+			trigger_run(link);
 		}
 	}
 }
