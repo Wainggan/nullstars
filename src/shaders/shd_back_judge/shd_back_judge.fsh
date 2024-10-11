@@ -9,6 +9,8 @@ uniform float u_time;
 #define PI 3.141593238
 #define SQ_AMOUNT 5.0
 #define SQ_SCALE 16.0
+#define SMOOTH 0.0
+
 
 vec3 palette(float t) {
     vec3 a = vec3(1.0, 0.0, 1.0);
@@ -36,7 +38,7 @@ vec3 m_circle(vec2 uv, float size) {
     float l = length(uv);
     
     circle *= l * 4.0;
-    circle *= smoothstep(1.0 / size, 1.0 / size + 0.06, 1.0/l);
+    circle *= smoothstep(1.0 / size, 1.0 / size + SMOOTH, 1.0/l);
     
     return circle;
 }
@@ -48,7 +50,7 @@ float m_squares1(vec2 uv) {
     uv.y += sin(u_time / 2.0) * 0.1;
     float t = sin(uv.x * SQ_SCALE) / 2.0 + 0.5;
     t = min(t, sin(uv.y * SQ_SCALE) / 2.0 + 0.5);
-    t = smoothstep(0.5, 0.51, t);
+    t = smoothstep(0.5, 0.5 + SMOOTH, t);
     return t;
 }
 
