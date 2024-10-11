@@ -1,6 +1,8 @@
 
 event_inherited();
 
+trigger_setup();
+
 vel = 0;
 accel = 0;
 
@@ -17,6 +19,10 @@ with target {
 	
 }
 
+trigger_set(function() {
+	if state.is(state_idle) state.change(state_active);
+});
+
 state = new State();
 
 state_idle = state.add()
@@ -28,7 +34,10 @@ state_idle = state.add()
 	}
 	
 	if _activate {
-		state.change(state_active)
+		if !reliant {
+			trigger_run();
+			trigger_send();
+		}
 	}
 	
 })

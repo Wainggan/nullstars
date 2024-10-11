@@ -148,6 +148,7 @@
     {"id":{"name":"scr_solid","path":"scripts/scr_solid/scr_solid.yy",},},
     {"id":{"name":"scr_state","path":"scripts/scr_state/scr_state.yy",},},
     {"id":{"name":"scr_timer","path":"scripts/scr_timer/scr_timer.yy",},},
+    {"id":{"name":"scr_trigger","path":"scripts/scr_trigger/scr_trigger.yy",},},
     {"id":{"name":"scr_tweens","path":"scripts/scr_tweens/scr_tweens.yy",},},
     {"id":{"name":"scr_util","path":"scripts/scr_util/scr_util.yy",},},
     {"id":{"name":"scr_yarn","path":"scripts/scr_yarn/scr_yarn.yy",},},

@@ -1,6 +1,8 @@
 
 event_inherited();
 
+trigger_setup();
+
 pet = instance_create_layer(x, y, layer, obj_Solid, {
 	image_xscale: sprite_width, image_yscale: sprite_height
 })
@@ -41,12 +43,10 @@ rest = true;
 anim_sight_x = 0;
 anim_sight_y = 0;
 
-activate_inherit = activate;
-activate = function(_other) {
-	//if !activate_inherit(_other) return false;
+trigger_set(function(){
 	if !rest return;
 	state.change(state_active)
-}
+})
 
 
 state = new State();
@@ -67,8 +67,8 @@ state_idle = state.add()
 	
 	if _activate {
 		if !reliant {
-			activate();
-			send();
+			trigger_run();
+			trigger_send();
 		}
 	}
 	

@@ -111,6 +111,7 @@
     {"name":"scr_sod","order":46,"path":"scripts/scr_sod/scr_sod.yy",},
     {"name":"scr_solid","order":4,"path":"scripts/scr_solid/scr_solid.yy",},
     {"name":"scr_timer","order":14,"path":"scripts/scr_timer/scr_timer.yy",},
+    {"name":"scr_trigger","order":8,"path":"scripts/scr_trigger/scr_trigger.yy",},
     {"name":"scr_util","order":1,"path":"scripts/scr_util/scr_util.yy",},
     {"name":"shd_back_blackhole","order":4,"path":"shaders/shd_back_blackhole/shd_back_blackhole.yy",},
     {"name":"shd_back_boxes","order":1,"path":"shaders/shd_back_boxes/shd_back_boxes.yy",},

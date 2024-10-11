@@ -2,8 +2,8 @@
 var _touching = place_meeting(x, y, obj_Actor);
 
 if _touching && !touching {
-	activate();
-	send();
+	trigger_run();
+	trigger_send();
 }
 
 touching = _touching;
