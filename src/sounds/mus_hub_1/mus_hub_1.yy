@@ -9,7 +9,7 @@
   "bitRate":192,
   "compression":3,
   "conversionMode":0,
-  "duration":88.235306,
+  "duration":88.23528,
   "name":"mus_hub_1",
   "parent":{
     "name":"sounds",
