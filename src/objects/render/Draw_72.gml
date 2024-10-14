@@ -7,19 +7,24 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 
 var _lvl_onscreen = game_level_onscreen()
 
+
+// clear screen
 draw_clear_alpha(c_black, 0);
 
-if surface_exists(surf_background) {
-	gpu_set_blendmode_ext_sepalpha(bm_one, bm_zero, bm_zero, bm_one)
-	draw_surface_ext(surf_background, 0, 0, 1, 1, 0, c_white, 1)
-	gpu_set_blendmode(bm_normal)
-}
+// redraw last frame's surf_background
+//if surface_exists(surf_background) {
+//	gpu_set_blendmode_ext_sepalpha(bm_one, bm_zero, bm_zero, bm_one) // paranoia
+//	draw_surface_ext(surf_background, 0, 0, 1, 1, 0, c_white, 1)
+//	gpu_set_blendmode(bm_normal)
+//}
 
-// background
+
+// -- background --
 
 if !surface_exists(surf_background)
 	surf_background = surface_create(_cam_w, _cam_h);
 
+// draw fading out background
 if background_anim < 1 {
 	surface_set_target(surf_background)
 	draw_clear_alpha(c_black, 1);
@@ -30,6 +35,7 @@ if background_anim < 1 {
 	surface_reset_target()
 }
 
+// draw fading in background, on seperate buffer for alpha
 surface_set_target(surf_ping)
 draw_clear_alpha(c_black, 1);
 
@@ -39,39 +45,39 @@ _mode.draw()
 surface_reset_target()
 
 surface_set_target(surf_background)
-
 draw_surface_ext(surf_ping, 0, 0, 1, 1, 0, c_white, background_anim)
-
 surface_reset_target()
 
 
-// background lights
+// -- set up background lights --
 
 if !surface_exists(surf_background_lights)
 	surf_background_lights = surface_create(_cam_w, _cam_h);
 
+// clear lights
 surface_set_target(surf_background_lights);
 draw_clear(c_black);
 
+// lazy brighten using the background
+// @todo: look into making this better with a shader
 gpu_set_blendmode(bm_add);
-
-// lazy brighten
 repeat background_lights_brightness
 	draw_surface(surf_background, 0, 0);
-
 gpu_set_blendmode(bm_normal);
 
 surface_reset_target();
 
 
-// bubbles
+// -- bubbles --
 
 if !surface_exists(surf_bubbles)
 	surf_bubbles = surface_create(_cam_w, _cam_h);
 
+// bubble surface for masking
 surface_set_target(surf_bubbles);
 draw_clear_alpha(c_black, 0)
 
+// draw bubble base
 with obj_spike_bubble {
 	var _size = 1
 	if global.config.graphics_up_bubble_wobble
@@ -83,6 +89,7 @@ with obj_spike_bubble {
 	
 }
 
+// disable alpha to use the base as a mask
 gpu_set_colorwriteenable(true, true, true, false)
 
 var _col = #aa78fa
@@ -91,6 +98,7 @@ draw_sprite_tiled_ext(spr_spike_stars, 0, floor(- _cam_x / 2), floor(- _cam_y / 
 draw_sprite_tiled_ext(spr_spike_stars, 0, floor(- _cam_x / 4), floor(- _cam_y / 4), 2, 2, merge_color(c_white, _col, 0.5), 1)
 draw_sprite_tiled_ext(spr_spike_stars, 0, floor(- _cam_x / 8), floor(- _cam_y / 8), 2, 2, merge_color(c_white, _col, 0.25), 1)
 
+// draw the Xs
 with obj_spike_bubble {
 	var _size = 1;
 	var _off_x = 0;
@@ -109,6 +117,7 @@ gpu_set_colorwriteenable(true, true, true, true)
 
 surface_reset_target()
 
+// begin bubble outline
 gpu_set_blendmode_ext(bm_one, bm_zero)
 
 surface_set_target(surf_ping)
@@ -143,7 +152,7 @@ surface_reset_target()
 gpu_set_blendmode(bm_normal)
 
 
-
+// draw level backgrounds
 for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 	var _lvl = _lvl_onscreen[i]
 	draw_tilemap(
@@ -158,3 +167,7 @@ for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 	);
 }
 
+/*
+note:
+up to this point, the application surface consists of the level background tiles.
+*/

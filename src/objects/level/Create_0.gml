@@ -1,6 +1,4 @@
 
-#macro TILESIZE 16
-
 var _file = game_json_open("level.ldtk");
 
 levels = [];

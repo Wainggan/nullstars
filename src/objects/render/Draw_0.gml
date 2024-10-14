@@ -6,13 +6,18 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 
 var _lvl_onscreen = game_level_onscreen()
 
+/*
+note:
+pretty much every normal object's draw event ran before this event.
+in the application surface, there is the background tiles with these objects layered on top.
+*/
 
-// finish surf_background_lights
 
+// -- background lights --
+
+// mask out light layer with whatever is on the application surface
 surface_set_target(surf_background_lights);
-
 draw_surface_ext(application_surface, 0, 0, 1, 1, 0, c_black, 1);
-
 surface_reset_target()
 
 if global.config.graphics_atmosphere_particles

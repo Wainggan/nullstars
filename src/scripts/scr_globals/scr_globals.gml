@@ -20,7 +20,10 @@ global.config = {
 	slow: false,
 }
 
+
 #macro WIDTH 960
 #macro HEIGHT 540
+
+#macro TILESIZE 16
 
 #macro GAME_BUBBLE_PARITY 10
