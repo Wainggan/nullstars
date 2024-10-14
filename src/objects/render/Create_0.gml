@@ -9,6 +9,10 @@ surf_lights = -1;
 surf_mask = -1;
 surf_background = -1;
 
+surf_layer_0 = -1;
+surf_layer_1 = -1;
+surf_layer_2 = -1;
+
 surf_ping = -1;
 
 surf_background_lights = -1;

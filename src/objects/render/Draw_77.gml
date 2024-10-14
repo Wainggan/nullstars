@@ -8,10 +8,8 @@ var _scale_w = window_get_width() / _cam_w,
 	_scale_h = window_get_height() / _cam_h
 
 
-if !surface_exists(surf_compose)
-	surf_compose = surface_create(_cam_w, _cam_h);
-
 surface_set_target(surf_compose)
+draw_clear_alpha(c_black, 1);
 
 draw_sprite_ext(
 	spr_pixel, 0, 
@@ -26,15 +24,18 @@ draw_surface_ext(surf_background, 0, 0, 1, 1, 0, c_white, 1);
 
 if global.config.graphics_post_outline {
 
-	shader_set(shd_outline_post)
-
-	var _u_texel = shader_get_uniform(shd_outline_post, "u_texel")
-
+	shader_set(shd_outline_post);
+	var _u_texel = shader_get_uniform(shd_outline_post, "u_texel");
 	shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);
 
-	draw_surface_ext(application_surface, 0, 0, 1, 1, 0, c_black, 1);
-
-	shader_reset()
+	draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_black, 1);
+	shader_reset();
+	
+	draw_surface_ext(surf_layer_1, 0, 0, 1, 1, 0, c_white, 1);
+	
+	shader_set(shd_outline_post);
+	draw_surface_ext(surf_layer_2, 0, 0, 1, 1, 0, c_black, 1);
+	shader_reset();
 
 } else {
 	
@@ -45,7 +46,6 @@ if global.config.graphics_post_outline {
 gpu_set_colorwriteenable(true, true, true, true);
 
 surface_reset_target();
-
 
 
 if keyboard_check_pressed(ord("Y")) mode = (mode + 1) % array_length(p)

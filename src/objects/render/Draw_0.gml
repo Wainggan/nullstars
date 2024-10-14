@@ -12,20 +12,32 @@ pretty much every normal object's draw event ran before this event.
 in the application surface, there is the background tiles with these objects layered on top.
 */
 
+surface_set_target(surf_layer_0);
+draw_surface(application_surface, 0, 0);
+surface_reset_target();
+
+draw_clear_alpha(c_black, 0);
+
 
 // -- background lights --
 
 // mask out light layer with whatever is on the application surface
 surface_set_target(surf_background_lights);
-draw_surface_ext(application_surface, 0, 0, 1, 1, 0, c_black, 1);
-surface_reset_target()
+draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_black, 1);
+surface_reset_target();
+
+surface_set_target(surf_layer_1);
+draw_clear_alpha(c_black, 0);
+
+// matrix_set doesn't seem to work with part_system_drawit ...
+camera_apply(view_camera[0])
 
 if global.config.graphics_atmosphere_particles
-	part_system_drawit(particles_ambient)
+	part_system_drawit(particles_ambient);
 
+surface_reset_target();
 
 // blur surf_background_lights
-
 if global.config.graphics_lights_rimblur {
 
 	shader_set(shd_blur);
@@ -75,7 +87,6 @@ if global.config.graphics_lights {
 	gpu_set_blendmode(bm_add);
 
 	draw_surface(surf_background_lights, 0, 0);
-
 	draw_surface(surf_bubbles, 0, 0);
 
 	gpu_set_blendmode(bm_normal)
@@ -185,29 +196,35 @@ if global.config.graphics_lights {
 
 	shader_reset();
 
-
-	// apply lights
-
-	gpu_set_blendmode_ext(bm_dest_color, bm_zero);
-		draw_surface(application_surface, 0, 0);
-	gpu_set_blendmode(bm_normal);
-
 	surface_reset_target();
-
-	draw_surface_ext(surf_lights, _cam_x, _cam_y, 1, 1, 0, c_white, 1);
+	
+	// apply lights
+	gpu_set_colorwriteenable(true, true, true, false);
+	gpu_set_blendmode_ext(bm_dest_color, bm_zero);
+	
+	surface_set_target(surf_layer_0);
+		draw_surface_ext(surf_lights, 0, 0, 1, 1, 0, c_white, 1);
+	
+	surface_set_target(surf_layer_1);
+		draw_surface_ext(surf_lights, 0, 0, 1, 1, 0, c_white, 1);
+	
+	surface_reset_target();
+	surface_reset_target();
+	
+	gpu_set_blendmode(bm_normal);
+	gpu_set_colorwriteenable(true, true, true, true);
 
 } else {
 	
 }
 
-
 // draw bubbles
-
-draw_surface(surf_bubbles, _cam_x, _cam_y)
+surface_set_target(surf_layer_0);
+draw_surface(surf_bubbles, _cam_x, _cam_y);
+surface_reset_target();
 
 
 // reflections
-
 if global.config.graphics_reflectables {
 
 	if !surface_exists(surf_relection)
@@ -222,7 +239,7 @@ if global.config.graphics_reflectables {
 
 	shader_set(shd_reflect)
 
-	texture_set_stage(_u_surf, surface_get_texture(application_surface))
+	texture_set_stage(_u_surf, surface_get_texture(surf_layer_0))
 	shader_set_uniform_f(_u_texel, 1 / _cam_w, 1 / _cam_h);
 
 	with obj_decor_reflectable {
@@ -247,6 +264,8 @@ if global.config.graphics_reflectables {
 
 }
 
+
+
 // level mask
 
 if !surface_exists(surf_mask)
@@ -262,44 +281,50 @@ for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 	draw_sprite_stretched(spr_pixel, 0, _lvl.x - _cam_x, _lvl.y - _cam_y, _lvl.width, _lvl.height)
 }
 
-gpu_set_blendmode(bm_normal)
+gpu_set_blendmode(bm_normal);
 
 surface_reset_target()
 
-draw_surface(surf_mask, _cam_x, _cam_y);
+
+surface_set_target(surf_layer_2);
+draw_clear_alpha(c_black, 0);
+
+draw_surface(surf_mask, 0, 0);
 
 
 // draw tile layer
 
-shader_set(shd_tiles)
+shader_set(shd_tiles);
 
 for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 	var _lvl = _lvl_onscreen[i]
-	matrix_set(matrix_world, matrix_build(_lvl.x,_lvl.y, 0, 0, 0, 0, 1, 1, 1))
-	vertex_submit(_lvl.vb_tiles_below, pr_trianglelist, tileset_get_texture(tl_tiles))
-	vertex_submit(_lvl.vb_front, pr_trianglelist, tileset_get_texture(tl_tiles))
+	matrix_set(matrix_world, matrix_build(_lvl.x - _cam_x, _lvl.y - _cam_y, 0, 0, 0, 0, 1, 1, 1));
+	vertex_submit(_lvl.vb_tiles_below, pr_trianglelist, tileset_get_texture(tl_tiles));
+	vertex_submit(_lvl.vb_front, pr_trianglelist, tileset_get_texture(tl_tiles));
 }
-matrix_set(matrix_world, matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1))
+matrix_set(matrix_world, matrix_build_identity());
 
-shader_reset()
+shader_reset();
 
 for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 	var _lvl = _lvl_onscreen[i]
 	draw_tilemap(
 		_lvl.tiles_tiles_above, 
-		tilemap_get_x(_lvl.tiles_tiles_above),
-		tilemap_get_y(_lvl.tiles_tiles_above)
+		tilemap_get_x(_lvl.tiles_tiles_above) - _cam_x,
+		tilemap_get_y(_lvl.tiles_tiles_above) - _cam_y
 	);
 	draw_tilemap(
 		_lvl.tiles_decor, 
-		tilemap_get_x(_lvl.tiles_decor),
-		tilemap_get_y(_lvl.tiles_decor)
+		tilemap_get_x(_lvl.tiles_decor) - _cam_x,
+		tilemap_get_y(_lvl.tiles_decor) - _cam_y
 	);
 	draw_tilemap(
 		_lvl.tiles_spike, 
-		tilemap_get_x(_lvl.tiles_spike),
-		tilemap_get_y(_lvl.tiles_spike)
+		tilemap_get_x(_lvl.tiles_spike) - _cam_x,
+		tilemap_get_y(_lvl.tiles_spike) - _cam_y
 	);
 }
+
+surface_reset_target();
 
 

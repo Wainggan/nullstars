@@ -148,24 +148,28 @@ surface_set_target(surf_bubbles)
 draw_surface(surf_ping, 0, 0);
 
 surface_reset_target()
-
 gpu_set_blendmode(bm_normal)
 
+
+surface_set_target(surf_layer_0);
+draw_clear_alpha(c_black, 0);
 
 // draw level backgrounds
 for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 	var _lvl = _lvl_onscreen[i]
 	draw_tilemap(
 		_lvl.tiles_back, 
-		tilemap_get_x(_lvl.tiles_back),
-		tilemap_get_y(_lvl.tiles_back)
+		tilemap_get_x(_lvl.tiles_back) - _cam_x,
+		tilemap_get_y(_lvl.tiles_back) - _cam_y
 	);
 	draw_tilemap(
 		_lvl.tiles_decor_under, 
-		tilemap_get_x(_lvl.tiles_decor_under),
-		tilemap_get_y(_lvl.tiles_decor_under)
+		tilemap_get_x(_lvl.tiles_decor_under) - _cam_x,
+		tilemap_get_y(_lvl.tiles_decor_under) - _cam_y
 	);
 }
+
+surface_reset_target();
 
 /*
 note:

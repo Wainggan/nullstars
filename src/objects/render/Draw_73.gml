@@ -1,6 +1,9 @@
 
 var _cam = game_camera_get()
 
+surface_set_target(surf_layer_2);
+draw_surface(application_surface, 0, 0);
+
 // draw reflections
 
 if global.config.graphics_reflectables {
@@ -10,7 +13,6 @@ if global.config.graphics_reflectables {
 	gpu_set_colorwriteenable(true, true, true, true);
 
 }
-
 
 if global.config.graphics_atmosphere_overlay {
 
@@ -32,4 +34,8 @@ if global.config.graphics_atmosphere_overlay {
 } else {
 	
 }
+
+surface_reset_target();
+
+draw_clear_alpha(c_black, 0);
 
