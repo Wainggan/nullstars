@@ -30,9 +30,9 @@ if _amparts != -1
 		_cam_x + _cam_w / 2, 
 		_cam_y + _cam_h / 2, 
 		_amparts
-	)
+	);
 
-part_system_update(particles_ambient)
+part_system_update(particles_ambient);
 
 
 var _background = game_level_get_background(camera.x, camera.y)
