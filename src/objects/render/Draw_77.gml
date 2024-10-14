@@ -18,6 +18,7 @@ if global.config.graphics_post_outline {
 	surface_reset_target();
 }
 
+
 surface_set_target(surf_compose)
 draw_clear_alpha(c_black, 1);
 
@@ -33,7 +34,7 @@ gpu_set_colorwriteenable(true, true, true, false);
 draw_surface_ext(surf_background, 0, 0, 1, 1, 0, c_white, 1);
 
 if global.config.graphics_post_outline {
-	
+
 	shader_set(shd_outline_post);
 	var _u_texel = shader_get_uniform(shd_outline_post, "u_texel");
 	shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);

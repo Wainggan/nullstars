@@ -220,7 +220,7 @@ if global.config.graphics_lights {
 
 // draw bubbles
 surface_set_target(surf_layer_0);
-draw_surface(surf_bubbles, _cam_x, _cam_y);
+draw_surface(surf_bubbles, 0, 0);
 surface_reset_target();
 
 
