@@ -41,7 +41,6 @@
     {"name":"music","order":17,"path":"objects/music/music.yy",},
     {"name":"obj_areaname","order":18,"path":"objects/obj_areaname/obj_areaname.yy",},
     {"name":"obj_ball","order":9,"path":"objects/obj_ball/obj_ball.yy",},
-    {"name":"obj_blank","order":25,"path":"objects/obj_blank/obj_blank.yy",},
     {"name":"obj_bounce_left","order":22,"path":"objects/obj_bounce_left/obj_bounce_left.yy",},
     {"name":"obj_bounce_right","order":23,"path":"objects/obj_bounce_right/obj_bounce_right.yy",},
     {"name":"obj_bounce","order":21,"path":"objects/obj_bounce/obj_bounce.yy",},
