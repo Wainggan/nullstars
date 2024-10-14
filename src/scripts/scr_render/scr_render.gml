@@ -8,9 +8,10 @@ function game_render_blendmode_reset() {
 }
 
 function game_render_refresh() {
+	var _surf = surface_get_target()
 	surface_set_target(render.surf_app)
 	draw_clear_alpha(c_black, 0)
-	draw_surface(application_surface, 0, 0)
+	draw_surface(_surf, 0, 0)
 	surface_reset_target()
 }
 
