@@ -19,5 +19,7 @@ if !surface_exists(surf_layer_1)
 	surf_layer_1 = surface_create(_cam_w, _cam_h);
 if !surface_exists(surf_layer_2)
 	surf_layer_2 = surface_create(_cam_w, _cam_h);
+if !surface_exists(surf_layer_outline)
+	surf_layer_outline = surface_create(_cam_w, _cam_h);
 
 

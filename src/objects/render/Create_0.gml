@@ -12,6 +12,7 @@ surf_background = -1;
 surf_layer_0 = -1;
 surf_layer_1 = -1;
 surf_layer_2 = -1;
+surf_layer_outline = -1;
 
 surf_ping = -1;
 

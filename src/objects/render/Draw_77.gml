@@ -8,6 +8,16 @@ var _scale_w = window_get_width() / _cam_w,
 	_scale_h = window_get_height() / _cam_h
 
 
+if global.config.graphics_post_outline {
+	surface_set_target(surf_layer_outline);
+	draw_clear_alpha(c_black, 0);
+	
+	draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_black, 1);
+	draw_surface_ext(surf_layer_2, 0, 0, 1, 1, 0, c_black, 1);
+	
+	surface_reset_target();
+}
+
 surface_set_target(surf_compose)
 draw_clear_alpha(c_black, 1);
 
@@ -23,23 +33,24 @@ gpu_set_colorwriteenable(true, true, true, false);
 draw_surface_ext(surf_background, 0, 0, 1, 1, 0, c_white, 1);
 
 if global.config.graphics_post_outline {
-
+	
 	shader_set(shd_outline_post);
 	var _u_texel = shader_get_uniform(shd_outline_post, "u_texel");
 	shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);
 
-	draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_black, 1);
+	draw_surface_ext(surf_layer_outline, 0, 0, 1, 1, 0, c_black, 1);
+	
 	shader_reset();
 	
+	draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_white, 1);
 	draw_surface_ext(surf_layer_1, 0, 0, 1, 1, 0, c_white, 1);
-	
-	shader_set(shd_outline_post);
-	draw_surface_ext(surf_layer_2, 0, 0, 1, 1, 0, c_black, 1);
-	shader_reset();
+	draw_surface_ext(surf_layer_2, 0, 0, 1, 1, 0, c_white, 1);
 
 } else {
 	
-	draw_surface_ext(application_surface, 0, 0, 1, 1, 0, c_white, 1);
+	draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_white, 1);
+	draw_surface_ext(surf_layer_1, 0, 0, 1, 1, 0, c_white, 1);
+	draw_surface_ext(surf_layer_2, 0, 0, 1, 1, 0, c_white, 1);
 	
 }
 
