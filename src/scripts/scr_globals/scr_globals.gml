@@ -6,6 +6,7 @@ global.defs = {
 }
 
 global.config = {
+	_demonstrate: false,
 	graphics_lights: true,
 	graphics_lights_shadow: true,
 	graphics_lights_rimblur: true,
