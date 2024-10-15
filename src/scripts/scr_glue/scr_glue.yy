@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_glue",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_glue",
+  "parent":{
+    "name":"entities",
+    "path":"folders/entities.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
