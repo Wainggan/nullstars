@@ -1,6 +1,7 @@
 
 global.pause = 0;
 global.pause_defer = 0;
+global.pause_freeze = false;
 
 function game_get_pause() {
 	return global.pause;
@@ -11,8 +12,12 @@ function game_set_pause(_pause) {
 	global.pause_defer = max(_pause, global.pause_defer);
 }
 
+function game_set_freeze(_pause) {
+	global.pause_freeze = _pause;
+}
+
 function game_paused() {
-	return global.pause > 0;
+	return global.pause_freeze || global.pause > 0;
 }
 
 function game_pause_update() {
