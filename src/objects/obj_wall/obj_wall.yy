@@ -9,7 +9,10 @@
     "name":"objects",
     "path":"folders/objects.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_Solid",
+    "path":"objects/obj_Solid/obj_Solid.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -27,7 +30,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_debug_wall",
+    "path":"sprites/spr_debug_wall/spr_debug_wall.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }
