@@ -34,6 +34,7 @@
     {"$GMFolder":"","%Name":"decor","folderPath":"folders/objects/decor.yy","name":"decor","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"behaviour","folderPath":"folders/objects/decor/behaviour.yy","name":"behaviour","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"effects","folderPath":"folders/objects/effects.yy","name":"effects","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"mods","folderPath":"folders/objects/mods.yy","name":"mods","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"oo","folderPath":"folders/objects/oo.yy","name":"oo","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"player","folderPath":"folders/objects/player.yy","name":"player","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"semisolids","folderPath":"folders/objects/semisolids.yy","name":"semisolids","resourceType":"GMFolder","resourceVersion":"2.0",},

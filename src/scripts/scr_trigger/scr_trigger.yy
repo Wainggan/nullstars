@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_trigger",
   "parent":{
-    "name":"entities",
-    "path":"folders/entities.yy",
+    "name":"mods",
+    "path":"folders/objects/mods.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

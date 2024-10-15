@@ -10,8 +10,8 @@
   "name":"obj_trigger_link",
   "overriddenProperties":[],
   "parent":{
-    "name":"objects",
-    "path":"folders/objects.yy",
+    "name":"mods",
+    "path":"folders/objects/mods.yy",
   },
   "parentObjectId":{
     "name":"obj_Entity",
