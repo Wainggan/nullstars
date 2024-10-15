@@ -11,8 +11,8 @@
   "name":"obj_eye",
   "overriddenProperties":[],
   "parent":{
-    "name":"objects",
-    "path":"folders/objects.yy",
+    "name":"lifts",
+    "path":"folders/objects/lifts.yy",
   },
   "parentObjectId":{
     "name":"obj_Actor",
