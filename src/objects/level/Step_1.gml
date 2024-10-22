@@ -9,7 +9,7 @@ with obj_Exists {
 }
 
 with obj_spike_bubble {
-	if (game.frame + parity) % GAME_BUBBLE_PARITY > 0 continue;
+	if (global.time + parity) % GAME_BUBBLE_PARITY > 0 continue;
 	var _lvl = game_level_get_safe(x, y)
 	if (_lvl == undefined || !_lvl.loaded)
 	&& rectangle_in_rectangle(

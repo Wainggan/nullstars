@@ -80,7 +80,7 @@ if global.config.graphics_lights {
 
 	surface_set_target(surf_lights);
 	// ambient lights
-	draw_clear_alpha(#444455, 1);
+	draw_clear_alpha(#777788, 1);
 
 	// background lights
 

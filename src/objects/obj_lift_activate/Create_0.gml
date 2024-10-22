@@ -7,6 +7,8 @@ glue_parent_setup();
 vel = 0;
 accel = 0;
 
+anim_vel = 0;
+
 start_x = x;
 start_y = y;
 
@@ -55,6 +57,8 @@ state_active = state.add()
 	accel += 0.05;
 	vel = approach(vel, spd, accel);
 	
+	anim_vel += min(vel, 5);
+	
 	solid_move(lengthdir_x(vel, _dir), lengthdir_y(vel, _dir));
 	glue_parent_moved(x, y);
 	
@@ -79,6 +83,8 @@ state_retract = state.add()
 	
 	accel = approach(accel, 0.04, 0.002);
 	vel = approach(vel, 1, accel);
+	
+	anim_vel -= vel;
 	
 	solid_move(lengthdir_x(vel, _dir), lengthdir_y(vel, _dir));
 	glue_parent_moved(x, y);

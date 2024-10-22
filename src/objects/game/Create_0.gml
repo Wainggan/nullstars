@@ -1,5 +1,5 @@
 
-frame = 0;
+global.time = 0;
 
 global.onoff = 1;
 

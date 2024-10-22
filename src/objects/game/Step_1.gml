@@ -1,5 +1,5 @@
 
-frame++;
+global.time++;
 
 if global.config.slow {
 	game_set_speed(10, gamespeed_fps)
