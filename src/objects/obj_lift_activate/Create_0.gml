@@ -82,7 +82,7 @@ state_retract = state.add()
 	var _dir = point_direction(target_x, target_y, start_x, start_y)
 	
 	accel = approach(accel, 0.04, 0.002);
-	vel = approach(vel, 1, accel);
+	vel = approach(vel, 2, accel);
 	
 	anim_vel -= vel;
 	
