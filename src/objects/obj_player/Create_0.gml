@@ -272,6 +272,7 @@ tail_draw = function(_p, j) {
 
 update_tail = function(_p, i, _points){
 	var _len = array_length(_points)
+	var _scale_nor = (i / _len);
 	var _scale_inv = (_len - i) / _len;
 	
 	if holding {
@@ -294,10 +295,10 @@ update_tail = function(_p, i, _points){
 		
 	} else {
 		_p.damp = 0.8
-		_p.weight = 1;
+		_p.weight = 2 + _scale_inv;
 		
 		var _d = sin(current_time / 1000 - i * 0.6)
-		_p.x_move = -dir * (_scale_inv * 0.7 + 0.2)
+		_p.x_move = -dir * (power(_scale_inv, 3) * 4 + 0.1)
 		_p.y_move = _d * (_scale_inv * 0.2 + 0.1) + 0.3 * _scale_inv
 		
 	}
