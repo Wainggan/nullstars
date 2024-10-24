@@ -54,7 +54,7 @@ function Background_Shader(_shd) : Background() constructor {
 
 		shader_set_uniform_f(shader_get_uniform(shader, "u_offset"), _cam.x / 4, _cam.y / 4);
 		shader_set_uniform_f(shader_get_uniform(shader, "u_resolution"), _cam.w, _cam.h);
-		shader_set_uniform_f(shader_get_uniform(shader, "u_time"), current_time / 1000);
+		shader_set_uniform_f(shader_get_uniform(shader, "u_time"), global.time / 60);
 
 		draw_sprite_ext(
 			spr_pixel, 0, 
@@ -77,7 +77,7 @@ function Background_Clouds() : Background() constructor {
 		
 		draw_sprite_ext(spr_pixel, 0, 0, 0, WIDTH, HEIGHT, 0, #1e1830, 1)
 		
-		var _dir = current_time / 256
+		var _dir = global.time / 60 * 3
 		var _amount = 8
 		var _len = 400
 		var _x = WIDTH / 2, _y = -32
@@ -104,7 +104,7 @@ function Background_Clouds() : Background() constructor {
 		
 		draw_line_sprite(_x, _y, _x, _y + _len, 2, _col, 1)
 		
-		draw_sprite_tiled(spr_background_star, 1, -_cam.x / 12, current_time / 1000 * 2 - _cam.y / 12)
+		draw_sprite_tiled(spr_background_star, 1, -_cam.x / 12, global.time / 60 * 2 - _cam.y / 12)
 		
 		draw_sprite_tiled(spr_background_clouds, 0, -_cam.x / 24, 0)
 		

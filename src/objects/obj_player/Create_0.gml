@@ -297,8 +297,8 @@ update_tail = function(_p, i, _points){
 		_p.damp = 0.8
 		_p.weight = 2 + _scale_inv;
 		
-		var _d = sin(current_time / 1000 - i * 0.6)
-		_p.x_move = -dir * (power(_scale_inv, 3) * 4 + 0.1)
+		var _d = sin(global.time / 60 - i * 0.6)
+		_p.x_move = -dir * (power(_scale_inv, 6) * 4 + 0.1)
 		_p.y_move = _d * (_scale_inv * 0.2 + 0.1) + 0.3 * _scale_inv
 		
 	}

@@ -1,6 +1,8 @@
 
 global.time++;
 
+if keyboard_check_pressed(ord("8")) global.config.slow = !global.config.slow
+
 if global.config.slow {
 	game_set_speed(10, gamespeed_fps)
 } else {

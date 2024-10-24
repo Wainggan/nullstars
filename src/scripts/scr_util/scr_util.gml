@@ -32,7 +32,7 @@ function map(_value, _start_low, _start_high, _target_low, _target_high) {
     return (((_value - _start_low) / (_start_high - _start_low)) * (_target_high - _target_low)) + _target_low;
 }
 
-function wave(_from, _to, _duration, _offset = 0, _time = current_time * 0.001) {
+function wave(_from, _to, _duration, _offset = 0, _time = global.time / 60) {
 	var _a4 = (_from - _to) * 0.5;
 	return _to + _a4 + sin(((_time + _duration) / _duration + _offset) * (pi*2)) * _a4;
 }

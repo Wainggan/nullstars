@@ -23,7 +23,7 @@ if global.config.graphics_atmosphere_overlay {
 	game_render_refresh()
 	game_render_blendmode_set(shd_blend_fog)
 
-	draw_sprite_tiled_ext(spr_atmosphere_overlay, 0, -_cam.x * 0.4, -_cam.y * 0.4 - (current_time / 100), 9, 9, c_white, 0.1);
+	draw_sprite_tiled_ext(spr_atmosphere_overlay, 0, -_cam.x * 0.4, -_cam.y * 0.4 - (global.time / 60), 9, 9, c_white, 0.1);
 
 	game_render_blendmode_reset()
 
