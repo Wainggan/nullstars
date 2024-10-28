@@ -131,6 +131,27 @@ function level_ldtk_tiles(_data, _tilemap) {
 	}
 }
 
+function level_ldtk_tiles_window(_data, _tilemap_normal, _tilemap_window) {
+	for (var i = 0; i < array_length(_data); i++) {
+
+		var _td = _data[i];
+
+		var _t_x = round(_td.px[0] / TILESIZE);
+		var _t_y = round(_td.px[1] / TILESIZE);
+		var _t = _td.t;
+		
+		var _p_w = (sprite_get_width(spr_tiles) / TILESIZE);
+
+		var _p_x = _t % _p_w
+		var _p_y = floor(_t / _p_w)
+		
+		show_debug_message("{0} {1} {2} {3}", _t, _p_w, _p_x, _p_y)
+		
+		tilemap_set(_tilemap_normal, _t, _t_x, _t_y);
+
+	}
+}
+
 function level_ldtk_buffer(_data, _buffer) {
 	vertex_begin(_buffer, level_get_vf())
 	
@@ -235,6 +256,10 @@ function Level() constructor {
 	layer_back = -1;
 	tiles_back = -1;
 	
+	// background glass tiles
+	layer_back_glass = -1;
+	tiles_back_glass = -1;
+	
 	// spike tiles
 	layer_spike = -1;
 	tiles_spike = -1;
@@ -271,6 +296,10 @@ function Level() constructor {
 		layer_back = layer_create(110)
 		layer_set_visible(layer_back, false)
 		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
+		
+		layer_back_glass = layer_create(110)
+		layer_set_visible(layer_back_glass, false)
+		tiles_back_glass = layer_tilemap_create(layer_back_glass, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
 		
 		layer_tiles_above = layer_create(109)
 		layer_set_visible(layer_tiles_above, false)
@@ -321,7 +350,7 @@ function Level() constructor {
 					
 					break;
 				case "Background": 
-					level_ldtk_tiles(_layer.autoLayerTiles, tiles_back);
+					level_ldtk_tiles_window(_layer.autoLayerTiles, tiles_back, tiles_back_glass);
 					
 					break;
 				case "Collisions":

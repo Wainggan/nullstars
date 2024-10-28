@@ -133,6 +133,7 @@
     {"name":"shd_reflect","order":9,"path":"shaders/shd_reflect/shd_reflect.yy",},
     {"name":"shd_tiles","order":10,"path":"shaders/shd_tiles/shd_tiles.yy",},
     {"name":"mus_hub_1","order":3,"path":"sounds/mus_hub_1/mus_hub_1.yy",},
+    {"name":"mus_story","order":4,"path":"sounds/mus_story/mus_story.yy",},
     {"name":"mus_wind","order":1,"path":"sounds/mus_wind/mus_wind.yy",},
     {"name":"mus_yearsago","order":2,"path":"sounds/mus_yearsago/mus_yearsago.yy",},
     {"name":"spr_atmoshpere","order":28,"path":"sprites/spr_atmoshpere/spr_atmoshpere.yy",},
