@@ -145,9 +145,11 @@ function level_ldtk_tiles_window(_data, _tilemap_normal, _tilemap_window) {
 		var _p_x = _t % _p_w
 		var _p_y = floor(_t / _p_w)
 		
-		show_debug_message("{0} {1} {2} {3}", _t, _p_w, _p_x, _p_y)
-		
-		tilemap_set(_tilemap_normal, _t, _t_x, _t_y);
+		if 4 <= _p_x && _p_x <= 7 && 13 <= _p_y && _p_y <= 20 {
+			tilemap_set(_tilemap_window, _t, _t_x, _t_y);
+		} else {
+			tilemap_set(_tilemap_normal, _t, _t_x, _t_y);
+		}
 
 	}
 }

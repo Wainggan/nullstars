@@ -163,6 +163,11 @@ for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 		tilemap_get_y(_lvl.tiles_back) - _cam_y
 	);
 	draw_tilemap(
+		_lvl.tiles_back_glass, 
+		tilemap_get_x(_lvl.tiles_back_glass) - _cam_x,
+		tilemap_get_y(_lvl.tiles_back_glass) - _cam_y
+	);
+	draw_tilemap(
 		_lvl.tiles_decor_under, 
 		tilemap_get_x(_lvl.tiles_decor_under) - _cam_x,
 		tilemap_get_y(_lvl.tiles_decor_under) - _cam_y

@@ -4,6 +4,8 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 	_cam_w = camera_get_view_width(view_camera[0]),
 	_cam_h = camera_get_view_height(view_camera[0])
 
+var _lvl_onscreen = game_level_onscreen()
+
 var _scale_w = window_get_width() / _cam_w,
 	_scale_h = window_get_height() / _cam_h
 
@@ -13,6 +15,18 @@ if global.config.graphics_post_outline {
 	draw_clear_alpha(c_black, 0);
 	
 	draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_black, 1);
+	
+	gpu_set_blendmode(bm_subtract);
+		for (var i = 0; i < array_length(_lvl_onscreen); i++) {
+			var _lvl = _lvl_onscreen[i]
+			draw_tilemap(
+				_lvl.tiles_back_glass, 
+				tilemap_get_x(_lvl.tiles_back_glass) - _cam_x,
+				tilemap_get_y(_lvl.tiles_back_glass) - _cam_y
+			);
+		}
+	gpu_set_blendmode(bm_normal);
+	
 	draw_surface_ext(surf_layer_2, 0, 0, 1, 1, 0, c_black, 1);
 	
 	surface_reset_target();
