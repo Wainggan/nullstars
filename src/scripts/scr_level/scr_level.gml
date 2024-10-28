@@ -532,7 +532,7 @@ function game_level_onscreen() {
 	static __cache_y = 0
 	
 	if __cache_x != _cam.x || __cache_y != _cam.y {
-		__out = []
+		array_delete(__out, 0, array_length(__out)); // hopefully this is fine
 		__cache_x = _cam.x
 		__cache_y = _cam.y
 		
