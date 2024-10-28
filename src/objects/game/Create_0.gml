@@ -29,4 +29,6 @@ for (var i = 0; i < array_length(_names); i++) {
 
 gc_target_frame_time(1000)
 
+instance_create_layer(0, 0, layer, obj_show_info, { persistent: true });
+
 

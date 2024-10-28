@@ -33,13 +33,13 @@ if _bgm_asset != bgm_asset {
 	bgm_name = _bgm_name
 	
 	if bgm_from != -1 {
-		audio_sound_gain(bgm, 0, 10000)
+		audio_sound_gain(bgm, 0, 4000)
 	} else {
 		bgm = audio_play_sound(bgm_asset, 0, true, 0);
-		audio_sound_gain(bgm, 1, 10000);
+		audio_sound_gain(bgm, 1, 4000);
 		bgm_anim_state = 2;
 		
-		//instance_create_layer(0, 0, "Meta", obj_musicname, { name: bgm_name })
+		instance_create_layer(0, 0, "Meta", obj_show_name_music, { name: bgm_name })
 	}
 }
 
@@ -49,10 +49,10 @@ if bgm_anim_state == 1 {
 		bgm = -1;
 		if bgm_asset != -1 {
 			bgm = audio_play_sound(bgm_asset, 0, true, 0);
-			audio_sound_gain(bgm, 1, 10000)
+			audio_sound_gain(bgm, 1, 4000)
 			bgm_anim_state = 2;
 			
-			//instance_create_layer(0, 0, "Meta", obj_musicname, { name: bgm_name })
+			instance_create_layer(0, 0, "Meta", obj_show_name_music, { name: bgm_name })
 		}
 	}
 }
