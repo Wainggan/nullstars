@@ -27,4 +27,4 @@ global.config = {
 
 #macro TILESIZE 16
 
-#macro GAME_BUBBLE_PARITY 10
+#macro GAME_BUBBLE_PARITY 8

@@ -84,9 +84,23 @@ with obj_spike_bubble {
 		_size = round_ext(wave(0.95, 1.1, 8, offset), 0.05)
 	
 	draw_sprite_ext(spr_spike_bubble, 0, x - _cam_x, y - _cam_y, _size, _size, 0, c_black, 1);
-	
 	draw_sprite_ext(spr_spike_bubble, 1, x - _cam_x, y - _cam_y, size, size, offset % 360, c_black, 1);
+}
+
+with obj_spike_pond {
+	var _size = 2, _frame = floor(global.time / 60);
+	if global.config.graphics_up_bubble_wobble {
+		_size = round_ext(wave(0, 4, 9, offset), 1);
+		_frame = floor(wave(0, 24, 10, offset));
+	}
 	
+	draw_sprite_ext(spr_spike_pond, 0, x - _cam_x, y - _cam_y, image_xscale, image_yscale, 0, c_black, 1);
+	draw_sprite_stretched_ext(
+		spr_spike_pond_waves, _frame,
+		x - (16 - _size) - _cam_x, y - (16 - _size) - _cam_y,
+		sprite_width + (16 - _size) * 2, sprite_height + (16 - _size) * 2,
+		c_black, 1,
+	);
 }
 
 // disable alpha to use the base as a mask

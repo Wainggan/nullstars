@@ -365,7 +365,7 @@ checkDeath = function(_x, _y){
 		if object_index == obj_spike_down && other.y_vel <= 0 return true;
 		if object_index == obj_spike_left && other.x_vel >= 0 return true;
 		if object_index == obj_spike_right && other.x_vel <= 0 return true;
-		if object_index == obj_spike_bubble return true;
+		return true;
 	}
 	
 	var _lx = x, _ly = y;
