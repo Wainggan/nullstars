@@ -195,6 +195,7 @@
     {"name":"spr_speed_arrows","order":30,"path":"sprites/spr_speed_arrows/spr_speed_arrows.yy",},
     {"name":"spr_speed_base","order":29,"path":"sprites/spr_speed_base/spr_speed_base.yy",},
     {"name":"spr_spike_bubble","order":42,"path":"sprites/spr_spike_bubble/spr_spike_bubble.yy",},
+    {"name":"spr_spike_pond_fill","order":57,"path":"sprites/spr_spike_pond_fill/spr_spike_pond_fill.yy",},
     {"name":"spr_spike_pond_waves","order":56,"path":"sprites/spr_spike_pond_waves/spr_spike_pond_waves.yy",},
     {"name":"spr_spike_pond","order":55,"path":"sprites/spr_spike_pond/spr_spike_pond.yy",},
     {"name":"spr_spike_stars","order":44,"path":"sprites/spr_spike_stars/spr_spike_stars.yy",},

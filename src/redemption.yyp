@@ -244,6 +244,7 @@
     {"id":{"name":"spr_speed_arrows","path":"sprites/spr_speed_arrows/spr_speed_arrows.yy",},},
     {"id":{"name":"spr_speed_base","path":"sprites/spr_speed_base/spr_speed_base.yy",},},
     {"id":{"name":"spr_spike_bubble","path":"sprites/spr_spike_bubble/spr_spike_bubble.yy",},},
+    {"id":{"name":"spr_spike_pond_fill","path":"sprites/spr_spike_pond_fill/spr_spike_pond_fill.yy",},},
     {"id":{"name":"spr_spike_pond_waves","path":"sprites/spr_spike_pond_waves/spr_spike_pond_waves.yy",},},
     {"id":{"name":"spr_spike_pond","path":"sprites/spr_spike_pond/spr_spike_pond.yy",},},
     {"id":{"name":"spr_spike_stars","path":"sprites/spr_spike_stars/spr_spike_stars.yy",},},
