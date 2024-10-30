@@ -106,7 +106,8 @@ with obj_spike_pond {
 // disable alpha to use the base as a mask
 gpu_set_colorwriteenable(true, true, true, false)
 
-var _col = #aa78fa
+// var _col = merge_color(#49f273, #aa78fa, power(sin(global.time / 60) * 0.5 + 0.5, 6))
+var _col = #49f273;
 
 draw_sprite_tiled_ext(spr_spike_stars, 0, floor(- _cam_x / 2), floor(- _cam_y / 2), 2, 2, merge_color(c_white, _col, 1), 1)
 draw_sprite_tiled_ext(spr_spike_stars, 0, floor(- _cam_x / 4), floor(- _cam_y / 4), 2, 2, merge_color(c_white, _col, 0.5), 1)
@@ -125,7 +126,7 @@ if global.config.graphics_up_bubble_spike {
 			_off_y = round_ext(wave(-6, 6, 24, offset * 3), 1)
 		}
 	
-		draw_sprite_ext(spr_spike_x, 0, x + _off_x - _cam_x, y + _off_y - _cam_y, _size, _size, 0, #49f273, 1)
+		draw_sprite_ext(spr_spike_x, 0, x + _off_x - _cam_x, y + _off_y - _cam_y, _size, _size, 0, _col, 1)
 	}
 
 	var _scissor = gpu_get_scissor();
@@ -135,7 +136,7 @@ if global.config.graphics_up_bubble_spike {
 			_off_y = round_ext(wave(-128, 129, 32, offset * 3), 1)
 		}
 		gpu_set_scissor(x - _cam_x + 2, y - _cam_y + 2, sprite_width - 4, sprite_height - 4);
-		draw_sprite_tiled_ext(spr_spike_pond_fill, 0, -_cam_x * 0.9, _off_y - _cam_y * 0.9, 1, 1, #49f273, 1);
+		draw_sprite_tiled_ext(spr_spike_pond_fill, 0, -_cam_x * 0.9, _off_y - _cam_y * 0.9, 1, 1, _col, 1);
 	}
 	gpu_set_scissor(_scissor);
 
@@ -160,13 +161,13 @@ if global.config.graphics_up_bubble_outline {
 	shader_set_uniform_f(_u_kernel, 2);
 	shader_set_uniform_f(_u_texel, 1 / _cam_w, 1 / _cam_h);
 
-	draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, #49f273, 1);
+	draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, _col, 1);
 
 	shader_reset()
 
 } else {
 	
-	draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, #49f273, 1);
+	draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, _col, 1);
 	
 }
 
