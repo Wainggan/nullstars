@@ -12,6 +12,7 @@ pretty much every normal object's draw event ran before this event.
 in the application surface, there is the background tiles with these objects layered on top.
 */
 
+// steal surface
 surface_set_target(surf_layer_0);
 draw_surface(application_surface, 0, 0);
 surface_reset_target();

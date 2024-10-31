@@ -1,6 +1,7 @@
 
 var _cam = game_camera_get()
 
+// steal surface again
 surface_set_target(surf_layer_2);
 draw_surface(application_surface, 0, 0);
 
