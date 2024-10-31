@@ -26,11 +26,7 @@ surf_app = -1;
 surf_compose = -1;
 surf_lut = -1;
 
-surface_resize(application_surface, WIDTH, HEIGHT)
-
-background_mode = 0;
-background_from = 0;
-background_anim = 0;
+surface_resize(application_surface, WIDTH, HEIGHT);
 
 background_lights_kernel = 7;
 background_lights_sigma = 0.8;

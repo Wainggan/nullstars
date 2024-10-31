@@ -35,16 +35,6 @@ if _amparts != -1
 part_system_update(particles_ambient);
 
 
-var _background = game_level_get_background(camera.x, camera.y)
-
-if background_mode != _background {
-	background_from = background_mode;
-	background_mode = _background;
-	background_anim = 0;
-}
-background_anim = approach(background_anim, 1, 1 / 120)
-
-
 var _lut = game_level_get_lut(camera.x, camera.y);
 
 if _lut {
