@@ -328,22 +328,6 @@
 					],
 					"__worldX": 17456,
 					"__worldY": 8304
-				},
-				{
-					"__identifier": "obj_player",
-					"__grid": [49,37],
-					"__pivot": [0.5,1],
-					"__tags": [],
-					"__tile": { "tilesetUid": 8, "x": 384, "y": 176, "w": 16, "h": 16 },
-					"__smartColor": "#EAD4AA",
-					"iid": "ea488d30-73f0-11ef-9991-336a9f74e15a",
-					"width": 16,
-					"height": 16,
-					"defUid": 11,
-					"px": [792,608],
-					"fieldInstances": [],
-					"__worldX": 16984,
-					"__worldY": 8352
 				}
 			]
 		},

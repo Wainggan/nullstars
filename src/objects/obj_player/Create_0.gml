@@ -433,6 +433,8 @@ jump = function(){
 			other.y_lift = y_lift;
 		}
 	}
+	x_lift = clamp(x_lift, -defs.boost_limit_x, defs.boost_limit_x); // temp
+	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
 	x_vel += x_lift;
 	y_vel += y_lift;
 	lifter = noone;
@@ -485,6 +487,8 @@ jumpbounce = function(_dir){
 			other.y_lift = y_lift;
 		}
 	}
+	x_lift = clamp(x_lift, -defs.boost_limit_x, defs.boost_limit_x); // temp
+	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
 	x_vel += x_lift;
 	y_vel += y_lift;
 	lifter = noone;
@@ -556,6 +560,8 @@ jumpdash = function(){
 			other.y_lift = y_lift;
 		}
 	}
+	x_lift = clamp(x_lift, -defs.boost_limit_x, defs.boost_limit_x); // temp
+	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
 	x_vel += x_lift;
 	y_vel += y_lift;
 	
@@ -617,6 +623,8 @@ walljump = function(_dir){
 			other.y_lift = y_lift;
 		}
 	}
+	x_lift = clamp(x_lift, -defs.boost_limit_x, defs.boost_limit_x); // temp
+	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
 	x_vel += x_lift;
 	y_vel += y_lift;
 	
