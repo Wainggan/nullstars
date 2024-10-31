@@ -316,7 +316,7 @@
 					"levelIid": "04c39c20-73f0-11ef-a9ab-9f2809fcb778",
 					"layerIid": "04c39c23-73f0-11ef-a9ab-3d4f7ab24337",
 					"entityIid": "ea6ef410-73f0-11ef-a9ab-25285defc214"
-				}, "worldX": 22496, "worldY": 8624, "widPx": 16, "heiPx": 160, "fields": { "time": 12, "ref": {
+				}, "worldX": 22496, "worldY": 8624, "widPx": 16, "heiPx": 160, "fields": { "time": 10, "ref": {
 					"entityIid": "f2533790-73f0-11ef-a9ab-dbb06c1ea1c2",
 					"layerIid": "04c39c23-73f0-11ef-a9ab-3d4f7ab24337",
 					"levelIid": "04c39c20-73f0-11ef-a9ab-9f2809fcb778",
@@ -327,7 +327,7 @@
 					"levelIid": "6b98ea30-73f0-11ef-88cf-49a6dcae35e6",
 					"layerIid": "6b991142-73f0-11ef-88cf-f7e2b37944a4",
 					"entityIid": "ffb8af20-73f0-11ef-88cf-4f8e42beb4da"
-				}, "worldX": 24208, "worldY": 8624, "widPx": 16, "heiPx": 160, "fields": { "time": 1, "ref": {
+				}, "worldX": 24208, "worldY": 8624, "widPx": 16, "heiPx": 160, "fields": { "time": 12, "ref": {
 					"entityIid": "01bedf60-73f0-11ef-88cf-bf6fee692bf5",
 					"layerIid": "6b991142-73f0-11ef-88cf-f7e2b37944a4",
 					"levelIid": "6b98ea30-73f0-11ef-88cf-49a6dcae35e6",
@@ -416,7 +416,7 @@
 					"levelIid": "6b98ea30-73f0-11ef-88cf-49a6dcae35e6",
 					"layerIid": "6b991142-73f0-11ef-88cf-f7e2b37944a4",
 					"entityIid": "01bedf60-73f0-11ef-88cf-bf6fee692bf5"
-				}, "worldX": 26000, "worldY": 8624, "widPx": 16, "heiPx": 160, "fields" : {} }
+				}, "worldX": 25968, "worldY": 8624, "widPx": 16, "heiPx": 160, "fields" : {} }
 			]
 		}
 	],
@@ -8895,9 +8895,9 @@
 			"tileRect": { "tilesetUid": 8, "x": 400, "y": 0, "w": 16, "h": 16 },
 			"uiTileRect": null,
 			"nineSliceBorders": [],
-			"maxCount": 0,
+			"maxCount": 6,
 			"limitScope": "PerLevel",
-			"limitBehavior": "MoveLastOne",
+			"limitBehavior": "PreventAdding",
 			"pivotX": 0.5,
 			"pivotY": 0.5,
 			"fieldDefs": [
@@ -13985,7 +13985,7 @@
 			"worldX": 24096,
 			"worldY": 8208,
 			"worldDepth": 0,
-			"pxWid": 2144,
+			"pxWid": 1936,
 			"pxHei": 752,
 			"__bgColor": "#2D2A30",
 			"bgColor": null,
@@ -13999,9 +13999,18 @@
 			"externalRelPath": "level/Room_43.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "boxes", "__tile": null, "defUid": 152, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["boxes"]
+				}] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "story", "__tile": null, "defUid": 153, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["story"]
+				}] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["dust"]
+				}] },
 				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
 				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }

@@ -28,6 +28,16 @@ if array_length(_lvl_onscreen) > 0 {
 	
 	// only two backgrounds can be drawn in one frame
 	var _second = undefined;
+	with obj_room_portal {
+		_second = background;
+		draw_sprite_ext(
+			spr_pixel, 0,
+			x - _cam_x, y - _cam_y,
+			sprite_width, sprite_height,
+			0, c_white, 1,
+		);
+	}
+	
 	for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 		var _lvl = _lvl_onscreen[i];
 		

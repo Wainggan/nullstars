@@ -142,6 +142,7 @@
     {"id":{"name":"obj_player_death","path":"objects/obj_player_death/obj_player_death.yy",},},
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
     {"id":{"name":"obj_Position","path":"objects/obj_Position/obj_Position.yy",},},
+    {"id":{"name":"obj_room_portal","path":"objects/obj_room_portal/obj_room_portal.yy",},},
     {"id":{"name":"obj_show_info","path":"objects/obj_show_info/obj_show_info.yy",},},
     {"id":{"name":"obj_show_name_area","path":"objects/obj_show_name_area/obj_show_name_area.yy",},},
     {"id":{"name":"obj_show_name_music","path":"objects/obj_show_name_music/obj_show_name_music.yy",},},

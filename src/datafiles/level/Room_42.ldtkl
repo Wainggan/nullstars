@@ -154,7 +154,7 @@
 					"defUid": 156,
 					"px": [128,144],
 					"fieldInstances": [
-						{ "__identifier": "time", "__type": "Float", "__value": 12, "__tile": null, "defUid": 158, "realEditorValues": [{ "id": "V_Float", "params": [12] }] },
+						{ "__identifier": "time", "__type": "Float", "__value": 10, "__tile": null, "defUid": 158, "realEditorValues": [{ "id": "V_Float", "params": [10] }] },
 						{ "__identifier": "ref", "__type": "EntityRef", "__value": {
 							"entityIid": "f2533790-73f0-11ef-a9ab-dbb06c1ea1c2",
 							"layerIid": "04c39c23-73f0-11ef-a9ab-3d4f7ab24337",

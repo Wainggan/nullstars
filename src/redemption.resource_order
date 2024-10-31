@@ -68,6 +68,7 @@
     {"name":"obj_ooswitch_place","order":2,"path":"objects/obj_ooswitch_place/obj_ooswitch_place.yy",},
     {"name":"obj_player_death","order":1,"path":"objects/obj_player_death/obj_player_death.yy",},
     {"name":"obj_Position","order":6,"path":"objects/obj_Position/obj_Position.yy",},
+    {"name":"obj_room_portal","order":5,"path":"objects/obj_room_portal/obj_room_portal.yy",},
     {"name":"obj_show_info","order":25,"path":"objects/obj_show_info/obj_show_info.yy",},
     {"name":"obj_show_name_area","order":18,"path":"objects/obj_show_name_area/obj_show_name_area.yy",},
     {"name":"obj_show_name_music","order":19,"path":"objects/obj_show_name_music/obj_show_name_music.yy",},
