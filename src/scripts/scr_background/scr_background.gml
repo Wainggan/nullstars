@@ -128,7 +128,7 @@ function Background_City() : Background() constructor {
 		
 		// this is a bad idea
 		gpu_set_scissor(WIDTH / 2 - 128 + wave(-16, 16, 16), 0, 256, HEIGHT);
-		draw_sprite_tiled(spr_background_city0_lines, clamp(floor(power(wave(0, 1, 7), 4) * 5), 0, 4), -_cam.x / 8, global.time / 60 * 2);
+		draw_sprite_tiled(spr_background_city0_lines, clamp(floor(power(wave(0, 1, 7), 4) * 5), 0, 4), -_cam.x * 1.1, global.time / 60 * 2);
 		gpu_set_scissor(0, 0, WIDTH, HEIGHT);
 		
 		draw_sprite_tiled(spr_background_star, 1, -_cam.x / 32, global.time / 60 * 4 - _cam.y / 12)
