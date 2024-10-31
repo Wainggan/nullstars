@@ -15,9 +15,13 @@ y_max = room_height;
 for (var i = 0; i < array_length(_file.levels); i++) {
 	var _level = new Level()
 	
-	_level.init(_file.levels[i], _file.defs);
+	var _file_level = game_json_open(_file.levels[i].externalRelPath);
+	
+	_level.init(_file_level, _file.defs);
 	
 	array_push(levels, _level);
+	
+	delete _file_level;
 }
 
 
