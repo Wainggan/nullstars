@@ -11,42 +11,63 @@ var _lvl_onscreen = game_level_onscreen()
 // clear screen
 draw_clear_alpha(c_black, 0);
 
-// redraw last frame's surf_background
-//if surface_exists(surf_background) {
-//	gpu_set_blendmode_ext_sepalpha(bm_one, bm_zero, bm_zero, bm_one) // paranoia
-//	draw_surface_ext(surf_background, 0, 0, 1, 1, 0, c_white, 1)
-//	gpu_set_blendmode(bm_normal)
-//}
-
 
 // -- background --
 
 if !surface_exists(surf_background)
 	surf_background = surface_create(_cam_w, _cam_h);
 
-// draw fading out background
-if background_anim < 1 {
-	surface_set_target(surf_background)
-	draw_clear_alpha(c_black, 1);
+// only draw a backround if there is one on screen
+if array_length(_lvl_onscreen) > 0 {
 	
-	var _from = game_background_get(background_from)
-	_from.draw()
+	var _first = _lvl_onscreen[0].fields.background;
+	
+	// mask layer
+	surface_set_target(surf_ping);
+	draw_clear_alpha(c_black, 0);
+	
+	// only two backgrounds can be drawn in one frame
+	var _second = undefined;
+	for (var i = 0; i < array_length(_lvl_onscreen); i++) {
+		var _lvl = _lvl_onscreen[i];
+		
+		if _lvl.fields.background != _first {
+			
+			if _second == undefined {
+				_second = _lvl.fields.background;
+			}
+			
+			// mask
+			draw_sprite_ext(
+				spr_pixel, 0,
+				_lvl.x - _cam_x, _lvl.y - _cam_y,
+				_lvl.width, _lvl.height,
+				0, c_white, 1,
+			);
+			
+		}
+	
+	}
+	
+	// draw second background onto mask
+	gpu_set_colorwriteenable(1, 1, 1, 0);
+	if _second != undefined {
+		game_background_get(_second).draw(); // bad idea
+	}
+	gpu_set_colorwriteenable(1, 1, 1, 1);
+	
+	surface_reset_target();
+	
+	// put everything together
+	surface_set_target(surf_background);
+	draw_clear_alpha(c_black, 1);
 
-	surface_reset_target()
+	game_background_get(_first).draw(); // still a bad idea
+	draw_surface(surf_ping, 0, 0);
+
+	surface_reset_target();
+	
 }
-
-// draw fading in background, on seperate buffer for alpha
-surface_set_target(surf_ping)
-draw_clear_alpha(c_black, 1);
-
-var _mode = game_background_get(background_mode)
-_mode.draw()
-
-surface_reset_target()
-
-surface_set_target(surf_background)
-draw_surface_ext(surf_ping, 0, 0, 1, 1, 0, c_white, background_anim)
-surface_reset_target()
 
 
 // -- set up background lights --
