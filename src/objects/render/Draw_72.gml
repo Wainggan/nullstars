@@ -52,7 +52,7 @@ if array_length(_lvl_onscreen) > 0 {
 	// draw second background onto mask
 	gpu_set_colorwriteenable(1, 1, 1, 0);
 	if _second != undefined {
-		game_background_get(_second).draw(surf_pong); // bad idea
+		game_background_get(_second).draw(); // bad idea
 	}
 	gpu_set_colorwriteenable(1, 1, 1, 1);
 	
@@ -62,7 +62,7 @@ if array_length(_lvl_onscreen) > 0 {
 	surface_set_target(surf_background);
 	draw_clear_alpha(c_black, 1);
 
-	game_background_get(_first).draw(surf_pong); // still a bad idea
+	game_background_get(_first).draw(); // still a bad idea
 	draw_surface(surf_ping, 0, 0);
 
 	surface_reset_target();
