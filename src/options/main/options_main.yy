@@ -2,7 +2,7 @@
   "$GMMainOptions":"v1",
   "%Name":"Main",
   "name":"Main",
-  "option_author":"parchii",
+  "option_author":"parchment",
   "option_collision_compatibility":false,
   "option_copy_on_write_enabled":false,
   "option_draw_colour":4294967295,
