@@ -18,6 +18,8 @@ function game_background_get(_name) {
 			return new Background_Shader(shd_back_blackhole)
 		case "clouds":
 			return new Background_Clouds()
+		case "city":
+			return new Background_City()
 	}
 	
 	return new Background()
@@ -115,4 +117,36 @@ function Background_Clouds() : Background() constructor {
 	}
 	
 }
+
+function Background_City() : Background() constructor {
+	
+	static draw = function (_surface) {
+		
+		var _cam = game_camera_get()
+		
+		draw_sprite_ext(spr_pixel, 0, 0, 0, WIDTH, HEIGHT, 0, #242234, 1);
+		
+		// this is a bad idea
+		gpu_set_scissor(WIDTH / 2 - 128 + wave(-16, 16, 16), 0, 256, HEIGHT);
+		draw_sprite_tiled(spr_background_city0_lines, clamp(floor(power(wave(0, 1, 7), 4) * 5), 0, 4), -_cam.x / 8, global.time / 60 * 2);
+		gpu_set_scissor(0, 0, WIDTH, HEIGHT);
+		
+		draw_sprite_tiled(spr_background_star, 1, -_cam.x / 32, global.time / 60 * 4 - _cam.y / 12)
+		draw_sprite_tiled(spr_background_star, 0, -_cam.x / 24, -_cam.y / 8)
+		
+		draw_sprite_tiled(spr_background_city0, 0, 0, 0);
+		
+		draw_sprite_tiled(spr_background_city0, 1, wave(-36, 36, 64) -_cam.x / 28, -_cam.y / 48);
+		draw_sprite_tiled(spr_background_city0, 2, wave(-20, 20, 48) -_cam.x / 20, -_cam.y / 40);
+		
+		draw_sprite_tiled(spr_background_city0, 3, -_cam.x / 14, 0);
+		
+		draw_sprite_tiled(spr_background_city0, 4, -_cam.x / 8, 0);	
+		
+		draw_sprite_tiled(spr_background_city0, 5, -_cam.x / 4, 0);
+		
+	}
+	
+}
+
 

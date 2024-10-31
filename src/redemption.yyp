@@ -184,6 +184,8 @@
     {"id":{"name":"mus_yearsago","path":"sounds/mus_yearsago/mus_yearsago.yy",},},
     {"id":{"name":"spr_atmoshpere","path":"sprites/spr_atmoshpere/spr_atmoshpere.yy",},},
     {"id":{"name":"spr_atmosphere_overlay","path":"sprites/spr_atmosphere_overlay/spr_atmosphere_overlay.yy",},},
+    {"id":{"name":"spr_background_city0_lines","path":"sprites/spr_background_city0_lines/spr_background_city0_lines.yy",},},
+    {"id":{"name":"spr_background_city0","path":"sprites/spr_background_city0/spr_background_city0.yy",},},
     {"id":{"name":"spr_background_clouds","path":"sprites/spr_background_clouds/spr_background_clouds.yy",},},
     {"id":{"name":"spr_background_star","path":"sprites/spr_background_star/spr_background_star.yy",},},
     {"id":{"name":"spr_button","path":"sprites/spr_button/spr_button.yy",},},
