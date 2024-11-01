@@ -1,4 +1,14 @@
 
+var _x = x;
+var _y = y;
+
+for (var i = 0; i < array_length(menu.stack); i++) {
+	menu.stack[i].draw(_x, _y, 1);
+	_x += 24;
+}
+
+
+/*
 var _cam = game_camera_get()
 
 var _menu_x = x + 32;
@@ -10,6 +20,8 @@ var _menu_option_pad = 14;
 
 while array_length(anim_menu_open) < array_length(menu.stack)
 	array_push(anim_menu_open, 0)
+
+show_debug_message(anim_menu_open)
 
 draw_set_font(ft_sign)
 draw_set_color(#cccccc)

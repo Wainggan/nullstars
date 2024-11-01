@@ -1533,7 +1533,7 @@ state_swimbulletset = state_base.add()
 
 menu = new Menu();
 
-menu_page_none = new MenuPage()
+menu_page_none = new MenuPageList()
 .add(new MenuButton("close", function(){
 	menu.close()
 }))
@@ -1544,7 +1544,7 @@ menu_page_none = new MenuPage()
 	show_debug_message("a")
 }))
 .add(new MenuButton("map", function(){
-	state.change(state_map)
+	menu.open(menu_page_map)
 }))
 .add(new MenuButton("settings", function(){
 	menu.open(menu_page_settings)
@@ -1556,7 +1556,9 @@ menu_page_none = new MenuPage()
 	game_end()
 }))
 
-menu_page_settings = new MenuPage()
+menu_page_map = new MenuPageMap()
+
+menu_page_settings = new MenuPageList()
 .add(new MenuButton("back", function(){
 	menu.close();
 }))
@@ -1594,7 +1596,7 @@ state_menu = state_base.add()
 	menu.update()
 	
 	if INPUT.check_pressed("dash") {
-		menu.close();
+		//menu.close();
 	}
 	
 	if array_length(menu.stack) == 0 {
