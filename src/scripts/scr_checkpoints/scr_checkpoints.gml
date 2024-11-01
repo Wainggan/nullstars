@@ -1,6 +1,11 @@
 
 function game_checkpoint_set(_index) {
 	game.checkpoint = _index;
+	global.data.location = _index;
+	if !array_contains(global.data.checkpoints, _index) {
+		array_push(global.data.checkpoints, _index);
+	}
+	game_file_save();
 }
 
 function game_checkpoint_add(_object) {

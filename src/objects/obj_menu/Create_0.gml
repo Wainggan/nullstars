@@ -43,6 +43,7 @@ page_settings_graphics = new MenuPageList()
 		function(_) {
 	global.settings.graphic.windowscale = _;
 	game_render_set_scale(_ + 1);
+	game_file_save();
 }))
 .add(new MenuRadio("fullscreen", 
 		["off", "on"],
@@ -50,49 +51,58 @@ page_settings_graphics = new MenuPageList()
 		function(_) {
 	global.settings.graphic.fullscreen = _;
 	game_render_set_fullscreen(_);
+	game_file_save();
 }))
 .add(new MenuRadio("screen shake", 
 		["none", "0.5x", "1x"],
 		global.settings.graphic.screenshake,
 		function(_) {
 	global.settings.graphic.screenshake = _;
+	game_file_save();
 }))
 .add(new MenuRadio("lights", 
 		["none", "simple", "shadows"],
 		global.settings.graphic.lights,
 		function(_) {
 	global.settings.graphic.lights = _;
+	game_file_save();
 }))
 .add(new MenuRadio("reflections", 
 		["off", "on"],
 		global.settings.graphic.reflections,
 		function(_) {
 	global.settings.graphic.reflections = _;
+	game_file_save();
 }))
 .add(new MenuRadio("backgrounds", 
 		["simplified", "full"],
 		global.settings.graphic.backgrounds,
 		function(_) {
 	global.settings.graphic.backgrounds = _;
+	game_file_save();
 }))
 .add(new MenuRadio("text scale", 
 		["1x", "2x"],
 		global.settings.graphic.textscale,
 		function(_) {
 	global.settings.graphic.textscale = _;
+	game_file_save();
 }))
 
 page_settings_sound = new MenuPageList()
 .add(new MenuButton("back", function(){
 	system.close();
 }))
-.add(new MenuSlider("all", 0, 10, 1, global.settings.sound.mix, function(_) {
+.add(new MenuSlider("mix", 0, 10, 1, global.settings.sound.mix, function(_) {
 	global.settings.sound.mix = _;
+	game_file_save();
 }))
 .add(new MenuSlider("bgm", 0, 10, 1, global.settings.sound.bgm, function(_) {
 	global.settings.sound.bgm = _;
+	game_file_save();
 }))
 .add(new MenuSlider("sfx", 0, 10, 1, global.settings.sound.sfx, function(_) {
 	global.settings.sound.sfx = _;
+	game_file_save();
 }))
 

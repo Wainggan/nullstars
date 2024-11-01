@@ -24,7 +24,6 @@ for (var i = 0; i < array_length(_file.levels); i++) {
 	delete _file_level;
 }
 
-
 for (var i_table = 0; i_table < array_length(_file.toc); i_table++) {
 	
 	var _item = _file.toc[i_table]
@@ -61,14 +60,12 @@ for (var i_table = 0; i_table < array_length(_file.toc); i_table++) {
 			"Instances",
 			asset_get_index(_item.identifier),
 			_field
-		)
+		);
 		
 		global.entities[$ _ent.iids.entityIid] = _inst
 		global.entities_toc[$ _ent.iids.entityIid] = _inst
 		
-		
 	}
-	
 }
 
 
