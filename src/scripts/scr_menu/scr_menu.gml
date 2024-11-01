@@ -106,7 +106,12 @@ function MenuPageList() : MenuPage() constructor {
 		for (var j = 0; j < array_length(list); j++) {
 			var _e = list[j]
 			if j == current
-				draw_text_transformed(_x + _pad_x, _y + _pad_y + j * _option_pad, ">", _scale, _scale, 0);
+				draw_text_transformed(
+					_x + _pad_x,
+					_y + _pad_y + j * _option_pad,
+					">",
+					_scale, _scale, 0,
+				);
 			_e.draw(_x + _pad_x + 12 * _scale, _y + _pad_y + j * _option_pad, _x + _width - _pad_x * 2, j == current);
 		}
 		
@@ -279,10 +284,10 @@ function MenuSlider(_text, _min = 0, _max = 1, _iter = 0.1, _value = 0, _callbac
 		
 		var _xm = (_x2 - _x1) / 2; // middle point
 
-		draw_line(_x1 + _xm, _y, _x2, _y);
+		draw_line_sprite(_x1 + _xm, _y, _x2, _y, _scale);
 		
 		var _p = _xm + _xm * (abs(value - low) / abs(high - low))
-		draw_line(_x1 + _p, _y, _x1 + _p, _y + 4)
+		draw_line_sprite(_x1 + _p, _y, _x1 + _p, _y + 4, _scale, _scale)
 		
 		if _selected draw_set_color(_last);
 	}
@@ -317,11 +322,12 @@ function MenuRadio(_text, _options = [], _value = 0, _callback = __none) : MenuO
 			draw_text_transformed(_x2 - _off, _y, options[i], _scale, _scale, 0);
 			
 			if value == i
-				draw_line(
+				draw_line_sprite(
 					_x2 - _off - string_width(options[i]) * _scale - 3,
 					_y + 10 * _scale,
 					_x2 - _off,
-					_y + 10 * _scale
+					_y + 10 * _scale,
+					_scale,
 				);
 			
 			_off += (string_width(options[i]) + 14) * _scale;
