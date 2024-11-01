@@ -36,7 +36,6 @@ function Logger() constructor {
 }
 
 global.logger = new Logger();
-global.logger.point = Log.note;
 
 function log(_level, _message) {
 	global.logger.write(_level, _message);

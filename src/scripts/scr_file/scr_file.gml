@@ -8,7 +8,7 @@ global.version = {
 #macro FILE_DATA "save.star"
 #macro FILE_INPUT "input.ini"
 
-#macro FILE_DATA_VERSION 0
+#macro FILE_DATA_VERSION 1
 
 global.file = undefined;
 global.settings = undefined;
@@ -21,7 +21,7 @@ global.file_default = {
 		"minor": 0,
 		"patch": 0,
 	},
-	"json": 0, // json version, used for updating
+	"json": FILE_DATA_VERSION, // json version, used for updating
 	
 	"data": {
 		
@@ -89,6 +89,11 @@ global.file_default = {
 			0 = 10fps
 			1 = 30fps
 			2 = 60fps default
+		log:
+			0 = note
+			1 = error
+			2 = warn
+			3 = note
 	*/
 	"settings": {
 		"graphic": {
@@ -109,6 +114,7 @@ global.file_default = {
 			"gctime": 2,
 			"overlay": 0,
 			"speed": 2,
+			"log": 3,
 		}
 	},
 }

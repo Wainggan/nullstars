@@ -140,5 +140,14 @@ page_debug = new MenuPageList()
 	game_update_overlay(global.settings.debug.overlay);
 	game_file_save();
 }))
+.add(new MenuRadio("log", 
+		["note", "warn", "error", "user"],
+		global.settings.debug.log,
+		function(_) {
+	global.settings.debug.log = _;
+	log(Log.user, $"log level set to {_}")
+	game_update_log(global.settings.debug.log);
+	game_file_save();
+}))
 
 

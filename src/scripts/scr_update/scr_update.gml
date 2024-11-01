@@ -21,3 +21,6 @@ function game_update_gctime(_set) {
 			break;
 	}
 }
+function game_update_log(_set) {
+	global.logger.point = _set;
+}
