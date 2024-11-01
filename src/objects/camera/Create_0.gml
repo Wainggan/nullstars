@@ -1,6 +1,9 @@
 
 target = obj_player;
 
+x_sod = new Sod().set_accuracy();
+y_sod = new Sod().set_accuracy();
+
 target_x = 0;
 target_y = 0;
 

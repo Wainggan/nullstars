@@ -10,7 +10,7 @@ if instance_exists(target) {
 }
 
 var _tx = target_x, _ty = target_y;
-var _ts = 0.08;
+var _ts = 0.025;
 
 var _weights = collision_point(_tx, _ty, obj_camera_focus, true, true);
 
@@ -79,8 +79,8 @@ if roomsnap_last != _weights || roomsnap_last_inside != _changed {
 roomsnap_last = _weights
 roomsnap_last_inside = _changed;
 	
-roomsnap_timer = approach(roomsnap_timer, 0, 0.05)
-_ts = lerp(_ts, 0, roomsnap_timer)
+roomsnap_timer = approach(roomsnap_timer, 0, 0.08);
+_ts = lerp(_ts, 0.01, roomsnap_timer);
 
 // bad idea
 if target == obj_player_death {
@@ -99,8 +99,13 @@ _tx = clamp(_tx, _cam_w / 2, _w - _cam_w / 2);
 _ty = clamp(_ty, _cam_h / 2, _h - _cam_h / 2);
 */
 
-x = lerp(x, _tx, _ts);
-y = lerp(y, _ty, _ts);
+x_sod.set_weights(_ts, 1, 0.25);
+y_sod.set_weights(_ts, 1, 0.25);
+x_sod.update(_tx);
+y_sod.update(_ty);
+
+x = x_sod.get_value();
+y = y_sod.get_value();
 
 var _shake_x = irandom_range(-shake_time, shake_time);
 var _shake_y = irandom_range(-shake_time, shake_time);
