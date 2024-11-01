@@ -44,12 +44,6 @@ page_settings_graphics = new MenuPageList()
 	global.settings.graphic.windowscale = _;
 	game_render_set_scale(_ + 1);
 }))
-.add(new MenuRadio("text scale", 
-		["1x", "2x"],
-		global.settings.graphic.textscale,
-		function(_) {
-	global.settings.graphic.textscale = _;
-}))
 .add(new MenuRadio("fullscreen", 
 		["off", "on"],
 		global.settings.graphic.fullscreen,
@@ -81,7 +75,12 @@ page_settings_graphics = new MenuPageList()
 		function(_) {
 	global.settings.graphic.backgrounds = _;
 }))
-
+.add(new MenuRadio("text scale", 
+		["1x", "2x"],
+		global.settings.graphic.textscale,
+		function(_) {
+	global.settings.graphic.textscale = _;
+}))
 
 page_settings_sound = new MenuPageList()
 .add(new MenuButton("back", function(){
