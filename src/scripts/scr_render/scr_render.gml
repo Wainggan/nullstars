@@ -15,13 +15,6 @@ function game_render_refresh() {
 	surface_reset_target()
 }
 
-function game_render_set_scale(_scale) {
-	window_set_size(WIDTH * _scale, HEIGHT * _scale);
-}
-function game_render_set_fullscreen(_enable) {
-	window_set_fullscreen(_enable);
-}
-
 
 function Mode(_init) constructor {
 	

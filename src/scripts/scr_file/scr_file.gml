@@ -77,6 +77,18 @@ global.file_default = {
 		backgrounds:
 			0 = simplified
 			1 = full
+	debug:
+		gctime:
+			0 = 100
+			1 = 500
+			2 = 1000
+		overlay:
+			0 = off
+			1 = on
+		speed: // fps
+			0 = 10fps
+			1 = 30fps
+			2 = 60fps default
 	*/
 	"settings": {
 		"graphic": {
@@ -93,6 +105,11 @@ global.file_default = {
 			"sfx": 10,
 			"mix": 10,
 		},
+		"debug": {
+			"gctime": 2,
+			"overlay": 0,
+			"speed": 2,
+		}
 	},
 }
 
@@ -110,6 +127,13 @@ function game_file_load() {
 		var _file = game_json_open(FILE_DATA);
 		game_file_update(_file);
 		global.file = _file;
+		
+		// TEMPORARY
+		if global.file.json < FILE_DATA_VERSION {
+			file_delete(FILE_DATA);
+			game_file_load();
+			return;
+		}
 	}
 	global.settings = global.file.settings; // alias
 	global.data = global.file.data; // alias

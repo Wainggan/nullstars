@@ -45,7 +45,7 @@ page_settings_graphics = new MenuPageList()
 		global.settings.graphic.windowscale,
 		function(_) {
 	global.settings.graphic.windowscale = _;
-	game_render_set_scale(_ + 1);
+	game_update_windowscale(_ + 1);
 	game_file_save();
 }))
 .add(new MenuRadio("fullscreen", 
@@ -53,7 +53,7 @@ page_settings_graphics = new MenuPageList()
 		global.settings.graphic.fullscreen,
 		function(_) {
 	global.settings.graphic.fullscreen = _;
-	game_render_set_fullscreen(_);
+	game_update_fullscreen(_);
 	game_file_save();
 }))
 .add(new MenuRadio("screen shake", 
@@ -127,6 +127,21 @@ page_debug = new MenuPageList()
 	show_debug_message(_text);
 	gc_collect();
 }))
-
+.add(new MenuRadio("gc time", 
+		["100ms", "500ms", "1000ms"],
+		global.settings.debug.gctime,
+		function(_) {
+	global.settings.debug.gctime = _;
+	game_update_gctime(global.settings.debug.gctime);
+	game_file_save();
+}))
+.add(new MenuRadio("overlay", 
+		["off", "on"],
+		global.settings.debug.overlay,
+		function(_) {
+	global.settings.debug.overlay = _;
+	game_update_overlay(global.settings.debug.overlay);
+	game_file_save();
+}))
 
 
