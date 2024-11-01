@@ -1,4 +1,9 @@
 
+anims = [];
+cache = [];
+stack_last_length = 0;
+stack_last_item = undefined;
+
 system = new Menu();
 
 page_none = new MenuPageList()

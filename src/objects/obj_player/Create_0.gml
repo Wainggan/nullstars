@@ -1544,10 +1544,6 @@ state_menu = state_base.add()
 	
 	with obj_menu system.update();
 	
-	if INPUT.check_pressed("dash") {
-		//menu.close();
-	}
-	
 	if array_length(obj_menu.system.stack) == 0 {
 		obj_menu.system.stop();
 		state.change(state_free);
