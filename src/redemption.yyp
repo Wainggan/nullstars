@@ -136,6 +136,7 @@
     {"id":{"name":"obj_lift_attack","path":"objects/obj_lift_attack/obj_lift_attack.yy",},},
     {"id":{"name":"obj_lift","path":"objects/obj_lift/obj_lift.yy",},},
     {"id":{"name":"obj_light","path":"objects/obj_light/obj_light.yy",},},
+    {"id":{"name":"obj_menu","path":"objects/obj_menu/obj_menu.yy",},},
     {"id":{"name":"obj_oo_block","path":"objects/obj_oo_block/obj_oo_block.yy",},},
     {"id":{"name":"obj_oo_off","path":"objects/obj_oo_off/obj_oo_off.yy",},},
     {"id":{"name":"obj_oo_on","path":"objects/obj_oo_on/obj_oo_on.yy",},},

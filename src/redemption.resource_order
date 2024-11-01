@@ -63,6 +63,7 @@
     {"name":"obj_lift_activate","order":2,"path":"objects/obj_lift_activate/obj_lift_activate.yy",},
     {"name":"obj_lift_attack","order":3,"path":"objects/obj_lift_attack/obj_lift_attack.yy",},
     {"name":"obj_lift","order":1,"path":"objects/obj_lift/obj_lift.yy",},
+    {"name":"obj_menu","order":26,"path":"objects/obj_menu/obj_menu.yy",},
     {"name":"obj_oo_off","order":3,"path":"objects/obj_oo_off/obj_oo_off.yy",},
     {"name":"obj_oo_on","order":1,"path":"objects/obj_oo_on/obj_oo_on.yy",},
     {"name":"obj_ooswitch_place","order":2,"path":"objects/obj_ooswitch_place/obj_ooswitch_place.yy",},

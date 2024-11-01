@@ -178,8 +178,8 @@ function MenuPageMap() : MenuPage() constructor {
 		
 		var _cam = game_camera_get();
 		
-		var _pos_x = _cam.x + WIDTH / 2;
-		var _pos_y = _cam.y + HEIGHT / 2;
+		var _pos_x = 0 + WIDTH / 2;
+		var _pos_y = 0 + HEIGHT / 2;
 		var _pos_w = 400 * hermite(_anim);
 		var _pos_h = 300 * hermite(_anim);
 
@@ -199,15 +199,15 @@ function MenuPageMap() : MenuPage() constructor {
 		
 			draw_sprite_ext(
 				spr_player_tail, 0, 
-				WIDTH / 2 + _cam.x + _c_x,
-				HEIGHT / 2 + _cam.y + _c_y,
+				WIDTH / 2 + 0 + _c_x,
+				HEIGHT / 2 + 0 + _c_y,
 				tween(Tween.Circ, _anim), 
 				tween(Tween.Circ, _anim),
 				0, c_white, 1,
 			);
 		}
 	
-		draw_sprite(spr_debug_marker, 0, _cam.x + WIDTH / 2, _cam.y + HEIGHT / 2);
+		draw_sprite(spr_debug_marker, 0, 0 + WIDTH / 2, 0 + HEIGHT / 2);
 	
 	}
 

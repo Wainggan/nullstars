@@ -1,9 +1,10 @@
 
+/*
 var _x = x;
 var _y = y;
 
-for (var i = 0; i < array_length(menu.stack); i++) {
-	menu.stack[i].draw(_x, _y, 1);
+for (var i = 0; i < array_length(menu.menu.stack); i++) {
+	menu.menu.stack[i].draw(_x, _y, 1);
 	_x += 24;
 }
 
