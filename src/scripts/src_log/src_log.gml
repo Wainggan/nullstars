@@ -10,25 +10,26 @@ function Logger() constructor {
 	
 	point = Log.user;
 	messages = [];
-	anim = 0;
+	anims = [];
 	
 	static write = function (_level, _message) {
 		if _level <= point {
 			show_debug_message($"{_level} :: {_message}");
 			array_insert(messages, 0, _message);
+			array_insert(anims, 0, 0);
 		}
 	}
 	
 	static update = function () {
-		if array_length(messages) == 0 {
-			anim = 0;
-			return;
+		
+		for (var i = 0; i < array_length(anims); i++) {
+			anims[i] = approach(anims[i], 1, 1 / (60 * 4));
+			if anims[i] == 1 {
+				array_pop(messages);
+				array_pop(anims);
+			}
 		}
-		anim = approach(anim, 1, 1 / (60 * 4));
-		if anim == 1 {
-			array_pop(messages);
-			anim = 0;
-		}
+		
 	}
 	
 }

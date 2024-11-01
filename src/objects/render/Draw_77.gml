@@ -94,8 +94,8 @@ for (var i = 0; i < array_length(obj_menu.anims); i++) {
 var _x = 20,
 	_y = _cam_h - 16;
 
-// draw_set_halign(fa_middle);
 draw_set_font(ft_sign);
+draw_set_color(c_white);
 
 for (var i = array_length(global.logger.messages) - 1; i >= 0; i--) {
 	draw_text_ext_transformed(
