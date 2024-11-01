@@ -80,8 +80,8 @@ global.file_default = {
 	*/
 	"settings": {
 		"graphic": {
-			"windowscale": 1,
-			"textscale": 1,
+			"windowscale": 0,
+			"textscale": 0,
 			"fullscreen": 0,
 			"screenshake": 2,
 			"lights": 2,
