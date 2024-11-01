@@ -19,10 +19,10 @@
 			"instances": [],
 			"instancesData": [{ "iids": {
 				"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
-				"levelIid": "6b98ea30-73f0-11ef-88cf-49a6dcae35e6",
-				"layerIid": "6b991142-73f0-11ef-88cf-f7e2b37944a4",
+				"levelIid": "047ae310-6280-11ee-8cd9-8bbfdf81ad3c",
+				"layerIid": "047ae312-6280-11ee-8cd9-d995b4e64f39",
 				"entityIid": "ea488d30-73f0-11ef-9991-336a9f74e15a"
-			}, "worldX": 24120, "worldY": 8784, "widPx": 16, "heiPx": 16, "fields" : {} }]
+			}, "worldX": 552, "worldY": 496, "widPx": 16, "heiPx": 16, "fields" : {} }]
 		},
 		{
 			"identifier": "obj_checkpoint",

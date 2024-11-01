@@ -9,7 +9,7 @@ draw_set_font(ft_sign);
 
 draw_text_ext_transformed(
 	_pos_x, _pos_y, 
-	$"{date_datetime_string(GM_build_date)} {GM_build_type} - {GM_version}", 
+	text, 
 	-1, -1, 
 	1, 1, 
 	0

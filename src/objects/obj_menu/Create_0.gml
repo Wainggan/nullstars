@@ -16,6 +16,9 @@ page_none = new MenuPageList()
 .add(new MenuButton("settings", function(){
 	system.open(page_settings)
 }))
+.add(new MenuButton("debug", function(){
+	system.open(page_debug);
+}))
 .add(new MenuButton("exit", function(){
 	game_end()
 }))
@@ -105,4 +108,25 @@ page_settings_sound = new MenuPageList()
 	global.settings.sound.sfx = _;
 	game_file_save();
 }))
+
+page_debug = new MenuPageList()
+.add(new MenuButton("back", function(){
+	system.close();
+}))
+.add(new MenuButton("clear save data", function(){
+	file_delete(FILE_DATA);
+	game_end(0);
+}))
+.add(new MenuButton("gc", function(){
+	var _stats = gc_get_stats();
+	var _text = $"{_stats}";
+	instance_create_layer(0, 0, layer, obj_show_info, {
+		text: _text,
+		persistent: true,
+	});
+	show_debug_message(_text);
+	gc_collect();
+}))
+
+
 

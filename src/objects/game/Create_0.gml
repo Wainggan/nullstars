@@ -32,6 +32,9 @@ for (var i = 0; i < array_length(_names); i++) {
 
 gc_target_frame_time(1000)
 
-instance_create_layer(0, 0, layer, obj_show_info, { persistent: true });
+instance_create_layer(0, 0, layer, obj_show_info, {
+	text: $"{date_datetime_string(GM_build_date)} {GM_build_type} - {GM_version}",
+	persistent: true,
+});
 
 
