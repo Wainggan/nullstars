@@ -87,6 +87,8 @@ function MenuPageList() : MenuPage() constructor {
 		
 		if _anim == 0 return;
 		
+		var _cam = game_camera_get();
+		
 		var _scale = global.settings.graphic.textscale + 1;
 		
 		var _width = 200 * _scale;
@@ -94,6 +96,9 @@ function MenuPageList() : MenuPage() constructor {
 		
 		draw_set_font(ft_sign);
 		draw_set_color(#cccccc);
+		
+		_x = clamp(_x, 16, WIDTH - _width - 16);
+		_y = clamp(_y, 16, HEIGHT - _height - 16);
 		
 		draw_sprite_stretched(spr_sign_board, 0, _x, _y, _width, _height * tween(Tween.Circ, _anim));
 		
