@@ -53,13 +53,13 @@ global.file_default = {
 	settings
 	graphics:
 		windowscale:
-			1 = 1x
-			2 = 2x
-			3 = 3x
-			4 = 4x
+			0 = 1x
+			1 = 2x
+			2 = 3x
+			3 = 4x
 		textscale:
-			1 = 1x
-			2 = 2x
+			0 = 1x
+			1 = 2x
 		fullscreen:
 			0 = off
 			1 = on
@@ -91,7 +91,7 @@ global.file_default = {
 		"sound": {
 			"bgm": 8,
 			"sfx": 10,
-			"all": 10,
+			"mix": 10,
 		},
 	},
 }
@@ -106,14 +106,13 @@ function game_file_update(_file) {
 function game_file_load() {
 	if !file_exists(FILE_DATA) {
 		global.file = json_parse(json_stringify(global.file_default));
-		return;
+	} else {
+		var _file = game_json_open(FILE_DATA);
+		game_file_update(_file);
+		global.file = _file;
 	}
-	
-	var _file = game_json_open(FILE_DATA);
-	game_file_update(_file);
-	global.file = _file;
-	global.settings = _file.settings; // alias
-	global.data = _file.data; // alias
+	global.settings = global.file.settings; // alias
+	global.data = global.file.data; // alias
 }
 
 function game_file_save() {

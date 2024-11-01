@@ -235,7 +235,7 @@ function MenuButton(_text, _callback = __none) : MenuOption() constructor {
 	callback = _callback;
 	
 	input = function(_click, _left, _right){
-		if _click callback(self);
+		if _click callback();
 	}
 	
 	static draw = function(_x1, _y, _x2, _selected){
@@ -248,21 +248,21 @@ function MenuButton(_text, _callback = __none) : MenuOption() constructor {
 	
 }
 
-function MenuSlider(_text, _min = 0, _max = 1, _value = 0, _iter = 0.1, _callback = __none) : MenuOption() constructor {
+function MenuSlider(_text, _min = 0, _max = 1, _iter = 0.1, _value = 0, _callback = __none) : MenuOption() constructor {
 	
 	text = _text;
 	low = _min;
 	high = _max;
-	value = _value;
 	iter = _iter;
+	value = _value;
 	callback = _callback;
 	
-	input = function(_click, _left, _right){
-		value = clamp(value + (_right - _left) * iter, low, high)
-		callback(self, _right - _left);
+	input = function(_click, _left, _right) {
+		value = clamp(value + (_right - _left) * iter, low, high);
+		callback(value);
 	}
 	
-	static draw = function(_x1, _y, _x2, _selected){
+	static draw = function(_x1, _y, _x2, _selected) {
 		var _last = draw_get_color()
 		if _selected draw_set_color(c_white);
 		
@@ -281,16 +281,16 @@ function MenuSlider(_text, _min = 0, _max = 1, _value = 0, _iter = 0.1, _callbac
 function MenuRadio(_text, _options = [], _value = 0, _callback = __none) : MenuOption() constructor {
 	
 	text = _text;
-	options = _options
+	options = _options;
 	value = _value;
 	callback = _callback;
 	
-	input = function(_click, _left, _right){
-		value = mod_euclidean(value + (_right - _left), array_length(options))
-		callback(self, _right - _left);
+	input = function(_click, _left, _right) {
+		value = mod_euclidean(value + (_right - _left), array_length(options));
+		callback(value);
 	}
 	
-	static draw = function(_x1, _y, _x2, _selected){
+	static draw = function(_x1, _y, _x2, _selected) {
 		var _last = draw_get_color()
 		if _selected draw_set_color(c_white);
 		
