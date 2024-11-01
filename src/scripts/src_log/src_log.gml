@@ -24,7 +24,7 @@ function Logger() constructor {
 	static update = function () {
 		
 		for (var i = 0; i < array_length(anims); i++) {
-			anims[i] = approach(anims[i], 1, 1 / (60 * 4));
+			anims[i] = approach(anims[i], 1, 1 / (60 * 6));
 			if anims[i] == 1 {
 				array_pop(messages);
 				array_pop(anims);
