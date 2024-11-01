@@ -1,6 +1,6 @@
 {
   "$GMProject":"",
-  "%Name":"redemption",
+  "%Name":"nullstars",
   "AudioGroups":[
     {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
@@ -97,7 +97,7 @@
   "MetaData":{
     "IDEVersion":"2024.8.1.171",
   },
-  "name":"redemption",
+  "name":"nullstars",
   "resources":[
     {"id":{"name":"ac_tweens","path":"animcurves/ac_tweens/ac_tweens.yy",},},
     {"id":{"name":"ft_sign","path":"fonts/ft_sign/ft_sign.yy",},},

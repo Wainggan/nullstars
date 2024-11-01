@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_util",
   "parent":{
-    "name":"redemption",
-    "path":"redemption.yyp",
+    "name":"nullstars",
+    "path":"nullstars.yyp",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
