@@ -15,32 +15,85 @@ global.settings = undefined;
 global.data = undefined;
 
 global.file_default = {
-	"version": {
+	
+	"version": { // game version, used for nothing
 		"major": 0,
 		"minor": 0,
-		"patch": 0
+		"patch": 0,
 	},
-	"json": 0,
+	"json": 0, // json version, used for updating
+	
 	"data": {
+		
+		/*
+		flags
+		*/
 		"flags": {},
+		
 		"location": "intro-0",
 		"checkpoints": [],
+		
+		/*
+		stats
+		deaths = total amount of deaths
+		*/
 		"stats": {
-			"deaths": 0
+			"deaths": 0,
 		},
-		"gates": {}
+		
+		/*
+		gates
+		"name": {}
+			time = best time in ms
+		*/
+		"gates": {},
+	
 	},
+	/*
+	settings
+	graphics:
+		windowscale:
+			1 = 1x
+			2 = 2x
+			3 = 3x
+			4 = 4x
+		textscale:
+			1 = 1x
+			2 = 2x
+		fullscreen:
+			0 = off
+			1 = on
+		screenshake:
+			0 = none
+			1 = 0.5x
+			2 = 1x
+		lights:
+			0 = off
+			1 = rimblur + spotlights
+			2 = shadows
+		reflections:
+			0 = off
+			1 = on
+		backgrounds:
+			0 = simplified
+			1 = full
+	*/
 	"settings": {
 		"graphic": {
-			"screenshake": 1,
-			"lights": 2
+			"windowscale": 1,
+			"textscale": 1,
+			"fullscreen": 0,
+			"screenshake": 2,
+			"lights": 2,
+			"reflections": 1,
+			"backgrounds": 1,
 		},
 		"sound": {
 			"bgm": 8,
-			"sfx": 9,
-			"all": 10
-		}
-	}
+			"sfx": 10,
+			"all": 10,
+		},
+	},
 }
 
 function game_file_update(_file) {

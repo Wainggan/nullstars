@@ -1,6 +1,5 @@
 
 game_file_load();
-show_debug_message(global.file)
 
 global.time = 0;
 
