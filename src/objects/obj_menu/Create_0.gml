@@ -120,11 +120,7 @@ page_debug = new MenuPageList()
 .add(new MenuButton("gc", function(){
 	var _stats = gc_get_stats();
 	var _text = $"{_stats}";
-	instance_create_layer(0, 0, layer, obj_show_info, {
-		text: _text,
-		persistent: true,
-	});
-	show_debug_message(_text);
+	log(Log.user, _text);
 	gc_collect();
 }))
 .add(new MenuRadio("gc time", 

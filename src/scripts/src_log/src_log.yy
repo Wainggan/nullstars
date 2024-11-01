@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"src_log",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"src_log",
+  "parent":{
+    "name":"game",
+    "path":"folders/game.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

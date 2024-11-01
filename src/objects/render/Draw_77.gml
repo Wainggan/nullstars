@@ -90,6 +90,24 @@ for (var i = 0; i < array_length(obj_menu.anims); i++) {
 	_x += 24;
 }
 
+
+var _x = 20,
+	_y = _cam_h - 16;
+
+// draw_set_halign(fa_middle);
+draw_set_font(ft_sign);
+
+for (var i = array_length(global.logger.messages) - 1; i >= 0; i--) {
+	draw_text_ext_transformed(
+		_x, _y, 
+		global.logger.messages[i], 
+		-1, -1, 
+		1, 1, 
+		0
+	);
+	_y -= 16;
+}
+
 surface_reset_target();
 
 

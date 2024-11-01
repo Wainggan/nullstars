@@ -8,7 +8,7 @@ global.version = {
 #macro FILE_DATA "save.star"
 #macro FILE_INPUT "input.ini"
 
-#macro FILE_DATA_VERSION 0
+#macro FILE_DATA_VERSION 1
 
 global.file = undefined;
 global.settings = undefined;

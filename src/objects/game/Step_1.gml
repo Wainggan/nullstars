@@ -1,6 +1,8 @@
 
 global.time++;
 
+global.logger.update();
+
 if keyboard_check_pressed(ord("8")) global.config.slow = !global.config.slow
 
 if global.config.slow {
