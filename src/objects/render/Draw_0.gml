@@ -39,7 +39,7 @@ if global.config.graphics_atmosphere_particles
 surface_reset_target();
 
 // blur surf_background_lights
-if global.config.graphics_lights_rimblur {
+if global.config.graphics_lights_rimblur && global.settings.graphic.lights >= 1 {
 
 	shader_set(shd_blur);
 	
@@ -73,7 +73,7 @@ if global.config.graphics_lights_rimblur {
 
 // lights
 
-if global.config.graphics_lights {
+if global.config.graphics_lights && global.settings.graphic.lights >= 1  {
 	
 	if !surface_exists(surf_lights) {
 		surf_lights = surface_create(_cam_w, _cam_h, surface_rgba16float);
@@ -108,7 +108,7 @@ if global.config.graphics_lights {
 
 	matrix_set(matrix_world, matrix_build(-_cam_x, -_cam_y, 0, 0, 0, 0, 1, 1, 1))
 	
-	if global.config.graphics_lights_shadow {
+	if global.config.graphics_lights_shadow && global.settings.graphic.lights >= 2 {
 	
 		var _z = 0;
 		with obj_light {
@@ -226,7 +226,7 @@ surface_reset_target();
 
 
 // reflections
-if global.config.graphics_reflectables {
+if global.config.graphics_reflectables && global.settings.graphic.reflections == 1 {
 
 	if !surface_exists(surf_relection)
 		surf_relection = surface_create(_cam_w, _cam_h);

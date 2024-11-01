@@ -101,6 +101,9 @@ setup_light = function(_level) {
 lut_mode_grade = new Mode(spr_grade_base);
 lut_mode_mix = new Mode(1);
 
+game_render_set_scale(global.settings.graphic.windowscale + 1);
+game_render_set_fullscreen(global.settings.graphic.fullscreen);
+
 
 
 p = [

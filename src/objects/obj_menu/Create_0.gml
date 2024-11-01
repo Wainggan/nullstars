@@ -42,6 +42,7 @@ page_settings_graphics = new MenuPageList()
 		global.settings.graphic.windowscale,
 		function(_) {
 	global.settings.graphic.windowscale = _;
+	game_render_set_scale(_ + 1);
 }))
 .add(new MenuRadio("text scale", 
 		["1x", "2x"],
@@ -54,6 +55,7 @@ page_settings_graphics = new MenuPageList()
 		global.settings.graphic.fullscreen,
 		function(_) {
 	global.settings.graphic.fullscreen = _;
+	game_render_set_fullscreen(_);
 }))
 .add(new MenuRadio("screen shake", 
 		["none", "0.5x", "1x"],

@@ -7,7 +7,7 @@ draw_surface(application_surface, 0, 0);
 
 // draw reflections
 
-if global.config.graphics_reflectables {
+if global.config.graphics_reflectables && global.settings.graphic.reflections == 1 {
 
 	gpu_set_colorwriteenable(true, true, true, false);
 	draw_surface_ext(surf_relection, 0, 0, 1, 1, 0, #bbaaff, 0.5)

@@ -102,8 +102,20 @@ _ty = clamp(_ty, _cam_h / 2, _h - _cam_h / 2);
 x = lerp(x, _tx, _ts);
 y = lerp(y, _ty, _ts);
 
-var _shake_x = irandom_range(-shake_time, shake_time)
-var _shake_y = irandom_range(-shake_time, shake_time)
+var _shake_x = irandom_range(-shake_time, shake_time);
+var _shake_y = irandom_range(-shake_time, shake_time);
+switch global.settings.graphic.screenshake {
+	case 0:
+		_shake_x = 0;
+		_shake_y = 0;
+		break;
+	case 1:
+		_shake_x *= 0.5;
+		_shake_y *= 0.5;
+		break;
+	default:
+		break;
+}
 
 camera_set_view_pos(
 	view_camera[0], 
