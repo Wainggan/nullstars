@@ -87,22 +87,27 @@ function MenuPageList() : MenuPage() constructor {
 		
 		if _anim == 0 return;
 		
+		var _scale = global.settings.graphic.textscale + 1;
+		
+		var _width = 200 * _scale;
+		var _height = 200 * _scale;
+		
 		draw_set_font(ft_sign);
 		draw_set_color(#cccccc);
 		
-		draw_sprite_stretched(spr_sign_board, 0, _x, _y, 200, 200 * tween(Tween.Circ, _anim));
+		draw_sprite_stretched(spr_sign_board, 0, _x, _y, _width, _height * tween(Tween.Circ, _anim));
 		
 		if _anim < 1 return;
 		
-		static _pad_x = 8;
-		static _pad_y = 11;
-		static _option_pad = 14;
+		var _pad_x = 8 * _scale;
+		var _pad_y = 11 * _scale;
+		var _option_pad = 14 * _scale;
 		
 		for (var j = 0; j < array_length(list); j++) {
 			var _e = list[j]
 			if j == current
-				draw_text(_x + _pad_x, _y + _pad_y + j * _option_pad, ">");
-			_e.draw(_x + _pad_x + 12, _y + _pad_y + j * _option_pad, _x + 200 - _pad_x * 2, j == current);
+				draw_text_transformed(_x + _pad_x, _y + _pad_y + j * _option_pad, ">", _scale, _scale, 0);
+			_e.draw(_x + _pad_x + 12 * _scale, _y + _pad_y + j * _option_pad, _x + _width - _pad_x * 2, j == current);
 		}
 		
 		draw_set_color(c_white);
@@ -241,7 +246,9 @@ function MenuButton(_text, _callback = __none) : MenuOption() constructor {
 	static draw = function(_x1, _y, _x2, _selected){
 		var _last = draw_get_color()
 		if _selected draw_set_color(c_white);
-		draw_text(_x1, _y, text)
+		
+		var _scale = global.settings.graphic.textscale + 1;
+		draw_text_transformed(_x1, _y, text, _scale, _scale, 0);
 		
 		if _selected draw_set_color(_last);
 	}
@@ -266,11 +273,15 @@ function MenuSlider(_text, _min = 0, _max = 1, _iter = 0.1, _value = 0, _callbac
 		var _last = draw_get_color()
 		if _selected draw_set_color(c_white);
 		
-		draw_text(_x1, _y, text)
-
-		draw_line(_x1 + (_x2 - _x1) / 2, _y, _x2, _y)
+		var _scale = global.settings.graphic.textscale + 1;
 		
-		var _p = (_x2 - _x1) / 2 + (_x2 - _x1) / 2 * (abs(value - low) / abs(high - low))
+		draw_text_transformed(_x1, _y, text, _scale, _scale, 0);
+		
+		var _xm = (_x2 - _x1) / 2; // middle point
+
+		draw_line(_x1 + _xm, _y, _x2, _y);
+		
+		var _p = _xm + _xm * (abs(value - low) / abs(high - low))
 		draw_line(_x1 + _p, _y, _x1 + _p, _y + 4)
 		
 		if _selected draw_set_color(_last);
@@ -294,19 +305,26 @@ function MenuRadio(_text, _options = [], _value = 0, _callback = __none) : MenuO
 		var _last = draw_get_color()
 		if _selected draw_set_color(c_white);
 		
-		draw_text(_x1, _y, text)
+		var _scale = global.settings.graphic.textscale + 1;
+		
+		draw_text_transformed(_x1, _y, text, _scale, _scale, 0);
 		
 		var _off = 0;
 		
 		draw_set_halign(fa_right)
 		for (var i = array_length(options) - 1; i >= 0; i--) {
 			
-			draw_text(_x2 - _off, _y, options[i]);
+			draw_text_transformed(_x2 - _off, _y, options[i], _scale, _scale, 0);
 			
 			if value == i
-				draw_line(_x2 - _off - string_width(options[i]) - 3, _y + 10, _x2 - _off, _y + 10)
+				draw_line(
+					_x2 - _off - string_width(options[i]) * _scale - 3,
+					_y + 10 * _scale,
+					_x2 - _off,
+					_y + 10 * _scale
+				);
 			
-			_off += string_width(options[i]) + 14
+			_off += (string_width(options[i]) + 14) * _scale;
 			
 		}
 		draw_set_halign(fa_left)
