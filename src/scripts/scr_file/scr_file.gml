@@ -116,7 +116,7 @@ global.file_default = {
 function game_file_update(_file) {
 	var i = _file.json;
 	for (; i < FILE_DATA_VERSION; i++) {
-		show_debug_message(i);
+		log(Log.user, $"updating save file from {_file.json} to {i}...");
 	}
 }
 
@@ -130,6 +130,7 @@ function game_file_load() {
 		
 		// TEMPORARY
 		if global.file.json < FILE_DATA_VERSION {
+			log(Log.user, $"save file deleted since the format changed ({global.file.json} => {FILE_DATA_VERSION})");
 			file_delete(FILE_DATA);
 			game_file_load();
 			return;
@@ -145,6 +146,7 @@ function game_file_save() {
 
 
 function game_json_save(_filename, _tree) {
+	log(Log.note, $"saving file {_filename}");
 	var _string = json_stringify(_tree);
 	var _buffer = buffer_create(string_byte_length(_string)+1, buffer_fixed, 1);
 	buffer_write(_buffer, buffer_string, _string);
@@ -154,6 +156,8 @@ function game_json_save(_filename, _tree) {
 
 function game_json_open(_filename) {
 	if file_exists(_filename) {
+		log(Log.note, $"loading file {_filename}");
+		
 		var _buffer = buffer_load(_filename);
 		var _string = buffer_read(_buffer, buffer_string);
 		buffer_delete(_buffer);

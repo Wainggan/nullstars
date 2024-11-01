@@ -17,6 +17,7 @@ page_none = new MenuPageList()
 	system.open(page_settings)
 }))
 .add(new MenuButton("debug", function(){
+	log(Log.warn, "good luck");
 	system.open(page_debug);
 }))
 .add(new MenuButton("exit", function(){
@@ -120,7 +121,7 @@ page_debug = new MenuPageList()
 .add(new MenuButton("gc", function(){
 	var _stats = gc_get_stats();
 	var _text = $"{_stats}";
-	log(Log.user, _text);
+	log(Log.note, _text);
 	gc_collect();
 }))
 .add(new MenuRadio("gc time", 
