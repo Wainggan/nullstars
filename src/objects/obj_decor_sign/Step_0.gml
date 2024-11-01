@@ -22,7 +22,11 @@ if _touching {
 
 last = _touching
 
+var _scale = global.settings.graphic.textscale + 1;
 
-anim_x = floor(x + 16 - width / 2 + anim_off * 16);
-anim_y = floor(y - height - 16 + abs(anim_off) * 4);
+var _width = width * _scale;
+var _height = height * _scale;
+
+anim_x = floor(x + 16 - _width / 2 + anim_off * 16);
+anim_y = floor(y - _height - 16 + abs(anim_off) * 4);
 
