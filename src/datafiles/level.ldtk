@@ -11,7 +11,7 @@
 	"iid": "d5a16520-6280-11ee-ba61-ad454e9d2411",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 582,
+	"nextUid": 587,
 	"identifierStyle": "Free",
 	"toc": [
 		{
@@ -200,7 +200,7 @@
 					"layerIid": "fcfd25d1-8990-11ee-90a8-255341f20184",
 					"levelIid": "fcfcfec0-8990-11ee-90a8-d5a51c517f6b",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } },
+				}, "dir": "right", "name": "0-3", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "2a2877d0-8990-11ee-9c14-1d70c15170d5",
@@ -211,7 +211,7 @@
 					"layerIid": "2a2877d3-8990-11ee-9c14-bba77b094a84",
 					"levelIid": "2a2877d0-8990-11ee-9c14-1d70c15170d5",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } },
+				}, "dir": "right", "name": "0-1", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "08c763b0-8990-11ee-9c14-51153f4d579a",
@@ -222,7 +222,7 @@
 					"layerIid": "08c763b3-8990-11ee-9c14-95fc22098e3f",
 					"levelIid": "08c763b0-8990-11ee-9c14-51153f4d579a",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } },
+				}, "dir": "right", "name": "0-2", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "25c95b00-8990-11ee-9c14-6db5b1853f6f",
@@ -233,7 +233,7 @@
 					"layerIid": "25c95b03-8990-11ee-9c14-95a78e914251",
 					"levelIid": "25c95b00-8990-11ee-9c14-6db5b1853f6f",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } },
+				}, "dir": "right", "name": "0-4", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "20af7010-8990-11ee-8d28-01157ecfb08d",
@@ -244,7 +244,7 @@
 					"layerIid": "20af9722-8990-11ee-8d28-253f7b3d042e",
 					"levelIid": "20af7010-8990-11ee-8d28-01157ecfb08d",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } },
+				}, "dir": "right", "name": "", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "9270c670-b0a0-11ee-98dc-ff94ea1806b0",
@@ -255,7 +255,7 @@
 					"layerIid": "9270c67a-b0a0-11ee-98dc-b3389a332aac",
 					"levelIid": "9270c670-b0a0-11ee-98dc-ff94ea1806b0",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } },
+				}, "dir": "right", "name": "0-a", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "5a637480-b0a0-11ee-98dc-653a21927d05",
@@ -266,7 +266,7 @@
 					"layerIid": "5a639b91-b0a0-11ee-98dc-19f6ef8f7247",
 					"levelIid": "5a637480-b0a0-11ee-98dc-653a21927d05",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "left" } },
+				}, "dir": "left", "name": "0-b", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "643b9330-b0a0-11ee-a053-afa85acba451",
@@ -277,7 +277,7 @@
 					"layerIid": "643bba41-b0a0-11ee-a053-c5092fc88dfa",
 					"levelIid": "643b9330-b0a0-11ee-a053-afa85acba451",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } },
+				}, "dir": "right", "name": "0-6", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "b92c4130-b0a0-11ee-a053-8793dbabfc2e",
@@ -288,7 +288,7 @@
 					"layerIid": "b92c6840-b0a0-11ee-a053-750a5f57007a",
 					"levelIid": "b92c4130-b0a0-11ee-a053-8793dbabfc2e",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } },
+				}, "dir": "right", "name": "0-5", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "4d5278c0-b0a0-11ee-8f5d-93c47300513d",
@@ -299,7 +299,7 @@
 					"layerIid": "4d529fd4-b0a0-11ee-8f5d-a9d2e5f69024",
 					"levelIid": "4d5278c0-b0a0-11ee-8f5d-93c47300513d",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "left" } },
+				}, "dir": "left", "name": "0-c", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "d64eb890-73f0-11ef-9991-d1b872a2e829",
@@ -310,7 +310,7 @@
 					"layerIid": "d64edfa0-73f0-11ef-9991-b94ef9691296",
 					"levelIid": "d64eb890-73f0-11ef-9991-d1b872a2e829",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } },
+				}, "dir": "right", "name": "1-1", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "04c39c20-73f0-11ef-a9ab-9f2809fcb778",
@@ -321,7 +321,7 @@
 					"layerIid": "04c39c23-73f0-11ef-a9ab-3d4f7ab24337",
 					"levelIid": "04c39c20-73f0-11ef-a9ab-9f2809fcb778",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } },
+				}, "dir": "right", "name": "1-2", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "6b98ea30-73f0-11ef-88cf-49a6dcae35e6",
@@ -332,7 +332,7 @@
 					"layerIid": "6b991142-73f0-11ef-88cf-f7e2b37944a4",
 					"levelIid": "6b98ea30-73f0-11ef-88cf-49a6dcae35e6",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right" } }
+				}, "dir": "right", "name": "1-3", "terms": [] } }
 			]
 		},
 		{
@@ -9049,6 +9049,43 @@
 			"pivotY": 0,
 			"fieldDefs": [
 				{
+					"identifier": "name",
+					"doc": "the displayed name of the gate",
+					"__type": "String",
+					"uid": 583,
+					"type": "F_String",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "NameAndValue",
+					"editorDisplayScale": 1,
+					"editorDisplayPos": "Above",
+					"editorLinkStyle": "StraightArrow",
+					"editorDisplayColor": null,
+					"editorAlwaysShow": false,
+					"editorShowInWorld": true,
+					"editorCutLongValues": true,
+					"editorTextSuffix": null,
+					"editorTextPrefix": null,
+					"useForSmartColor": false,
+					"exportToToc": true,
+					"searchable": false,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": null,
+					"symmetricalRef": false,
+					"autoChainRef": true,
+					"allowOutOfLevelRef": true,
+					"allowedRefs": "OnlySame",
+					"allowedRefsEntityUid": null,
+					"allowedRefTags": [],
+					"tilesetUid": null
+				},
+				{
 					"identifier": "time",
 					"doc": "timer length in seconds",
 					"__type": "Float",
@@ -9153,6 +9190,43 @@
 						"id": "V_String",
 						"params": ["right"]
 					},
+					"textLanguageMode": null,
+					"symmetricalRef": false,
+					"autoChainRef": true,
+					"allowOutOfLevelRef": true,
+					"allowedRefs": "OnlySame",
+					"allowedRefsEntityUid": null,
+					"allowedRefTags": [],
+					"tilesetUid": null
+				},
+				{
+					"identifier": "terms",
+					"doc": "rules",
+					"__type": "Array<LocalEnum.Terms>",
+					"uid": 586,
+					"type": "F_Enum(584)",
+					"isArray": true,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": 4,
+					"editorDisplayMode": "NameAndValue",
+					"editorDisplayScale": 1,
+					"editorDisplayPos": "Beneath",
+					"editorLinkStyle": "StraightArrow",
+					"editorDisplayColor": null,
+					"editorAlwaysShow": false,
+					"editorShowInWorld": true,
+					"editorCutLongValues": true,
+					"editorTextSuffix": null,
+					"editorTextPrefix": null,
+					"useForSmartColor": false,
+					"exportToToc": true,
+					"searchable": false,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
 					"textLanguageMode": null,
 					"symmetricalRef": false,
 					"autoChainRef": true,
@@ -12018,7 +12092,8 @@
 			{ "id": "left_down", "tileRect": null, "color": 4073265 },
 			{ "id": "down", "tileRect": null, "color": 16690740 },
 			{ "id": "right_down", "tileRect": null, "color": 16705377 }
-		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }
+		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
+		{ "identifier": "Terms", "uid": 584, "values": [], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] }
 	], "externalEnums": [], "levelFields": [
 		{
 			"identifier": "preset",

@@ -262,6 +262,7 @@
 					"defUid": 156,
 					"px": [96,224],
 					"fieldInstances": [
+						{ "__identifier": "name", "__type": "String", "__value": "", "__tile": null, "defUid": 583, "realEditorValues": [] },
 						{ "__identifier": "time", "__type": "Float", "__value": 900, "__tile": null, "defUid": 158, "realEditorValues": [{ "id": "V_Float", "params": [900] }] },
 						{ "__identifier": "ref", "__type": "EntityRef", "__value": {
 							"entityIid": "54ea9850-8990-11ee-b9a8-7543bc685031",
@@ -272,7 +273,8 @@
 							"id": "V_String",
 							"params": ["54ea9850-8990-11ee-b9a8-7543bc685031"]
 						}] },
-						{ "__identifier": "dir", "__type": "LocalEnum.Direction_4", "__value": "right", "__tile": null, "defUid": 448, "realEditorValues": [] }
+						{ "__identifier": "dir", "__type": "LocalEnum.Direction_4", "__value": "right", "__tile": null, "defUid": 448, "realEditorValues": [] },
+						{ "__identifier": "terms", "__type": "Array<LocalEnum.Terms>", "__value": [], "__tile": null, "defUid": 586, "realEditorValues": [] }
 					],
 					"__worldX": 5536,
 					"__worldY": 1472
