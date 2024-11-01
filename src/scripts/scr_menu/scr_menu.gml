@@ -127,15 +127,17 @@ function MenuPageMap() : MenuPage() constructor {
 		var _kh = INPUT.check("right") - INPUT.check("left");
 		var _kv = INPUT.check("down") - INPUT.check("up");
 		
+		var _speed = INPUT.check("grab");
 		var _click = INPUT.check_pressed("jump");
 		var _close = INPUT.check_pressed("dash");
 		
 		
 		var _dir = point_direction(0, 0, _kh, _kv);
+		var _spd = _speed ? 6 : 3;
 	
 		if _kh != 0 || _kv != 0 {
-			cam_x += lengthdir_x(3 / cam_scale, _dir);
-			cam_y += lengthdir_y(3 / cam_scale, _dir);
+			cam_x += lengthdir_x(_spd / cam_scale, _dir);
+			cam_y += lengthdir_y(_spd / cam_scale, _dir);
 		}
 		
 		var _c = noone;
