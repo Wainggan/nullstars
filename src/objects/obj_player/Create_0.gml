@@ -650,10 +650,10 @@ bounce = function(_dir = 0){
 	
 		dash_grace = 0;
 	
-		if INPUT.check("jump")
-			y_vel = -8;
-		else
-			y_vel = -5
+		//if INPUT.check("jump")
+			y_vel = -9;
+		//else
+		//	y_vel = -5
 	
 		scale_x = 0.6;
 		scale_y = 1.4;
