@@ -1,6 +1,8 @@
 
 game_file_load();
 
+global.demonstrate = false;
+
 global.time = 0;
 
 global.onoff = 1;
