@@ -4,7 +4,7 @@ if state == 0 {
 	if !game_timer_running() {
 		state = 1;
 	} else {
-		time = game.timer;
+		time = game.timer_length - game.timer;
 	}
 } else {
 	anim_end = approach(anim_end, 1, 1 / 120);

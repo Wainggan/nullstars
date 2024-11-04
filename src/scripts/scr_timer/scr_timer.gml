@@ -1,7 +1,8 @@
 
 function game_timer_start(_length, _start = undefined, _target = undefined) {
 	if !game.timer_active {
-		game.timer = _length;
+		game.timer = 0;
+		game.timer_length = _length;
 		game.timer_start = _start;
 		game.timer_target = _target;
 		game.timer_active = true;
@@ -25,8 +26,8 @@ function game_timer_running() {
 
 function game_timer_update() {
 	if game.timer_active {
-		game.timer -= 1;
-		if game.timer <= 0 {
+		game.timer += 1;
+		if game.timer_length - game.timer <= 0 {
 			game_timer_stop()
 			//game_player_kill()
 		}
