@@ -109,3 +109,19 @@ function hex_to_dec(_hex) {
  
     return _dec;
 }
+
+function variable_ref_create(_inst, _name) {
+	with { _inst, _name } return function() {
+		if (argument_count > 0) {
+			variable_instance_set(_inst, _name, argument[0]);
+		} else return variable_instance_get(_inst, _name);
+	}
+}
+
+function array_ref_create(_array, _index) {
+	with { _array, _index } return function() {
+		if (argument_count > 0) {
+			_array[_index] = argument[0];
+		} else return _array[_index];
+	}
+}
