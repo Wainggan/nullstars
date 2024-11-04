@@ -146,7 +146,7 @@ if global.config.graphics_post_grading {
 		shader_set_uniform_f(_u_strength, 1)
 		texture_set_stage(_u_lut, surface_get_texture(surf_lut));
 
-		draw_surface_ext(surf_compose, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
+		draw_surface_ext(surf_compose, 0, 0, 1, 1, 0, c_white, 1);
 
 	surface_reset_target();
 	shader_reset();
@@ -155,9 +155,11 @@ if global.config.graphics_post_grading {
 } else {
 
 	surface_set_target(application_surface);
-	draw_surface_ext(surf_compose, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
+	draw_surface_ext(surf_compose, 0, 0, 1, 1, 0, c_white, 1);
 	surface_reset_target();
 	
 }
 
-draw_surface(application_surface, 0, 0);
+
+
+draw_surface_ext(application_surface, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
