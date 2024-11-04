@@ -34,5 +34,5 @@
     "path":"sprites/spr_debug_timer_start/spr_debug_timer_start.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }
