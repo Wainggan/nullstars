@@ -8,13 +8,11 @@ function Game() constructor {
 	static unpack = function() {
 		checkpoint.unpack();
 		
-		
-		//with obj_player {
-		//	game_checkpoint_set(global.data.location);
-		//	var _checkpoint = game_checkpoint_ref();
-		//	x = _checkpoint.x;
-		//	y = _checkpoint.y;
-		//}
+		with obj_player {
+			var _checkpoint = game_checkpoint_ref();
+			x = _checkpoint.x;
+			y = _checkpoint.y;
+		}
 
 	}
 	static pack = function() {
