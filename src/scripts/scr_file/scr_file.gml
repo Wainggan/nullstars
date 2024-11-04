@@ -50,6 +50,7 @@ global.file_default = {
 		/*
 		gates
 		"name": {}
+			complete = has complete
 			time = best time in ms
 		*/
 		"gates": {},

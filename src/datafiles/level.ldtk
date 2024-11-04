@@ -244,7 +244,7 @@
 					"layerIid": "20af9722-8990-11ee-8d28-253f7b3d042e",
 					"levelIid": "20af7010-8990-11ee-8d28-01157ecfb08d",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
-				}, "dir": "right", "name": "", "terms": [] } },
+				}, "dir": "right", "name": "none", "terms": [] } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "9270c670-b0a0-11ee-98dc-ff94ea1806b0",
@@ -8815,7 +8815,10 @@
 					"max": null,
 					"regex": "/([a-z]|[0-9]|_)+(-([a-z]|[0-9]|_)+)*/gi",
 					"acceptFileTypes": null,
-					"defaultOverride": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["none"]
+					},
 					"textLanguageMode": null,
 					"symmetricalRef": false,
 					"autoChainRef": true,
@@ -9075,7 +9078,10 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": null,
+					"defaultOverride": {
+						"id": "V_String",
+						"params": ["none"]
+					},
 					"textLanguageMode": null,
 					"symmetricalRef": false,
 					"autoChainRef": true,

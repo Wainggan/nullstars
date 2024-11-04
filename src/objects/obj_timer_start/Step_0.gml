@@ -85,7 +85,7 @@ if _end {
 
 with level_get_instance(ref) {
 	
-	if !other.collected && game_level_get_safe(x, y) {
+	if !global.game.gate.data(other.name).complete && game_level_get_safe(x, y) {
 		if game_timer_running() {
 			if instance_exists(other.pet) instance_destroy(other.pet)
 		} else {
@@ -112,8 +112,10 @@ with level_get_instance(ref) {
 		var _pop = false;
 	
 		if game_timer_running() {
-			other.collected = true;
-			other.collected_time = game_timer_get()
+			global.game.gate.data(other.name).complete = true;
+			global.game.gate.data(other.name).time = game_timer_get();
+			
+			game_file_save();
 			
 			game_timer_stop();
 		

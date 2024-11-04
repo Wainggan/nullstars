@@ -7,6 +7,7 @@ function Game() constructor {
 	
 	static unpack = function() {
 		checkpoint.unpack();
+		gate.unpack();
 		
 		with obj_player {
 			var _checkpoint = game_checkpoint_ref();
@@ -17,6 +18,7 @@ function Game() constructor {
 	}
 	static pack = function() {
 		checkpoint.pack();
+		gate.pack();
 	}
 	
 }
@@ -84,6 +86,48 @@ function GameHandleGates() constructor {
 	
 	static unpack = function() {
 		
+		var _names = variable_struct_get_names(global.data.gates);
+		for (var i = 0; i < array_length(_names); i++) {
+			var _index = _names[i];
+			
+			list[$ _index].complete = global.data.gates[$ _index].complete;
+			list[$ _index].time = global.data.gates[$ _index].time;
+		}
+		
+	}
+	static pack = function() {
+		
+		var _names = variable_struct_get_names(list);
+		for (var i = 0; i < array_length(_names); i++) {
+			var _index = _names[i];
+			
+			if list[$ _index].complete {
+				if global.data.gates[$ _index] == undefined {
+					global.data.gates[$ _index] = {};
+				}
+				global.data.gates[$ _index].complete = true;
+				global.data.gates[$ _index].time = list[$ _index].time;
+			}
+		}
+		
+	}
+	
+	static add = function(_object) {
+		if list[$ _object.name] != undefined {
+			log(Log.error, $"gate: {_object.name} already exists!");
+		}
+		list[$ _object.name] = {
+			object: _object,
+			complete: false,
+			time: 0,
+		};
+	}
+
+	static ref = function(_index) {
+		return list[$ _index].object;
+	}
+	static data = function(_index) {
+		return list[$ _index];
 	}
 }
 

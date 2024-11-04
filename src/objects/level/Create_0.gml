@@ -40,9 +40,10 @@ for (var i_table = 0; i_table < array_length(_file.toc); i_table++) {
 				_field.index = level_ldtk_field_item(_val.index, "String");
 				break;
 			case nameof(obj_timer_start):
-				_field.time = level_ldtk_field_item(_val.time, "Float")
-				_field.dir = level_ldtk_field_item(_val.dir, "Enum")
-				_field.ref = level_ldtk_field_item(_val.ref, "EntityRef")
+				_field.name = level_ldtk_field_item(_val.name, "String");
+				_field.time = level_ldtk_field_item(_val.time, "Float");
+				_field.dir = level_ldtk_field_item(_val.dir, "Enum");
+				_field.ref = level_ldtk_field_item(_val.ref, "EntityRef");
 				
 				_field.image_xscale = floor(_ent.widPx / TILESIZE);
 				_field.image_yscale = floor(_ent.heiPx / TILESIZE);
