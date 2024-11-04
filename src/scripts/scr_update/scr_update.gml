@@ -31,5 +31,5 @@ function game_update_gctime(_set) {
 	}
 }
 function game_update_log(_set) {
-	global.logger.point = _set;
+	global.logger.point = _set + 1;
 }
