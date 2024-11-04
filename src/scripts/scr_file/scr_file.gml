@@ -153,7 +153,7 @@ function game_file_save() {
 
 
 function game_json_save(_filename, _tree) {
-	log(Log.note, $"saving file {_filename}");
+	log(Log.hide, $"saving file {_filename}");
 	var _string = json_stringify(_tree);
 	var _buffer = buffer_create(string_byte_length(_string)+1, buffer_fixed, 1);
 	buffer_write(_buffer, buffer_string, _string);
@@ -163,7 +163,7 @@ function game_json_save(_filename, _tree) {
 
 function game_json_open(_filename) {
 	if file_exists(_filename) {
-		log(Log.note, $"loading file {_filename}");
+		log(Log.hide, $"loading file {_filename}");
 		
 		var _buffer = buffer_load(_filename);
 		var _string = buffer_read(_buffer, buffer_string);

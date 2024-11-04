@@ -1,5 +1,6 @@
 
 enum Log {
+	hide,
 	note,
 	warn,
 	error,
