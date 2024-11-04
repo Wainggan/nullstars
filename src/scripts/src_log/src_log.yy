@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"src_log",
   "parent":{
-    "name":"game",
-    "path":"folders/game.yy",
+    "name":"util",
+    "path":"folders/game/util.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
