@@ -8,7 +8,7 @@ global.version = {
 #macro FILE_DATA "save.star"
 #macro FILE_INPUT "input.ini"
 
-#macro FILE_DATA_VERSION 1
+#macro FILE_DATA_VERSION 2
 
 global.file = undefined;
 global.settings = undefined;
@@ -31,7 +31,13 @@ global.file_default = {
 		"flags": {},
 		
 		"location": "intro-0",
-		"checkpoints": [],
+		/*
+		checkpoints
+		"index": {}
+			collected = has collected
+			deaths = amount of respawns
+		*/
+		"checkpoints": {},
 		
 		/*
 		stats
@@ -148,13 +154,14 @@ function game_file_load() {
 }
 
 function game_file_save() {
+	global.game.pack();
 	game_json_save(FILE_DATA, global.file);
 }
 
 
 function game_json_save(_filename, _tree) {
 	log(Log.hide, $"saving file {_filename}");
-	var _string = json_stringify(_tree);
+	var _string = json_stringify(_tree, true);
 	var _buffer = buffer_create(string_byte_length(_string)+1, buffer_fixed, 1);
 	buffer_write(_buffer, buffer_string, _string);
 	buffer_save(_buffer, _filename);
