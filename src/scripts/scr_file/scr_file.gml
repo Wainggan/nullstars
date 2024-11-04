@@ -62,7 +62,8 @@ global.file_default = {
 			1 = 2x
 		fullscreen:
 			0 = off
-			1 = on
+			1 = exclusive
+			2 = borderless
 		screenshake:
 			0 = none
 			1 = 0.5x

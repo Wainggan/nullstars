@@ -50,7 +50,7 @@ page_settings_graphics = new MenuPageList()
 	game_file_save();
 }))
 .add(new MenuRadio("fullscreen", 
-		["off", "on"],
+		["off", "exclusive", "borderless"],
 		global.settings.graphic.fullscreen,
 		function(_) {
 	global.settings.graphic.fullscreen = _;

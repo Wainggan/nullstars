@@ -10,7 +10,7 @@ function game_checkpoint_set(_index) {
 
 function game_checkpoint_add(_object) {
 	if game.checkpoint_list[$ _object.index] != undefined {
-		throw $"checkpoint: {_object.index} already exists";
+		log(Log.error, $"checkpoint: {_object.index} already exists!");
 	}
 	game.checkpoint_list[$ _object.index] = _object
 }
