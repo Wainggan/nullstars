@@ -5,6 +5,9 @@ global.time = 0;
 
 global.onoff = 1;
 
+gif_id = -1;
+gif_state = 0;
+
 timer = 0;
 timer_active = false;
 timer_target = undefined;

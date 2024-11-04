@@ -141,18 +141,23 @@ if global.config.graphics_post_grading {
 
 	gpu_set_tex_filter_ext(_u_lut, true)
 	shader_set(shd_grade);
+	surface_set_target(application_surface); // lmao
 
 		shader_set_uniform_f(_u_strength, 1)
 		texture_set_stage(_u_lut, surface_get_texture(surf_lut));
 
 		draw_surface_ext(surf_compose, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
 
+	surface_reset_target();
 	shader_reset();
 	gpu_set_tex_filter(false)
 
 } else {
 
+	surface_set_target(application_surface);
 	draw_surface_ext(surf_compose, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
+	surface_reset_target();
 	
 }
 
+draw_surface(application_surface, 0, 0);
