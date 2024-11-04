@@ -138,6 +138,7 @@
     {"name":"shd_outline_post","order":8,"path":"shaders/shd_outline_post/shd_outline_post.yy",},
     {"name":"shd_outline","order":7,"path":"shaders/shd_outline/shd_outline.yy",},
     {"name":"shd_reflect","order":9,"path":"shaders/shd_reflect/shd_reflect.yy",},
+    {"name":"shd_rimlight","order":11,"path":"shaders/shd_rimlight/shd_rimlight.yy",},
     {"name":"shd_tiles","order":10,"path":"shaders/shd_tiles/shd_tiles.yy",},
     {"name":"mus_hub_1","order":3,"path":"sounds/mus_hub_1/mus_hub_1.yy",},
     {"name":"mus_story","order":4,"path":"sounds/mus_story/mus_story.yy",},

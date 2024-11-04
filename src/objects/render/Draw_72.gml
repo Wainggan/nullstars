@@ -89,12 +89,21 @@ if !surface_exists(surf_background_lights)
 surface_set_target(surf_background_lights);
 draw_clear(c_black);
 
-// lazy brighten using the background
-// @todo: look into making this better with a shader
-gpu_set_blendmode(bm_add);
-repeat background_lights_brightness
+if global.demonstrate {
+	// lazy brighten using the background
+	// @todo: look into making this better with a shader
+	gpu_set_blendmode(bm_add);
+	repeat background_lights_brightness
+		draw_surface(surf_background, 0, 0);
+	gpu_set_blendmode(bm_normal);
+} else {
+	
+	shader_set(shd_rimlight);
 	draw_surface(surf_background, 0, 0);
-gpu_set_blendmode(bm_normal);
+	shader_reset();
+	
+}
+
 
 surface_reset_target();
 
