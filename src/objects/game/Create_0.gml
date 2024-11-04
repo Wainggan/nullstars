@@ -18,7 +18,7 @@ checkpoint = "area-split-cont";
 instance_create_layer(0, 0, layer, obj_input);
 instance_create_layer(0, 0, layer, camera);
 instance_create_layer(0, 0, layer, render);
-instance_create_layer(0, 0, layer, music);
+instance_create_layer(0, 0, layer, obj_music);
 instance_create_layer(0, 0, layer, obj_menu);
 
 room_goto(rm_game);
