@@ -193,8 +193,7 @@ buffer_dash = 0;
 grace_vel = 0
 grace_vel_timer = 0
 
-gravity_hold_peak = 0;
-gravity_hold = 0;
+gravity_hold = false;
 
 key_hold = 0;
 key_hold_timer = 0;
@@ -418,8 +417,7 @@ jump = function(){
 	}
 	grace = 0;
 	grace_target = noone;
-	gravity_hold = 0;
-	gravity_hold_peak = 0;
+	gravity_hold = false;
 	//actor_move_y(grace_y - y)
 	
 	dash_left = defs.dash_total;
@@ -460,8 +458,7 @@ jumpbounce = function(_dir){
 	buffer = 0
 	grace = 0;
 	grace_target = noone;
-	gravity_hold = 0;
-	gravity_hold_peak = 0;
+	gravity_hold = false;
 	//actor_move_y(grace_y - y)
 	
 	if dash_recover < 0 {
@@ -528,8 +525,7 @@ jumpdash = function(){
 	dash_grace = 0;
 	buffer = 0;
 	buffer_dash = 0;
-	gravity_hold = 0;
-	gravity_hold_peak = 0;
+	gravity_hold = false;
 			
 	if dash_dir_y == 0 {
 		
@@ -537,7 +533,7 @@ jumpdash = function(){
 			y_vel = -5.4;
 			x_vel = dash_dir_x_vel * 0.4
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
-			gravity_hold = 6
+			gravity_hold = true;
 		} else {
 			y_vel = defs.jump_vel;
 			x_vel = dash_dir_x_vel * 0.8
@@ -582,8 +578,7 @@ wallbounce = function(_dir){
 	buffer = 0
 	grace = 0;
 	dash_grace = 0;
-	gravity_hold = 0;
-	gravity_hold_peak = 0;
+	gravity_hold = false;
 	
 	dash_left = defs.dash_total
 	
@@ -608,8 +603,7 @@ walljump = function(_dir){
 	
 	buffer = 0
 	grace = 0;
-	gravity_hold = 0;
-	gravity_hold_peak = 0;
+	gravity_hold = false;
 	//actor_move_y(grace_y - y)
 	
 	dash_left = defs.dash_total;
@@ -631,7 +625,7 @@ walljump = function(_dir){
 	scale_x = 0.8;
 	scale_y = 1.2;
 	
-	gravity_hold = 9;
+	gravity_hold = true;
 	
 	ledge_keybuffer = dir
 	
@@ -648,8 +642,7 @@ bounce = function(_dir = 0){
 	state.change(state_free);
 	
 	grace = 0;
-	gravity_hold = 0;
-	gravity_hold_peak = 0;
+	gravity_hold = false;
 	
 	dash_left = defs.dash_total;
 	
@@ -665,7 +658,7 @@ bounce = function(_dir = 0){
 		scale_x = 0.6;
 		scale_y = 1.4;
 	
-		gravity_hold = 8;
+		gravity_hold = true;
 	
 	} else {
 		
@@ -675,7 +668,7 @@ bounce = function(_dir = 0){
 		scale_x = 0.8;
 		scale_y = 1.2;
 	
-		gravity_hold = 8;
+		gravity_hold = true;
 		
 		key_hold = _dir;
 		key_hold_timer = 8;
@@ -720,14 +713,16 @@ state_base = state.add()
 	buffer -= 1;
 	buffer_dash -= 1;
 	grace -= 1;
-	gravity_hold -= 1;
-	gravity_hold_peak -= 1;
 	key_hold_timer -= 1;
 	dash_grace -= 1;
 	dash_recover -= 1;
 	dash_kick_buffer -= 1;
 	hold_cooldown -= 1;
 	grace_vel_timer -= 1;
+	
+	if INPUT.check_pressed("jump") || INPUT.check_released("jump") {
+		gravity_hold = false;
+	}
 	
 	if !grace {
 		grace_target = noone;
@@ -915,6 +910,9 @@ state_stuck = state_base.add()
 })
 
 state_free = state_base.add()
+.set("leave", function(){
+	gravity_hold = false;
+})
 .set("step", function(){
 
 	var _kh = INPUT.check("right") - INPUT.check("left");
@@ -972,12 +970,12 @@ state_free = state_base.add()
 	var _y_accel = 0;
 	
 	var _jump = INPUT.check("jump");
-	if gravity_hold > 0 {
+	if gravity_hold {
 		_jump = true;
 	}
 
 	if _jump {
-		if abs(y_vel) < defs.gravity_peak_thresh {
+		if INPUT.check("jump") && abs(y_vel) < defs.gravity_peak_thresh {
 			// peak jump
 			_y_accel = defs.gravity_peak;
 		} else {
@@ -985,9 +983,6 @@ state_free = state_base.add()
 		}
 	} else {
 		_y_accel = defs.gravity;
-	}
-	if gravity_hold_peak > 0 {
-		_y_accel = defs.gravity_peak;
 	}
 	if y_vel >= defs.terminal_vel {
 		_y_accel = defs.gravity_term;
@@ -1022,6 +1017,8 @@ state_free = state_base.add()
 		grace = defs.grace;
 		grace_target = noone;
 		grace_y = y;
+		
+		gravity_hold = false;
 		
 		if dash_recover < 0
 			dash_left = defs.dash_total;
@@ -1293,7 +1290,7 @@ endDash = function(){
 	if !state.is(state_dash) return;
 	
 	grace = 0;
-	gravity_hold = 14
+	gravity_hold = true
 	
 	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 	
@@ -1493,7 +1490,7 @@ state_swim = state_base.add()
 	
 	if !place_meeting(x, y, obj_water) {
 		grace = defs.grace;
-		gravity_hold = 9;
+		gravity_hold = true;
 		y_vel += -1;
 		
 		if swim_bullet {
