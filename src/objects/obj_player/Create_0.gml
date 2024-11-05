@@ -751,8 +751,9 @@ state_base = state.add()
 	}
 	
 	var _d = 0, _amount = 0;
+	var _shifted = false;
 	
-	if y_vel < 0 && dash_dir_y != -1 {
+	if y_vel < 0 && !_shifted {
 		_d = 0;
 		_amount = 8;
 		if actor_collision(x, y + y_vel)
@@ -760,8 +761,10 @@ state_base = state.add()
 				if actor_collision(x - _d, y + y_vel) {
 				} else break;
 			}
-		if _d != _amount
+		if _d != _amount {
 			actor_move_x(-_d)
+			_shifted = true;
+		}
 		
 		_d = 0;
 		if actor_collision(x, y + y_vel)
@@ -769,8 +772,10 @@ state_base = state.add()
 				if actor_collision(x + _d, y + y_vel) {
 				} else break;
 			}
-		if _d != _amount
+		if _d != _amount {
 			actor_move_x(_d)
+			_shifted = true;
+		}
 	}
 	
 	static __collide_y = function(){
@@ -790,7 +795,7 @@ state_base = state.add()
 	actor_move_y(y_vel, __collide_y);
 	
 	
-	if true {
+	if !_shifted {
 		_d = 0;
 		_amount = state.is(state_dash) ? 16 : 4;
 		if actor_collision(x + x_vel, y)
@@ -798,8 +803,10 @@ state_base = state.add()
 				if actor_collision(x + x_vel, y + _d) {
 				} else break;
 			}
-		if _d != _amount
+		if _d != _amount {
 			actor_move_y(_d)
+			_shifted = true;
+		}
 			
 		_d = 0;
 		_amount = state.is(state_dash) ? 10 : 2;
@@ -808,8 +815,10 @@ state_base = state.add()
 				if actor_collision(x + x_vel, y - _d) {
 				} else break;
 			}
-		if _d != _amount
+		if _d != _amount {
 			actor_move_y(-_d)
+			_shifted = true;
+		}
 	}
 
 	static __collide_x = function(){
