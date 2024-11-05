@@ -1,4 +1,6 @@
 
+if game_paused() exit;
+
 var _cam_x = camera_get_view_x(view_camera[0]),
 	_cam_y = camera_get_view_y(view_camera[0]),
 	_cam_w = camera_get_view_width(view_camera[0]),

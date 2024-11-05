@@ -1,10 +1,14 @@
 
-global.time++;
+if !game_paused() {
+	global.time++;
+}
 
 global.logger.update();
 
-if keyboard_check_pressed(ord("8")) global.config.slow = !global.config.slow
-if keyboard_check_pressed(ord("0")) global.demonstrate = !global.demonstrate
+if keyboard_check_pressed(ord("8")) global.config.slow = !global.config.slow;
+if keyboard_check_pressed(ord("0")) global.demonstrate = !global.demonstrate;
+
+if keyboard_check_pressed(ord("6")) game_set_freeze(!game_paused());
 
 if keyboard_check_pressed(ord("9")) {
 	if gif_state == 0 {

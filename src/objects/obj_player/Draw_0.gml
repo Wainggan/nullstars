@@ -99,7 +99,8 @@ var _meta = anim.meta();
 
 tail.position((_tpos_x ?? x) + _meta.x * dir, (_tpos_y ?? y) + _meta.y);
 
-tail.update(, update_tail)
+if !game_paused()
+	tail.update(, update_tail)
 
 var _color = dash_left == 0 ? #00ffff : #ff00ff;
 var _mult = dash_left == 0 ? #ddccdd : c_white;
