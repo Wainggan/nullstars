@@ -12,8 +12,8 @@
   "duration":309.67743,
   "name":"mus_yearsago",
   "parent":{
-    "name":"sounds",
-    "path":"folders/sounds.yy",
+    "name":"bgm",
+    "path":"folders/sounds/bgm.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

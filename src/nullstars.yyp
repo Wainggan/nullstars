@@ -43,6 +43,8 @@
     {"$GMFolder":"","%Name":"timer","folderPath":"folders/objects/timer.yy","name":"timer","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"rooms","folderPath":"folders/rooms.yy","name":"rooms","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"sounds","folderPath":"folders/sounds.yy","name":"sounds","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"bgm","folderPath":"folders/sounds/bgm.yy","name":"bgm","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"sfx","folderPath":"folders/sounds/sfx.yy","name":"sfx","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "IncludedFiles":[
     {"$GMIncludedFile":"","%Name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles","name":"level.ldtk","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -234,6 +236,7 @@
     {"id":{"name":"mus_story","path":"sounds/mus_story/mus_story.yy",},},
     {"id":{"name":"mus_wind","path":"sounds/mus_wind/mus_wind.yy",},},
     {"id":{"name":"mus_yearsago","path":"sounds/mus_yearsago/mus_yearsago.yy",},},
+    {"id":{"name":"sfx_death","path":"sounds/sfx_death/sfx_death.yy",},},
     {"id":{"name":"spr_atmoshpere","path":"sprites/spr_atmoshpere/spr_atmoshpere.yy",},},
     {"id":{"name":"spr_atmosphere_overlay","path":"sprites/spr_atmosphere_overlay/spr_atmosphere_overlay.yy",},},
     {"id":{"name":"spr_background_city0_lines","path":"sprites/spr_background_city0_lines/spr_background_city0_lines.yy",},},

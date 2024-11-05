@@ -12,8 +12,8 @@
   "duration":200.597,
   "name":"mus_story",
   "parent":{
-    "name":"sounds",
-    "path":"folders/sounds.yy",
+    "name":"bgm",
+    "path":"folders/sounds/bgm.yy",
   },
   "preload":false,
   "resourceType":"GMSound",
