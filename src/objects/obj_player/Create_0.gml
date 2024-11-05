@@ -447,7 +447,7 @@ jump = function(){
 	if abs(x_vel) > defs.move_speed + 2
 		anim_runjump_timer = 120
 	
-	audio_play_sound(sfx_pop_0, 10, false);
+	game_sound_play(sfx_pop_0);
 	
 	state.change(state_free);
 	
@@ -501,7 +501,7 @@ jumpbounce = function(_dir){
 	event.call("jump")
 	event.call("jumpbounce")
 	
-	audio_play_sound(sfx_pop_2, 10, false);
+	game_sound_play(sfx_pop_2);
 	
 	state.change(state_free);
 	
@@ -573,7 +573,7 @@ jumpdash = function(){
 	event.call("jump")
 	event.call("jumpdash")
 	
-	audio_play_sound(sfx_pop_2, 10, false);
+	game_sound_play(sfx_pop_2);
 	
 	state.change(state_free);
 	
@@ -637,7 +637,7 @@ walljump = function(_dir){
 	
 	event.call("jump")
 	
-	audio_play_sound(sfx_pop_0, 10, false);
+	game_sound_play(sfx_pop_0);
 	
 	state.change(state_free);
 	
@@ -780,7 +780,7 @@ state_base = state.add()
 			}
 		} else {
 			if y_vel > 1 {
-				audio_play_sound(sfx_pop_1, 10, false);
+				game_sound_play(sfx_pop_1);
 				scale_x = 1.2;
 				scale_y = 0.8;
 			}
@@ -1291,7 +1291,7 @@ state_dashset = state_base.add()
 		return;
 	}
 	
-	audio_play_sound(sfx_dash, 10, false);
+	game_sound_play(sfx_dash);
 	
 	state.change(state_dash);
 })
