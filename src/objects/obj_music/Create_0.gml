@@ -4,6 +4,8 @@ bgm_asset = -1;
 bgm_asset_last = -1;
 bgm_asset_next = -1;
 
+bgm_old = {};
+
 play = false;
 
 state = new State();
@@ -65,13 +67,23 @@ state_switch = state_base.add()
 .set("step", function() {
 	if bgm_asset == -1 {
 		bgm_asset = bgm_asset_next;
-		bgm = audio_play_sound(bgm_asset, 0, true, 0);
+		if bgm_asset != -1 {
+			bgm = audio_play_sound(bgm_asset, 0, true, 0);
+			if bgm_old[$ bgm_asset] != undefined {
+				audio_sound_set_track_position(bgm, bgm_old[$ bgm_asset]);
+			}
+		}
 		state.change(state_idle);
 	} else if audio_sound_get_gain(bgm) == 0 {
+		bgm_old[$ bgm_asset] = audio_sound_get_track_position(bgm);
 		audio_stop_sound(bgm);
 		bgm_asset = bgm_asset_next;
-		if bgm_asset != -1
+		if bgm_asset != -1 {
 			bgm = audio_play_sound(bgm_asset, 0, true, 0);
+			if bgm_old[$ bgm_asset] != undefined {
+				audio_sound_set_track_position(bgm, bgm_old[$ bgm_asset]);
+			}
+		}
 		state.change(state_idle);
 	}
 })
