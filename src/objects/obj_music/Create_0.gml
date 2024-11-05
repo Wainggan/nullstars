@@ -62,7 +62,7 @@ state_switch = state_base.add()
 	if bgm_asset != -1 audio_sound_gain(bgm, 0, 2000);
 })
 .set("leave", function() {
-	if bgm_asset != -1 audio_sound_gain(bgm, 1, 2000);
+	if bgm_asset != -1 audio_sound_gain(bgm, game_sound_get_bgm(), 2000);
 })
 .set("step", function() {
 	if bgm_asset == -1 {
@@ -89,3 +89,10 @@ state_switch = state_base.add()
 })
 
 state.change(state_idle);
+
+global.game.news_sound.subscribe(function () {
+	if audio_exists(bgm) && state.is(state_idle) {
+		audio_sound_gain(bgm, game_sound_get_bgm(), 50);
+	}
+});
+

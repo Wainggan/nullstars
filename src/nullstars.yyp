@@ -201,6 +201,7 @@
     {"id":{"name":"scr_render","path":"scripts/scr_render/scr_render.yy",},},
     {"id":{"name":"scr_sod","path":"scripts/scr_sod/scr_sod.yy",},},
     {"id":{"name":"scr_solid","path":"scripts/scr_solid/scr_solid.yy",},},
+    {"id":{"name":"scr_sound","path":"scripts/scr_sound/scr_sound.yy",},},
     {"id":{"name":"scr_state","path":"scripts/scr_state/scr_state.yy",},},
     {"id":{"name":"scr_timer","path":"scripts/scr_timer/scr_timer.yy",},},
     {"id":{"name":"scr_trigger","path":"scripts/scr_trigger/scr_trigger.yy",},},

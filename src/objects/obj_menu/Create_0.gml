@@ -99,14 +99,17 @@ page_settings_sound = new MenuPageList()
 }))
 .add(new MenuSlider("mix", 0, 10, 1, global.settings.sound.mix, function(_) {
 	global.settings.sound.mix = _;
+	global.game.news_sound.push();
 	game_file_save();
 }))
 .add(new MenuSlider("bgm", 0, 10, 1, global.settings.sound.bgm, function(_) {
 	global.settings.sound.bgm = _;
+	global.game.news_sound.push();
 	game_file_save();
 }))
 .add(new MenuSlider("sfx", 0, 10, 1, global.settings.sound.sfx, function(_) {
 	global.settings.sound.sfx = _;
+	global.game.news_sound.push();
 	game_file_save();
 }))
 
