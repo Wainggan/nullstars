@@ -110,6 +110,11 @@ function hex_to_dec(_hex) {
     return _dec;
 }
 
+function array_kick(_array, _index) {
+	_array[_index] = _array[array_length(_array) - 1];
+	array_pop(_array);
+}
+
 function variable_ref_create(_inst, _name) {
 	with { _inst, _name } return function() {
 		if (argument_count > 0) {

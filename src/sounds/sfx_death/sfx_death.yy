@@ -6,7 +6,7 @@
     "path":"audiogroups/audiogroup_default",
   },
   "bitDepth":1,
-  "bitRate":128,
+  "bitRate":64,
   "compression":0,
   "conversionMode":0,
   "duration":2.0,
@@ -20,6 +20,6 @@
   "resourceVersion":"2.0",
   "sampleRate":44100,
   "soundFile":"sfx_death.wav",
-  "type":0,
+  "type":1,
   "volume":1.0,
 }

@@ -293,6 +293,9 @@ draw_clear_alpha(c_black, 0);
 draw_surface(surf_mask, 0, 0);
 
 
+part_system_drawit(particles_layer);
+
+
 // draw tile layer
 
 shader_set(shd_tiles);

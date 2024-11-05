@@ -1,7 +1,15 @@
 
 function game_player_kill() {
-	game_set_pause(10);
-	game_camera_set_shake(6, 0.5)
+	
+	var _x = obj_player.x, _y = obj_player.y;
+	game_render_particle(_x, _y - 16, ps_player_death_0);
+	global.game.schedule.add_wait(2, method({ _x, _y }, function(){
+		game_render_particle(_x, _y - 16, ps_player_death_1);
+	}));
+	
+	audio_play_sound(sfx_death, 20, false);
+	game_set_pause(14);
+	game_camera_set_shake(6, 0.4);
 	
 	global.onoff = 1;
 	

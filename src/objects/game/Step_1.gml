@@ -1,6 +1,7 @@
 
 if !game_paused() {
 	global.time++;
+	global.game.update();
 }
 
 global.logger.update();

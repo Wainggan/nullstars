@@ -32,9 +32,13 @@ background_lights_kernel = 7;
 background_lights_sigma = 0.8;
 background_lights_brightness = 4;
 
-particles_ambient = part_system_create_layer("Instances", true)
-part_system_automatic_update(particles_ambient, false)
-part_system_automatic_draw(particles_ambient, false)
+particles_ambient = part_system_create_layer("Instances", true);
+part_system_automatic_update(particles_ambient, false);
+part_system_automatic_draw(particles_ambient, false);
+
+particles_layer = part_system_create_layer("Instances", true);
+part_system_automatic_update(particles_layer, false);
+part_system_automatic_draw(particles_layer, false);
 
 vertex_format_begin();
 vertex_format_add_position_3d();

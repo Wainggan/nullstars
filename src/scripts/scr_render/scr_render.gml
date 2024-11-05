@@ -15,6 +15,12 @@ function game_render_refresh() {
 	surface_reset_target()
 }
 
+function game_render_particle(_x, _y, _system) {
+	with render part_particles_burst(
+		particles_ambient, _x, _y, _system
+	);
+}
+
 
 function Mode(_init) constructor {
 	

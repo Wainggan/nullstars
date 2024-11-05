@@ -35,6 +35,7 @@ if _amparts != -1
 	);
 
 part_system_update(particles_ambient);
+part_system_update(particles_layer);
 
 
 var _lut = game_level_get_lut(camera.x, camera.y);

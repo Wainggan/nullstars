@@ -4,8 +4,14 @@ function Game() constructor {
 	checkpoint = new GameHandleCheckpoints();
 	gate = new GameHandleGates();
 	
+	schedule = new Schedule();
+	
 	news_sound = new News();
 	
+	
+	static update = function() {
+		schedule.update();
+	}
 	
 	static unpack = function() {
 		checkpoint.unpack();
