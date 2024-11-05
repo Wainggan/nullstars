@@ -16,7 +16,7 @@ if keyboard_check_pressed(ord("9")) {
 		gif_state = 2;
 	} else if gif_state == 2 {
 		var _name = $"{irandom(99999999)}.gif";
-		log(Log.user, $"saved! ({game_save_id}/{_name})");
+		log(Log.user, $"gif saved! ({game_save_id}/{_name})");
 		var _status = gif_save(gif_id, _name);
 		if _status == -1 {
 			log(Log.user, $"recording failed?");
