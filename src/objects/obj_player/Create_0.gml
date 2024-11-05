@@ -752,7 +752,7 @@ state_base = state.add()
 	
 	var _d = 0, _amount = 0;
 	
-	if y_vel < 0 && !dash_dir_y == -1 {
+	if y_vel < 0 && dash_dir_y != -1 {
 		_d = 0;
 		_amount = 8;
 		if actor_collision(x, y + y_vel)
