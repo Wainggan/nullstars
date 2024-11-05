@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"sfx_pop_0",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":0,
+  "conversionMode":0,
+  "duration":0.124989,
+  "name":"sfx_pop_0",
+  "parent":{
+    "name":"sfx",
+    "path":"folders/sounds/sfx.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"sfx_pop_0.wav",
+  "type":0,
+  "volume":1.0,
+}

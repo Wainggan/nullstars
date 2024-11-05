@@ -447,6 +447,8 @@ jump = function(){
 	if abs(x_vel) > defs.move_speed + 2
 		anim_runjump_timer = 120
 	
+	audio_play_sound(sfx_pop_0, 10, false);
+	
 	state.change(state_free);
 	
 }
@@ -498,6 +500,8 @@ jumpbounce = function(_dir){
 	
 	event.call("jump")
 	event.call("jumpbounce")
+	
+	audio_play_sound(sfx_pop_2, 10, false);
 	
 	state.change(state_free);
 	
@@ -569,6 +573,8 @@ jumpdash = function(){
 	event.call("jump")
 	event.call("jumpdash")
 	
+	audio_play_sound(sfx_pop_2, 10, false);
+	
 	state.change(state_free);
 	
 }
@@ -630,6 +636,8 @@ walljump = function(_dir){
 	ledge_keybuffer = dir
 	
 	event.call("jump")
+	
+	audio_play_sound(sfx_pop_0, 10, false);
 	
 	state.change(state_free);
 	
@@ -771,7 +779,8 @@ state_base = state.add()
 				swim_dir = point_direction(0, 0, x_vel, -y_vel);
 			}
 		} else {
-			if y_vel > 1.5 {
+			if y_vel > 1 {
+				audio_play_sound(sfx_pop_1, 10, false);
 				scale_x = 1.2;
 				scale_y = 0.8;
 			}
@@ -1281,6 +1290,8 @@ state_dashset = state_base.add()
 		
 		return;
 	}
+	
+	audio_play_sound(sfx_dash, 10, false);
 	
 	state.change(state_dash);
 })

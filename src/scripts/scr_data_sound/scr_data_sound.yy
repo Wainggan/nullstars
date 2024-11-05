@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_data_sound",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_data_sound",
+  "parent":{
+    "name":"game",
+    "path":"folders/game.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
