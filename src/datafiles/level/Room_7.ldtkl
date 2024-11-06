@@ -11,7 +11,7 @@
 	"identifier": "Room_7",
 	"iid": "b494a060-8990-11ee-9c14-bbb1da13c235",
 	"uid": 162,
-	"worldX": 1824,
+	"worldX": 2624,
 	"worldY": 32,
 	"worldDepth": 0,
 	"pxWid": 3440,
@@ -144,7 +144,7 @@
 						{ "__identifier": "unlock_y", "__type": "Bool", "__value": true, "__tile": null, "defUid": 60, "realEditorValues": [] },
 						{ "__identifier": "priority", "__type": "Int", "__value": 0, "__tile": null, "defUid": 477, "realEditorValues": [] }
 					],
-					"__worldX": 2016,
+					"__worldX": 2816,
 					"__worldY": 192
 				}
 			]
@@ -192,7 +192,7 @@
 						}] },
 						{ "__identifier": "waypoint", "__type": "Bool", "__value": true, "__tile": null, "defUid": 527, "realEditorValues": [] }
 					],
-					"__worldX": 2464,
+					"__worldX": 3264,
 					"__worldY": 528
 				},
 				{
@@ -211,7 +211,7 @@
 						"id": "V_String",
 						"params": ["omega\\ncount how many sand is in this desert\\nOKAY\\nONE. TWO. THREE. FOUR"]
 					}] }],
-					"__worldX": 2192,
+					"__worldX": 2992,
 					"__worldY": 416
 				}
 			]
@@ -7755,5 +7755,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [ { "levelIid": "047ae310-6280-11ee-8cd9-8bbfdf81ad3c", "dir": "w" }, { "levelIid": "9bf7e840-8990-11ee-8561-83979119a4de", "dir": "e" } ]
+	"__neighbours": [{ "levelIid": "9bf7e840-8990-11ee-8561-83979119a4de", "dir": "e" }]
 }

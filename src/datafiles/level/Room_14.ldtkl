@@ -11,7 +11,7 @@
 	"identifier": "Room_14",
 	"iid": "9bf7e840-8990-11ee-8561-83979119a4de",
 	"uid": 446,
-	"worldX": 5264,
+	"worldX": 6064,
 	"worldY": 32,
 	"worldDepth": 0,
 	"pxWid": 5440,
@@ -126,7 +126,7 @@
 					"defUid": 198,
 					"px": [592,80],
 					"fieldInstances": [],
-					"__worldX": 5856,
+					"__worldX": 6656,
 					"__worldY": 112
 				}
 			]

@@ -69,7 +69,7 @@
 					"levelIid": "b494a060-8990-11ee-9c14-bbb1da13c235",
 					"layerIid": "b494a063-8990-11ee-9c14-99d2e1607975",
 					"entityIid": "c86b71c0-8990-11ee-a77a-79fcbbb3bf02"
-				}, "worldX": 2464, "worldY": 528, "widPx": 32, "heiPx": 32, "fields": { "index": "temp-1", "waypoint": true } },
+				}, "worldX": 3264, "worldY": 528, "widPx": 32, "heiPx": 32, "fields": { "index": "temp-1", "waypoint": true } },
 				{ "iids": {
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
 					"levelIid": "08c763b0-8990-11ee-9c14-51153f4d579a",
@@ -12409,7 +12409,7 @@
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelIid": "d41a90d0-6280-11ee-8cd9-f503b67e224f", "dir": "s" }, { "levelIid": "b494a060-8990-11ee-9c14-bbb1da13c235", "dir": "e" } ]
+			"__neighbours": [{ "levelIid": "d41a90d0-6280-11ee-8cd9-f503b67e224f", "dir": "s" }]
 		},
 		{
 			"identifier": "Room_1",
@@ -12643,7 +12643,7 @@
 			"identifier": "Room_7",
 			"iid": "b494a060-8990-11ee-9c14-bbb1da13c235",
 			"uid": 162,
-			"worldX": 1824,
+			"worldX": 2624,
 			"worldY": 32,
 			"worldDepth": 0,
 			"pxWid": 3440,
@@ -12674,7 +12674,7 @@
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": [ { "levelIid": "047ae310-6280-11ee-8cd9-8bbfdf81ad3c", "dir": "w" }, { "levelIid": "9bf7e840-8990-11ee-8561-83979119a4de", "dir": "e" } ]
+			"__neighbours": [{ "levelIid": "9bf7e840-8990-11ee-8561-83979119a4de", "dir": "e" }]
 		},
 		{
 			"identifier": "Room_8",
@@ -12923,7 +12923,7 @@
 			"identifier": "Room_14",
 			"iid": "9bf7e840-8990-11ee-8561-83979119a4de",
 			"uid": 446,
-			"worldX": 5264,
+			"worldX": 6064,
 			"worldY": 32,
 			"worldDepth": 0,
 			"pxWid": 5440,
@@ -12957,7 +12957,7 @@
 			"identifier": "Room_15",
 			"iid": "23ea9ea0-8990-11ee-8561-55ae953908c0",
 			"uid": 447,
-			"worldX": 10704,
+			"worldX": 11504,
 			"worldY": 32,
 			"worldDepth": 0,
 			"pxWid": 7760,

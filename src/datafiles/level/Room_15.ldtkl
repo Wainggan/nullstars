@@ -11,7 +11,7 @@
 	"identifier": "Room_15",
 	"iid": "23ea9ea0-8990-11ee-8561-55ae953908c0",
 	"uid": 447,
-	"worldX": 10704,
+	"worldX": 11504,
 	"worldY": 32,
 	"worldDepth": 0,
 	"pxWid": 7760,
@@ -112,7 +112,7 @@
 						{ "__identifier": "unlock_y", "__type": "Bool", "__value": true, "__tile": null, "defUid": 60, "realEditorValues": [] },
 						{ "__identifier": "priority", "__type": "Int", "__value": 0, "__tile": null, "defUid": 477, "realEditorValues": [] }
 					],
-					"__worldX": 16544,
+					"__worldX": 17344,
 					"__worldY": 48
 				}
 			]

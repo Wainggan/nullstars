@@ -118,24 +118,7 @@
 			"seed": 9446800,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
-			"entityInstances": [
-				{
-					"__identifier": "obj_water",
-					"__grid": [2,0],
-					"__pivot": [0,0],
-					"__tags": [ "SIZE_TILE", "water" ],
-					"__tile": null,
-					"__smartColor": "#50FAFF",
-					"iid": "7eb24da0-73f0-11ef-bdce-c3c69cd665df",
-					"width": 1312,
-					"height": 1024,
-					"defUid": 198,
-					"px": [32,0],
-					"fieldInstances": [],
-					"__worldX": 12592,
-					"__worldY": 9568
-				}
-			]
+			"entityInstances": []
 		},
 		{
 			"__identifier": "Spikes",
@@ -1435,7 +1418,24 @@
 			"seed": 7350192,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
-			"entityInstances": []
+			"entityInstances": [
+				{
+					"__identifier": "obj_spike_pond",
+					"__grid": [2,0],
+					"__pivot": [0,0],
+					"__tags": [ "spike", "SIZE_TILE" ],
+					"__tile": null,
+					"__smartColor": "#85FF6A",
+					"iid": "300896a0-9b00-11ef-ae8e-85d92651e645",
+					"width": 1248,
+					"height": 944,
+					"defUid": 560,
+					"px": [32,0],
+					"fieldInstances": [],
+					"__worldX": 12592,
+					"__worldY": 9568
+				}
+			]
 		},
 		{
 			"__identifier": "DecorUnder",

@@ -121,7 +121,7 @@
 			"entityInstances": [
 				{
 					"__identifier": "obj_lift_activate",
-					"__grid": [23,42],
+					"__grid": [23,40],
 					"__pivot": [0,0],
 					"__tags": [ "object", "SIZE_TILE", "trigger", "glue_parent", "lift" ],
 					"__tile": null,
@@ -130,7 +130,7 @@
 					"width": 96,
 					"height": 32,
 					"defUid": 16,
-					"px": [368,672],
+					"px": [368,640],
 					"fieldInstances": [
 						{ "__identifier": "target", "__type": "Point", "__value": { "cx": 23, "cy": 32 }, "__tile": null, "defUid": 17, "realEditorValues": [{
 							"id": "V_String",
@@ -140,7 +140,7 @@
 						{ "__identifier": "reliant", "__type": "Bool", "__value": false, "__tile": null, "defUid": 203, "realEditorValues": [] }
 					],
 					"__worldX": 15920,
-					"__worldY": 9584
+					"__worldY": 9552
 				},
 				{
 					"__identifier": "obj_lift_activate",
