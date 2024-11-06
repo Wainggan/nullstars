@@ -11,7 +11,7 @@
 	"iid": "d5a16520-6280-11ee-ba61-ad454e9d2411",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 590,
+	"nextUid": 592,
 	"identifierStyle": "Free",
 	"toc": [
 		{
@@ -12038,6 +12038,7 @@
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
 		{ "identifier": "Level_Music", "uid": 150, "values": [
 			{ "id": "none", "tileRect": null, "color": 12470831 },
+			{ "id": "null", "tileRect": null, "color": 4073265 },
 			{ "id": "wind", "tileRect": null, "color": 14120515 },
 			{ "id": "stars", "tileRect": null, "color": 15389866 },
 			{ "id": "lava", "tileRect": null, "color": 14984818 },
@@ -12067,7 +12068,18 @@
 			{ "id": "bump_yellow", "tileRect": null, "color": 16777215 },
 			{ "id": "vaporwave", "tileRect": null, "color": 12635100 }
 		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
-		{ "identifier": "Level_Preset", "uid": 505, "values": [ { "id": "area_0_1", "tileRect": null, "color": 12470831 }, { "id": "area_0_2", "tileRect": null, "color": 14120515 } ], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
+		{ "identifier": "Level_Area", "uid": 590, "values": [
+			{ "id": "hub", "tileRect": null, "color": 14120515 },
+			{ "id": "area0", "tileRect": null, "color": 12470831 },
+			{ "id": "area1", "tileRect": null, "color": 15389866 }
+		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
+		{ "identifier": "Level_Preset", "uid": 505, "values": [
+			{ "id": "area0_1", "tileRect": null, "color": 12470831 },
+			{ "id": "area0_2", "tileRect": null, "color": 14120515 },
+			{ "id": "area1_1", "tileRect": null, "color": 15389866 },
+			{ "id": "area1_2", "tileRect": null, "color": 14984818 },
+			{ "id": "hub_0", "tileRect": null, "color": 7552569 }
+		], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
 		{ "identifier": "Level_Flags", "uid": 450, "values": [{ "id": "hub", "tileRect": null, "color": 12470831 }], "iconTilesetUid": null, "externalRelPath": null, "externalFileChecksum": null, "tags": [] },
 		{ "identifier": "Control", "uid": 191, "values": [
 			{ "id": "left", "tileRect": null, "color": 12470831 },
@@ -12127,7 +12139,44 @@
 			"editorCutLongValues": true,
 			"editorTextSuffix": null,
 			"editorTextPrefix": null,
-			"useForSmartColor": false,
+			"useForSmartColor": true,
+			"exportToToc": false,
+			"searchable": false,
+			"min": null,
+			"max": null,
+			"regex": null,
+			"acceptFileTypes": null,
+			"defaultOverride": null,
+			"textLanguageMode": null,
+			"symmetricalRef": false,
+			"autoChainRef": true,
+			"allowOutOfLevelRef": true,
+			"allowedRefs": "OnlySame",
+			"allowedRefsEntityUid": null,
+			"allowedRefTags": [],
+			"tilesetUid": null
+		},
+		{
+			"identifier": "area",
+			"doc": null,
+			"__type": "LocalEnum.Level_Area",
+			"uid": 591,
+			"type": "F_Enum(590)",
+			"isArray": false,
+			"canBeNull": true,
+			"arrayMinLength": null,
+			"arrayMaxLength": null,
+			"editorDisplayMode": "Hidden",
+			"editorDisplayScale": 1,
+			"editorDisplayPos": "Above",
+			"editorLinkStyle": "StraightArrow",
+			"editorDisplayColor": null,
+			"editorAlwaysShow": false,
+			"editorShowInWorld": true,
+			"editorCutLongValues": true,
+			"editorTextSuffix": null,
+			"editorTextPrefix": null,
+			"useForSmartColor": true,
 			"exportToToc": false,
 			"searchable": false,
 			"min": null,
@@ -12151,7 +12200,7 @@
 			"uid": 152,
 			"type": "F_Enum(149)",
 			"isArray": false,
-			"canBeNull": false,
+			"canBeNull": true,
 			"arrayMinLength": null,
 			"arrayMaxLength": null,
 			"editorDisplayMode": "Hidden",
@@ -12171,10 +12220,7 @@
 			"max": null,
 			"regex": null,
 			"acceptFileTypes": null,
-			"defaultOverride": {
-				"id": "V_String",
-				"params": ["none"]
-			},
+			"defaultOverride": null,
 			"textLanguageMode": null,
 			"symmetricalRef": false,
 			"autoChainRef": true,
@@ -12228,7 +12274,7 @@
 			"uid": 154,
 			"type": "F_Enum(151)",
 			"isArray": false,
-			"canBeNull": false,
+			"canBeNull": true,
 			"arrayMinLength": null,
 			"arrayMaxLength": null,
 			"editorDisplayMode": "Hidden",
@@ -12248,10 +12294,7 @@
 			"max": null,
 			"regex": null,
 			"acceptFileTypes": null,
-			"defaultOverride": {
-				"id": "V_String",
-				"params": ["none"]
-			},
+			"defaultOverride": null,
 			"textLanguageMode": null,
 			"symmetricalRef": false,
 			"autoChainRef": true,
@@ -12268,7 +12311,7 @@
 			"uid": 504,
 			"type": "F_Enum(503)",
 			"isArray": false,
-			"canBeNull": false,
+			"canBeNull": true,
 			"arrayMinLength": null,
 			"arrayMaxLength": null,
 			"editorDisplayMode": "Hidden",
@@ -12288,10 +12331,7 @@
 			"max": null,
 			"regex": null,
 			"acceptFileTypes": null,
-			"defaultOverride": {
-				"id": "V_String",
-				"params": ["base"]
-			},
+			"defaultOverride": null,
 			"textLanguageMode": null,
 			"symmetricalRef": false,
 			"autoChainRef": true,
@@ -12308,7 +12348,7 @@
 			"uid": 502,
 			"type": "F_Float",
 			"isArray": false,
-			"canBeNull": false,
+			"canBeNull": true,
 			"arrayMinLength": null,
 			"arrayMaxLength": null,
 			"editorDisplayMode": "Hidden",
@@ -12328,7 +12368,7 @@
 			"max": 1,
 			"regex": null,
 			"acceptFileTypes": null,
-			"defaultOverride": { "id": "V_Float", "params": [1] },
+			"defaultOverride": null,
 			"textLanguageMode": null,
 			"symmetricalRef": false,
 			"autoChainRef": true,
@@ -12398,6 +12438,7 @@
 			"externalRelPath": "level/Room_0.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["glow"]
@@ -12410,8 +12451,8 @@
 					"id": "V_String",
 					"params": ["rain"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [null] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [null] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12433,11 +12474,15 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#DB9B8D",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_1.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [null] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": "area0", "__tile": null, "defUid": 591, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["area0"]
+				}] },
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["glow"]
@@ -12450,8 +12495,8 @@
 					"id": "V_String",
 					"params": ["rain"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [null] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [null] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12478,6 +12523,7 @@
 			"externalRelPath": "level/Room_2.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["none"]
@@ -12490,8 +12536,8 @@
 					"id": "V_String",
 					"params": ["rain"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12513,22 +12559,23 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#DB9B8D",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_3.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_1", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["glow"]
+					"params": ["area0_1"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [null] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "null", "__tile": null, "defUid": 153, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["dust"]
+					"params": ["null"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12555,11 +12602,12 @@
 			"externalRelPath": "level/Room_4.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12581,25 +12629,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#DB9B8D",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_5.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_1", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["glow"]
+					"params": ["area0_1"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12621,25 +12664,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#DB9B8D",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_6.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_1", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["glow"]
+					"params": ["area0_1"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12666,6 +12704,7 @@
 			"externalRelPath": "level/Room_7.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "soup", "__tile": null, "defUid": 152, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["soup"]
@@ -12675,8 +12714,8 @@
 					"id": "V_String",
 					"params": ["smoke"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12698,25 +12737,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#DB9B8D",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_8.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_1", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["glow"]
+					"params": ["area0_1"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12738,25 +12772,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#DB9B8D",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_9.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_1", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["glow"]
+					"params": ["area0_1"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [null] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [null] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [null] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [null] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12778,19 +12807,17 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#DB9B8D",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_10.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_1", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["glow"]
+					"params": ["area0_1"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [null] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "star", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["star"]
@@ -12826,6 +12853,7 @@
 			"externalRelPath": "level/Room_11.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["glow"]
@@ -12838,8 +12866,8 @@
 					"id": "V_String",
 					"params": ["dust"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12861,25 +12889,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_12.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12901,25 +12924,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_13.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12946,14 +12964,15 @@
 			"externalRelPath": "level/Room_14.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "blackhole", "__tile": null, "defUid": 152, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["blackhole"]
 				}] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -12980,6 +12999,7 @@
 			"externalRelPath": "level/Room_15.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
 				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "boxes", "__tile": null, "defUid": 152, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["boxes"]
@@ -12989,8 +13009,8 @@
 					"id": "V_String",
 					"params": ["dust"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13012,25 +13032,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_16.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13058,25 +13073,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_17.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13098,25 +13108,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_18.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13138,25 +13143,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_19.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13178,25 +13178,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_20.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13218,25 +13213,23 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_21.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["rain"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13265,25 +13258,23 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_22.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["rain"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13305,25 +13296,23 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_23.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["rain"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13345,22 +13334,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_24.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13382,25 +13369,23 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_25.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["rain"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13427,11 +13412,12 @@
 			"externalRelPath": "level/Room_26.ldtkl",
 			"fieldInstances": [
 				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13453,25 +13439,23 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_27.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["rain"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13493,25 +13477,23 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_28.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
 				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
 					"id": "V_String",
 					"params": ["rain"]
 				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13533,25 +13515,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#E9B498",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_29.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "clouds", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["clouds"]
+					"params": ["area0_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["stars"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13573,26 +13550,21 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#B29592",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_30.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "judge", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "hub_0", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["judge"]
+					"params": ["hub_0"]
 				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "smoke", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["smoke"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
-				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": ["hub"], "__tile": null, "defUid": 451, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["hub"]
-				}] }
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [
@@ -13619,26 +13591,21 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#B29592",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_31.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "judge", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "hub_0", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["judge"]
+					"params": ["hub_0"]
 				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "smoke", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["smoke"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
-				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": ["hub"], "__tile": null, "defUid": 451, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["hub"]
-				}] }
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelIid": "da5e5060-73f0-11ef-88f4-152a45cfbddc", "dir": "n" }]
@@ -13659,26 +13626,21 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#B29592",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_32.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "judge", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "hub_0", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["judge"]
+					"params": ["hub_0"]
 				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "smoke", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["smoke"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
-				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": ["hub"], "__tile": null, "defUid": 451, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["hub"]
-				}] }
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelIid": "da5e5060-73f0-11ef-88f4-152a45cfbddc", "dir": "w" }, { "levelIid": "f7c6ebb0-73f0-11ef-8c46-e98dffaa599c", "dir": "e" } ]
@@ -13699,16 +13661,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#B29592",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_33.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "hub_0", "__tile": null, "defUid": 506, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["hub_0"]
+				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13730,16 +13696,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#B29592",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_34.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "hub_0", "__tile": null, "defUid": 506, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["hub_0"]
+				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13761,26 +13731,21 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#B29592",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_35.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "judge", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "hub_0", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["judge"]
+					"params": ["hub_0"]
 				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
-				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": ["hub"], "__tile": null, "defUid": 451, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["hub"]
-				}] }
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
 			"__neighbours": [ { "levelIid": "d2a74a10-73f0-11ef-bdce-211a60c233a3", "dir": "w" }, { "levelIid": "32eef9e0-73f0-11ef-8c46-53bca54c3a11", "dir": "e" } ]
@@ -13801,25 +13766,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F3E7D0",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_36.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "city", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_1", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["city"]
+					"params": ["area1_1"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "story", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["story"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["rain"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13841,25 +13801,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F3E7D0",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_37.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "city", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_1", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["city"]
+					"params": ["area1_1"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "story", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["story"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "rain", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["rain"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [null] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [null] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13881,25 +13836,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F0CEB1",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_38.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "boxes", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["boxes"]
+					"params": ["area1_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "story", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["story"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13921,25 +13871,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F0CEB1",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_39.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "boxes", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["boxes"]
+					"params": ["area1_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "story", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["story"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -13961,25 +13906,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F0CEB1",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_40.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "boxes", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["boxes"]
+					"params": ["area1_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "story", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["story"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -14001,25 +13941,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F0CEB1",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_41.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "boxes", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["boxes"]
+					"params": ["area1_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "story", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["story"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -14041,25 +13976,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F0CEB1",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_42.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "boxes", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["boxes"]
+					"params": ["area1_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "story", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["story"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -14081,25 +14011,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F0CEB1",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_43.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "boxes", "__tile": null, "defUid": 152, "realEditorValues": [{
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
 					"id": "V_String",
-					"params": ["boxes"]
+					"params": ["area1_2"]
 				}] },
-				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "story", "__tile": null, "defUid": 153, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["story"]
-				}] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-					"id": "V_String",
-					"params": ["dust"]
-				}] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -14121,16 +14046,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F0CEB1",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_44.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["area1_2"]
+				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -14152,16 +14081,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F0CEB1",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_45.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["area1_2"]
+				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -14183,16 +14116,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F0CEB1",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_46.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["area1_2"]
+				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
@@ -14214,16 +14151,20 @@
 			"bgPos": null,
 			"bgPivotX": 0.5,
 			"bgPivotY": 0.5,
-			"__smartColor": "#8C8A8D",
+			"__smartColor": "#F0CEB1",
 			"__bgPos": null,
 			"externalRelPath": "level/Room_47.ldtkl",
 			"fieldInstances": [
-				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
+					"id": "V_String",
+					"params": ["area1_2"]
+				}] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [] },
 				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
-				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-				{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,

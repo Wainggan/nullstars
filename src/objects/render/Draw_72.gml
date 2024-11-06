@@ -20,7 +20,7 @@ if !surface_exists(surf_background)
 // only draw a backround if there is one on screen
 if array_length(_lvl_onscreen) > 0 {
 	
-	var _first = _lvl_onscreen[0].fields.background;
+	var _first = game_level_grab_data(_lvl_onscreen[0]).background;
 	
 	// mask layer
 	surface_set_target(surf_ping);
@@ -40,11 +40,12 @@ if array_length(_lvl_onscreen) > 0 {
 	
 	for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 		var _lvl = _lvl_onscreen[i];
+		var _this = game_level_grab_data(_lvl).background;
 		
-		if _lvl.fields.background != _first {
+		if _this != _first {
 			
 			if _second == undefined {
-				_second = _lvl.fields.background;
+				_second = _this;
 			}
 			
 			// mask

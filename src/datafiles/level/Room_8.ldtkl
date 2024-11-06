@@ -23,25 +23,20 @@
 	"bgPos": null,
 	"bgPivotX": 0.5,
 	"bgPivotY": 0.5,
-	"__smartColor": "#8C8A8D",
+	"__smartColor": "#DB9B8D",
 	"__bgPos": null,
 	"externalRelPath": null,
 	"fieldInstances": [
-		{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-		{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "glow", "__tile": null, "defUid": 152, "realEditorValues": [{
+		{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area0_1", "__tile": null, "defUid": 506, "realEditorValues": [{
 			"id": "V_String",
-			"params": ["glow"]
+			"params": ["area0_1"]
 		}] },
-		{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": "stars", "__tile": null, "defUid": 153, "realEditorValues": [{
-			"id": "V_String",
-			"params": ["stars"]
-		}] },
-		{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "dust", "__tile": null, "defUid": 154, "realEditorValues": [{
-			"id": "V_String",
-			"params": ["dust"]
-		}] },
-		{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-		{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+		{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+		{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [null] },
+		{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [null] },
+		{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [null] },
+		{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+		{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 		{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 	],
 	"layerInstances": [

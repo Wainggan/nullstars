@@ -556,9 +556,13 @@ function game_level_onscreen() {
 
 function game_level_get_data(_x, _y) {
 	var _lvl = game_level_get(_x, _y);
+	return game_level_grab_data(_lvl);
+}
+
+function game_level_grab_data(_lvl) {
 	
 	static __return = {
-		preset: undefined,
+		area: undefined,
 		biome: undefined,
 		background: undefined,
 		music: undefined,
@@ -569,20 +573,73 @@ function game_level_get_data(_x, _y) {
 	
 	if !_lvl return __return;
 	
-	__return.preset = _lvl.fields.preset;
-	__return.biome = _lvl.fields.biome;
-	__return.background = _lvl.fields.background;
-	__return.music = _lvl.fields.music == pointer_null ? undefined : _lvl.fields.music;
-	__return.lut_grade = _lvl.fields.lut_grade;
-	__return.lut_mix = _lvl.fields.lut_mix;
-	__return.flags = _lvl.fields.flags;
+	__return.biome = "none";
+	__return.background = "none";
+	__return.music = undefined;
+	__return.lut_grade = "base";
+	__return.lut_mix = 1;
+	static __empty = [];
+	array_delete(__empty, 0, array_length(__empty));
+	__return.flags = __empty;
+	
+	// oh no
+	switch _lvl.fields.preset {
+		case "hub_0":
+			__return.area = "hub";
+			__return.background = "judge";
+			__return.biome = "smoke";
+			break;
+		
+		case "area0_1":
+			__return.area = "area0";
+			__return.background = "glow";
+			__return.music = "stars";
+			__return.biome = "dust";
+			break;
+		case "area0_2":
+			__return.area = "area0";
+			__return.background = "clouds";
+			__return.music = "stars";
+			__return.biome = "dust";
+			break;
+			
+		case "area1_1":
+			__return.area = "area1";
+			__return.background = "city";
+			__return.music = "story";
+			__return.biome = "rain";
+			break;
+		case "area1_2":
+			__return.area = "area1";
+			__return.background = "boxes";
+			__return.music = "story";
+			__return.biome = "dust";
+			break;
+	}
+	
+	// this feels like a terrible idea
+	__return.biome =
+		_lvl.fields.biome != undefined
+		? _lvl.fields.biome : __return.biome;
+	__return.background =
+		_lvl.fields.background != undefined
+		? _lvl.fields.background : __return.background;
+	__return.music =
+		(_lvl.fields.music != undefined && _lvl.fields.music != "null")
+		? _lvl.fields.music : __return.music;
+	__return.lut_grade =
+		_lvl.fields.lut_grade != undefined
+		? _lvl.fields.lut_grade : __return.lut_grade;
+	__return.lut_mix =
+		_lvl.fields.lut_mix != undefined
+		? _lvl.fields.lut_mix : __return.lut_mix;
+	for (var i = 0; i < array_length(_lvl.fields.flags); i++) {
+		array_push(__return.flags, _lvl.fields.flags[i]);
+	}
 	
 	return __return;
 }
 
-function game_level_get_preset(_x, _y) {
-	return game_level_get_data(_x, _y).preset;
-}
 function game_level_get_biome(_x, _y) {
 	return game_level_get_data(_x, _y).biome;
 }

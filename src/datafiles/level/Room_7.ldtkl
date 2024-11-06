@@ -28,6 +28,7 @@
 	"externalRelPath": null,
 	"fieldInstances": [
 		{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
+		{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
 		{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "soup", "__tile": null, "defUid": 152, "realEditorValues": [{
 			"id": "V_String",
 			"params": ["soup"]
@@ -37,8 +38,8 @@
 			"id": "V_String",
 			"params": ["smoke"]
 		}] },
-		{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-		{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+		{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+		{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 		{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 	],
 	"layerInstances": [
@@ -213,6 +214,54 @@
 					}] }],
 					"__worldX": 2992,
 					"__worldY": 416
+				},
+				{
+					"__identifier": "obj_water",
+					"__grid": [52,10],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "water" ],
+					"__tile": null,
+					"__smartColor": "#50FAFF",
+					"iid": "32028b10-9b00-11ef-ae8e-c392b5b271c0",
+					"width": 320,
+					"height": 240,
+					"defUid": 198,
+					"px": [832,160],
+					"fieldInstances": [],
+					"__worldX": 3456,
+					"__worldY": 192
+				},
+				{
+					"__identifier": "obj_water",
+					"__grid": [69,4],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "water" ],
+					"__tile": null,
+					"__smartColor": "#50FAFF",
+					"iid": "35d53df0-9b00-11ef-ae8e-dfed9372095f",
+					"width": 192,
+					"height": 128,
+					"defUid": 198,
+					"px": [1104,64],
+					"fieldInstances": [],
+					"__worldX": 3728,
+					"__worldY": 96
+				},
+				{
+					"__identifier": "obj_water",
+					"__grid": [79,8],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "water" ],
+					"__tile": null,
+					"__smartColor": "#50FAFF",
+					"iid": "39aa88e0-9b00-11ef-ae8e-b32df1da325a",
+					"width": 352,
+					"height": 144,
+					"defUid": 198,
+					"px": [1264,128],
+					"fieldInstances": [],
+					"__worldX": 3888,
+					"__worldY": 160
 				}
 			]
 		},
