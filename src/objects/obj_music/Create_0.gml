@@ -6,8 +6,6 @@ bgm_asset_next = -1;
 
 bgm_old = {};
 
-play = false;
-
 state = new State();
 
 state_base = state.add()
@@ -33,8 +31,6 @@ state_base = state.add()
 			// _bgm_name = global.data_music[$ _asset].name;
 			break;
 	}
-	if keyboard_check_pressed(ord("T")) play = !play
-	if !play _bgm_asset = -1;
 	
 	if state.is(state_idle) {
 		if _bgm_asset != bgm_asset {
