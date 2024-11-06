@@ -7,7 +7,7 @@ function game_player_kill() {
 		game_render_particle(_x, _y - 16, ps_player_death_1);
 	}));
 	
-	audio_play_sound(sfx_death, 20, false);
+	game_sound_play(sfx_death);
 	game_set_pause(14);
 	game_camera_set_shake(6, 0.4);
 	

@@ -22,9 +22,6 @@ update = function(_anim = true) {
 
 	if instance_exists(target) {
 		target.cam()
-	} else {
-		target_x += (keyboard_check(ord("D")) - keyboard_check(ord("A"))) * 16
-		target_y += (keyboard_check(ord("S")) - keyboard_check(ord("W"))) * 16
 	}
 
 	var _tx = target_x, _ty = target_y;
