@@ -34,7 +34,7 @@ void main() {
 	vec2 uv = v_coord;
 	vec2 center = vec2(0.5, 0.5);
     
-	vec2 place = (uv / u_texel / 128.0 - u_off) * (sin(u_time * 0.8) * 0.5 + 0.5 + 3.0);
+	vec2 place = (uv / u_texel / 64.0 - u_off);
 	place += vec2(sin(u_time * 0.735), sin(u_time * 0.777));
     
 	float point = noise(place);
