@@ -23,16 +23,20 @@
 	"bgPos": null,
 	"bgPivotX": 0.5,
 	"bgPivotY": 0.5,
-	"__smartColor": "#8C8A8D",
+	"__smartColor": "#F0CEB1",
 	"__bgPos": null,
 	"externalRelPath": null,
 	"fieldInstances": [
-		{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
-		{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": "none", "__tile": null, "defUid": 152, "realEditorValues": [] },
+		{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": "area1_2", "__tile": null, "defUid": 506, "realEditorValues": [{
+			"id": "V_String",
+			"params": ["area1_2"]
+		}] },
+		{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+		{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [] },
 		{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
-		{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": "none", "__tile": null, "defUid": 154, "realEditorValues": [] },
-		{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": "base", "__tile": null, "defUid": 504, "realEditorValues": [] },
-		{ "__identifier": "lut_mix", "__type": "Float", "__value": 1, "__tile": null, "defUid": 502, "realEditorValues": [] },
+		{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+		{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+		{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
 		{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 	],
 	"layerInstances": [
@@ -125,6 +129,38 @@
 					"fieldInstances": [],
 					"__worldX": 26784,
 					"__worldY": 8656
+				},
+				{
+					"__identifier": "obj_water",
+					"__grid": [14,28],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "water" ],
+					"__tile": null,
+					"__smartColor": "#50FAFF",
+					"iid": "b85c8bf0-9b00-11ef-ae8e-371ae9f03792",
+					"width": 384,
+					"height": 96,
+					"defUid": 198,
+					"px": [224,448],
+					"fieldInstances": [],
+					"__worldX": 26256,
+					"__worldY": 8656
+				},
+				{
+					"__identifier": "obj_water",
+					"__grid": [41,15],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "water" ],
+					"__tile": null,
+					"__smartColor": "#50FAFF",
+					"iid": "ba419fa0-9b00-11ef-ae8e-2d8d525ed791",
+					"width": 224,
+					"height": 160,
+					"defUid": 198,
+					"px": [656,240],
+					"fieldInstances": [],
+					"__worldX": 26688,
+					"__worldY": 8448
 				}
 			]
 		},
