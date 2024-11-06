@@ -184,17 +184,11 @@ surface_set_target(surf_ping)
 
 if global.config.graphics_up_bubble_outline {
 
-	shader_set(shd_outline)
-
-	var _u_kernel = shader_get_uniform(shd_outline, "u_kernel")
-	var _u_texel = shader_get_uniform(shd_outline, "u_texel")
-
-	shader_set_uniform_f(_u_kernel, 2);
+	shader_set(shd_outline);
+	var _u_texel = shader_get_uniform(shd_outline, "u_texel");
 	shader_set_uniform_f(_u_texel, 1 / _cam_w, 1 / _cam_h);
-
-	draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, _col, 1);
-
-	shader_reset()
+		draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, _col, 1);
+	shader_reset();
 
 } else {
 	
