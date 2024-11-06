@@ -127,9 +127,10 @@ update = function(_anim = true) {
 		x_sod.set_value(x);
 		y_sod.set_value(y);
 	}
-
-	var _shake_x = irandom_range(-shake_time, shake_time);
-	var _shake_y = irandom_range(-shake_time, shake_time);
+	
+	var _shake_dir = irandom_range(0, 360);
+	var _shake_x = round(lengthdir_x(shake_time, _shake_dir));
+	var _shake_y = round(lengthdir_y(shake_time, _shake_dir));
 	switch global.settings.graphic.screenshake {
 		case 0:
 			_shake_x = 0;

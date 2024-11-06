@@ -5,11 +5,13 @@ function game_player_kill() {
 	game_render_particle(_x, _y - 16, ps_player_death_0);
 	global.game.schedule.add_wait(2, method({ _x, _y }, function(){
 		game_render_particle(_x, _y - 16, ps_player_death_1);
+		game_camera_set_shake(8, 1);
+		game_set_pause(1);
 	}));
 	
 	game_sound_play(sfx_death);
 	game_set_pause(14);
-	game_camera_set_shake(6, 0.4);
+	game_camera_set_shake(4, 0.8);
 	
 	global.onoff = 1;
 	
