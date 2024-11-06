@@ -341,7 +341,12 @@ shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);
 	draw_surface_ext(surf_water, 0, 0, 1, 1, 0, #99bbff, 0.9);
 shader_reset();
 
+camera_apply(view_camera[0]);
 part_system_drawit(particles_layer);
+
+// camera_apply() bullshit
+surface_reset_target();
+surface_set_target(surf_layer_2);
 
 draw_surface(surf_mask, 0, 0);
 

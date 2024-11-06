@@ -197,6 +197,38 @@
 					],
 					"__worldX": 15712,
 					"__worldY": 9456
+				},
+				{
+					"__identifier": "obj_decor_dripping",
+					"__grid": [10,24],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "decor" ],
+					"__tile": null,
+					"__smartColor": "#F77622",
+					"iid": "e3aff6a0-9b00-11ef-ae8e-399509716c29",
+					"width": 32,
+					"height": 16,
+					"defUid": 594,
+					"px": [160,384],
+					"fieldInstances": [],
+					"__worldX": 15712,
+					"__worldY": 9296
+				},
+				{
+					"__identifier": "obj_decor_dripping",
+					"__grid": [16,4],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "decor" ],
+					"__tile": null,
+					"__smartColor": "#F77622",
+					"iid": "e76c6260-9b00-11ef-ae8e-0724bc234c3b",
+					"width": 48,
+					"height": 16,
+					"defUid": 594,
+					"px": [256,64],
+					"fieldInstances": [],
+					"__worldX": 15808,
+					"__worldY": 8976
 				}
 			]
 		},

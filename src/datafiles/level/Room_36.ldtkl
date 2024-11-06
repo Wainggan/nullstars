@@ -323,6 +323,38 @@
 					],
 					"__worldX": 17456,
 					"__worldY": 8304
+				},
+				{
+					"__identifier": "obj_decor_dripping",
+					"__grid": [3,75],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "decor" ],
+					"__tile": null,
+					"__smartColor": "#F77622",
+					"iid": "e975ee00-9b00-11ef-ae8e-f9218bfeb31b",
+					"width": 96,
+					"height": 16,
+					"defUid": 594,
+					"px": [48,1200],
+					"fieldInstances": [],
+					"__worldX": 16240,
+					"__worldY": 8944
+				},
+				{
+					"__identifier": "obj_decor_dripping",
+					"__grid": [12,75],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "decor" ],
+					"__tile": null,
+					"__smartColor": "#F77622",
+					"iid": "ea002ca0-9b00-11ef-ae8e-e39a7caae114",
+					"width": 48,
+					"height": 16,
+					"defUid": 594,
+					"px": [192,1200],
+					"fieldInstances": [],
+					"__worldX": 16384,
+					"__worldY": 8944
 				}
 			]
 		},

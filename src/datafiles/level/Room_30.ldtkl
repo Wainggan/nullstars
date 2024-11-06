@@ -222,6 +222,38 @@
 					"fieldInstances": [],
 					"__worldX": 12928,
 					"__worldY": 9024
+				},
+				{
+					"__identifier": "obj_decor_dripping",
+					"__grid": [13,38],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "decor" ],
+					"__tile": null,
+					"__smartColor": "#F77622",
+					"iid": "cf8b1a60-9b00-11ef-ae8e-8348fd17bb80",
+					"width": 48,
+					"height": 16,
+					"defUid": 594,
+					"px": [208,608],
+					"fieldInstances": [],
+					"__worldX": 12976,
+					"__worldY": 9104
+				},
+				{
+					"__identifier": "obj_decor_dripping",
+					"__grid": [11,37],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "decor" ],
+					"__tile": null,
+					"__smartColor": "#F77622",
+					"iid": "d0c59630-9b00-11ef-ae8e-9da8234a6982",
+					"width": 16,
+					"height": 16,
+					"defUid": 594,
+					"px": [176,592],
+					"fieldInstances": [],
+					"__worldX": 12944,
+					"__worldY": 9088
 				}
 			]
 		},
