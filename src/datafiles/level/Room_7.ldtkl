@@ -262,6 +262,22 @@
 					"fieldInstances": [],
 					"__worldX": 3888,
 					"__worldY": 160
+				},
+				{
+					"__identifier": "obj_decor_dripping",
+					"__grid": [78,19],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "decor" ],
+					"__tile": null,
+					"__smartColor": "#F77622",
+					"iid": "7b2bff90-9b00-11ef-ae8e-c13e7e52ceb9",
+					"width": 48,
+					"height": 16,
+					"defUid": 594,
+					"px": [1248,304],
+					"fieldInstances": [],
+					"__worldX": 3872,
+					"__worldY": 336
 				}
 			]
 		},

@@ -1454,6 +1454,25 @@ state_swim = state_base.add()
 		swim_bullet_check = false;
 	}
 	
+	var _inst = instance_place(x, y, obj_water);
+	if instance_exists(_inst) {
+		var _dir = point_direction(
+			x, y - 16,
+			_inst.x + _inst.sprite_width / 2,
+			_inst.y + _inst.sprite_height / 2
+		);
+		_dir = floor((_dir + 45) % 360 / 90);
+		if _dir == 1 {
+			game_render_particle_water(x, _inst.bbox_bottom - 16, ps_water_pour);
+		} else {
+			if _dir == 3 {
+				game_render_particle_water(x, _inst.bbox_top + 16, ps_water_splash);
+			} else {
+				game_render_particle_water(x, y, ps_water_splash);
+			}
+		}
+	}
+	
 })
 .set("step", function(){
 	

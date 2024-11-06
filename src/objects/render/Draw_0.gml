@@ -292,6 +292,8 @@ shader_set_uniform_f(_u_time, global.time / 60);
 		);
 	}
 shader_reset();
+camera_apply(view_camera[0])
+part_system_drawit(particles_water);
 surface_reset_target();
 
 surface_set_target(surf_ping);

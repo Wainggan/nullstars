@@ -17,7 +17,13 @@ function game_render_refresh() {
 
 function game_render_particle(_x, _y, _system) {
 	with render part_particles_burst(
-		particles_ambient, _x, _y, _system
+		particles_layer, _x, _y, _system
+	);
+}
+
+function game_render_particle_water(_x, _y, _system) {
+	with render part_particles_burst(
+		particles_water, _x, _y, _system
 	);
 }
 

@@ -42,6 +42,10 @@ particles_layer = part_system_create_layer("Instances", true);
 part_system_automatic_update(particles_layer, false);
 part_system_automatic_draw(particles_layer, false);
 
+particles_water = part_system_create_layer("Instances", true);
+part_system_automatic_update(particles_water, false);
+part_system_automatic_draw(particles_water, false);
+
 vertex_format_begin();
 vertex_format_add_position_3d();
 lights_vf = vertex_format_end();
