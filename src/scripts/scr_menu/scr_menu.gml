@@ -292,7 +292,7 @@ function MenuSlider(_text, _min = 0, _max = 1, _iter = 0.1, _value = 0, _callbac
 		draw_line_sprite(_x1 + _xm, _y, _x2, _y, _scale);
 		
 		var _p = _xm + _xm * (abs(value - low) / abs(high - low))
-		draw_line_sprite(_x1 + _p, _y, _x1 + _p, _y + 4, _scale, _scale)
+		draw_circle_sprite(_x1 + _p, _y + 1, 4, c_white, 1);
 		
 		if _selected draw_set_color(_last);
 	}
