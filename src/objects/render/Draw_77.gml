@@ -71,6 +71,14 @@ if global.config.graphics_post_outline {
 
 gpu_set_colorwriteenable(true, true, true, true);
 
+shader_set(shd_outline)
+var _u_kernel = shader_get_uniform(shd_outline, "u_kernel");
+var _u_texel = shader_get_uniform(shd_outline, "u_texel");
+shader_set_uniform_f(_u_kernel, 2);
+shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);
+	draw_surface_ext(surf_water, 0, 0, 1, 1, 0, #99ffff, 0.9);
+shader_reset();
+
 // holy shit please fucking kill me
 // ??????????
 var _x = 0;

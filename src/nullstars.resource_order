@@ -147,6 +147,8 @@
     {"name":"shd_reflect","order":9,"path":"shaders/shd_reflect/shd_reflect.yy",},
     {"name":"shd_rimlight","order":11,"path":"shaders/shd_rimlight/shd_rimlight.yy",},
     {"name":"shd_tiles","order":10,"path":"shaders/shd_tiles/shd_tiles.yy",},
+    {"name":"shd_water_color","order":13,"path":"shaders/shd_water_color/shd_water_color.yy",},
+    {"name":"shd_water_shape","order":12,"path":"shaders/shd_water_shape/shd_water_shape.yy",},
     {"name":"mus_questionthestars","order":1,"path":"sounds/mus_questionthestars/mus_questionthestars.yy",},
     {"name":"mus_story","order":2,"path":"sounds/mus_story/mus_story.yy",},
     {"name":"mus_wind","order":3,"path":"sounds/mus_wind/mus_wind.yy",},

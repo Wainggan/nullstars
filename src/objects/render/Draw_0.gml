@@ -266,11 +266,54 @@ if global.config.graphics_reflectables && global.settings.graphic.reflections ==
 }
 
 
+// water
 
-// level mask
+if !surface_exists(surf_water)
+	surf_water = surface_create(WIDTH, HEIGHT);
 
 if !surface_exists(surf_mask)
-	surf_mask = surface_create(_cam_w, _cam_h);
+	surf_mask = surface_create(WIDTH, HEIGHT);
+
+surface_set_target(surf_mask);
+draw_clear_alpha(c_black, 0);
+var _u_texel = shader_get_uniform(shd_water_shape, "u_texel");
+var _u_time = shader_get_uniform(shd_water_shape, "u_time");
+var _u_off = shader_get_uniform(shd_water_shape, "u_off");
+shader_set(shd_water_shape);
+shader_set_uniform_f(_u_time, global.time / 60);
+	with obj_water {
+		shader_set_uniform_f(_u_texel, 1 / sprite_width, 1 / sprite_height);
+		shader_set_uniform_f(_u_off, x / WIDTH, y / HEIGHT);
+		draw_surface_ext(
+			application_surface, 
+			x - _cam_x, y - _cam_y,
+			sprite_width / WIDTH, sprite_height / HEIGHT,
+			0, c_white, 1
+		);
+	}
+shader_reset();
+surface_reset_target();
+
+surface_set_target(surf_ping);
+	draw_surface_ext(surf_background, 0, 0, 1, 1, 0, #8888dd, 1);
+	draw_surface(surf_layer_0, 0, 0);
+surface_reset_target();
+
+surface_set_target(surf_water);
+draw_clear_alpha(c_black, 0);
+var _u_back = shader_get_sampler_index(shd_water_color, "u_back");
+var _u_time = shader_get_uniform(shd_water_color, "u_time");
+var _u_off = shader_get_uniform(shd_water_color, "u_off");
+shader_set(shd_water_color);
+shader_set_uniform_f(_u_time, global.time / 60);
+shader_set_uniform_f(_u_off, _cam_x / WIDTH, _cam_y / HEIGHT);
+texture_set_stage(_u_back, surface_get_texture(surf_ping));
+	draw_surface(surf_mask, 0, 0);
+shader_reset();
+surface_reset_target();
+
+
+// level mask
 
 surface_set_target(surf_mask)
 draw_clear(c_black)
@@ -290,10 +333,9 @@ surface_reset_target()
 surface_set_target(surf_layer_2);
 draw_clear_alpha(c_black, 0);
 
-draw_surface(surf_mask, 0, 0);
-
-
 part_system_drawit(particles_layer);
+
+draw_surface(surf_mask, 0, 0);
 
 
 // draw tile layer

@@ -235,6 +235,8 @@
     {"id":{"name":"shd_reflect","path":"shaders/shd_reflect/shd_reflect.yy",},},
     {"id":{"name":"shd_rimlight","path":"shaders/shd_rimlight/shd_rimlight.yy",},},
     {"id":{"name":"shd_tiles","path":"shaders/shd_tiles/shd_tiles.yy",},},
+    {"id":{"name":"shd_water_color","path":"shaders/shd_water_color/shd_water_color.yy",},},
+    {"id":{"name":"shd_water_shape","path":"shaders/shd_water_shape/shd_water_shape.yy",},},
     {"id":{"name":"mus_hub_1","path":"sounds/mus_hub_1/mus_hub_1.yy",},},
     {"id":{"name":"mus_questionthestars","path":"sounds/mus_questionthestars/mus_questionthestars.yy",},},
     {"id":{"name":"mus_story","path":"sounds/mus_story/mus_story.yy",},},

@@ -34,5 +34,5 @@
     "path":"sprites/spr_water/spr_water.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

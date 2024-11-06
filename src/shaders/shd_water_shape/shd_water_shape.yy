@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"shd_water_shape",
+  "name":"shd_water_shape",
+  "parent":{
+    "name":"shaders",
+    "path":"folders/graphics/shaders.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}
