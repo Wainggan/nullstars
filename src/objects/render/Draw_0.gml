@@ -333,6 +333,14 @@ surface_reset_target()
 surface_set_target(surf_layer_2);
 draw_clear_alpha(c_black, 0);
 
+shader_set(shd_outline)
+var _u_kernel = shader_get_uniform(shd_outline, "u_kernel");
+var _u_texel = shader_get_uniform(shd_outline, "u_texel");
+shader_set_uniform_f(_u_kernel, 2);
+shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);
+	draw_surface_ext(surf_water, 0, 0, 1, 1, 0, #99bbff, 0.9);
+shader_reset();
+
 part_system_drawit(particles_layer);
 
 draw_surface(surf_mask, 0, 0);
