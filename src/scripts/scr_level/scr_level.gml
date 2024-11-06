@@ -588,6 +588,7 @@ function game_level_grab_data(_lvl) {
 			__return.area = "hub";
 			__return.background = "judge";
 			__return.biome = "smoke";
+			array_push(__return.flags, "hub");
 			break;
 		
 		case "area0_1":
@@ -618,21 +619,13 @@ function game_level_grab_data(_lvl) {
 	}
 	
 	// this feels like a terrible idea
-	__return.biome =
-		_lvl.fields.biome != undefined
-		? _lvl.fields.biome : __return.biome;
-	__return.background =
-		_lvl.fields.background != undefined
-		? _lvl.fields.background : __return.background;
+	__return.biome = _lvl.fields.biome ?? __return.biome;
+	__return.background = _lvl.fields.background ?? __return.background;
 	__return.music =
 		(_lvl.fields.music != undefined && _lvl.fields.music != "null")
 		? _lvl.fields.music : __return.music;
-	__return.lut_grade =
-		_lvl.fields.lut_grade != undefined
-		? _lvl.fields.lut_grade : __return.lut_grade;
-	__return.lut_mix =
-		_lvl.fields.lut_mix != undefined
-		? _lvl.fields.lut_mix : __return.lut_mix;
+	__return.lut_grade = _lvl.fields.lut_grade ?? __return.lut_grade;
+	__return.lut_mix = _lvl.fields.lut_mix ?? __return.lut_mix;
 	for (var i = 0; i < array_length(_lvl.fields.flags); i++) {
 		array_push(__return.flags, _lvl.fields.flags[i]);
 	}

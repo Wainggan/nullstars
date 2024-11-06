@@ -202,17 +202,50 @@ function MenuPageMap() : MenuPage() constructor {
 
 		var _pos_xoff = _pos_x - _pos_w / 2;
 		var _pos_yoff = _pos_y - _pos_h / 2;
+		
+		var _cam_x = round(cam_x);
+		var _cam_y = round(cam_y);
 
 		draw_sprite_stretched_ext(spr_map_background, 0, _pos_xoff, _pos_yoff, _pos_w, _pos_h, c_black, 1);
+		
+		var _pad = 16 * 8;
+		
+		for (var i = 0; i < array_length(level.levels); i++) {
+			var _lvl = level.levels[i];
+			var _c_x = (_lvl.x - _pad - _cam_x) * cam_scale;
+			var _c_y = (_lvl.y - _pad - _cam_y) * cam_scale;
+			var _c_w = (_lvl.width + _pad * 2) * cam_scale;
+			var _c_h = (_lvl.height + _pad * 2) * cam_scale;
+			
+			var _col = #666666;
+			
+			switch game_level_grab_data(_lvl).area {
+				case "hub":
+					_col = #777788;
+					break;
+				case "area0":
+					_col = #009999;
+					break;
+				case "area1":
+					_col = #996699;
+					break;
+			}
+			
+			draw_sprite_ext(
+				spr_pixel, 0,
+				WIDTH / 2 + _c_x, HEIGHT/ 2 + _c_y, _c_w, _c_h * hermite(_anim),
+				0, _col, 1
+			);
+		}
 	
 		with obj_checkpoint {
-			var _c_x = (x - other.cam_x) * (other.cam_scale);
-			var _c_y = (y - other.cam_y) * (other.cam_scale);
+			var _c_x = (x - _cam_x) * (other.cam_scale);
+			var _c_y = (y - _cam_y) * (other.cam_scale);
 			var _dist = point_distance(0, 0, _c_x, _c_y);
 			var _dir = point_direction(0, 0, _c_x, _c_y);
 		
-			_c_x += lengthdir_x(power(_dist / 12, 1.5) + WIDTH * 0.5 * hermite(1 - _anim), _dir);
-			_c_y += lengthdir_y(power(_dist / 12, 1.5) + HEIGHT * 0.5 * hermite(1 - _anim), _dir);
+			_c_x += lengthdir_x(WIDTH * 0.5 * hermite(1 - _anim), _dir);
+			_c_y += lengthdir_y(HEIGHT * 0.5 * hermite(1 - _anim), _dir);
 		
 			draw_sprite_ext(
 				spr_player_tail, 0, 
