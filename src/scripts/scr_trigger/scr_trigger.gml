@@ -1,7 +1,7 @@
 
 function trigger_setup() {
 	static __none = function(){};
-	link = undefined;
+	link = [];
 	trigger_activate = __none;
 }
 
@@ -15,8 +15,8 @@ function trigger_set(_callback, _target = self) {
 
 function trigger_send(_target = self) {
 	with _target {
-		if link != undefined {
-			trigger_run(link);
+		for (var i = 0; i < array_length(link); i++) {
+			trigger_run(link[i]);
 		}
 	}
 }

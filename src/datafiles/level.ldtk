@@ -195,7 +195,7 @@
 					"levelIid": "ee2d9b90-9b00-11ef-ae8e-13f9eeaab133",
 					"layerIid": "ee2d9b93-9b00-11ef-ae8e-53063a77a79e",
 					"entityIid": "6205d520-9b00-11ef-ae8e-499008f9a68c"
-				}, "worldX": 27168, "worldY": 8432, "widPx": 32, "heiPx": 32, "fields": { "index": "none", "waypoint": true } }
+				}, "worldX": 27040, "worldY": 8432, "widPx": 32, "heiPx": 32, "fields": { "index": "none", "waypoint": true } }
 			]
 		},
 		{
@@ -284,7 +284,7 @@
 					"levelIid": "643b9330-b0a0-11ee-a053-afa85acba451",
 					"layerIid": "643bba41-b0a0-11ee-a053-c5092fc88dfa",
 					"entityIid": "38ea5a80-b0a0-11ee-a053-3df86fcc4f70"
-				}, "worldX": 9232, "worldY": 3712, "widPx": 16, "heiPx": 128, "fields": { "time": 15, "ref": {
+				}, "worldX": 9232, "worldY": 3712, "widPx": 16, "heiPx": 128, "fields": { "time": 16, "ref": {
 					"entityIid": "3bd67df0-b0a0-11ee-a053-894505b475ef",
 					"layerIid": "643bba41-b0a0-11ee-a053-c5092fc88dfa",
 					"levelIid": "643b9330-b0a0-11ee-a053-afa85acba451",
@@ -350,7 +350,7 @@
 					"levelIid": "ee2d9b90-9b00-11ef-ae8e-13f9eeaab133",
 					"layerIid": "ee2d9b93-9b00-11ef-ae8e-53063a77a79e",
 					"entityIid": "6d9175c0-9b00-11ef-ae8e-fbcec5a590e6"
-				}, "worldX": 27264, "worldY": 8288, "widPx": 16, "heiPx": 144, "fields": { "time": 1, "ref": {
+				}, "worldX": 27136, "worldY": 8288, "widPx": 16, "heiPx": 144, "fields": { "time": 8, "ref": {
 					"entityIid": "74ff77d0-9b00-11ef-ae8e-1d8ddf1a9582",
 					"layerIid": "ee2d9b93-9b00-11ef-ae8e-53063a77a79e",
 					"levelIid": "ee2d9b90-9b00-11ef-ae8e-13f9eeaab133",
@@ -445,7 +445,7 @@
 					"levelIid": "ee2d9b90-9b00-11ef-ae8e-13f9eeaab133",
 					"layerIid": "ee2d9b93-9b00-11ef-ae8e-53063a77a79e",
 					"entityIid": "74ff77d0-9b00-11ef-ae8e-1d8ddf1a9582"
-				}, "worldX": 27696, "worldY": 8192, "widPx": 112, "heiPx": 112, "fields" : {} }
+				}, "worldX": 27568, "worldY": 8208, "widPx": 112, "heiPx": 96, "fields" : {} }
 			]
 		}
 	],
@@ -14162,7 +14162,7 @@
 			"worldX": 26032,
 			"worldY": 8208,
 			"worldDepth": 0,
-			"pxWid": 1072,
+			"pxWid": 944,
 			"pxHei": 688,
 			"__bgColor": "#2D2A30",
 			"bgColor": null,
@@ -14229,11 +14229,11 @@
 			"identifier": "Room_46",
 			"iid": "249ef1c0-9b00-11ef-ae8e-1740de9b0f07",
 			"uid": 588,
-			"worldX": 27104,
+			"worldX": 26976,
 			"worldY": 8576,
 			"worldDepth": 0,
 			"pxWid": 960,
-			"pxHei": 528,
+			"pxHei": 384,
 			"__bgColor": "#2D2A30",
 			"bgColor": null,
 			"useAutoIdentifier": true,
@@ -14264,7 +14264,7 @@
 			"identifier": "Room_47",
 			"iid": "ee2d9b90-9b00-11ef-ae8e-13f9eeaab133",
 			"uid": 589,
-			"worldX": 27104,
+			"worldX": 26976,
 			"worldY": 7824,
 			"worldDepth": 0,
 			"pxWid": 1152,
