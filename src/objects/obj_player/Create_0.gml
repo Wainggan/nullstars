@@ -425,7 +425,7 @@ jump = function(){
 	dash_left = defs.dash_total;
 
 	y_vel = min(defs.jump_vel, y_vel);
-	if _kh != 0 x_vel = defs.move_speed * _kh;
+	if _kh != 0 && abs(x_vel) < defs.move_speed x_vel = defs.move_speed * _kh;
 	x_vel += (defs.jump_move_boost + defs.move_accel) * sign(x_vel);
 	
 	if x_lift == 0 && y_lift == 0 {
