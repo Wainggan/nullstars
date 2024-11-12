@@ -609,12 +609,16 @@ function game_level_grab_data(_lvl) {
 			__return.background = "city";
 			__return.music = "story";
 			__return.biome = "rain";
+			__return.lut_grade = "vaporwave";
+			__return.lut_mix = 0.25;
 			break;
 		case "area1_2":
 			__return.area = "area1";
 			__return.background = "boxes";
 			__return.music = "story";
 			__return.biome = "dust";
+			__return.lut_grade = "vaporwave";
+			__return.lut_mix = 0.1;
 			break;
 	}
 	
