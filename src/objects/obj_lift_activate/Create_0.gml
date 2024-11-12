@@ -16,15 +16,19 @@ target_x = x;
 target_y = y;
 
 with target {
-	
 	other.target_x = x;
-	other.target_y = y;
-	
+	other.target_y = y;	
 }
 
 trigger_set(function() {
 	if state.is(state_idle) state.change(state_active);
 });
+
+reset = function(){
+	state.change(state_idle);
+	x = xstart;
+	y = ystart;
+}
 
 state = new State();
 

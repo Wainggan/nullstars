@@ -1210,6 +1210,22 @@
 					"fieldInstances": [],
 					"__worldX": 26512,
 					"__worldY": 9040
+				},
+				{
+					"__identifier": "obj_ss_up",
+					"__grid": [25,0],
+					"__pivot": [0,0],
+					"__tags": [ "semisolid", "SIZE_TILE" ],
+					"__tile": { "tilesetUid": 8, "x": 384, "y": 80, "w": 16, "h": 16 },
+					"__smartColor": "#63C74D",
+					"iid": "d33e9830-9b00-11ef-b1e1-2758c0ae9c9e",
+					"width": 64,
+					"height": 16,
+					"defUid": 244,
+					"px": [400,0],
+					"fieldInstances": [],
+					"__worldX": 26528,
+					"__worldY": 8896
 				}
 			]
 		},

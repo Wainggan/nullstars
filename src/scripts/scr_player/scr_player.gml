@@ -8,6 +8,10 @@ function game_player_kill() {
 		game_camera_set_shake(8, 0.8);
 		game_set_pause(1);
 		game_render_wave(_x, _y, 256, 90, spr_wave_wave);
+		
+		with obj_Entity {
+			reset();
+		}
 	}));
 	
 	game_sound_play(sfx_death);
@@ -19,9 +23,5 @@ function game_player_kill() {
 	game_timer_stop()
 	instance_create_layer(obj_player.x, obj_player.y, "Instances", obj_player_death);
 	instance_destroy(obj_player);
-	
-	with obj_Entity {
-		reset();
-	}
 	
 }
