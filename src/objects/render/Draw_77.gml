@@ -71,6 +71,58 @@ if global.config.graphics_post_outline {
 
 gpu_set_colorwriteenable(true, true, true, true);
 
+
+if instance_number(obj_effect_wave) == 0 {
+} else {
+	
+	surface_set_target(surf_ping);
+	draw_surface(surf_compose, 0, 0);
+	surface_reset_target();
+	
+	var _surf_wave_scale = 1 / 2;
+	
+	if !surface_exists(surf_wave) {
+		surf_wave = surface_create(WIDTH * _surf_wave_scale, HEIGHT * _surf_wave_scale);
+	}
+	
+	gpu_set_tex_filter(true);
+	
+	surface_set_target(surf_wave);
+		draw_clear_alpha(#7f7fff, 1);
+	gpu_set_blendmode_ext(bm_dest_color, bm_src_color);
+	shader_set(shd_wave_normals);
+	
+	with obj_effect_wave {
+		draw_sprite_ext(
+			sprite, 0,
+			(x - _cam_x) * _surf_wave_scale,
+			(y - _cam_y) * _surf_wave_scale,
+			scale / 512 * _surf_wave_scale, scale / 512 * _surf_wave_scale, 0,
+			c_white, alpha
+		);
+	}
+	
+	shader_reset();
+	gpu_set_blendmode(bm_normal);
+	surface_reset_target();
+	
+	gpu_set_tex_filter(false);
+	
+	var _u_normals = shader_get_sampler_index(shd_wave_distort, "u_normals");
+	var _u_strength = shader_get_uniform(shd_wave_distort, "u_strength");
+	var _u_aspect = shader_get_uniform(shd_wave_distort, "u_aspect");
+	
+	surface_set_target(surf_compose);
+	shader_set(shd_wave_distort);
+	shader_set_uniform_f(_u_strength, 0.025);
+	shader_set_uniform_f(_u_aspect, WIDTH / HEIGHT);
+	texture_set_stage(_u_normals, surface_get_texture(surf_wave));
+		draw_surface(surf_ping, 0, 0);
+	shader_reset();
+	surface_reset_target();
+	
+}
+
 // holy shit please fucking kill me
 // ??????????
 var _x = 0;
@@ -160,6 +212,5 @@ if global.config.graphics_post_grading {
 	
 }
 
-
-
 draw_surface_ext(application_surface, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
+

@@ -23,6 +23,7 @@ surf_bubbles = -1;
 surf_water = -1;
 
 surf_relection = -1;
+surf_wave = -1;
 
 surf_app = -1;
 surf_compose = -1;

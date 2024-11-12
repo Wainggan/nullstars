@@ -1,0 +1,1 @@
+game_render_wave(mouse_x, mouse_y, irandom_range(256, 512), 120, choose(spr_wave_sphere, spr_wave_ripple, spr_wave_diamond, spr_wave_wave));

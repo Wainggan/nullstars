@@ -27,6 +27,14 @@ function game_render_particle_water(_x, _y, _system) {
 	);
 }
 
+function game_render_wave(_x, _y, _size, _life, _type) {
+	with instance_create_layer(_x, _y, "Instances", obj_effect_wave) {
+		sprite = _type;
+		size = _size;
+		life = _life;
+	}
+}
+
 
 function Mode(_init) constructor {
 	

@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"shd_wave_normals",
+  "name":"shd_wave_normals",
+  "parent":{
+    "name":"distortion",
+    "path":"folders/graphics/distortion.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}
