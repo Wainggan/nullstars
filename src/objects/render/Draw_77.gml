@@ -79,14 +79,14 @@ if instance_exists(obj_player) {
 	_x = obj_player.x + 16;
 	_y = obj_player.y - 100;
 }
-for (var i = 0; i < array_length(obj_menu.anims); i++) {
+for (var i = 0; i < array_length(obj_menu.system.stack); i++) {
 	// I feel like I had my entire bloodline implicitly cursed after writing this
-	if i < array_length(obj_menu.system.stack) {
-		obj_menu.system.stack[i].draw(_x - _cam_x, _y - _cam_y, obj_menu.anims[i]);
-	}
-	else if obj_menu.cache[i] != undefined {
-		obj_menu.cache[i].draw(_x - _cam_x, _y - _cam_y, obj_menu.anims[i]);
-	}
+	//if i < array_length(obj_menu.system.stack) {
+	obj_menu.system.stack[i].draw(_x - _cam_x, _y - _cam_y, 1);
+	//}
+	//else if obj_menu.cache[i] != undefined {
+		//obj_menu.cache[i].draw(_x - _cam_x, _y - _cam_y, obj_menu.anims[i]);
+	//}
 	_x += 24;
 }
 

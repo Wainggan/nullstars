@@ -32,6 +32,8 @@ function Menu() constructor {
 
 function MenuPage() constructor {
 	
+	anim = 0;
+	
 	// run once when added to Menu()
 	static init = function(){};
 	
@@ -43,12 +45,17 @@ function MenuPage() constructor {
 	
 }
 
-function MenuPageList() : MenuPage() constructor {
+function MenuPageList(_width = 200) : MenuPage() constructor {
 	
 	list = [];
 	current = 0;
+	width = _width;
+	
+	anim_desc = 0;
 	
 	static init = function() {
+		anim = 0;
+		anim_desc = 0;
 		current = 0;
 	}
 	
@@ -83,30 +90,57 @@ function MenuPageList() : MenuPage() constructor {
 		return self;
 	}
 	
-	static draw = function(_x, _y, _anim) {
+	static draw = function(_x, _y, _active) {
 		
-		if _anim == 0 return;
+		anim = approach(anim, _active, 1 / 10);
 		
-		var _cam = game_camera_get();
+		if anim == 0 return;
 		
 		var _scale = global.settings.graphic.textscale + 1;
 		
-		var _width = 200 * _scale;
+		var _width = width * _scale;
 		var _height = 200 * _scale;
 		
-		draw_set_font(ft_sign);
-		draw_set_color(#cccccc);
-		
-		_x = clamp(_x, 16, WIDTH - _width - 16);
-		_y = clamp(_y, 16, HEIGHT - _height - 16);
-		
-		draw_sprite_stretched(spr_sign_board, 0, _x, _y, _width, _height * tween(Tween.Circ, _anim));
-		
-		if _anim < 1 return;
+		var _width_t = 160 * _scale;
 		
 		var _pad_x = 8 * _scale;
 		var _pad_y = 11 * _scale;
 		var _option_pad = 14 * _scale;
+		
+		draw_set_font(ft_sign);
+		draw_set_color(#cccccc);
+		
+		_x = clamp(_x, 16, WIDTH - (_width + _width_t) - 16);
+		_y = clamp(_y, 16, HEIGHT - _height - 16);
+		
+		var _active_desc = list[current].description != undefined;
+		anim_desc = approach(anim_desc, _active_desc, 1 / 10)
+		if anim_desc != 0 {
+			draw_sprite_stretched(
+				spr_sign_board, 0,
+				_x + _width - 8, _y + 8,
+				_width_t * tween(Tween.Circ, anim_desc),
+				_height - 16
+			);
+			
+			if anim_desc >= 1 {
+				draw_text_ext_transformed(
+					_x + _width - 8 + 4 + _pad_x,
+					_y + 8 + _pad_y,
+					list[current].description,
+					-1, (_width_t - 8 - 8 - 4) / _scale,
+					_scale, _scale, 0,
+				);
+			}
+		}
+		
+		draw_sprite_stretched(
+			spr_sign_board, 0,
+			_x, _y,
+			_width, _height * tween(Tween.Circ, anim)
+		);
+		
+		if anim < 1 return;
 		
 		for (var j = 0; j < array_length(list); j++) {
 			var _e = list[j]
@@ -117,7 +151,12 @@ function MenuPageList() : MenuPage() constructor {
 					">",
 					_scale, _scale, 0,
 				);
-			_e.draw(_x + _pad_x + 12 * _scale, _y + _pad_y + j * _option_pad, _x + _width - _pad_x * 2, j == current);
+			_e.draw(
+				_x + _pad_x + 12 * _scale,
+				_y + _pad_y + j * _option_pad,
+				_x + _width - _pad_x * 2,
+				j == current,
+			);
 		}
 		
 		draw_set_color(c_white);
@@ -133,6 +172,7 @@ function MenuPageMap() : MenuPage() constructor {
 	cam_scale = 1 / 24;
 	
 	static init = function() {
+		anim = 0;
 		cam_x = obj_player.x;
 		cam_y = obj_player.y;
 	}
@@ -189,16 +229,18 @@ function MenuPageMap() : MenuPage() constructor {
 		
 	}
 	
-	static draw = function(_x, _y, _anim) {
+	static draw = function(_x, _y, _active) {
 		
-		if _anim == 0 return;
+		anim = approach(anim, _active, 1 / 14);
+		
+		if anim == 0 return;
 		
 		var _cam = game_camera_get();
 		
 		var _pos_x = 0 + WIDTH / 2;
 		var _pos_y = 0 + HEIGHT / 2;
-		var _pos_w = 400 * hermite(_anim);
-		var _pos_h = 300 * hermite(_anim);
+		var _pos_w = 400 * hermite(anim);
+		var _pos_h = 300 * hermite(anim);
 
 		var _pos_xoff = _pos_x - _pos_w / 2;
 		var _pos_yoff = _pos_y - _pos_h / 2;
@@ -233,7 +275,7 @@ function MenuPageMap() : MenuPage() constructor {
 			
 			draw_sprite_ext(
 				spr_pixel, 0,
-				WIDTH / 2 + _c_x, HEIGHT/ 2 + _c_y, _c_w, _c_h * hermite(_anim),
+				WIDTH / 2 + _c_x, HEIGHT/ 2 + _c_y, _c_w, _c_h * hermite(anim),
 				0, _col, 1
 			);
 		}
@@ -244,15 +286,15 @@ function MenuPageMap() : MenuPage() constructor {
 			var _dist = point_distance(0, 0, _c_x, _c_y);
 			var _dir = point_direction(0, 0, _c_x, _c_y);
 		
-			_c_x += lengthdir_x(WIDTH * 0.5 * hermite(1 - _anim), _dir);
-			_c_y += lengthdir_y(HEIGHT * 0.5 * hermite(1 - _anim), _dir);
+			_c_x += lengthdir_x(WIDTH * 0.5 * hermite(1 - other.anim), _dir);
+			_c_y += lengthdir_y(HEIGHT * 0.5 * hermite(1 - other.anim), _dir);
 		
 			draw_sprite_ext(
-				spr_player_tail, 0, 
+				spr_player_tail, 0,
 				WIDTH / 2 + 0 + _c_x,
 				HEIGHT / 2 + 0 + _c_y,
-				tween(Tween.Circ, _anim), 
-				tween(Tween.Circ, _anim),
+				tween(Tween.Circ, other.anim),
+				tween(Tween.Circ, other.anim),
 				0, c_white, 1,
 			);
 		}
@@ -270,6 +312,7 @@ function MenuOption() constructor {
 	
 	callback = __none;
 	input = __none;
+	description = undefined;
 	
 	static draw = function(_x, _y){
 		draw_text(_x, _y, "- empty -")
@@ -277,10 +320,14 @@ function MenuOption() constructor {
 	
 }
 
-function MenuButton(_text, _callback = __none) : MenuOption() constructor {
+function MenuButton(
+		_text, _callback = __none,
+		_description = undefined
+	) : MenuOption() constructor {
 	
 	text = _text;
 	callback = _callback;
+	description = _description;
 	
 	input = function(_click, _left, _right){
 		if _click callback();
@@ -298,14 +345,23 @@ function MenuButton(_text, _callback = __none) : MenuOption() constructor {
 	
 }
 
-function MenuSlider(_text, _min = 0, _max = 1, _iter = 0.1, _value = 0, _callback = __none) : MenuOption() constructor {
+function MenuSlider(
+		_text,
+		_min = 0, _max = 1,
+		_iter = 0.1, _value = 0,
+		_callback = __none,
+		_description = undefined
+	) : MenuOption() constructor {
 	
 	text = _text;
+	
 	low = _min;
 	high = _max;
 	iter = _iter;
 	value = _value;
+	
 	callback = _callback;
+	description = _description;
 	
 	input = function(_click, _left, _right) {
 		value = clamp(value + (_right - _left) * iter, low, high);
@@ -332,12 +388,20 @@ function MenuSlider(_text, _min = 0, _max = 1, _iter = 0.1, _value = 0, _callbac
 	
 }
 
-function MenuRadio(_text, _options = [], _value = 0, _callback = __none) : MenuOption() constructor {
+function MenuRadio(
+		_text,
+		_options = [], _value = 0,
+		_callback = __none,
+		_description = undefined
+	) : MenuOption() constructor {
 	
 	text = _text;
+	
 	options = _options;
 	value = _value;
+	
 	callback = _callback;
+	description = _description;
 	
 	input = function(_click, _left, _right) {
 		value = mod_euclidean(value + (_right - _left), array_length(options));
