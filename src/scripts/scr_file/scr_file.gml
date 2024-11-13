@@ -8,7 +8,7 @@ global.version = {
 #macro FILE_DATA "save.star"
 #macro FILE_INPUT "input.ini"
 
-#macro FILE_DATA_VERSION 2
+#macro FILE_DATA_VERSION 3
 
 global.file = undefined;
 global.settings = undefined;
@@ -56,62 +56,42 @@ global.file_default = {
 		"gates": {},
 	
 	},
-	/*
-	settings
-	graphics:
-		windowscale:
-			0 = 1x
-			1 = 2x
-			2 = 3x
-			3 = 4x
-		textscale:
-			0 = 1x
-			1 = 2x
-		fullscreen:
-			0 = off
-			1 = exclusive
-			2 = borderless
-		screenshake:
-			0 = none
-			1 = 0.5x
-			2 = 1x
-		lights:
-			0 = off
-			1 = rimblur + spotlights
-			2 = shadows
-		reflections:
-			0 = off
-			1 = on
-		backgrounds:
-			0 = simplified
-			1 = full
-	debug:
-		gctime:
-			0 = 100
-			1 = 500
-			2 = 1000
-		overlay:
-			0 = off
-			1 = on
-		speed: // fps
-			0 = 10fps
-			1 = 30fps
-			2 = 60fps default
-		log:
-			0 = note
-			1 = error
-			2 = warn
-			3 = note
-	*/
 	"settings": {
 		"graphic": {
 			"windowscale": 0,
+				// 0 = 1x
+				// 1 = 2x
+				// 2 = 3x
+				// 3 = 4x
 			"textscale": 0,
+				// 0 = 1x
+				// 1 = 2x
 			"fullscreen": 0,
+				// 0 = off
+				// 1 = exclusive
+				// 2 = borderless
 			"screenshake": 2,
+				// 0 = none
+				// 1 = 0.5x
+				// 2 = 1x
 			"lights": 2,
+				// 0 = off
+				// 1 = rimblur + spotlights
+				// 2 = shadows
 			"reflections": 1,
+				// 0 = off
+				// 1 = on
 			"backgrounds": 1,
+				// 0 = simplified
+				// 1 = full
+			"bloom": 1,
+				// 0 = off
+				// 1 = on
+				// 2 = extreme
+			"distortion": 1,
+				// 0 = off
+				// 1 = 1/4x
+				// 2 = 1/2x
 		},
 		"sound": {
 			"bgm": 8,
@@ -120,9 +100,22 @@ global.file_default = {
 		},
 		"debug": {
 			"gctime": 2,
+				// 0 = 100
+				// 1 = 500
+				// 2 = 1000
+				// 3 = 2000
 			"overlay": 0,
+				// 0 = off
+				// 1 = on
 			"speed": 2,
+				// 0 = 10fps
+				// 1 = 30fps
+				// 2 = 60fps
 			"log": 3,
+				// 0 = note
+				// 1 = error
+				// 2 = warn
+				// 3 = note
 		}
 	},
 }
