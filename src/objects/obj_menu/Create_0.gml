@@ -85,6 +85,22 @@ unused if fullscreen is enabled."))
 	game_file_save();
 }, @"enables background and puddle reflections.
 can save some performance in weaker graphics cards."))
+.add(new MenuRadio("bloom", 
+		["off", "on"],
+		global.settings.graphic.bloom,
+		function(_) {
+	global.settings.graphic.bloom = _;
+	game_file_save();
+}, @"enables the bloom post processing layer.
+can save some performance in weaker graphics cards."))
+.add(new MenuRadio("distortion", 
+		["off", "on"],
+		global.settings.graphic.distortion,
+		function(_) {
+	global.settings.graphic.distortion = _;
+	game_file_save();
+}, @"enables the pixel distortion post processing layer.
+can save a tiny bit of performance in weaker graphics cards."))
 .add(new MenuRadio("backgrounds", 
 		["simplified", "0.5x", "full"],
 		global.settings.graphic.backgrounds,

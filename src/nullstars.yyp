@@ -231,6 +231,7 @@
     {"id":{"name":"scr_util","path":"scripts/scr_util/scr_util.yy",},},
     {"id":{"name":"scr_yarn","path":"scripts/scr_yarn/scr_yarn.yy",},},
     {"id":{"name":"src_log","path":"scripts/src_log/src_log.yy",},},
+    {"id":{"name":"shd_abberation","path":"shaders/shd_abberation/shd_abberation.yy",},},
     {"id":{"name":"shd_back_blackhole","path":"shaders/shd_back_blackhole/shd_back_blackhole.yy",},},
     {"id":{"name":"shd_back_boxes","path":"shaders/shd_back_boxes/shd_back_boxes.yy",},},
     {"id":{"name":"shd_back_glow","path":"shaders/shd_back_glow/shd_back_glow.yy",},},

@@ -170,6 +170,25 @@ surface_reset_target();
 
 
 
+surface_set_target(surf_ping);
+
+var _u_resolution = shader_get_uniform(shd_abberation, "u_resolution");
+var _u_strength = shader_get_uniform(shd_abberation, "u_strength");
+
+shader_set(shd_abberation);
+
+shader_set_uniform_f(_u_resolution, WIDTH, HEIGHT);
+shader_set_uniform_f(_u_strength, 1 / WIDTH);
+
+draw_surface(surf_compose, 0, 0);
+
+shader_reset();
+surface_reset_target();
+
+draw_surface(surf_ping, 0, 0);
+
+
+
 // holy shit please fucking kill me
 // ??????????
 var _x = 0;
