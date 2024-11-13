@@ -917,7 +917,17 @@ state_base = state.add()
 	x_last = x;
 	y_last = y;
 	
-	
+	if state.is(state_free)
+	&& !crouched
+	&& INPUT.check_pressed("menu") {
+		if place_meeting(x, y, obj_checkpoint) {
+			state.change(state_menu)
+			return;
+		} else {
+			game_player_kill();
+			return;
+		}
+	}
 	
 })
 
@@ -1146,11 +1156,6 @@ state_free = state_base.add()
 		}
 		if y_vel > 3
 			ledge_keybuffer = 0;
-	}
-	
-	if INPUT.check_pressed("up") && !crouched && place_meeting(x, y, obj_checkpoint) {
-		state.change(state_menu)
-		return;
 	}
 	
 })

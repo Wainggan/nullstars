@@ -53,3 +53,10 @@ manager.create_input("grab")
 .add_keyboard_key(vk_space)
 .add_gamepad_shoulder_virtual(gp_shoulderl)
 .add_gamepad_shoulder_virtual(gp_shoulderr)
+
+manager.create_input("menu")
+.add_keyboard_key(vk_escape)
+.add_keyboard_key(ord("V"))
+.add_keyboard_key(vk_tab)
+.add_gamepad_shoulder_virtual(gp_start)
+
