@@ -142,7 +142,7 @@ var _u_texel = shader_get_uniform(shd_blur, "u_texel")
 
 shader_set(shd_blur);
 
-shader_set_uniform_f(_u_kernel, 8);
+shader_set_uniform_f(_u_kernel, 7);
 shader_set_uniform_f(_u_sigma, 0.2);
 shader_set_uniform_f(_u_texel, 1 / _cam_w, 1 / _cam_h);
 
@@ -163,7 +163,7 @@ shader_reset();
 surface_set_target(surf_compose);
 gpu_set_colorwriteenable(true, true, true, false);
 gpu_set_blendmode(bm_add);
-if !keyboard_check(ord("H")) draw_surface_ext(surf_ping, 0, 0, 1, 1, 0, #99aaff, 0.2);
+if !keyboard_check(ord("H")) draw_surface_ext(surf_ping, 0, 0, 1, 1, 0, #8899ff, 0.2);
 gpu_set_blendmode(bm_normal);
 gpu_set_colorwriteenable(true, true, true, true);
 surface_reset_target();

@@ -7,7 +7,7 @@ function game_player_kill() {
 		game_render_particle(_x, _y - 16, ps_player_death_1);
 		game_camera_set_shake(8, 0.8);
 		game_set_pause(1);
-		game_render_wave(_x, _y, 256, 90, spr_wave_wave);
+		game_render_wave(_x, _y - 16, 256, 90, spr_wave_wave);
 		
 		with obj_Entity {
 			reset();

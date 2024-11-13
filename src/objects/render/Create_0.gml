@@ -33,7 +33,7 @@ surf_lut = -1;
 surface_resize(application_surface, WIDTH, HEIGHT);
 
 background_lights_kernel = 7;
-background_lights_sigma = 0.8;
+background_lights_sigma = 0.6;
 background_lights_brightness = 4;
 
 particles_ambient = part_system_create_layer("Instances", true);
