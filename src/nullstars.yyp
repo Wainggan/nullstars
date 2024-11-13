@@ -238,6 +238,7 @@
     {"id":{"name":"shd_blend_fog","path":"shaders/shd_blend_fog/shd_blend_fog.yy",},},
     {"id":{"name":"shd_blend_overlay","path":"shaders/shd_blend_overlay/shd_blend_overlay.yy",},},
     {"id":{"name":"shd_blend_screen","path":"shaders/shd_blend_screen/shd_blend_screen.yy",},},
+    {"id":{"name":"shd_bloom_filter","path":"shaders/shd_bloom_filter/shd_bloom_filter.yy",},},
     {"id":{"name":"shd_blur","path":"shaders/shd_blur/shd_blur.yy",},},
     {"id":{"name":"shd_grade","path":"shaders/shd_grade/shd_grade.yy",},},
     {"id":{"name":"shd_light_color","path":"shaders/shd_light_color/shd_light_color.yy",},},

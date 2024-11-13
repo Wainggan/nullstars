@@ -15,6 +15,7 @@ surf_layer_2 = -1;
 surf_layer_outline = -1;
 
 surf_ping = -1;
+surf_pong = -1;
 
 surf_background_lights = -1;
 

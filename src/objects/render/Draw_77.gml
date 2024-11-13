@@ -120,8 +120,55 @@ if instance_number(obj_effect_wave) == 0 {
 		draw_surface(surf_ping, 0, 0);
 	shader_reset();
 	surface_reset_target();
-	
 }
+
+var _u_threshold = shader_get_uniform(shd_bloom_filter, "u_threshold");
+var _u_range = shader_get_uniform(shd_bloom_filter, "u_range");
+
+surface_set_target(surf_ping);
+shader_set(shd_bloom_filter);
+	shader_set_uniform_f(_u_threshold, 0.4);
+	shader_set_uniform_f(_u_range, 0.3);
+
+draw_surface(surf_compose, 0, 0);
+
+shader_reset();
+surface_reset_target();
+
+var _u_kernel = shader_get_uniform(shd_blur, "u_kernel")
+var _u_sigma = shader_get_uniform(shd_blur, "u_sigma")
+var _u_direction = shader_get_uniform(shd_blur, "u_direction")
+var _u_texel = shader_get_uniform(shd_blur, "u_texel")
+
+shader_set(shd_blur);
+
+shader_set_uniform_f(_u_kernel, 8);
+shader_set_uniform_f(_u_sigma, 0.2);
+shader_set_uniform_f(_u_texel, 1 / _cam_w, 1 / _cam_h);
+
+shader_set_uniform_f(_u_direction, 0, 1);
+
+surface_set_target(surf_pong);
+draw_surface(surf_ping, 0, 0);
+surface_reset_target();
+
+shader_set_uniform_f(_u_direction, 1, 0);
+
+surface_set_target(surf_ping);
+draw_surface(surf_pong, 0, 0);
+surface_reset_target();
+
+shader_reset();
+
+surface_set_target(surf_compose);
+gpu_set_colorwriteenable(true, true, true, false);
+gpu_set_blendmode(bm_add);
+if !keyboard_check(ord("H")) draw_surface_ext(surf_ping, 0, 0, 1, 1, 0, #99aaff, 0.2);
+gpu_set_blendmode(bm_normal);
+gpu_set_colorwriteenable(true, true, true, true);
+surface_reset_target();
+
+
 
 // holy shit please fucking kill me
 // ??????????

@@ -41,12 +41,12 @@ surface_reset_target();
 // blur surf_background_lights
 if global.config.graphics_lights_rimblur && global.settings.graphic.lights >= 1 {
 
-	shader_set(shd_blur);
-	
 	var _u_kernel = shader_get_uniform(shd_blur, "u_kernel")
 	var _u_sigma = shader_get_uniform(shd_blur, "u_sigma")
 	var _u_direction = shader_get_uniform(shd_blur, "u_direction")
 	var _u_texel = shader_get_uniform(shd_blur, "u_texel")
+
+	shader_set(shd_blur);
 
 	shader_set_uniform_f(_u_kernel, background_lights_kernel);
 	shader_set_uniform_f(_u_sigma, background_lights_sigma);
