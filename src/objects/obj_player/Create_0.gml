@@ -233,6 +233,8 @@ ledge_stick = 0;
 
 spike_buffer = 0;
 
+respawn_timer = 0;
+
 anim_dive_timer = 0;
 anim_jab_timer = 0;
 anim_longjump_timer = 0;
@@ -917,16 +919,20 @@ state_base = state.add()
 	x_last = x;
 	y_last = y;
 	
-	if state.is(state_free)
-	&& !crouched
-	&& INPUT.check_pressed("menu") {
-		if place_meeting(x, y, obj_checkpoint) {
+	if state.is(state_free) && !crouched {
+		if INPUT.check_pressed("menu") && place_meeting(x, y, obj_checkpoint) {
 			state.change(state_menu)
 			return;
+		} else if INPUT.check("menu") {
+			respawn_timer += 1;
+			if respawn_timer > 17 {
+				game_player_kill();
+			}
 		} else {
-			game_player_kill();
-			return;
+			respawn_timer = approach(respawn_timer, 0, 2);
 		}
+	} else {
+		respawn_timer = approach(respawn_timer, 0, 2);
 	}
 	
 })
