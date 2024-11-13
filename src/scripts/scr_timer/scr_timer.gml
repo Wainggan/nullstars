@@ -7,6 +7,10 @@ function game_timer_start(_length, _start = undefined, _target = undefined) {
 		game.timer_target = _target;
 		game.timer_active = true;
 		
+		with obj_Entity {
+			reset();
+		}
+		
 		instance_create_layer(0, 0, "Instances", obj_timer_render)
 	}
 }
