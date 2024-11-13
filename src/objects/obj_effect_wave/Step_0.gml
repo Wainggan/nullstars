@@ -1,3 +1,6 @@
+
+if game_paused() exit;
+
 age += 1;
 if age >= life {
 	instance_destroy();
@@ -5,5 +8,5 @@ if age >= life {
 }
 
 scale = tween(Tween.Circ, age / life) * size;
-alpha = 1 - tween(Tween.Ease, age / life);
+alpha = (1 - tween(Tween.Ease, age / life)) * strength;
 

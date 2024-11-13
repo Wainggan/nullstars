@@ -7,7 +7,7 @@ function game_player_kill() {
 		game_render_particle(_x, _y - 16, ps_player_death_1);
 		game_camera_set_shake(8, 0.8);
 		game_set_pause(1);
-		game_render_wave(_x, _y - 16, 256, 90, spr_wave_wave);
+		game_render_wave(_x, _y - 16, 256, 90, 1, spr_wave_wave);
 		
 		with obj_Entity {
 			reset();
@@ -16,7 +16,7 @@ function game_player_kill() {
 	
 	game_sound_play(sfx_death);
 	game_set_pause(14);
-	game_camera_set_shake(4, 0.8);
+	game_camera_set_shake(2, 0.4);
 	
 	global.onoff = 1;
 	
