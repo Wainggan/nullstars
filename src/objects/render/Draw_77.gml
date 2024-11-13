@@ -163,7 +163,7 @@ shader_reset();
 surface_set_target(surf_compose);
 gpu_set_colorwriteenable(true, true, true, false);
 gpu_set_blendmode(bm_add);
-if !keyboard_check(ord("H")) draw_surface_ext(surf_ping, 0, 0, 1, 1, 0, #8899ff, 0.2);
+draw_surface_ext(surf_ping, 0, 0, 1, 1, 0, #8899ff, 0.2);
 gpu_set_blendmode(bm_normal);
 gpu_set_colorwriteenable(true, true, true, true);
 surface_reset_target();
@@ -227,9 +227,6 @@ for (var i = array_length(global.logger.messages) - 1; i >= 0; i--) {
 }
 
 surface_reset_target();
-
-
-if keyboard_check_pressed(ord("Y")) mode = (mode + 1) % array_length(p)
 
 if global.config.graphics_post_grading {
 
