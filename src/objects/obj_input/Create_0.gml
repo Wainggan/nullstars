@@ -56,7 +56,9 @@ manager.create_input("grab")
 
 manager.create_input("menu")
 .add_keyboard_key(vk_escape)
+.add_keyboard_key(vk_control)
 .add_keyboard_key(ord("V"))
+.add_keyboard_key(ord("E"))
 .add_keyboard_key(vk_tab)
 .add_gamepad_shoulder_virtual(gp_start)
 
