@@ -135,6 +135,7 @@
     {"name":"scr_timer","order":14,"path":"scripts/scr_timer/scr_timer.yy",},
     {"name":"scr_trigger","order":4,"path":"scripts/scr_trigger/scr_trigger.yy",},
     {"name":"scr_update","order":27,"path":"scripts/scr_update/scr_update.yy",},
+    {"name":"scr_updater","order":6,"path":"scripts/scr_updater/scr_updater.yy",},
     {"name":"scr_util","order":1,"path":"scripts/scr_util/scr_util.yy",},
     {"name":"src_log","order":3,"path":"scripts/src_log/src_log.yy",},
     {"name":"shd_back_blackhole","order":4,"path":"shaders/shd_back_blackhole/shd_back_blackhole.yy",},

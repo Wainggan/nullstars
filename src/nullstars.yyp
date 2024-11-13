@@ -227,6 +227,7 @@
     {"id":{"name":"scr_trigger","path":"scripts/scr_trigger/scr_trigger.yy",},},
     {"id":{"name":"scr_tweens","path":"scripts/scr_tweens/scr_tweens.yy",},},
     {"id":{"name":"scr_update","path":"scripts/scr_update/scr_update.yy",},},
+    {"id":{"name":"scr_updater","path":"scripts/scr_updater/scr_updater.yy",},},
     {"id":{"name":"scr_util","path":"scripts/scr_util/scr_util.yy",},},
     {"id":{"name":"scr_yarn","path":"scripts/scr_yarn/scr_yarn.yy",},},
     {"id":{"name":"src_log","path":"scripts/src_log/src_log.yy",},},
