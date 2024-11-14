@@ -8,7 +8,7 @@ global.version = {
 #macro FILE_DATA "save.star"
 #macro FILE_INPUT "input.ini"
 
-#macro FILE_DATA_VERSION 3
+#macro FILE_DATA_VERSION 4
 
 global.file = undefined;
 global.settings = undefined;
@@ -92,6 +92,14 @@ global.file_default = {
 				// 0 = off
 				// 1 = 1/4x
 				// 2 = 1/2x
+			"abberation": 1,
+				// 0 = off
+				// 1 = on
+				// 2 = extreme
+			"cracks": 1,
+				// 0 = off
+				// 1 = on
+				// 2 = extreme
 		},
 		"sound": {
 			"bgm": 8,

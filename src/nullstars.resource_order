@@ -148,6 +148,7 @@
     {"name":"shd_blend_screen","order":1,"path":"shaders/shd_blend_screen/shd_blend_screen.yy",},
     {"name":"shd_bloom_filter","order":13,"path":"shaders/shd_bloom_filter/shd_bloom_filter.yy",},
     {"name":"shd_blur","order":2,"path":"shaders/shd_blur/shd_blur.yy",},
+    {"name":"shd_edgeglitch","order":15,"path":"shaders/shd_edgeglitch/shd_edgeglitch.yy",},
     {"name":"shd_grade","order":1,"path":"shaders/shd_grade/shd_grade.yy",},
     {"name":"shd_light_color","order":1,"path":"shaders/shd_light_color/shd_light_color.yy",},
     {"name":"shd_light_compose","order":4,"path":"shaders/shd_light_compose/shd_light_compose.yy",},

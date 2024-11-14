@@ -84,7 +84,7 @@ unused if fullscreen is enabled."))
 	global.settings.graphic.reflections = _;
 	game_file_save();
 }, @"enables background and puddle reflections.
-can save some performance in weaker graphics cards."))
+disabling can save some performance in weaker graphics cards."))
 .add(new MenuRadio("bloom", 
 		["off", "on"],
 		global.settings.graphic.bloom,
@@ -92,7 +92,7 @@ can save some performance in weaker graphics cards."))
 	global.settings.graphic.bloom = _;
 	game_file_save();
 }, @"enables the bloom post processing layer.
-can save some performance in weaker graphics cards."))
+disabling can save some performance in weaker graphics cards."))
 .add(new MenuRadio("distortion", 
 		["off", "on"],
 		global.settings.graphic.distortion,
@@ -100,7 +100,23 @@ can save some performance in weaker graphics cards."))
 	global.settings.graphic.distortion = _;
 	game_file_save();
 }, @"enables the pixel distortion post processing layer.
-can save a tiny bit of performance in weaker graphics cards."))
+disabling can save a tiny bit of performance in weaker graphics cards."))
+.add(new MenuRadio("chromatic abberation", 
+		["off", "on"],
+		global.settings.graphic.abberation,
+		function(_) {
+	global.settings.graphic.abberation = _;
+	game_file_save();
+}, @"enables a subtle immitation of chromatic abberation along the edges of the screen.
+disabling can save a tiny bit of performance in weaker graphics cards."))
+.add(new MenuRadio("screen cracks", 
+		["off", "on"],
+		global.settings.graphic.cracks,
+		function(_) {
+	global.settings.graphic.cracks = _;
+	game_file_save();
+}, @"enables an effect that causes the edges of the screen to randomly offset.
+disabling can save a tiny bit of performance in weaker graphics cards."))
 .add(new MenuRadio("backgrounds", 
 		["simplified", "0.5x", "full"],
 		global.settings.graphic.backgrounds,

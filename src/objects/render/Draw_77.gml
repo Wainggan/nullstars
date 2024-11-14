@@ -72,7 +72,7 @@ if global.config.graphics_post_outline {
 gpu_set_colorwriteenable(true, true, true, true);
 
 
-if instance_number(obj_effect_wave) == 0 {
+if instance_number(obj_effect_wave) == 0 || global.settings.graphic.distortion != 0 {
 } else {
 	
 	surface_set_target(surf_ping);
@@ -122,70 +122,96 @@ if instance_number(obj_effect_wave) == 0 {
 	surface_reset_target();
 }
 
-var _u_threshold = shader_get_uniform(shd_bloom_filter, "u_threshold");
-var _u_range = shader_get_uniform(shd_bloom_filter, "u_range");
+if global.settings.graphic.cracks != 0 {
+	surface_set_target(surf_ping);
 
-surface_set_target(surf_ping);
-shader_set(shd_bloom_filter);
-	shader_set_uniform_f(_u_threshold, 0.4);
-	shader_set_uniform_f(_u_range, 0.3);
+	var _u_time = shader_get_uniform(shd_edgeglitch, "u_time");
+	var _u_texel = shader_get_uniform(shd_edgeglitch, "u_texel");
 
-draw_surface(surf_compose, 0, 0);
+	shader_set(shd_edgeglitch);
 
-shader_reset();
-surface_reset_target();
+	shader_set_uniform_f(_u_time, global.time / 60);
+	shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);
 
-var _u_kernel = shader_get_uniform(shd_blur, "u_kernel")
-var _u_sigma = shader_get_uniform(shd_blur, "u_sigma")
-var _u_direction = shader_get_uniform(shd_blur, "u_direction")
-var _u_texel = shader_get_uniform(shd_blur, "u_texel")
+	draw_surface(surf_compose, 0, 0);
 
-shader_set(shd_blur);
+	shader_reset();
+	surface_reset_target();
 
-shader_set_uniform_f(_u_kernel, 7);
-shader_set_uniform_f(_u_sigma, 0.2);
-shader_set_uniform_f(_u_texel, 1 / _cam_w, 1 / _cam_h);
+	surface_set_target(surf_compose);
+	draw_surface(surf_ping, 0, 0);
+	surface_reset_target();
+}
 
-shader_set_uniform_f(_u_direction, 0, 1);
+if global.settings.graphic.bloom != 0 {
+	var _u_threshold = shader_get_uniform(shd_bloom_filter, "u_threshold");
+	var _u_range = shader_get_uniform(shd_bloom_filter, "u_range");
 
-surface_set_target(surf_pong);
-draw_surface(surf_ping, 0, 0);
-surface_reset_target();
+	surface_set_target(surf_ping);
+	shader_set(shd_bloom_filter);
+		shader_set_uniform_f(_u_threshold, 0.4);
+		shader_set_uniform_f(_u_range, 0.3);
 
-shader_set_uniform_f(_u_direction, 1, 0);
+	draw_surface(surf_compose, 0, 0);
 
-surface_set_target(surf_ping);
-draw_surface(surf_pong, 0, 0);
-surface_reset_target();
+	shader_reset();
+	surface_reset_target();
 
-shader_reset();
+	var _u_kernel = shader_get_uniform(shd_blur, "u_kernel")
+	var _u_sigma = shader_get_uniform(shd_blur, "u_sigma")
+	var _u_direction = shader_get_uniform(shd_blur, "u_direction")
+	var _u_texel = shader_get_uniform(shd_blur, "u_texel")
 
-surface_set_target(surf_compose);
-gpu_set_colorwriteenable(true, true, true, false);
-gpu_set_blendmode(bm_add);
-draw_surface_ext(surf_ping, 0, 0, 1, 1, 0, #8899ff, 0.2);
-gpu_set_blendmode(bm_normal);
-gpu_set_colorwriteenable(true, true, true, true);
-surface_reset_target();
+	shader_set(shd_blur);
+
+	shader_set_uniform_f(_u_kernel, 7);
+	shader_set_uniform_f(_u_sigma, 0.2);
+	shader_set_uniform_f(_u_texel, 1 / _cam_w, 1 / _cam_h);
+
+	shader_set_uniform_f(_u_direction, 0, 1);
+
+	surface_set_target(surf_pong);
+	draw_surface(surf_ping, 0, 0);
+	surface_reset_target();
+
+	shader_set_uniform_f(_u_direction, 1, 0);
+
+	surface_set_target(surf_ping);
+	draw_surface(surf_pong, 0, 0);
+	surface_reset_target();
+
+	shader_reset();
+
+	surface_set_target(surf_compose);
+	gpu_set_colorwriteenable(true, true, true, false);
+	gpu_set_blendmode(bm_add);
+	draw_surface_ext(surf_ping, 0, 0, 1, 1, 0, #7788ff, 0.2);
+	gpu_set_blendmode(bm_normal);
+	gpu_set_colorwriteenable(true, true, true, true);
+	surface_reset_target();
+}
 
 
+if global.settings.graphic.abberation != 0 {
+	surface_set_target(surf_ping);
 
-surface_set_target(surf_ping);
+	var _u_resolution = shader_get_uniform(shd_abberation, "u_resolution");
+	var _u_strength = shader_get_uniform(shd_abberation, "u_strength");
 
-var _u_resolution = shader_get_uniform(shd_abberation, "u_resolution");
-var _u_strength = shader_get_uniform(shd_abberation, "u_strength");
+	shader_set(shd_abberation);
 
-shader_set(shd_abberation);
+	shader_set_uniform_f(_u_resolution, WIDTH, HEIGHT);
+	shader_set_uniform_f(_u_strength, 1 / WIDTH);
 
-shader_set_uniform_f(_u_resolution, WIDTH, HEIGHT);
-shader_set_uniform_f(_u_strength, 1 / WIDTH);
+	draw_surface(surf_compose, 0, 0);
 
-draw_surface(surf_compose, 0, 0);
+	shader_reset();
+	surface_reset_target();
 
-shader_reset();
-surface_reset_target();
-
-draw_surface(surf_ping, 0, 0);
+	surface_set_target(surf_compose);
+	draw_surface(surf_ping, 0, 0);
+	surface_reset_target();
+}
 
 
 
