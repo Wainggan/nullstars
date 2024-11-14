@@ -25,7 +25,7 @@ void main() {
     vec2 nuv = fract(v_vTexcoord * AMOUNT);
     float r = random(floor(v_vTexcoord * AMOUNT));
     vec2 d = floor(abs(v_vTexcoord * 2.0 - 1.0) * (AMOUNT * 0.5)) / (AMOUNT * 0.5);
-    float dp = min(max((d.x + d.y) / 2.0 - 0.4, 0.0) * 2.5, 1.0);
+    float dp = smoothstep(0.00, 0.2, max((d.x + d.y) / 2.0 - 0.3, 0.0));
     
     float t = (u_time + r * 200.0) * 0.1;
     
