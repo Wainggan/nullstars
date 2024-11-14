@@ -4,8 +4,8 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 	_cam_w = camera_get_view_width(view_camera[0]),
 	_cam_h = camera_get_view_height(view_camera[0]);
 
-var _pos_x = _cam_x + _cam_w / 2,
-	_pos_y = _cam_y + 40;
+var _pos_x = _cam_w / 2,
+	_pos_y = 40;
 
 _pos_y -= terp(1, 0, Tween.Quart, anim) * 80;
 
