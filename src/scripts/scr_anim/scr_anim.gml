@@ -13,6 +13,7 @@ function AnimController() constructor {
 	
 	__meta_default = {};
 	__meta_items = {};
+	__cache = 0;
 	
 	static add = function(_name, _level){
 		animations[$ _name] = _level;
@@ -47,6 +48,7 @@ function AnimController() constructor {
 	
 	static meta_default = function(_data){
 		__meta_default = _data;
+		__cache += 1;
 		return self;
 	}
 	static meta_items = function(_items, _data) {
@@ -55,24 +57,40 @@ function AnimController() constructor {
 				__meta_items[$ _items[i]] = [];
 			array_push(__meta_items[$ _items[i]], _data);
 		}
+		__cache += 1;
 		return self;
 	}
 	
 	static meta = function(){
-		var _out = {};
-		var _names = struct_get_names(__meta_default);
-		for (var i = 0; i < array_length(_names); i++) {
-			_out[$ _names[i]] = __meta_default[$ _names[i]];
+		
+		// avoid unneccessary struct creation
+		static __cache_last = -1;
+		static __names = undefined;
+		if __cache != __cache_last {
+			__names = struct_get_names(__meta_default);
+			__cache_last = __cache;
 		}
+		
+		// set up default metadata
+		var _out = {};
+		for (var i = 0; i < array_length(__names); i++) {
+			_out[$ __names[i]] = __meta_default[$ __names[i]];
+		}
+		
+		// override defaults with current frame's metadata
 		var _datas = __meta_items[$ get()];
 		if _datas != undefined {
 			for (var j = 0; j < array_length(_datas); j++) {
-				var _names = struct_get_names(_datas[j]);
-				for (var i = 0; i < array_length(_names); i++) {
-					_out[$ _names[i]] = _datas[j][$ _names[i]];
+				
+				for (var i = 0; i < array_length(__names); i++) {
+					var _item = _datas[j][$ __names[i]];
+					
+					if _item != undefined _out[$ __names[i]] = _item;
 				}
+				
 			}
 		}
+		
 		return _out;
 	}
 	
