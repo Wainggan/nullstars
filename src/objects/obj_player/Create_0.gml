@@ -276,7 +276,14 @@ update_tail = function(_p, i, _points){
 	var _scale_nor = (i / _len);
 	var _scale_inv = (_len - i) / _len;
 	
-	if holding {
+	_p.weight = 0;
+	_p.x_move = 0;
+	_p.y_move = 0;
+	
+	if state.is(state_swim) && swim_bullet {
+		_p.damp = 0.5;
+		
+	} else if holding {
 		_p.damp = 0.8
 		_p.weight = 6;
 		
@@ -293,10 +300,8 @@ update_tail = function(_p, i, _points){
 			
 		}
 		
-		
 	} else {
-		_p.damp = 0.8
-		_p.weight = 2 + _scale_inv;
+		_p.damp = 0.8;
 		
 		var _d = sin(global.time / 60 - i * 0.6)
 		_p.x_move = -dir * (power(_scale_inv, 6) * 6 + 0.1)
