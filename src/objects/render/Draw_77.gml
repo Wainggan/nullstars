@@ -72,7 +72,7 @@ if global.config.graphics_post_outline {
 gpu_set_colorwriteenable(true, true, true, true);
 
 
-if instance_number(obj_effect_wave) == 0 || global.settings.graphic.distortion != 0 {
+if instance_number(obj_effect_wave) == 0 || global.settings.graphic.distortion == 0 {
 } else {
 	
 	surface_set_target(surf_ping);
