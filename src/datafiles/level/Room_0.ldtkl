@@ -425,7 +425,7 @@
 					"fieldInstances": [{ "__identifier": "text", "__type": "String", "__value": "-- crystals\n* they root into the ground, consuming undiscriminately. \n* it is said that their glow will bring the end of times. \n* time has already ended. this legend is meaningless. a distilled bad omen. ", "__tile": null, "defUid": 266, "realEditorValues": [{
 						"id": "V_String",
 						"params": [
-							"-- crystals\n* they root into the ground, consuming undiscriminately. \n* it is said that their glow will bring the end of times. \n* time has already ended. this legend is meaningless. a distilled bad omen. "
+							"-- crystals\\n* they root into the ground, consuming undiscriminately. \\n* it is said that their glow will bring the end of times. \\n* time has already ended. this legend is meaningless. a distilled bad omen. "
 						]
 					}] }],
 					"__worldX": 1312,
@@ -445,7 +445,7 @@
 					"px": [208,464],
 					"fieldInstances": [{ "__identifier": "text", "__type": "String", "__value": "<-- exit\n\nsorry you didn't enjoy what was here. you may leave.", "__tile": null, "defUid": 266, "realEditorValues": [{
 						"id": "V_String",
-						"params": ["<-- exit\n\nsorry you didn't enjoy what was here. you may leave."]
+						"params": ["<-- exit\\n\\nsorry you didn't enjoy what was here. you may leave."]
 					}] }],
 					"__worldX": 208,
 					"__worldY": 464

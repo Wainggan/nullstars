@@ -378,9 +378,9 @@
 					"defUid": 70,
 					"px": [48,208],
 					"fieldInstances": [
-						{ "__identifier": "index", "__type": "String", "__value": "z", "__tile": null, "defUid": 275, "realEditorValues": [{
+						{ "__identifier": "index", "__type": "String", "__value": "e", "__tile": null, "defUid": 275, "realEditorValues": [{
 							"id": "V_String",
-							"params": ["z"]
+							"params": ["e"]
 						}] },
 						{ "__identifier": "waypoint", "__type": "Bool", "__value": true, "__tile": null, "defUid": 527, "realEditorValues": [] }
 					],
