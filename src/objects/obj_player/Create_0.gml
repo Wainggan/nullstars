@@ -1095,8 +1095,8 @@ state_free = state_base.add()
 	// hell
 	if buffer > 0 {
 		if grace > 0 {
-			if dash_grace > 0 || buffer_dash > 0 {
-				jumpdash()
+			if buffer_dash > 0 {
+				// jumpdash()
 			} else {
 				jump();
 				if !INPUT.check("jump") y_vel *= defs.gravity_damp;
