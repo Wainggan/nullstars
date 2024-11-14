@@ -64,6 +64,7 @@
     {"name":"obj_flag_stop","order":3,"path":"objects/obj_flag_stop/obj_flag_stop.yy",},
     {"name":"obj_glue","order":2,"path":"objects/obj_glue/obj_glue.yy",},
     {"name":"obj_input","order":21,"path":"objects/obj_input/obj_input.yy",},
+    {"name":"obj_kaizo","order":37,"path":"objects/obj_kaizo/obj_kaizo.yy",},
     {"name":"obj_lift_activate","order":2,"path":"objects/obj_lift_activate/obj_lift_activate.yy",},
     {"name":"obj_lift_attack","order":3,"path":"objects/obj_lift_attack/obj_lift_attack.yy",},
     {"name":"obj_lift","order":1,"path":"objects/obj_lift/obj_lift.yy",},

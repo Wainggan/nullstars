@@ -145,6 +145,7 @@
     {"id":{"name":"obj_flag_stop","path":"objects/obj_flag_stop/obj_flag_stop.yy",},},
     {"id":{"name":"obj_glue","path":"objects/obj_glue/obj_glue.yy",},},
     {"id":{"name":"obj_input","path":"objects/obj_input/obj_input.yy",},},
+    {"id":{"name":"obj_kaizo","path":"objects/obj_kaizo/obj_kaizo.yy",},},
     {"id":{"name":"obj_levelreset","path":"objects/obj_levelreset/obj_levelreset.yy",},},
     {"id":{"name":"obj_lift_activate","path":"objects/obj_lift_activate/obj_lift_activate.yy",},},
     {"id":{"name":"obj_lift_attack","path":"objects/obj_lift_attack/obj_lift_attack.yy",},},
