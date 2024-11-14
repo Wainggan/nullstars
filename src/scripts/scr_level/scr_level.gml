@@ -215,6 +215,14 @@ function level_get_vf() {
 	__out = vertex_format_end()
 	return __out
 }
+function level_get_vf_shadows() {
+	static __out = -1;
+	if __out != -1 return __out;
+	vertex_format_begin();
+	vertex_format_add_position_3d();
+	__out = vertex_format_end();
+	return __out
+}
 
 global.entities_toc = {}
 global.entities = {}
@@ -471,8 +479,8 @@ function Level() constructor {
 			
 		}
 		
-		if shadow_vb == -1 && global.config.graphics_lights_shadow {
-			render.setup_light(self);
+		if shadow_vb == -1 {
+			game_level_setup_light(self);
 		}
 		
 	}
@@ -482,13 +490,71 @@ function Level() constructor {
 		if !loaded return;
 		loaded = false;
 		
-		if shadow_vb != -1 {
-			vertex_delete_buffer(shadow_vb);
-			shadow_vb = -1;
-		}
+		//if shadow_vb != -1 {
+		//	vertex_delete_buffer(shadow_vb);
+		//	shadow_vb = -1;
+		//}
 	
 	}
 	
+	
+}
+
+function game_level_setup_light(_level) {
+	
+	static _Quad = function(_vb, _x1, _y1, _x2, _y2) {
+		vertex_position_3d(_vb, _x1, _y1, 0);
+		vertex_position_3d(_vb, _x1, _y1, 1);
+		vertex_position_3d(_vb, _x2, _y2, 0);
+		
+		vertex_position_3d(_vb, _x1, _y1, 1);
+		vertex_position_3d(_vb, _x2, _y2, 0);
+		vertex_position_3d(_vb, _x2, _y2, 1);
+	};
+	
+	var _tiles = _level.tiles;
+	var _x_off = _level.x;
+	var _y_off = _level.y;
+	
+	var _vb = vertex_create_buffer();
+	
+	var _count = 0;
+	
+	vertex_begin(_vb, level_get_vf_shadows());
+	
+	for (var _x = 0; _x < tilemap_get_width(_tiles); _x++) {
+		for (var _y = 0; _y < tilemap_get_height(_tiles); _y++) {
+			
+			if tilemap_get(_tiles, _x, _y) == 0 continue;
+			
+			var _cx = _x_off + _x * TILESIZE;
+			var _cy = _y_off + _y * TILESIZE;
+			var _h = TILESIZE;
+			
+			while _y < tilemap_get_height(_tiles) && tilemap_get(_tiles, _x, _y + 1) != 0 {
+				_h += TILESIZE;
+				_y++;
+			}
+			
+			_Quad(
+				_vb, 
+				_cx, _cy, _cx + TILESIZE, _cy + _h
+			);
+			_Quad(
+				_vb, 
+				_cx + TILESIZE, _cy, _cx, _cy + _h
+			);
+			
+			_count++;
+				
+		}
+	}
+	
+	vertex_end(_vb);
+	
+	show_debug_message($"{_count} shadow tiles")
+	
+	_level.shadow_vb = _vb;
 	
 }
 
