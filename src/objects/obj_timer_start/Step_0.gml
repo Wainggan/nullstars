@@ -39,8 +39,6 @@ last_alive = instance_exists(obj_player);
 if !game_timer_running() && _start {
 	game_timer_start(time * 60, self, ref);
 	
-	global.onoff = true;
-	
 	game_set_pause(4)
 	game_camera_set_shake(3, 0.5)
 	

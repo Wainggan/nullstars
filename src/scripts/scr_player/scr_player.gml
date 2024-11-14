@@ -14,13 +14,12 @@ function game_player_kill() {
 		with obj_Entity {
 			reset();
 		}
+		global.onoff = 1;
 	}));
 	
 	game_sound_play(sfx_death);
 	game_set_pause(14);
 	game_camera_set_shake(2, 0.4);
-	
-	global.onoff = 1;
 	
 	game_timer_stop()
 	instance_create_layer(obj_player.x, obj_player.y, "Instances", obj_player_death);
