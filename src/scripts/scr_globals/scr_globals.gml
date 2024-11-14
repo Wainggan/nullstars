@@ -1,5 +1,8 @@
 
-// gml_release_mode(true)
+#macro RELEASE false
+#macro Release:RELEASE true
+
+gml_release_mode(RELEASE);
 
 global.defs = {
 	terminal_vel: 5

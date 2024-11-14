@@ -18,3 +18,4 @@ with obj_spike_bubble {
 		instance_destroy()
 	}
 }
+
