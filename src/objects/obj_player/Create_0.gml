@@ -558,10 +558,12 @@ jumpdash = function(){
 		y_vel = -3
 		var _test = abs(dash_dir_x_vel) * 0.7 + 4;
 		x_vel = max(abs(x_vel), _test);
-		x_vel *= sign(_kh == 0 ? sign(x_vel) : _kh)
+		x_vel *= sign(_kh == 0 ? dash_dir_x_vel : _kh)
 		
 		key_hold = sign(x_vel);
 		key_hold_timer = 6;
+		
+		show_debug_message(x_vel)
 	}
 	
 	if x_lift == 0 && y_lift == 0 {
@@ -1107,7 +1109,7 @@ state_free = state_base.add()
 			if _close && dash_grace > 0 {
 				dash_grace = 2;
 			}
-			if dash_grace > 0 && ((_close && grace > 0) || !_close || dash_dir_y == 0) && !checkWall(sign(x_vel)) {
+			if dash_grace > 0 && dash_dir_y != -1 && ((_close && grace > 0) || !_close || dash_dir_y == 0) && !checkWall(sign(x_vel), 6) {
 				jumpdash()
 			} else if dash_kick_buffer > 0 {
 				if checkWall(1)
