@@ -556,9 +556,10 @@ jumpdash = function(){
 		
 	} else {
 		y_vel = -3
+		var _idk = x_vel; // ????
 		var _test = abs(dash_dir_x_vel) * 0.7 + 4;
 		x_vel = max(abs(x_vel), _test);
-		x_vel *= sign(_kh == 0 ? dash_dir_x_vel : _kh)
+		x_vel *= sign(_kh == 0 ? sign(_idk) : _kh)
 		
 		key_hold = sign(x_vel);
 		key_hold_timer = 6;
@@ -1097,8 +1098,10 @@ state_free = state_base.add()
 	// hell
 	if buffer > 0 {
 		if grace > 0 {
-			if buffer_dash > 0 {
-				// jumpdash()
+			if dash_grace > 0 {
+				jumpdash();
+			} else if buffer_dash > 0 {
+				//jumpdash()
 			} else {
 				jump();
 				if !INPUT.check("jump") y_vel *= defs.gravity_damp;
