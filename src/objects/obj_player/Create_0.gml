@@ -396,9 +396,9 @@ checkDeath = function(_x, _y){
 hold_begin = function(_inst){
 	holding = _inst;
 	anim_holding = 0;
-			
+	
 	holding.state.change(holding.state_held)
-			
+	
 	state.change(state_free);
 }
 hold_end = function(){
@@ -563,8 +563,6 @@ jumpdash = function(){
 		
 		key_hold = sign(x_vel);
 		key_hold_timer = 6;
-		
-		show_debug_message(x_vel)
 	}
 	
 	if x_lift == 0 && y_lift == 0 {
@@ -1108,7 +1106,8 @@ state_free = state_base.add()
 			}
 		} else {
 			
-			var _close = actor_collision(x, y + 32) || checkWall(-1, 12) || checkWall(1, 12)
+			var _close = actor_collision(x, y + 24) || checkWall(-1, 12) || checkWall(1, 12);
+			_close = _close && !checkDeath(x, y + 24)
 			if _close && dash_grace > 0 {
 				dash_grace = 2;
 			}
