@@ -251,7 +251,7 @@
 					"px": [144,368],
 					"fieldInstances": [
 						{ "__identifier": "name", "__type": "String", "__value": "none", "__tile": null, "defUid": 583, "realEditorValues": [] },
-						{ "__identifier": "time", "__type": "Float", "__value": 1, "__tile": null, "defUid": 158, "realEditorValues": [] },
+						{ "__identifier": "time", "__type": "Float", "__value": 12, "__tile": null, "defUid": 158, "realEditorValues": [{ "id": "V_Float", "params": [12] }] },
 						{ "__identifier": "ref", "__type": "EntityRef", "__value": {
 							"entityIid": "425be9d0-9b00-11ef-b27b-51231dc33789",
 							"layerIid": "5b515280-9b00-11ef-b1e1-65ed4dd1ad68",
@@ -4446,5 +4446,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [{ "levelIid": "195d8120-9b00-11ef-b27b-a358682a4525", "dir": "e" }]
+	"__neighbours": [{ "levelIid": "0da82250-9b00-11ef-b27b-c57cefe46b8c", "dir": "e" }]
 }
