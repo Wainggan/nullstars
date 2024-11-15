@@ -127,9 +127,9 @@
 					"defUid": 70,
 					"px": [48,528],
 					"fieldInstances": [
-						{ "__identifier": "index", "__type": "String", "__value": "z", "__tile": null, "defUid": 275, "realEditorValues": [{
+						{ "__identifier": "index", "__type": "String", "__value": "f", "__tile": null, "defUid": 275, "realEditorValues": [{
 							"id": "V_String",
-							"params": ["z"]
+							"params": ["f"]
 						}] },
 						{ "__identifier": "waypoint", "__type": "Bool", "__value": true, "__tile": null, "defUid": 527, "realEditorValues": [] }
 					],
@@ -4446,5 +4446,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": []
+	"__neighbours": [{ "levelIid": "195d8120-9b00-11ef-b27b-a358682a4525", "dir": "e" }]
 }

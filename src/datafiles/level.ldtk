@@ -11,7 +11,7 @@
 	"iid": "d5a16520-6280-11ee-ba61-ad454e9d2411",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 600,
+	"nextUid": 601,
 	"identifierStyle": "Free",
 	"toc": [
 		{
@@ -207,7 +207,13 @@
 					"levelIid": "5b512b70-9b00-11ef-b1e1-491955bf4018",
 					"layerIid": "5b515280-9b00-11ef-b1e1-65ed4dd1ad68",
 					"entityIid": "83c687d0-9b00-11ef-b1e1-eba03a50e094"
-				}, "worldX": 29104, "worldY": 8784, "widPx": 32, "heiPx": 32, "fields": { "index": "z", "waypoint": true } }
+				}, "worldX": 29104, "worldY": 8784, "widPx": 32, "heiPx": 32, "fields": { "index": "f", "waypoint": true } },
+				{ "iids": {
+					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
+					"levelIid": "195d8120-9b00-11ef-b27b-a358682a4525",
+					"layerIid": "195d8123-9b00-11ef-b27b-656c840b0691",
+					"entityIid": "26cf9500-9b00-11ef-b27b-bd841d04fb9e"
+				}, "worldX": 30416, "worldY": 8784, "widPx": 32, "heiPx": 32, "fields": { "index": "z", "waypoint": true } }
 			]
 		},
 		{
@@ -389,6 +395,17 @@
 					"layerIid": "5b515280-9b00-11ef-b1e1-65ed4dd1ad68",
 					"levelIid": "5b512b70-9b00-11ef-b1e1-491955bf4018",
 					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
+				}, "dir": "right", "name": "none", "terms": [] } },
+				{ "iids": {
+					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
+					"levelIid": "195d8120-9b00-11ef-b27b-a358682a4525",
+					"layerIid": "195d8123-9b00-11ef-b27b-656c840b0691",
+					"entityIid": "e2fcfe60-9b00-11ef-b27b-596182bf5d08"
+				}, "worldX": 30560, "worldY": 8624, "widPx": 16, "heiPx": 160, "fields": { "time": 1, "ref": {
+					"entityIid": "e5d7e3c0-9b00-11ef-b27b-8bb6974c6d29",
+					"layerIid": "195d8123-9b00-11ef-b27b-656c840b0691",
+					"levelIid": "195d8120-9b00-11ef-b27b-a358682a4525",
+					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3"
 				}, "dir": "right", "name": "none", "terms": [] } }
 			]
 		},
@@ -491,7 +508,13 @@
 					"levelIid": "5b512b70-9b00-11ef-b1e1-491955bf4018",
 					"layerIid": "5b515280-9b00-11ef-b1e1-65ed4dd1ad68",
 					"entityIid": "425be9d0-9b00-11ef-b27b-51231dc33789"
-				}, "worldX": 30144, "worldY": 8624, "widPx": 16, "heiPx": 160, "fields" : {} }
+				}, "worldX": 30144, "worldY": 8624, "widPx": 16, "heiPx": 160, "fields" : {} },
+				{ "iids": {
+					"worldIid": "d5a22870-6280-11ee-ba61-cd0c5d88e4b3",
+					"levelIid": "195d8120-9b00-11ef-b27b-a358682a4525",
+					"layerIid": "195d8123-9b00-11ef-b27b-656c840b0691",
+					"entityIid": "e5d7e3c0-9b00-11ef-b27b-8bb6974c6d29"
+				}, "worldX": 30336, "worldY": 8496, "widPx": 160, "heiPx": 16, "fields" : {} }
 			]
 		}
 	],
@@ -14479,7 +14502,7 @@
 				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
 			],
 			"layerInstances": null,
-			"__neighbours": []
+			"__neighbours": [{ "levelIid": "195d8120-9b00-11ef-b27b-a358682a4525", "dir": "e" }]
 		},
 		{
 			"identifier": "Room_51",
@@ -14515,6 +14538,38 @@
 			],
 			"layerInstances": null,
 			"__neighbours": [{ "levelIid": "ee2d9b90-9b00-11ef-ae8e-13f9eeaab133", "dir": "w" }]
+		},
+		{
+			"identifier": "Room_52",
+			"iid": "195d8120-9b00-11ef-b27b-a358682a4525",
+			"uid": 600,
+			"worldX": 30224,
+			"worldY": 8144,
+			"worldDepth": 0,
+			"pxWid": 1024,
+			"pxHei": 784,
+			"__bgColor": "#2D2A30",
+			"bgColor": null,
+			"useAutoIdentifier": true,
+			"bgRelPath": null,
+			"bgPos": null,
+			"bgPivotX": 0.5,
+			"bgPivotY": 0.5,
+			"__smartColor": "#8C8A8D",
+			"__bgPos": null,
+			"externalRelPath": "level/Room_52.ldtkl",
+			"fieldInstances": [
+				{ "__identifier": "preset", "__type": "LocalEnum.Level_Preset", "__value": null, "__tile": null, "defUid": 506, "realEditorValues": [] },
+				{ "__identifier": "area", "__type": "LocalEnum.Level_Area", "__value": null, "__tile": null, "defUid": 591, "realEditorValues": [] },
+				{ "__identifier": "background", "__type": "LocalEnum.Level_Background", "__value": null, "__tile": null, "defUid": 152, "realEditorValues": [] },
+				{ "__identifier": "music", "__type": "LocalEnum.Level_Music", "__value": null, "__tile": null, "defUid": 153, "realEditorValues": [] },
+				{ "__identifier": "biome", "__type": "LocalEnum.Level_Biome", "__value": null, "__tile": null, "defUid": 154, "realEditorValues": [] },
+				{ "__identifier": "lut_grade", "__type": "LocalEnum.Level_Grade", "__value": null, "__tile": null, "defUid": 504, "realEditorValues": [] },
+				{ "__identifier": "lut_mix", "__type": "Float", "__value": null, "__tile": null, "defUid": 502, "realEditorValues": [] },
+				{ "__identifier": "flags", "__type": "Array<LocalEnum.Level_Flags>", "__value": [], "__tile": null, "defUid": 451, "realEditorValues": [] }
+			],
+			"layerInstances": null,
+			"__neighbours": [{ "levelIid": "5b512b70-9b00-11ef-b1e1-491955bf4018", "dir": "w" }]
 		}
 	],
 	"worlds": [],
