@@ -199,22 +199,39 @@ if global.config.graphics_lights && global.settings.graphic.lights >= 1  {
 
 	surface_reset_target();
 	
+	var _u_destination = shader_get_sampler_index(shd_light_compose, "u_destination");
+	
 	// apply lights
-	gpu_set_colorwriteenable(true, true, true, false);
-	gpu_set_blendmode_ext(bm_dest_color, bm_zero);
 	
+	surface_set_target(surf_ping);
+		gpu_set_blendmode_ext(bm_one, bm_zero);
+		draw_surface(surf_layer_0, 0, 0);
+		gpu_set_blendmode(bm_normal);
+		
 	surface_set_target(surf_layer_0);
+		shader_set(shd_light_compose);
+		texture_set_stage(_u_destination, surface_get_texture(surf_ping));
 		draw_surface_ext(surf_lights, 0, 0, 1, 1, 0, c_white, 1);
+		shader_reset();
+		
+	surface_reset_target();
+	surface_reset_target();
 	
+	
+	surface_set_target(surf_ping);
+		gpu_set_blendmode_ext(bm_one, bm_zero);
+		draw_surface(surf_layer_1, 0, 0);
+		gpu_set_blendmode(bm_normal);
+		
 	surface_set_target(surf_layer_1);
+		shader_set(shd_light_compose);
+		texture_set_stage(_u_destination, surface_get_texture(surf_ping));
 		draw_surface_ext(surf_lights, 0, 0, 1, 1, 0, c_white, 1);
-	
+		shader_reset();
+		
 	surface_reset_target();
 	surface_reset_target();
 	
-	gpu_set_blendmode(bm_normal);
-	gpu_set_colorwriteenable(true, true, true, true);
-
 } else {
 	
 }
