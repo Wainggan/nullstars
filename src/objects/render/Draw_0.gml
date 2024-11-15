@@ -25,6 +25,7 @@ draw_clear_alpha(c_black, 0);
 // mask out light layer with whatever is on the application surface
 surface_set_target(surf_background_lights);
 draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_black, 1);
+draw_surface(surf_bubbles, 0, 0);
 surface_reset_target();
 
 surface_set_target(surf_layer_1);
@@ -88,7 +89,6 @@ if global.config.graphics_lights && global.settings.graphic.lights >= 1  {
 	gpu_set_blendmode(bm_add);
 
 	draw_surface(surf_background_lights, 0, 0);
-	draw_surface(surf_bubbles, 0, 0);
 
 	gpu_set_blendmode(bm_normal)
 
