@@ -11,8 +11,8 @@
 	"identifier": "Room_50",
 	"iid": "5b512b70-9b00-11ef-b1e1-491955bf4018",
 	"uid": 597,
-	"worldX": 29056,
-	"worldY": 8256,
+	"worldX": 28736,
+	"worldY": 7904,
 	"worldDepth": 0,
 	"pxWid": 1168,
 	"pxHei": 816,
@@ -133,8 +133,8 @@
 						}] },
 						{ "__identifier": "waypoint", "__type": "Bool", "__value": true, "__tile": null, "defUid": 527, "realEditorValues": [] }
 					],
-					"__worldX": 29104,
-					"__worldY": 8784
+					"__worldX": 28784,
+					"__worldY": 8432
 				},
 				{
 					"__identifier": "obj_lift_activate",
@@ -156,8 +156,8 @@
 						{ "__identifier": "spd", "__type": "Float", "__value": 6, "__tile": null, "defUid": 18, "realEditorValues": [] },
 						{ "__identifier": "reliant", "__type": "Bool", "__value": false, "__tile": null, "defUid": 203, "realEditorValues": [] }
 					],
-					"__worldX": 29360,
-					"__worldY": 8608
+					"__worldX": 29040,
+					"__worldY": 8256
 				},
 				{
 					"__identifier": "obj_ooswitch_place",
@@ -172,8 +172,8 @@
 					"defUid": 25,
 					"px": [248,200],
 					"fieldInstances": [],
-					"__worldX": 29304,
-					"__worldY": 8456
+					"__worldX": 28984,
+					"__worldY": 8104
 				},
 				{
 					"__identifier": "obj_lift_activate",
@@ -195,8 +195,8 @@
 						{ "__identifier": "spd", "__type": "Float", "__value": 6, "__tile": null, "defUid": 18, "realEditorValues": [] },
 						{ "__identifier": "reliant", "__type": "Bool", "__value": false, "__tile": null, "defUid": 203, "realEditorValues": [] }
 					],
-					"__worldX": 29424,
-					"__worldY": 8736
+					"__worldX": 29104,
+					"__worldY": 8384
 				},
 				{
 					"__identifier": "obj_dash",
@@ -211,8 +211,8 @@
 					"defUid": 21,
 					"px": [528,560],
 					"fieldInstances": [{ "__identifier": "regen", "__type": "Bool", "__value": true, "__tile": null, "defUid": 22, "realEditorValues": [] }],
-					"__worldX": 29584,
-					"__worldY": 8816
+					"__worldX": 29264,
+					"__worldY": 8464
 				},
 				{
 					"__identifier": "obj_lift_activate",
@@ -234,8 +234,8 @@
 						{ "__identifier": "spd", "__type": "Float", "__value": 6, "__tile": null, "defUid": 18, "realEditorValues": [] },
 						{ "__identifier": "reliant", "__type": "Bool", "__value": false, "__tile": null, "defUid": 203, "realEditorValues": [] }
 					],
-					"__worldX": 29760,
-					"__worldY": 8848
+					"__worldX": 29440,
+					"__worldY": 8496
 				},
 				{
 					"__identifier": "obj_timer_start",
@@ -264,8 +264,8 @@
 						{ "__identifier": "dir", "__type": "LocalEnum.Direction_4", "__value": "right", "__tile": null, "defUid": 448, "realEditorValues": [] },
 						{ "__identifier": "terms", "__type": "Array<LocalEnum.Terms>", "__value": [], "__tile": null, "defUid": 586, "realEditorValues": [] }
 					],
-					"__worldX": 29200,
-					"__worldY": 8624
+					"__worldX": 28880,
+					"__worldY": 8272
 				},
 				{
 					"__identifier": "obj_timer_end",
@@ -280,8 +280,8 @@
 					"defUid": 157,
 					"px": [1088,368],
 					"fieldInstances": [],
-					"__worldX": 30144,
-					"__worldY": 8624
+					"__worldX": 29824,
+					"__worldY": 8272
 				},
 				{
 					"__identifier": "obj_bounce",
@@ -296,8 +296,8 @@
 					"defUid": 200,
 					"px": [976,672],
 					"fieldInstances": [],
-					"__worldX": 30032,
-					"__worldY": 8928
+					"__worldX": 29712,
+					"__worldY": 8576
 				},
 				{
 					"__identifier": "obj_dash",
@@ -312,8 +312,8 @@
 					"defUid": 21,
 					"px": [768,272],
 					"fieldInstances": [{ "__identifier": "regen", "__type": "Bool", "__value": true, "__tile": null, "defUid": 22, "realEditorValues": [] }],
-					"__worldX": 29824,
-					"__worldY": 8528
+					"__worldX": 29504,
+					"__worldY": 8176
 				},
 				{
 					"__identifier": "obj_kaizo",
@@ -328,8 +328,8 @@
 					"defUid": 599,
 					"px": [992,528],
 					"fieldInstances": [],
-					"__worldX": 30048,
-					"__worldY": 8784
+					"__worldX": 29728,
+					"__worldY": 8432
 				},
 				{
 					"__identifier": "obj_dash",
@@ -344,8 +344,8 @@
 					"defUid": 21,
 					"px": [432,560],
 					"fieldInstances": [{ "__identifier": "regen", "__type": "Bool", "__value": true, "__tile": null, "defUid": 22, "realEditorValues": [] }],
-					"__worldX": 29488,
-					"__worldY": 8816
+					"__worldX": 29168,
+					"__worldY": 8464
 				}
 			]
 		},
@@ -3072,8 +3072,8 @@
 					"defUid": 244,
 					"px": [368,240],
 					"fieldInstances": [],
-					"__worldX": 29424,
-					"__worldY": 8496
+					"__worldX": 29104,
+					"__worldY": 8144
 				},
 				{
 					"__identifier": "obj_ss_up",
@@ -3088,8 +3088,8 @@
 					"defUid": 244,
 					"px": [608,304],
 					"fieldInstances": [],
-					"__worldX": 29664,
-					"__worldY": 8560
+					"__worldX": 29344,
+					"__worldY": 8208
 				},
 				{
 					"__identifier": "obj_ss_up",
@@ -3104,8 +3104,8 @@
 					"defUid": 244,
 					"px": [976,704],
 					"fieldInstances": [],
-					"__worldX": 30032,
-					"__worldY": 8960
+					"__worldX": 29712,
+					"__worldY": 8608
 				},
 				{
 					"__identifier": "obj_ss_left",
@@ -3120,8 +3120,8 @@
 					"defUid": 246,
 					"px": [848,592],
 					"fieldInstances": [],
-					"__worldX": 29904,
-					"__worldY": 8848
+					"__worldX": 29584,
+					"__worldY": 8496
 				},
 				{
 					"__identifier": "obj_oo_on",
@@ -3136,8 +3136,8 @@
 					"defUid": 27,
 					"px": [336,352],
 					"fieldInstances": [],
-					"__worldX": 29392,
-					"__worldY": 8608
+					"__worldX": 29072,
+					"__worldY": 8256
 				},
 				{
 					"__identifier": "obj_oo_on",
@@ -3152,8 +3152,8 @@
 					"defUid": 27,
 					"px": [848,160],
 					"fieldInstances": [],
-					"__worldX": 29904,
-					"__worldY": 8416
+					"__worldX": 29584,
+					"__worldY": 8064
 				},
 				{
 					"__identifier": "obj_ss_left",
@@ -3168,8 +3168,8 @@
 					"defUid": 246,
 					"px": [848,352],
 					"fieldInstances": [],
-					"__worldX": 29904,
-					"__worldY": 8608
+					"__worldX": 29584,
+					"__worldY": 8256
 				},
 				{
 					"__identifier": "obj_oo_on",
@@ -3184,8 +3184,8 @@
 					"defUid": 27,
 					"px": [800,688],
 					"fieldInstances": [],
-					"__worldX": 29856,
-					"__worldY": 8944
+					"__worldX": 29536,
+					"__worldY": 8592
 				}
 			]
 		},
@@ -3251,8 +3251,8 @@
 					"defUid": 560,
 					"px": [640,720],
 					"fieldInstances": [],
-					"__worldX": 29696,
-					"__worldY": 8976
+					"__worldX": 29376,
+					"__worldY": 8624
 				},
 				{
 					"__identifier": "obj_spike_pond",
@@ -3267,8 +3267,8 @@
 					"defUid": 560,
 					"px": [672,64],
 					"fieldInstances": [],
-					"__worldX": 29728,
-					"__worldY": 8320
+					"__worldX": 29408,
+					"__worldY": 7968
 				}
 			]
 		},
@@ -4446,5 +4446,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [{ "levelIid": "0da82250-9b00-11ef-b27b-c57cefe46b8c", "dir": "e" }]
+	"__neighbours": [{ "levelIid": "0da82250-9b00-11ef-b27b-c57cefe46b8c", "dir": "w" }]
 }

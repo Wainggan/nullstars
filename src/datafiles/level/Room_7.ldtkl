@@ -210,7 +210,7 @@
 					"px": [368,384],
 					"fieldInstances": [{ "__identifier": "text", "__type": "String", "__value": "omega\ncount how many sand is in this desert\nOKAY\nONE. TWO. THREE. FOUR", "__tile": null, "defUid": 266, "realEditorValues": [{
 						"id": "V_String",
-						"params": ["omega\\ncount how many sand is in this desert\\nOKAY\\nONE. TWO. THREE. FOUR"]
+						"params": ["omega\ncount how many sand is in this desert\nOKAY\nONE. TWO. THREE. FOUR"]
 					}] }],
 					"__worldX": 2992,
 					"__worldY": 416

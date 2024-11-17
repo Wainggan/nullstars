@@ -11,8 +11,8 @@
 	"identifier": "Room_51",
 	"iid": "043169c0-9b00-11ef-bcfd-2da5dac3a6d4",
 	"uid": 598,
-	"worldX": 28128,
-	"worldY": 7536,
+	"worldX": 25216,
+	"worldY": 6592,
 	"worldDepth": 0,
 	"pxWid": 960,
 	"pxHei": 544,
@@ -546,5 +546,5 @@
 			"entityInstances": []
 		}
 	],
-	"__neighbours": [{ "levelIid": "ee2d9b90-9b00-11ef-ae8e-13f9eeaab133", "dir": "w" }]
+	"__neighbours": []
 }
