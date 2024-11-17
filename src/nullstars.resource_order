@@ -222,6 +222,8 @@
     {"name":"spr_map_background","order":48,"path":"sprites/spr_map_background/spr_map_background.yy",},
     {"name":"spr_none","order":15,"path":"sprites/spr_none/spr_none.yy",},
     {"name":"spr_pixel","order":16,"path":"sprites/spr_pixel/spr_pixel.yy",},
+    {"name":"spr_player_accessory_flower","order":5,"path":"sprites/spr_player_accessory_flower/spr_player_accessory_flower.yy",},
+    {"name":"spr_player_cloth_shirt","order":6,"path":"sprites/spr_player_cloth_shirt/spr_player_cloth_shirt.yy",},
     {"name":"spr_player_eyes","order":3,"path":"sprites/spr_player_eyes/spr_player_eyes.yy",},
     {"name":"spr_player_tail","order":2,"path":"sprites/spr_player_tail/spr_player_tail.yy",},
     {"name":"spr_sign_board","order":40,"path":"sprites/spr_sign_board/spr_sign_board.yy",},

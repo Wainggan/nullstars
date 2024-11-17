@@ -328,6 +328,8 @@
     {"id":{"name":"spr_map_background","path":"sprites/spr_map_background/spr_map_background.yy",},},
     {"id":{"name":"spr_none","path":"sprites/spr_none/spr_none.yy",},},
     {"id":{"name":"spr_pixel","path":"sprites/spr_pixel/spr_pixel.yy",},},
+    {"id":{"name":"spr_player_accessory_flower","path":"sprites/spr_player_accessory_flower/spr_player_accessory_flower.yy",},},
+    {"id":{"name":"spr_player_cloth_shirt","path":"sprites/spr_player_cloth_shirt/spr_player_cloth_shirt.yy",},},
     {"id":{"name":"spr_player_eyes","path":"sprites/spr_player_eyes/spr_player_eyes.yy",},},
     {"id":{"name":"spr_player_tail","path":"sprites/spr_player_tail/spr_player_tail.yy",},},
     {"id":{"name":"spr_player","path":"sprites/spr_player/spr_player.yy",},},

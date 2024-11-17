@@ -111,9 +111,23 @@ self._blend = _mult;
 if !_meta.front
 	tail.each_reverse(tail_draw)
 
+var _frame = anim.get();
+
 draw_sprite_ext(
-	_sprite,
-	anim.get(), _pos_x, _pos_y,
+	spr_player,
+	_frame, _pos_x, _pos_y,
+	scale_x * _dir, scale_y,
+	_angle, _mult, image_alpha
+);
+if false draw_sprite_ext(
+	spr_player_cloth_shirt,
+	_frame, _pos_x, _pos_y,
+	scale_x * _dir, scale_y,
+	_angle, _mult, image_alpha
+);
+if false draw_sprite_ext(
+	spr_player_accessory_flower,
+	_frame, _pos_x, _pos_y,
 	scale_x * _dir, scale_y,
 	_angle, _mult, image_alpha
 );
