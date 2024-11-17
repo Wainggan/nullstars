@@ -56,83 +56,110 @@ defs = {
 	
 };
 
+var _s_stand = 0,
+	_s_walk_a1 = 3,
+	_s_walk_a2 = 4,
+	_s_walk_b1 = 1,
+	_s_walk_b2 = 2,
+	_s_jump = 5,
+	_s_fall = 6,
+	_s_dive = 7,
+	_s_dash = 9,
+	_s_long = 8,
+	_s_swim_idle_1 = 11,
+	_s_swim_idle_2 = 12,
+	_s_swim_1 = 13,
+	_s_swim_2 = 14,
+	_s_swim_bullet = 15,
+	_s_ledge = 16,
+	_s_crouch = 17,
+	_s_flip_1 = 18,
+	_s_flip_2 = 19,
+	_s_run_1 = 21,
+	_s_run_2 = 22,
+	_s_run_3 = 23,
+	_s_run_jump = 21,
+	_s_run_fall = 24;
+
 anim = new AnimController()
-.add("idle", new AnimLevel([0]))
-.add("walk", new AnimLevel([3, 1, 4, 2], 12))
-.add("jump", new AnimLevel([5]))
-.add("fall", new AnimLevel([6]))
-.add("dive", new AnimLevel([7]))
-.add("jab", new AnimLevel([11]))
-.add("longjump", new AnimLevel([8]))
-.add("swim", new AnimLevel([13, 14], 1 / 60))
-.add("swimming", new AnimLevel([15, 16], 1 / 60))
-.add("swimbullet", new AnimLevel([18]))
-.add("ledge", new AnimLevel([20]))
-.add("crouch", new AnimLevel([22]))
-.add("flip", new AnimLevel([24, 25], 1 / 14, 0))
-.add("run", new AnimLevel([29, 29, 27, 27, 27, 28, 28], 1/12))
-.add("runjump", new AnimLevel([27]))
-.add("runfall", new AnimLevel([30]))
-.add("land", new AnimLevel([29]))
+.add("idle", new AnimLevel([_s_stand]))
+.add("walk", new AnimLevel([
+		_s_walk_a1, _s_walk_b1,
+		_s_walk_a2, _s_walk_b2
+	], 12))
+.add("jump", new AnimLevel([_s_jump]))
+.add("fall", new AnimLevel([_s_fall]))
+.add("dive", new AnimLevel([_s_dive]))
+.add("jab", new AnimLevel([_s_dash]))
+.add("longjump", new AnimLevel([_s_long]))
+.add("swim", new AnimLevel([_s_swim_idle_1, _s_swim_idle_2], 1 / 60))
+.add("swimming", new AnimLevel([_s_swim_1, _s_swim_2], 1 / 60))
+.add("swimbullet", new AnimLevel([_s_swim_bullet]))
+.add("ledge", new AnimLevel([_s_ledge]))
+.add("crouch", new AnimLevel([_s_crouch]))
+.add("flip", new AnimLevel([_s_flip_1, _s_flip_2], 1 / 14, 0))
+.add("run", new AnimLevel([
+		_s_run_1, _s_run_1,
+		_s_run_2, _s_run_2, _s_run_2,
+		_s_run_3, _s_run_3
+	], 1/12))
+.add("runjump", new AnimLevel([_s_run_jump]))
+.add("runfall", new AnimLevel([_s_run_fall]))
 
 .meta_default({
 	x: -2, y: -16,
-	eye_x: 2, eye_y: -29,
 	front: false
 })
-.meta_items([1, 2], {
+.meta_items([_s_walk_a1, _s_walk_a2], {
 	y: -15
 })
-.meta_items([5, 6], {
+.meta_items([_s_jump, _s_fall], {
 	y: -17
 })
-.meta_items([7], {
+.meta_items([_s_dive], {
 	x: -4, y: -21,
 	front: true
 })
-.meta_items([8], {
+.meta_items([_s_long], {
 	x: -8, y: -16
 })
-.meta_items([11], {
+.meta_items([_s_dash], {
 	x: 3, y: -11
 })
-.meta_items([13], {
+.meta_items([_s_swim_idle_1], {
 	x: -4, y: -17
 })
-.meta_items([14], {
+.meta_items([_s_swim_idle_2], {
 	x: -5, y: -15
 })
-.meta_items([15], {
+.meta_items([_s_swim_1], {
 	x: -4, y: -16
 })
-.meta_items([16], {
+.meta_items([_s_swim_2], {
 	x: -4, y: -17
 })
-.meta_items([18, 19], {
+.meta_items([_s_swim_bullet], {
 	x: 0, y: -16
 })
-.meta_items([20], {
+.meta_items([_s_ledge], {
 	x: -4, y: -17
 })
-.meta_items([22], {
+.meta_items([_s_crouch], {
 	x: -5, y: -6
 })
-.meta_items([23], {
-	x: -2, y: -17
-})
-.meta_items([24, 25], {
+.meta_items([_s_flip_1, _s_flip_2], {
 	x: -2, y: -15
 })
-.meta_items([27], {
+.meta_items([_s_run_2], {
 	x: -5, y: -13
 })
-.meta_items([28], {
+.meta_items([_s_run_3], {
 	x: -8, y: -16
 })
-.meta_items([29], {
+.meta_items([_s_run_1], {
 	x: -8, y: -16
 })
-.meta_items([30], {
+.meta_items([_s_run_fall], {
 	x: -3, y: -15
 })
 
