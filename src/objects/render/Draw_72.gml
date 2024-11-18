@@ -44,9 +44,8 @@ if array_length(_lvl_onscreen) > 0 {
 		
 		if _this != _first {
 			
-			if _second == undefined {
-				_second = _this;
-			}
+			// thanks feather ???
+			_second ??= _this;
 			
 			// mask
 			draw_sprite_ext(
@@ -128,7 +127,7 @@ with obj_spike_pond {
 		spr_spike_pond_waves, _frame,
 		x - (16 - _size) - _cam_x, y - (16 - _size) - _cam_y,
 		sprite_width + (16 - _size) * 2, sprite_height + (16 - _size) * 2,
-		c_black, 1,
+		c_black, 1
 	);
 }
 
