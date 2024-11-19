@@ -164,11 +164,10 @@ if _lighting {
 				}
 			}
 		}
-		shader_reset();
-		
 		matrix_set(matrix_world, matrix_identity);
 		
 	}
+	shader_reset();
 	
 	surface_reset_target();
 	
