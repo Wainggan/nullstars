@@ -121,6 +121,7 @@ if config.light_method {
 			_y = floor(i_light / _size_index);
 		
 		with lights_array[i_light] {
+			// if other.config.light_method_scissor gpu_set_scissor(_x * _size, _y * _size, _size, _size);
 	
 			shader_set_uniform_f(_u_l_position, _x * _size + _size / 2, _y * _size + _size / 2);
 			shader_set_uniform_f(_u_l_size, size);
