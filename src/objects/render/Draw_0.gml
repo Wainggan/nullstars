@@ -74,8 +74,6 @@ if global.config.graphics_lights_rimblur && global.settings.graphic.lights >= 1 
 
 // lights
 
-#macro GAME_RENDER_LIGHT_SIZE 2048
-
 var _lighting = true;
 
 if global.settings.graphic.lights >= 1
@@ -106,8 +104,8 @@ if _lighting {
 	
 	var _u_s_position = shader_get_uniform(shd_light_shadow_new, "u_position");
 	
-	var _size = 256,
-		_size_index = GAME_RENDER_LIGHT_SIZE / _size;
+	var _size = GAME_RENDER_LIGHT_KERNEL,
+		_size_index = GAME_RENDER_LIGHT_SIZE / GAME_RENDER_LIGHT_KERNEL;
 	
 	shader_set(shd_light_color_new);
 	for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
