@@ -71,8 +71,10 @@ config = {
 	
 	light_rim: true,
 	light_spot: true,
+	light_spot_shader: true,
 	light_shadow: true,
 	light_method: true,
+	light_method_scissor: true,
 	
 	bubble_anim: true,
 	bubble_outline: true,

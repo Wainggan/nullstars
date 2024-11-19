@@ -78,7 +78,7 @@ var _lighting = true;
 
 // "simple" option
 if global.settings.graphic.lights >= 1
-if _lighting {
+if config.light_method {
 	
 	if !surface_exists(surf_lights_buffer) {
 		// big downside: this takes a lot of space.
@@ -121,7 +121,6 @@ if _lighting {
 			_y = floor(i_light / _size_index);
 		
 		with lights_array[i_light] {
-			gpu_set_scissor(_x * _size, _y * _size, _size, _size);
 	
 			shader_set_uniform_f(_u_l_position, _x * _size + _size / 2, _y * _size + _size / 2);
 			shader_set_uniform_f(_u_l_size, size);
@@ -145,7 +144,7 @@ if _lighting {
 				_y = floor(i_light / _size_index);
 			
 			with lights_array[i_light] {
-				gpu_set_scissor(_x * _size, _y * _size, _size, _size);
+				if other.config.light_method_scissor gpu_set_scissor(_x * _size, _y * _size, _size, _size);
 				
 				var _x_r = _x * _size + _size / 2,
 					_y_r = _y * _size + _size / 2;
