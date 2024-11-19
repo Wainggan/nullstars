@@ -266,3 +266,5 @@ if global.config.graphics_post_grading {
 
 draw_surface_ext(application_surface, 0, 0, _scale_w, _scale_h, 0, c_white, 1);
 
+if global.demonstrate
+draw_surface_ext(surf_lights_buffer, 0, 0, 1 / 6, 1 / 6, 0, c_white, 1);
