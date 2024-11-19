@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_globals",
   "parent":{
-    "name":"game",
-    "path":"folders/game.yy",
+    "name":"nullstars",
+    "path":"nullstars.yyp",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
