@@ -76,12 +76,15 @@ if global.config.graphics_lights_rimblur && global.settings.graphic.lights >= 1 
 
 var _lighting = true;
 
+// "simple" option
 if global.settings.graphic.lights >= 1
 if _lighting {
 	
 	if !surface_exists(surf_lights_buffer) {
 		surf_lights_buffer = surface_create(GAME_RENDER_LIGHT_SIZE, GAME_RENDER_LIGHT_SIZE, surface_rgba16float);
 	}
+	
+	// collect relevant lights into list
 	
 	array_delete(lights_array, 0, array_length(lights_array));
 	with obj_light {
@@ -107,6 +110,8 @@ if _lighting {
 	var _size = GAME_RENDER_LIGHT_KERNEL,
 		_size_index = GAME_RENDER_LIGHT_SIZE / GAME_RENDER_LIGHT_KERNEL;
 	
+	// 1st pass: draw all lights into surf_lights_buffer, seperated into groups
+	
 	shader_set(shd_light_color_new);
 	for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
 		var _x = i_light % _size_index,
@@ -123,7 +128,10 @@ if _lighting {
 		}
 	}
 	
+	// "shadows" option
 	if global.settings.graphic.lights >= 2 {
+		
+		// 2nd pass: draw shadows on top of light groups
 	
 		shader_set(shd_light_shadow_new);
 		for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
@@ -160,11 +168,14 @@ if _lighting {
 	if !surface_exists(surf_lights) {
 		surf_lights = surface_create(_cam_w, _cam_h, surface_rgba16float);
 	}
+	
+	// 3rd "pass": finally draw lights from surf_lights_buffer into surf_lights
 
 	surface_set_target(surf_lights);
 	draw_clear_alpha(#777788, 1);
 	
 	gpu_set_blendmode(bm_add);
+	// rim lighting
 	draw_surface(surf_background_lights, 0, 0);
 	
 	for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
