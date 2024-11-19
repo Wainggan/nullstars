@@ -62,18 +62,34 @@ game_update_fullscreen(global.settings.graphic.fullscreen);
 matrix_identity = matrix_build_identity();
 
 
-p = [
-	spr_grade_base,
-	spr_grade_decorrelation_1,
-	spr_grade_decorrelation_2,
-	spr_grade_decorrelation_3,
-	spr_grade_muddy,
-	spr_grade_snow,
-	spr_grade_saturate,
-	spr_grade_cracked,
-	spr_grade_meltingpot,
-	spr_grade_contrast_lightness,
-	spr_grade_bump_yellow,
-	spr_grade_mild,
-	spr_grade_waterfall,
-]
+config = {
+	background: true,
+	tiles_decor: true,
+	
+	particles_enable: true,
+	particles_light: true,
+	
+	light_rim: true,
+	light_spot: true,
+	light_shadow: true,
+	light_method: true,
+	
+	bubble_anim: true,
+	bubble_outline: true,
+	
+	water_anim_waves: true,
+	water_anim_refract: true,
+	water_outline: true,
+	
+	reflection_floor: true,
+	reflection_back: true,
+	
+	post_outline: true,
+	post_outline_except: true,
+	post_atmosphere: true,
+	post_bloom: true,
+	post_abberation: true,
+	post_cracks: true,
+	post_lut: true,
+};
+
