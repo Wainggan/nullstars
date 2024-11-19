@@ -3,10 +3,11 @@ varying vec4 v_color;
 
 uniform vec2 u_position;
 uniform float u_size;
+uniform float u_scale;
 uniform float u_intensity;
 
 void main() {
-	float dist = distance(gl_FragCoord.xy, u_position);
+	float dist = distance(gl_FragCoord.xy, u_position) * u_scale;
 	float bright = 1.0 / max(1.5 / u_intensity, dist - u_size);
 	// bright = pow(bright, 1.0 / 1.0);
 	

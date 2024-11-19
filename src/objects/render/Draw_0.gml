@@ -106,6 +106,7 @@ if config.light_method {
 
 	var _u_l_position = shader_get_uniform(shd_light_color_new, "u_position");
 	var _u_l_size = shader_get_uniform(shd_light_color_new, "u_size");
+	var _u_l_scale = shader_get_uniform(shd_light_color_new, "u_scale");
 	var _u_l_intensity = shader_get_uniform(shd_light_color_new, "u_intensity");
 	
 	var _u_s_position = shader_get_uniform(shd_light_shadow_new, "u_position");
@@ -122,9 +123,12 @@ if config.light_method {
 		
 		with lights_array[i_light] {
 			// if other.config.light_method_scissor gpu_set_scissor(_x * _size, _y * _size, _size, _size);
+			
+			var _size_scale = size div (GAME_RENDER_LIGHT_KERNEL / 2) + 1;
 	
 			shader_set_uniform_f(_u_l_position, _x * _size + _size / 2, _y * _size + _size / 2);
 			shader_set_uniform_f(_u_l_size, size);
+			shader_set_uniform_f(_u_l_scale, _size_scale);
 			shader_set_uniform_f(_u_l_intensity, intensity);
 	
 			draw_sprite_stretched_ext(spr_pixel, 0, _x * _size, _y * _size, _size, _size, color, 1);
@@ -150,10 +154,14 @@ if config.light_method {
 				var _x_r = _x * _size + _size / 2,
 					_y_r = _y * _size + _size / 2;
 				
+				var _size_scale = size div (GAME_RENDER_LIGHT_KERNEL / 2) + 1;
+				
 				shader_set_uniform_f(_u_s_position, x, y);
 				
-				_matrix[_matrix_ind.x] = -x + _x_r;
-				_matrix[_matrix_ind.y] = -y + _y_r;
+				_matrix[_matrix_ind.x] = -x / _size_scale + _x_r;
+				_matrix[_matrix_ind.y] = -y / _size_scale + _y_r;
+				_matrix[_matrix_ind.x_scale] = 1 / _size_scale;
+				_matrix[_matrix_ind.y_scale] = 1 / _size_scale;
 				matrix_set(matrix_world, _matrix);
 				
 				for (var i_lvl = 0; i_lvl < array_length(_lvl_onscreen); i_lvl++) {
@@ -191,12 +199,16 @@ if config.light_method {
 		
 		var _e = lights_array[i_light];
 		
-		draw_surface_part(
+		var _size_scale = _e.size div (GAME_RENDER_LIGHT_KERNEL / 2) + 1;
+		
+		draw_surface_part_ext(
 			surf_lights_buffer,
 			_x * _size, _y * _size,
 			_size, _size,
-			_e.x - _cam_x - _size / 2,
-			_e.y - _cam_y - _size / 2
+			_e.x - _cam_x - _size / 2 * _size_scale,
+			_e.y - _cam_y - _size / 2 * _size_scale,
+			_size_scale, _size_scale,
+			c_white, 1
 		);
 	}
 	
