@@ -932,7 +932,7 @@ state_base = state.add()
 	
 	if instance_exists(light) {
 		light.x = x;
-		light.y = y - (crouched ? 8 : 20);
+		light.y = y - (crouched ? 14 : 22);
 	}
 	
 	if checkDeath(x, y) {
