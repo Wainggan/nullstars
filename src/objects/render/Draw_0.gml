@@ -88,12 +88,13 @@ if _lighting {
 	
 	array_delete(lights_array, 0, array_length(lights_array));
 	with obj_light {
+		var _size = size * 2 + 16; // surely this won't cause an accident
 		if point_in_rectangle(
 			x, y,
-			_cam_x - size * 2,
-			_cam_y - size * 2,
-			_cam_x + _cam_w + size * 2,
-			_cam_y + _cam_h + size * 2) {
+			_cam_x - _size,
+			_cam_y - _size,
+			_cam_x + _cam_w + _size,
+			_cam_y + _cam_h + _size) {
 			array_push(other.lights_array, self);
 		}
 	}
