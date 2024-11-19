@@ -274,6 +274,25 @@
 					],
 					"__worldX": 12752,
 					"__worldY": 7248
+				},
+				{
+					"__identifier": "obj_decor_sign",
+					"__grid": [102,62],
+					"__pivot": [0,0],
+					"__tags": ["decor"],
+					"__tile": { "tilesetUid": 8, "x": 16, "y": 384, "w": 16, "h": 16 },
+					"__smartColor": "#FFFFFF",
+					"iid": "3a3b6cb0-9b00-11ef-a071-d9c8c4070dec",
+					"width": 32,
+					"height": 32,
+					"defUid": 265,
+					"px": [1632,992],
+					"fieldInstances": [
+						{ "__identifier": "text", "__type": "String", "__value": null, "__tile": null, "defUid": 266, "realEditorValues": [] },
+						{ "__identifier": "color", "__type": "Color", "__value": "#FFFFFF", "__tile": null, "defUid": 602, "realEditorValues": [] }
+					],
+					"__worldX": 13728,
+					"__worldY": 7680
 				}
 			]
 		},

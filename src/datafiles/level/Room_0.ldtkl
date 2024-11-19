@@ -416,18 +416,21 @@
 					"__pivot": [0,0],
 					"__tags": ["decor"],
 					"__tile": { "tilesetUid": 8, "x": 16, "y": 384, "w": 16, "h": 16 },
-					"__smartColor": "#262B44",
+					"__smartColor": "#FFFFFF",
 					"iid": "a6ae6d90-8990-11ee-a77a-2399aa250896",
 					"width": 32,
 					"height": 32,
 					"defUid": 265,
 					"px": [1312,912],
-					"fieldInstances": [{ "__identifier": "text", "__type": "String", "__value": "-- crystals\n* they root into the ground, consuming undiscriminately. \n* it is said that their glow will bring the end of times. \n* time has already ended. this legend is meaningless. a distilled bad omen. ", "__tile": null, "defUid": 266, "realEditorValues": [{
-						"id": "V_String",
-						"params": [
-							"-- crystals\n* they root into the ground, consuming undiscriminately. \n* it is said that their glow will bring the end of times. \n* time has already ended. this legend is meaningless. a distilled bad omen. "
-						]
-					}] }],
+					"fieldInstances": [
+						{ "__identifier": "text", "__type": "String", "__value": "-- crystals\n* it is said that their glow will bring the end of times. \n* time has already ended. this legend is meaningless.", "__tile": null, "defUid": 266, "realEditorValues": [{
+							"id": "V_String",
+							"params": [
+								"-- crystals\\n* it is said that their glow will bring the end of times. \\n* time has already ended. this legend is meaningless."
+							]
+						}] },
+						{ "__identifier": "color", "__type": "Color", "__value": "#FFFFFF", "__tile": null, "defUid": 602, "realEditorValues": [] }
+					],
 					"__worldX": 1312,
 					"__worldY": 912
 				},
@@ -437,16 +440,19 @@
 					"__pivot": [0,0],
 					"__tags": ["decor"],
 					"__tile": { "tilesetUid": 8, "x": 16, "y": 384, "w": 16, "h": 16 },
-					"__smartColor": "#262B44",
+					"__smartColor": "#FFFFFF",
 					"iid": "d5674e60-8990-11ee-a77a-8fc0ca67d72f",
 					"width": 32,
 					"height": 32,
 					"defUid": 265,
 					"px": [208,464],
-					"fieldInstances": [{ "__identifier": "text", "__type": "String", "__value": "<-- exit\n\nsorry you didn't enjoy what was here. you may leave.", "__tile": null, "defUid": 266, "realEditorValues": [{
-						"id": "V_String",
-						"params": ["<-- exit\n\nsorry you didn't enjoy what was here. you may leave."]
-					}] }],
+					"fieldInstances": [
+						{ "__identifier": "text", "__type": "String", "__value": "<-- exit\n\nsorry you didn't enjoy what was here. you may leave.", "__tile": null, "defUid": 266, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["<-- exit\\n\\nsorry you didn't enjoy what was here. you may leave."]
+						}] },
+						{ "__identifier": "color", "__type": "Color", "__value": "#FFFFFF", "__tile": null, "defUid": 602, "realEditorValues": [] }
+					],
 					"__worldX": 208,
 					"__worldY": 464
 				},

@@ -120,16 +120,19 @@
 					"__pivot": [0,0],
 					"__tags": ["decor"],
 					"__tile": { "tilesetUid": 8, "x": 16, "y": 384, "w": 16, "h": 16 },
-					"__smartColor": "#262B44",
+					"__smartColor": "#FFFFFF",
 					"iid": "d32037c0-9b00-11ef-ae8e-17784c6c0819",
 					"width": 32,
 					"height": 32,
 					"defUid": 265,
 					"px": [160,176],
-					"fieldInstances": [{ "__identifier": "text", "__type": "String", "__value": "pretend you got something really cool here", "__tile": null, "defUid": 266, "realEditorValues": [{
-						"id": "V_String",
-						"params": ["pretend you got something really cool here"]
-					}] }],
+					"fieldInstances": [
+						{ "__identifier": "text", "__type": "String", "__value": "pretend you got something really cool here", "__tile": null, "defUid": 266, "realEditorValues": [{
+							"id": "V_String",
+							"params": ["pretend you got something really cool here"]
+						}] },
+						{ "__identifier": "color", "__type": "Color", "__value": "#FFFFFF", "__tile": null, "defUid": 602, "realEditorValues": [] }
+					],
 					"__worldX": 25392,
 					"__worldY": 9120
 				},
