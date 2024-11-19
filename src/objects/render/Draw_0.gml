@@ -76,7 +76,10 @@ if global.config.graphics_lights_rimblur && global.settings.graphic.lights >= 1 
 
 #macro GAME_RENDER_LIGHT_SIZE 2048
 
-if global.demonstrate && global.settings.graphic.lights >= 1 {
+var _lighting = true;
+
+if global.settings.graphic.lights >= 1
+if _lighting {
 	
 	if !surface_exists(surf_lights_buffer) {
 		surf_lights_buffer = surface_create(GAME_RENDER_LIGHT_SIZE, GAME_RENDER_LIGHT_SIZE, surface_rgba16float);
@@ -122,32 +125,37 @@ if global.demonstrate && global.settings.graphic.lights >= 1 {
 		}
 	}
 	
-	shader_set(shd_light_shadow_new);
-	for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
-		var _x = i_light % _size_index,
-			_y = floor(i_light / _size_index);
-		
-		with lights_array[i_light] {
-			gpu_set_scissor(_x * _size, _y * _size, _size, _size);
+	if global.settings.graphic.lights >= 2 {
+	
+		shader_set(shd_light_shadow_new);
+		for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
+			var _x = i_light % _size_index,
+				_y = floor(i_light / _size_index);
 			
-			var _x_r = _x * _size + _size / 2,
-				_y_r = _y * _size + _size / 2;
-			
-			shader_set_uniform_f(_u_s_position, x, y);
-
-			matrix_set(matrix_world, matrix_build(-x + _x_r, -y + _y_r, 0, 0, 0, 0, 1, 1, 1));
-			
-			for (var i_lvl = 0; i_lvl < array_length(_lvl_onscreen); i_lvl++) {
-				var _lvl = _lvl_onscreen[i_lvl];
-				if _lvl.shadow_vb != -1 {
-					vertex_submit(_lvl.shadow_vb, pr_trianglelist, -1);
+			with lights_array[i_light] {
+				gpu_set_scissor(_x * _size, _y * _size, _size, _size);
+				
+				var _x_r = _x * _size + _size / 2,
+					_y_r = _y * _size + _size / 2;
+				
+				shader_set_uniform_f(_u_s_position, x, y);
+	
+				matrix_set(matrix_world, matrix_build(-x + _x_r, -y + _y_r, 0, 0, 0, 0, 1, 1, 1));
+				
+				for (var i_lvl = 0; i_lvl < array_length(_lvl_onscreen); i_lvl++) {
+					var _lvl = _lvl_onscreen[i_lvl];
+					if _lvl.shadow_vb != -1 {
+						vertex_submit(_lvl.shadow_vb, pr_trianglelist, -1);
+					}
 				}
 			}
 		}
+		shader_reset();
+		
+		matrix_set(matrix_world, matrix_build_identity());
+		
 	}
-	shader_reset();
 	
-	matrix_set(matrix_world, matrix_build_identity());
 	surface_reset_target();
 	
 	
@@ -211,9 +219,7 @@ if global.demonstrate && global.settings.graphic.lights >= 1 {
 	surface_reset_target();
 	surface_reset_target();
 	
-}
-else
-if global.settings.graphic.lights >= 1  {
+} else {
 	
 	if !surface_exists(surf_lights) {
 		surf_lights = surface_create(_cam_w, _cam_h, surface_rgba16float);
