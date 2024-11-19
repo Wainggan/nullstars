@@ -215,6 +215,41 @@ if config.light_method {
 	gpu_set_blendmode(bm_normal);
 	surface_reset_target();
 	
+	if config.light_method_blur {
+		
+		// shitty implementation
+		
+		if !surface_exists(surf_ping16) {
+			surf_ping16 = surface_create(WIDTH, HEIGHT, surface_rgba16float);
+		}
+		
+		var _u_kernel = shader_get_uniform(shd_blur, "u_kernel")
+		var _u_sigma = shader_get_uniform(shd_blur, "u_sigma")
+		var _u_direction = shader_get_uniform(shd_blur, "u_direction")
+		var _u_texel = shader_get_uniform(shd_blur, "u_texel")
+	
+		shader_set(shd_blur);
+	
+		shader_set_uniform_f(_u_kernel, 4);
+		shader_set_uniform_f(_u_sigma, 0.3);
+		shader_set_uniform_f(_u_texel, 1 / WIDTH, 1 / HEIGHT);
+	
+		shader_set_uniform_f(_u_direction, 0, 1);
+	
+		surface_set_target(surf_ping16);
+		draw_surface(surf_lights, 0, 0);
+		surface_reset_target();
+	
+		shader_set_uniform_f(_u_direction, 1, 0);
+	
+		surface_set_target(surf_lights);
+		draw_surface(surf_ping16, 0, 0);
+		surface_reset_target();
+		
+		shader_reset()
+		
+	}
+	
 	var _u_destination = shader_get_sampler_index(shd_light_compose, "u_destination");
 		
 	// apply lights

@@ -16,6 +16,7 @@ surf_layer_2 = -1;
 surf_layer_outline = -1;
 
 surf_ping = -1;
+surf_ping16 = -1;
 surf_pong = -1;
 
 surf_background_lights = -1;
@@ -75,6 +76,7 @@ config = {
 	light_shadow: true,
 	light_method: true,
 	light_method_scissor: true,
+	light_method_blur: false, // broken
 	
 	bubble_anim: true,
 	bubble_outline: true,
