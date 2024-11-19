@@ -35,6 +35,27 @@ function game_render_wave(_x, _y, _size, _life, _strength, _type) {
 	}
 }
 
+function util_matrix_get_alignment() {
+	static __out = undefined;
+	if __out == undefined {
+		var _get = matrix_build(-1, -2, -3, 0, 0, 0, -7, -8, -9);
+		var _x = -1, _y = -1, _z = -1,
+			_x_s = -1, _y_s = -1, _z_s = -1;
+		for (var i = 0; i < array_length(_get); i++) {
+			if _get[i] == -1 _x = i;
+			if _get[i] == -2 _y = i;
+			if _get[i] == -3 _z = i;
+			if _get[i] == -7 _x_s = i;
+			if _get[i] == -8 _y_s = i;
+			if _get[i] == -9 _z_s = i;
+		}
+		__out = {
+			x: _x, y: _y, z: _z,
+			x_scale: _x_s, y_scale: _y_s, z_scale: _z_s,
+		};
+	}
+	return __out;
+}
 
 function Mode(_init) constructor {
 	

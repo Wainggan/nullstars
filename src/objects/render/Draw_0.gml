@@ -4,7 +4,7 @@ var _cam_x = camera_get_view_x(view_camera[0]),
 	_cam_w = camera_get_view_width(view_camera[0]),
 	_cam_h = camera_get_view_height(view_camera[0]);
 
-var _lvl_onscreen = game_level_onscreen()
+var _lvl_onscreen = game_level_onscreen();
 
 /*
 note:
@@ -81,6 +81,8 @@ if global.settings.graphic.lights >= 1
 if _lighting {
 	
 	if !surface_exists(surf_lights_buffer) {
+		// big downside: this takes a lot of space.
+		/// @todo: change to `surface_r16float`, and use the 3rd pass to color?
 		surf_lights_buffer = surface_create(GAME_RENDER_LIGHT_SIZE, GAME_RENDER_LIGHT_SIZE, surface_rgba16float);
 	}
 	
@@ -133,6 +135,9 @@ if _lighting {
 	if global.settings.graphic.lights >= 2 {
 		
 		// 2nd pass: draw shadows on top of light groups
+		
+		var _matrix = matrix_build_identity();
+		var _matrix_ind = util_matrix_get_alignment();
 	
 		shader_set(shd_light_shadow_new);
 		for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
@@ -146,8 +151,10 @@ if _lighting {
 					_y_r = _y * _size + _size / 2;
 				
 				shader_set_uniform_f(_u_s_position, x, y);
-	
-				matrix_set(matrix_world, matrix_build(-x + _x_r, -y + _y_r, 0, 0, 0, 0, 1, 1, 1));
+				
+				_matrix[_matrix_ind.x] = -x + _x_r;
+				_matrix[_matrix_ind.y] = -y + _y_r;
+				matrix_set(matrix_world, _matrix);
 				
 				for (var i_lvl = 0; i_lvl < array_length(_lvl_onscreen); i_lvl++) {
 					var _lvl = _lvl_onscreen[i_lvl];
@@ -159,7 +166,7 @@ if _lighting {
 		}
 		shader_reset();
 		
-		matrix_set(matrix_world, matrix_build_identity());
+		matrix_set(matrix_world, matrix_identity);
 		
 	}
 	
@@ -345,7 +352,7 @@ if _lighting {
 		
 	}
 
-	matrix_set(matrix_world, matrix_build(0, 0, 0, 0, 0, 0, 1, 1, 1))
+	matrix_set(matrix_world, matrix_identity);
 
 	gpu_set_ztestenable(false);
 	//gpu_set_zwriteenable(true);
@@ -527,13 +534,18 @@ draw_surface(surf_mask, 0, 0);
 
 shader_set(shd_tiles);
 
+var _matrix = matrix_build_identity();
+var _matrix_ind = util_matrix_get_alignment();
+
 for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 	var _lvl = _lvl_onscreen[i]
-	matrix_set(matrix_world, matrix_build(_lvl.x - _cam_x, _lvl.y - _cam_y, 0, 0, 0, 0, 1, 1, 1));
+	_matrix[_matrix_ind.x] = _lvl.x - _cam_x;
+	_matrix[_matrix_ind.y] = _lvl.y - _cam_y;
+	matrix_set(matrix_world, _matrix);
 	vertex_submit(_lvl.vb_tiles_below, pr_trianglelist, tileset_get_texture(tl_tiles));
 	vertex_submit(_lvl.vb_front, pr_trianglelist, tileset_get_texture(tl_tiles));
 }
-matrix_set(matrix_world, matrix_build_identity());
+matrix_set(matrix_world, matrix_identity);
 
 shader_reset();
 

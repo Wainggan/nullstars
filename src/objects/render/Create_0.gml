@@ -59,6 +59,7 @@ lut_mode_mix = new Mode(1);
 game_update_windowscale(global.settings.graphic.windowscale + 1);
 game_update_fullscreen(global.settings.graphic.fullscreen);
 
+matrix_identity = matrix_build_identity();
 
 
 p = [
