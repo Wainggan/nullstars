@@ -6,6 +6,7 @@ depth = 10;
 mode = 0
 
 surf_lights = -1;
+surf_lights_buffer = -1;
 surf_mask = -1;
 surf_background = -1;
 
@@ -29,6 +30,9 @@ surf_wave = -1;
 surf_app = -1;
 surf_compose = -1;
 surf_lut = -1;
+
+lights_ds = ds_list_create();
+lights_array = [];
 
 surface_resize(application_surface, WIDTH, HEIGHT);
 

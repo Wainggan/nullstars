@@ -74,7 +74,146 @@ if global.config.graphics_lights_rimblur && global.settings.graphic.lights >= 1 
 
 // lights
 
-if global.config.graphics_lights && global.settings.graphic.lights >= 1  {
+#macro GAME_RENDER_LIGHT_SIZE 2048
+
+if global.demonstrate && global.settings.graphic.lights >= 1 {
+	
+	if !surface_exists(surf_lights_buffer) {
+		surf_lights_buffer = surface_create(GAME_RENDER_LIGHT_SIZE, GAME_RENDER_LIGHT_SIZE, surface_rgba16float);
+	}
+	
+	array_delete(lights_array, 0, array_length(lights_array));
+	with obj_light {
+		if point_in_rectangle(
+			x, y,
+			_cam_x - size * 2,
+			_cam_y - size * 2,
+			_cam_x + _cam_w + size * 2,
+			_cam_y + _cam_h + size * 2) {
+			array_push(other.lights_array, self);
+		}
+	}
+	
+	surface_set_target(surf_lights_buffer);
+	draw_clear_alpha(c_black, 1);
+
+	var _u_l_position = shader_get_uniform(shd_light_color_new, "u_position");
+	var _u_l_size = shader_get_uniform(shd_light_color_new, "u_size");
+	var _u_l_intensity = shader_get_uniform(shd_light_color_new, "u_intensity");
+	
+	var _u_s_position = shader_get_uniform(shd_light_shadow_new, "u_position");
+	
+	var _size = 256,
+		_size_index = GAME_RENDER_LIGHT_SIZE / _size;
+	
+	shader_set(shd_light_color_new);
+	for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
+		var _x = i_light % _size_index,
+			_y = floor(i_light / _size_index);
+		
+		with lights_array[i_light] {
+			gpu_set_scissor(_x * _size, _y * _size, _size, _size);
+	
+			shader_set_uniform_f(_u_l_position, _x * _size + _size / 2, _y * _size + _size / 2);
+			shader_set_uniform_f(_u_l_size, size);
+			shader_set_uniform_f(_u_l_intensity, intensity);
+	
+			draw_sprite_stretched_ext(spr_pixel, 0, _x * _size, _y * _size, _size, _size, color, 1);
+		}
+	}
+	
+	shader_set(shd_light_shadow_new);
+	for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
+		var _x = i_light % _size_index,
+			_y = floor(i_light / _size_index);
+		
+		with lights_array[i_light] {
+			gpu_set_scissor(_x * _size, _y * _size, _size, _size);
+			
+			var _x_r = _x * _size + _size / 2,
+				_y_r = _y * _size + _size / 2;
+			
+			shader_set_uniform_f(_u_s_position, x, y);
+
+			matrix_set(matrix_world, matrix_build(-x + _x_r, -y + _y_r, 0, 0, 0, 0, 1, 1, 1));
+			
+			for (var i_lvl = 0; i_lvl < array_length(_lvl_onscreen); i_lvl++) {
+				var _lvl = _lvl_onscreen[i_lvl];
+				if _lvl.shadow_vb != -1 {
+					vertex_submit(_lvl.shadow_vb, pr_trianglelist, -1);
+				}
+			}
+		}
+	}
+	shader_reset();
+	
+	matrix_set(matrix_world, matrix_build_identity());
+	surface_reset_target();
+	
+	
+	if !surface_exists(surf_lights) {
+		surf_lights = surface_create(_cam_w, _cam_h, surface_rgba16float);
+	}
+
+	surface_set_target(surf_lights);
+	draw_clear_alpha(#777788, 1);
+	
+	gpu_set_blendmode(bm_add);
+	draw_surface(surf_background_lights, 0, 0);
+	
+	for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
+		var _x = i_light % _size_index,
+			_y = floor(i_light / _size_index);
+		
+		var _e = lights_array[i_light];
+		
+		draw_surface_part(
+			surf_lights_buffer,
+			_x * _size, _y * _size,
+			_size, _size,
+			_e.x - _cam_x - _size / 2,
+			_e.y - _cam_y - _size / 2
+		);
+	}
+	
+	gpu_set_blendmode(bm_normal);
+	surface_reset_target();
+	
+	var _u_destination = shader_get_sampler_index(shd_light_compose, "u_destination");
+		
+	// apply lights
+	
+	surface_set_target(surf_ping);
+		gpu_set_blendmode_ext(bm_one, bm_zero);
+		draw_surface(surf_layer_0, 0, 0);
+		gpu_set_blendmode(bm_normal);
+		
+	surface_set_target(surf_layer_0);
+		shader_set(shd_light_compose);
+		texture_set_stage(_u_destination, surface_get_texture(surf_ping));
+		draw_surface_ext(surf_lights, 0, 0, 1, 1, 0, c_white, 1);
+		shader_reset();
+	
+	surface_reset_target();
+	surface_reset_target();
+	
+	surface_set_target(surf_ping);
+		gpu_set_blendmode_ext(bm_one, bm_zero);
+		draw_surface(surf_layer_1, 0, 0);
+		gpu_set_blendmode(bm_normal);
+		
+	surface_set_target(surf_layer_1);
+		shader_set(shd_light_compose);
+		texture_set_stage(_u_destination, surface_get_texture(surf_ping));
+		draw_surface_ext(surf_lights, 0, 0, 1, 1, 0, c_white, 1);
+		shader_reset();
+		
+	surface_reset_target();
+	surface_reset_target();
+	
+}
+else
+if global.settings.graphic.lights >= 1  {
 	
 	if !surface_exists(surf_lights) {
 		surf_lights = surface_create(_cam_w, _cam_h, surface_rgba16float);
