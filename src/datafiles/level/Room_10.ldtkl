@@ -1382,10 +1382,10 @@
 			"gridTiles": [],
 			"entityInstances": [
 				{
-					"__identifier": "obj_light",
+					"__identifier": "obj_decor_light",
 					"__grid": [23,16],
 					"__pivot": [0.5,0.5],
-					"__tags": ["light"],
+					"__tags": [ "light", "decor" ],
 					"__tile": { "tilesetUid": 8, "x": 400, "y": 0, "w": 16, "h": 16 },
 					"__smartColor": "#FFED6A",
 					"iid": "50f00270-8990-11ee-9c14-3555e290f2b6",

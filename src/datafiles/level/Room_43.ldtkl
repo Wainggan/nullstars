@@ -3970,10 +3970,10 @@
 			"gridTiles": [],
 			"entityInstances": [
 				{
-					"__identifier": "obj_light",
+					"__identifier": "obj_decor_light",
 					"__grid": [87,37],
 					"__pivot": [0.5,0.5],
-					"__tags": ["light"],
+					"__tags": [ "light", "decor" ],
 					"__tile": { "tilesetUid": 8, "x": 400, "y": 0, "w": 16, "h": 16 },
 					"__smartColor": "#99DDFF",
 					"iid": "9f6f8230-73f0-11ef-8761-d34531d8c0f9",
@@ -3990,10 +3990,10 @@
 					"__worldY": 8808
 				},
 				{
-					"__identifier": "obj_light",
+					"__identifier": "obj_decor_light",
 					"__grid": [47,35],
 					"__pivot": [0.5,0.5],
-					"__tags": ["light"],
+					"__tags": [ "light", "decor" ],
 					"__tile": { "tilesetUid": 8, "x": 400, "y": 0, "w": 16, "h": 16 },
 					"__smartColor": "#99DDFF",
 					"iid": "b14a2050-73f0-11ef-8761-0d705322738f",
@@ -4010,10 +4010,10 @@
 					"__worldY": 8776
 				},
 				{
-					"__identifier": "obj_light",
+					"__identifier": "obj_decor_light",
 					"__grid": [67,12],
 					"__pivot": [0.5,0.5],
-					"__tags": ["light"],
+					"__tags": [ "light", "decor" ],
 					"__tile": { "tilesetUid": 8, "x": 400, "y": 0, "w": 16, "h": 16 },
 					"__smartColor": "#99DDFF",
 					"iid": "d6d9c1e0-73f0-11ef-8761-d1776ae447bc",

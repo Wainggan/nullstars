@@ -9007,9 +9007,9 @@
 			]
 		},
 		{
-			"identifier": "obj_light",
+			"identifier": "obj_decor_light",
 			"uid": 138,
-			"tags": ["light"],
+			"tags": [ "light", "decor" ],
 			"exportToToc": false,
 			"allowOutOfBounds": false,
 			"doc": "emits a light. color controls the color, and higher intensities will whiten the light.",

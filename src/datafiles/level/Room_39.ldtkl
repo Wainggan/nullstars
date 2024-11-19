@@ -2547,10 +2547,10 @@
 			"gridTiles": [],
 			"entityInstances": [
 				{
-					"__identifier": "obj_light",
+					"__identifier": "obj_decor_light",
 					"__grid": [33,11],
 					"__pivot": [0.5,0.5],
-					"__tags": ["light"],
+					"__tags": [ "light", "decor" ],
 					"__tile": { "tilesetUid": 8, "x": 400, "y": 0, "w": 16, "h": 16 },
 					"__smartColor": "#99DDFF",
 					"iid": "eca89d10-73f0-11ef-88cf-cf2f19ec8468",
@@ -2567,10 +2567,10 @@
 					"__worldY": 8664
 				},
 				{
-					"__identifier": "obj_light",
+					"__identifier": "obj_decor_light",
 					"__grid": [62,30],
 					"__pivot": [0.5,0.5],
-					"__tags": ["light"],
+					"__tags": [ "light", "decor" ],
 					"__tile": { "tilesetUid": 8, "x": 400, "y": 0, "w": 16, "h": 16 },
 					"__smartColor": "#99DDFF",
 					"iid": "8709a3e0-73f0-11ef-88cf-5931005f4aa5",
