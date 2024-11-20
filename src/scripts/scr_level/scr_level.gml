@@ -206,6 +206,7 @@ function level_ldtk_buffer(_data, _buffer) {
 	vertex_end(_buffer)
 }
 
+/// @return {id.VertexFormat}
 function level_get_vf() {
 	static __out = -1;
 	if __out != -1 return __out
@@ -215,6 +216,7 @@ function level_get_vf() {
 	__out = vertex_format_end()
 	return __out
 }
+/// @return {id.VertexFormat}
 function level_get_vf_shadows() {
 	static __out = -1;
 	if __out != -1 return __out;
@@ -229,12 +231,15 @@ global.entities = {}
 
 function Level() constructor {
 	
+	prepared = false;
 	loaded = false;
 	
 	x = 0;
 	y = 0;
 	width = 0;
 	height = 0;
+	
+	file = -1;
 	
 	fields = {}
 	
@@ -278,7 +283,7 @@ function Level() constructor {
 	// shadows
 	shadow_vb = -1;
 	
-	// should only be run once, _level struct to be destroyed later
+	/// run once after having created Level()
 	static init = function(_level, _defs) {
 		
 		var _lv_x = floor(_level.worldX / TILESIZE),
@@ -328,6 +333,8 @@ function Level() constructor {
 		layer_set_visible(layer_spike, false)
 		tiles_spike = layer_tilemap_create(layer_spike, x, y, tl_debug_spikes, width / TILESIZE, height / TILESIZE);
 		
+		
+		var _time = get_timer();
 		
 		entities = []
 		
@@ -410,6 +417,7 @@ function Level() constructor {
 								_def = _defs.entities[_def];
 							} else {
 								if _def {
+									show_debug_message("what the fuck?");
 									_field.image_xscale = floor(_e.width / _def.width);
 									_field.image_yscale = floor(_e.height / _def.height);
 								} else {
@@ -446,8 +454,16 @@ function Level() constructor {
 				
 			}
 		}
+		
+		show_debug_message("unpack: {0}", (get_timer() - _time) / 1000)
 	}
 	
+	/// creates tile data from file
+	static prepare = function() {
+		
+	}
+	
+	/// flags level as loaded, loads entities
 	static load = function() {
 		
 		if loaded return;
@@ -485,6 +501,8 @@ function Level() constructor {
 		
 	}
 	
+	/// flags level as 'unloaded', probably destroying 
+	/// it's associated entities in the process.
 	static unload = function() {
 		
 		if !loaded return;
@@ -495,6 +513,11 @@ function Level() constructor {
 		//	shadow_vb = -1;
 		//}
 	
+	}
+	
+	/// destroys tile data.
+	static destroy = function() {
+		
 	}
 	
 	
@@ -552,7 +575,7 @@ function game_level_setup_light(_level) {
 	
 	vertex_end(_vb);
 	
-	vertex_freeze(_vb);
+	if _count > 0 vertex_freeze(_vb);
 	
 	show_debug_message($"{_count} shadow tiles")
 	

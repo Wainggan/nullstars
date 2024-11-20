@@ -426,7 +426,7 @@
 						{ "__identifier": "text", "__type": "String", "__value": "-- crystals\n* it is said that their glow will bring the end of times. \n* time has already ended. this legend is meaningless.", "__tile": null, "defUid": 266, "realEditorValues": [{
 							"id": "V_String",
 							"params": [
-								"-- crystals\\n* it is said that their glow will bring the end of times. \\n* time has already ended. this legend is meaningless."
+								"-- crystals\n* it is said that their glow will bring the end of times. \n* time has already ended. this legend is meaningless."
 							]
 						}] },
 						{ "__identifier": "color", "__type": "Color", "__value": "#FFFFFF", "__tile": null, "defUid": 602, "realEditorValues": [] }
@@ -449,7 +449,7 @@
 					"fieldInstances": [
 						{ "__identifier": "text", "__type": "String", "__value": "<-- exit\n\nsorry you didn't enjoy what was here. you may leave.", "__tile": null, "defUid": 266, "realEditorValues": [{
 							"id": "V_String",
-							"params": ["<-- exit\\n\\nsorry you didn't enjoy what was here. you may leave."]
+							"params": ["<-- exit\n\nsorry you didn't enjoy what was here. you may leave."]
 						}] },
 						{ "__identifier": "color", "__type": "Color", "__value": "#FFFFFF", "__tile": null, "defUid": 602, "realEditorValues": [] }
 					],

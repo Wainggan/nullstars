@@ -1,5 +1,9 @@
 
+var _time = get_timer();
+
 var _file = game_json_open("level.ldtk");
+
+show_debug_message("main file: {0}", (get_timer() - _time) / 1000)
 
 levels = [];
 
@@ -13,9 +17,11 @@ y_max = room_height;
 
 // partition
 for (var i = 0; i < array_length(_file.levels); i++) {
-	var _level = new Level()
+	var _level = new Level();
 	
+	var _time = get_timer();
 	var _file_level = game_json_open(_file.levels[i].externalRelPath);
+	show_debug_message("level file: {0}", (get_timer() - _time) / 1000)
 	
 	_level.init(_file_level, _file.defs);
 	
