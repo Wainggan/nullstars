@@ -552,6 +552,8 @@ function game_level_setup_light(_level) {
 	
 	vertex_end(_vb);
 	
+	vertex_freeze(_vb);
+	
 	show_debug_message($"{_count} shadow tiles")
 	
 	_level.shadow_vb = _vb;

@@ -74,8 +74,6 @@ if global.config.graphics_lights_rimblur && global.settings.graphic.lights >= 1 
 
 // lights
 
-var _lighting = true;
-
 // "simple" option
 if global.settings.graphic.lights >= 1
 if config.light_method {
