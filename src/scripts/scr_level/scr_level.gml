@@ -283,6 +283,89 @@ function level_unpack_field_inner(_buffer, _type) {
 	
 }
 
+function level_unpack_main(_buffer) {
+	
+	var _rooms = [];
+	
+	var _room_count = buffer_read(_buffer, buffer_u32);
+	for (var i_room = 0; i_room < _room_count; i_room++) {
+		
+		var _room_name = buffer_read(_buffer, buffer_string);
+		var _room_id = buffer_read(_buffer, buffer_string);
+		
+		var _room_x = buffer_read(_buffer, buffer_u32);
+		var _room_y = buffer_read(_buffer, buffer_u32);
+		var _room_width = buffer_read(_buffer, buffer_u32);
+		var _room_height = buffer_read(_buffer, buffer_u32);
+		
+		var _room_fields = {};
+		
+		var _fields_count = buffer_read(_buffer, buffer_u8);
+		for (var i_field = 0; i_field < _fields_count; i_field++) {
+			var _field = level_unpack_field(_buffer);
+			_room_fields[$ _field.name] = _field.value;
+		}
+		
+		array_push(_rooms, {
+			name: _room_name,
+			id: _room_id,
+			x: _room_x, y: _room_y,
+			width: _room_width, height: _room_height,
+			fields: _room_fields,
+		});
+	}
+	
+	var _toc = [];
+	
+	var _toc_count = buffer_read(_buffer, buffer_u32);
+	for (var i_toc = 0; i_toc < _toc_count; i_toc++) {
+		
+		var _toc_type = buffer_read(_buffer, buffer_u8);
+		var _toc_id = buffer_read(_buffer, buffer_string);
+		
+		var _toc_x = buffer_read(_buffer, buffer_u32);
+		var _toc_y = buffer_read(_buffer, buffer_u32);
+		var _toc_width = buffer_read(_buffer, buffer_u32);
+		var _toc_height = buffer_read(_buffer, buffer_u32);
+		
+		var _toc_object = "";
+		
+		var _toc_fields = {};
+		
+		switch _toc_type {
+			case 0:
+				_toc_object = nameof(obj_player);
+				break;
+			case 1:
+				_toc_object = nameof(obj_checkpoint);
+				_toc_fields.index = buffer_read(_buffer, buffer_string);
+				break;
+			case 2:
+				_toc_object = nameof(obj_timer_start);
+				_toc_fields.name = buffer_read(_buffer, buffer_string);
+				_toc_fields.time = buffer_read(_buffer, buffer_f32);
+				_toc_fields.dir = buffer_read(_buffer, buffer_string);
+				_toc_fields.ref = buffer_read(_buffer, buffer_string);
+				break;
+			case 3:
+				_toc_object = nameof(obj_timer_end);
+				break;
+		}
+		
+		array_push(_toc, {
+			object: _toc_object,
+			x: _toc_x, y: _toc_y,
+			width: _toc_width, height: _toc_height,
+			fields: _toc_fields,
+		});
+	}
+	
+	return {
+		rooms: _rooms,
+		toc: _toc,
+	};
+}
+
 
 /// @return {id.VertexFormat}
 function level_get_vf() {
