@@ -210,7 +210,7 @@ function level_ldtk_buffer(_data, _buffer) {
 
 function __newbufferread(_buffer, _offset) {
 	var _o = __oldbufferread(_buffer, _offset);
-	//show_debug_message($":: {buffer_tell(_buffer)} -> {_o}")
+	if _offset == buffer_string show_debug_message($":: {buffer_tell(_buffer)} -> {_o}")
 	return _o;
 }
 
@@ -220,6 +220,8 @@ function __newbufferread(_buffer, _offset) {
 function level_unpack_bin_field(_buffer) {
 	
 	var _name = buffer_read(_buffer, buffer_string);
+	if _name == ""
+			show_debug_message(buffer_tell(_buffer));
 	var _type = buffer_read(_buffer, buffer_u8);
 	var _isnull = buffer_read(_buffer, buffer_bool);
 	
@@ -231,6 +233,7 @@ function level_unpack_bin_field(_buffer) {
 			var _array_length = buffer_read(_buffer, buffer_u8);
 			_value = [];
 			for (var i = 0; i < _array_length; i++) {
+				buffer_read(_buffer, buffer_u8); // lol
 				var _out = level_unpack_bin_field_inner(_buffer, _array_type);
 				array_push(_value, _out);
 			}
@@ -241,6 +244,13 @@ function level_unpack_bin_field(_buffer) {
 	}
 	
 	if _isnull _value = undefined;
+		
+	if _name == "" {
+		show_debug_message(buffer_tell(_buffer));
+		show_debug_message(_type);
+		show_debug_message(_isnull);
+		show_debug_message(_value);
+	}
 	
 	return {
 		name: _name,
@@ -382,7 +392,7 @@ function level_unpack_bin_room(_buffer) {
 	
 	var _name = buffer_read(_buffer, buffer_string);
 	
-	var _layers = [];
+	var _layers = {};
 	
 	var _layer_count = buffer_read(_buffer, buffer_u8);
 	repeat _layer_count {
@@ -437,7 +447,25 @@ function level_unpack_bin_room(_buffer) {
 					var _entity_fields_count = buffer_read(_buffer, buffer_u8);
 					repeat _entity_fields_count {
 						var _entity_field = level_unpack_bin_field(_buffer);
+						try {
 						_entity_fields[$ _entity_field.name] = _entity_field.value;
+						} catch (e) {
+							show_debug_message("////")
+							show_debug_message(_name)
+							show_debug_message(_layer_name)
+							show_debug_message(_layer_type)
+							show_debug_message(_entity_name)
+							show_debug_message(_entity_id)
+							show_debug_message(_entity_tags_count)
+							show_debug_message(_entity_x)
+							show_debug_message(_entity_y)
+							show_debug_message(_entity_width)
+							show_debug_message(_entity_height)
+							show_debug_message(_entity_fields_count)
+							show_debug_message(_entity_field)
+							show_debug_message(_entity_fields)
+							throw e;
+						}
 					}
 					
 					array_push(_entities, {
@@ -513,7 +541,7 @@ function level_unpack_bin_room(_buffer) {
 		}
 		
 		_layer.name = _layer_name;
-		array_push(_layers, _layer);
+		_layers[$ _layer_name] = _layer;
 	}
 	
 	return {
@@ -547,7 +575,6 @@ global.entities = {}
 
 function Level() constructor {
 	
-	prepared = false;
 	loaded = false;
 	
 	x = 0;
@@ -600,26 +627,24 @@ function Level() constructor {
 	shadow_vb = -1;
 	
 	/// run once after having created Level()
-	static init = function(_level, _defs) {
+	static init = function(_level, _local) {
 		
-		var _lv_x = floor(_level.worldX / TILESIZE),
-			_lv_y = floor(_level.worldY / TILESIZE),
-			_lv_w = floor(_level.pxWid / TILESIZE),
-			_lv_h = floor(_level.pxHei / TILESIZE);
+		var _lv_x = _level.x div TILESIZE,
+			_lv_y = _level.y div TILESIZE,
+			_lv_w = _level.height div TILESIZE,
+			_lv_h = _level.width div TILESIZE;
 	
 		x = _lv_x * TILESIZE;
 		y = _lv_y * TILESIZE;
 		width = _lv_w * TILESIZE;
 		height = _lv_h * TILESIZE;
 		
-		for (var i_field = 0; i_field < array_length(_level.fieldInstances); i_field++) {
-			var _f = _level.fieldInstances[i_field]
-			fields[$ _f.__identifier] = level_ldtk_field(_f, x, y);
-		}
+		fields = _level.fields;
 		
-		layer = layer_create(0)
-		layer_set_visible(layer, false)
-		tiles = layer_tilemap_create(layer, x, y, tl_debug, width / TILESIZE, height / TILESIZE);
+		show_debug_message(json_stringify(_local.layers, true));
+		
+		layer = _local.layers[$ "Collisions"].layer;
+		tiles = _local.layers[$ "Collisions"].tiles;
 		
 		layer_front = layer_create(0)
 		layer_set_visible(layer_front, false)
@@ -653,6 +678,8 @@ function Level() constructor {
 		var _time = get_timer();
 		
 		entities = []
+		
+		/*
 		
 		for (var i_layer = 0; i_layer < array_length(_level.layerInstances); i_layer++) {
 			var _layer = _level.layerInstances[i_layer];
@@ -770,6 +797,7 @@ function Level() constructor {
 				
 			}
 		}
+		*/
 		
 		show_debug_message("unpack: {0}", (get_timer() - _time) / 1000)
 	}
