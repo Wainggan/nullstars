@@ -210,14 +210,14 @@ function level_ldtk_buffer(_data, _buffer) {
 
 function __newbufferread(_buffer, _offset) {
 	var _o = __oldbufferread(_buffer, _offset);
-	show_debug_message($":: {buffer_tell(_buffer)} -> {_o}")
+	//show_debug_message($":: {buffer_tell(_buffer)} -> {_o}")
 	return _o;
 }
 
 #macro buffer_read __newbufferread
 
 /// @arg {id.Buffer} _buffer
-function level_unpack_field(_buffer) {
+function level_unpack_bin_field(_buffer) {
 	
 	var _name = buffer_read(_buffer, buffer_string);
 	var _type = buffer_read(_buffer, buffer_u8);
@@ -231,12 +231,12 @@ function level_unpack_field(_buffer) {
 			var _array_length = buffer_read(_buffer, buffer_u8);
 			_value = [];
 			for (var i = 0; i < _array_length; i++) {
-				var _out = level_unpack_field_inner(_buffer, _array_type);
+				var _out = level_unpack_bin_field_inner(_buffer, _array_type);
 				array_push(_value, _out);
 			}
 			break;
 		default:
-			_value = level_unpack_field_inner(_buffer, _type);
+			_value = level_unpack_bin_field_inner(_buffer, _type);
 			break;
 	}
 	
@@ -251,7 +251,7 @@ function level_unpack_field(_buffer) {
 
 /// @arg {id.Buffer} _buffer
 /// @arg {real} _type
-function level_unpack_field_inner(_buffer, _type) {
+function level_unpack_bin_field_inner(_buffer, _type) {
 	
 	var _value;
 	
@@ -294,7 +294,7 @@ function level_unpack_field_inner(_buffer, _type) {
 	
 }
 
-function level_unpack_main(_buffer) {
+function level_unpack_bin_main(_buffer) {
 	
 	var _rooms = [];
 	
@@ -313,7 +313,7 @@ function level_unpack_main(_buffer) {
 		
 		var _fields_count = buffer_read(_buffer, buffer_u8);
 		for (var i_field = 0; i_field < _fields_count; i_field++) {
-			var _field = level_unpack_field(_buffer);
+			var _field = level_unpack_bin_field(_buffer);
 			_room_fields[$ _field.name] = _field.value;
 		}
 		
@@ -378,6 +378,149 @@ function level_unpack_main(_buffer) {
 	};
 }
 
+function level_unpack_bin_room(_buffer) {
+	
+	var _name = buffer_read(_buffer, buffer_string);
+	
+	var _layers = [];
+	
+	var _layer_count = buffer_read(_buffer, buffer_u8);
+	repeat _layer_count {
+		var _layer_name = buffer_read(_buffer, buffer_string);
+		var _layer_type = buffer_read(_buffer, buffer_u8);
+		
+		var _layer;
+		
+		switch _layer_type {
+			case 0:
+				var _tiles_width = buffer_read(_buffer, buffer_u32);
+				var _tiles_count = buffer_read(_buffer, buffer_u32);
+				var _tiles_height = _tiles_count / _tiles_width;
+			
+				var _layer_id = layer_create(0);
+				layer_set_visible(_layer_id, false);
+				var _layer_tiles = layer_tilemap_create(
+						_layer_id, 0, 0, tl_tiles,
+						_tiles_width, _tiles_height
+					);
+			
+				for (var i_tile = 0; i_tile < _tiles_count; i_tile++) {
+					var _tile = buffer_read(_buffer, buffer_u8);
+					tilemap_set(_layer_tiles, _tile, i_tile mod _tiles_width, i_tile div _tiles_width);
+				}
+			
+				_layer = {
+					layer: _layer_id,
+					tiles: _layer_tiles
+				};
+			break;
+			case 1:
+				var _entities = [];
+				var _entities_count = buffer_read(_buffer, buffer_u32);
+				repeat _entities_count {
+					var _entity_name = buffer_read(_buffer, buffer_string);
+					var _entity_id = buffer_read(_buffer, buffer_string);
+					
+					var _entity_tags = [];
+					var _entity_tags_count = buffer_read(_buffer, buffer_u8);
+					repeat _entity_tags_count {
+						var _entity_tag = buffer_read(_buffer, buffer_string);
+						array_push(_entity_tags, _entity_tag);
+					}
+					
+					var _entity_x = buffer_read(_buffer, buffer_u32);
+					var _entity_y = buffer_read(_buffer, buffer_u32);
+					var _entity_width = buffer_read(_buffer, buffer_u32);
+					var _entity_height = buffer_read(_buffer, buffer_u32);
+					
+					var _entity_fields = {};
+					var _entity_fields_count = buffer_read(_buffer, buffer_u8);
+					repeat _entity_fields_count {
+						var _entity_field = level_unpack_bin_field(_buffer);
+						_entity_fields[$ _entity_field.name] = _entity_field.value;
+					}
+					
+					array_push(_entities, {
+						object: _entity_name,
+						id: _entity_id,
+						tags: _entity_tags,
+						x: _entity_x, y: _entity_y,
+						width: _entity_width, height: _entity_height,
+						fields: _entity_fields,
+					});
+				}
+				_layer = {
+					entities: _entities,
+				};
+			break;
+			case 2:
+			case 3:
+				var _tiles_count = buffer_read(_buffer, buffer_u32);	
+			
+				var _tiles_buffer = vertex_create_buffer();
+				vertex_begin(_tiles_buffer, level_get_vf());
+			
+				var _ts_info = tileset_get_info(tl_tiles);
+				var _ts_width = _ts_info.tile_width + 2 * _ts_info.tile_horizontal_separator;
+				var _ts_height = _ts_info.tile_height + 2 * _ts_info.tile_vertical_separator;
+			
+				var _tex_rx = texture_get_texel_width(_ts_info.texture);
+				var _tex_ry = texture_get_texel_height(_ts_info.texture);
+			
+				var _uv_x = tileset_get_uvs(tl_tiles)[0];
+				var _uv_y = tileset_get_uvs(tl_tiles)[1];
+			
+				repeat _tiles_count {
+					var _t = buffer_read(_buffer, buffer_u32);
+					var _t_x = buffer_read(_buffer, buffer_u32);
+					var _t_y = buffer_read(_buffer, buffer_u32);
+			
+					var _ts_tile_x = (_t mod _ts_info.tile_columns) * _ts_width;
+					var _ts_tile_y = (_t div _ts_info.tile_columns) * _ts_height;
+			
+					var _uv_t_x = _uv_x + _ts_tile_x * _tex_rx;
+					var _uv_t_y = _uv_y + _ts_tile_y * _tex_ry;
+			
+					// tri 1
+					vertex_position(_tiles_buffer, _t_x, _t_y);
+					vertex_texcoord(_tiles_buffer, _uv_t_x, _uv_t_y);
+			
+					vertex_position(_tiles_buffer, _t_x + TILESIZE, _t_y);
+					vertex_texcoord(_tiles_buffer, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y);
+			
+					vertex_position(_tiles_buffer, _t_x + TILESIZE, _t_y + TILESIZE);
+					vertex_texcoord(_tiles_buffer, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y + TILESIZE * _tex_ry);
+			
+					// tri 2
+					vertex_position(_tiles_buffer, _t_x, _t_y);
+					vertex_texcoord(_tiles_buffer, _uv_t_x, _uv_t_y);
+			
+					vertex_position(_tiles_buffer, _t_x, _t_y + TILESIZE);
+					vertex_texcoord(_tiles_buffer, _uv_t_x, _uv_t_y + TILESIZE * _tex_ry);
+			
+					vertex_position(_tiles_buffer, _t_x + TILESIZE, _t_y + TILESIZE);
+					vertex_texcoord(_tiles_buffer, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y + TILESIZE * _tex_ry);
+				}
+				
+				vertex_end(_tiles_buffer);
+				
+				_layer = {
+					buffer: _tiles_buffer
+				};
+			break;
+			default:
+				show_debug_message($"impending doom... {_layer_type}");
+		}
+		
+		_layer.name = _layer_name;
+		array_push(_layers, _layer);
+	}
+	
+	return {
+		name: _name,
+		layers: _layers,
+	};
+}
 
 /// @return {id.VertexFormat}
 function level_get_vf() {
