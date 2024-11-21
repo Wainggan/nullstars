@@ -145,8 +145,15 @@ fn parse_root(json: &Value) -> (Vec<u8>, Vec<&str>) {
 
 	let toc = file.get("toc").unwrap().as_array().unwrap();
 
-	println!("total toc: {}", toc.len());
-	buffer.extend_from_slice(&(toc.len() as u32).to_le_bytes());
+	let mut toc_count = 0;
+	for item in toc {
+		let item = item.as_object().unwrap();
+		let item= item.get("instancesData").unwrap().as_array().unwrap();
+		toc_count += item.len();
+	}
+
+	println!("total toc: {}", toc_count);
+	buffer.extend_from_slice(&(toc_count as u32).to_le_bytes());
 
 	for item in toc {
 		let item = item.as_object().unwrap();
