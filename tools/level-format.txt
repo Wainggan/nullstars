@@ -61,14 +61,14 @@ string = u8* + '\0'
 			.Field
 	u32 -> TocLength
 	[TocLength]
-		string		# object name
+		u8 -> ObjectType
 		string		# id
 		u32			# x
 		u32			# y
 		u32			# width
 		u32			# height
 		
-		u8 ?		# object type
+		ObjectType ? # object type
 			: 0		# "obj_player"
 		
 			: 1		# "obj_checkpoint"
@@ -77,7 +77,7 @@ string = u8* + '\0'
 			: 2		# "obj_timer_start"
 		string		# timer name
 		f32			# timer duration
-		u8			# timer direction
+		string		# timer direction
 		string		# obj_timer_end id
 			
 			: 3		# "obj_timer_end"

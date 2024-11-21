@@ -133,6 +133,82 @@ fn parse_root(json: &Value) -> (Vec<u8>, Vec<&str>) {
 
 	}
 
+	let toc = file.get("toc").unwrap().as_array().unwrap();
+
+	println!("total toc: {}", toc.len());
+	buffer.extend_from_slice(&(toc.len() as u32).to_le_bytes());
+
+	for item in toc {
+		let item = item.as_object().unwrap();
+
+		let kind = item.get("identifier").unwrap().as_str().unwrap();
+		let kind: u8 = match kind {
+			"obj_player" => 0,
+			"obj_checkpoint" => 1,
+			"obj_timer_start" => 2,
+			"obj_timer_end" => 3,
+			_ => panic!("{} unimplemented", kind),
+		};
+
+		for item in item.get("instancesData").unwrap().as_array().unwrap() {
+			let item = item.as_object().unwrap();
+
+			let id = item.get("iids").unwrap()
+				.as_object().unwrap()
+				.get("entityIid").unwrap()
+				.as_str().unwrap();
+
+			let x = item.get("worldX").unwrap().as_u64().unwrap() as u32;
+			let y = item.get("worldY").unwrap().as_u64().unwrap() as u32;
+			let width = item.get("widPx").unwrap().as_u64().unwrap() as u32;
+			let height = item.get("heiPx").unwrap().as_u64().unwrap() as u32;
+
+			buffer.push(kind);
+
+			buffer.extend_from_slice(id.as_bytes());
+			buffer.push(0);
+
+			buffer.extend_from_slice(&x.to_le_bytes());
+			buffer.extend_from_slice(&y.to_le_bytes());
+			buffer.extend_from_slice(&width.to_le_bytes());
+			buffer.extend_from_slice(&height.to_le_bytes());
+
+			let fields = item.get("fields").unwrap()
+				.as_object().unwrap();
+
+			match kind {
+				1 => { // obj_checkpoint
+					let index = fields.get("index").unwrap().as_str().unwrap();
+
+					buffer.extend_from_slice(index.as_bytes());
+					buffer.push(0);
+				},
+				2 => { // obj_timer_start
+					let name = fields.get("name").unwrap().as_str().unwrap();
+					let time = fields.get("time").unwrap().as_f64().unwrap() as f32;
+					let dir = fields.get("dir").unwrap().as_str().unwrap();
+					let other = fields.get("ref").unwrap()
+						.as_object().unwrap()
+						.get("entityIid").unwrap()
+						.as_str().unwrap();
+
+					buffer.extend_from_slice(name.as_bytes());
+					buffer.push(0);
+
+					buffer.extend_from_slice(&time.to_le_bytes());
+
+					buffer.extend_from_slice(dir.as_bytes());
+					buffer.push(0);
+
+					buffer.extend_from_slice(other.as_bytes());
+					buffer.push(0);
+				},
+				_ => (),
+			}
+		}
+
+	}
+
 	(buffer, refs)
 }
 
