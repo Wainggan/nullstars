@@ -206,22 +206,11 @@ function level_ldtk_buffer(_data, _buffer) {
 	vertex_end(_buffer)
 }
 
-#macro __oldbufferread buffer_read
-
-function __newbufferread(_buffer, _offset) {
-	var _o = __oldbufferread(_buffer, _offset);
-	if _offset == buffer_string show_debug_message($":: {buffer_tell(_buffer)} -> {_o}")
-	return _o;
-}
-
-#macro buffer_read __newbufferread
 
 /// @arg {id.Buffer} _buffer
 function level_unpack_bin_field(_buffer) {
 	
 	var _name = buffer_read(_buffer, buffer_string);
-	if _name == ""
-			show_debug_message(buffer_tell(_buffer));
 	var _type = buffer_read(_buffer, buffer_u8);
 	var _isnull = buffer_read(_buffer, buffer_bool);
 	
@@ -244,13 +233,6 @@ function level_unpack_bin_field(_buffer) {
 	}
 	
 	if _isnull _value = undefined;
-		
-	if _name == "" {
-		show_debug_message(buffer_tell(_buffer));
-		show_debug_message(_type);
-		show_debug_message(_isnull);
-		show_debug_message(_value);
-	}
 	
 	return {
 		name: _name,
@@ -447,25 +429,7 @@ function level_unpack_bin_room(_buffer) {
 					var _entity_fields_count = buffer_read(_buffer, buffer_u8);
 					repeat _entity_fields_count {
 						var _entity_field = level_unpack_bin_field(_buffer);
-						try {
 						_entity_fields[$ _entity_field.name] = _entity_field.value;
-						} catch (e) {
-							show_debug_message("////")
-							show_debug_message(_name)
-							show_debug_message(_layer_name)
-							show_debug_message(_layer_type)
-							show_debug_message(_entity_name)
-							show_debug_message(_entity_id)
-							show_debug_message(_entity_tags_count)
-							show_debug_message(_entity_x)
-							show_debug_message(_entity_y)
-							show_debug_message(_entity_width)
-							show_debug_message(_entity_height)
-							show_debug_message(_entity_fields_count)
-							show_debug_message(_entity_field)
-							show_debug_message(_entity_fields)
-							throw e;
-						}
 					}
 					
 					array_push(_entities, {
@@ -640,9 +604,7 @@ function Level() constructor {
 		height = _lv_h * TILESIZE;
 		
 		fields = _level.fields;
-		
-		show_debug_message(json_stringify(_local.layers, true));
-		
+				
 		layer = _local.layers[$ "Collisions"].layer;
 		tiles = _local.layers[$ "Collisions"].tiles;
 		
