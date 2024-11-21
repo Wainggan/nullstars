@@ -395,10 +395,45 @@ fn parse_field_array(json: &Value, buffer: &mut Vec<u8>) {
 
 		let j_part = j_part.as_array().unwrap();
 
+		buffer.push(255);
+		buffer.push(0);
+
+		let kind = match j_type_in {
+			"Int" => 0,
+			"Float" => 1,
+			"Bool" => 2,
+			"String" => 3,
+			"Color" => 4,
+			"Point" => 5,
+			"EntityRef" => 6,
+			_ => if j_type_in.starts_with("LocalEnum") {
+				3
+			} else {
+				todo!()
+			},
+		};
+		buffer.push(kind);
+		buffer.push(j_part.len() as u8);
+
 		for val in j_part {
 			parse_field_instance(val, j_type_in, buffer);
 		}
 	} else {
+		let kind = match j_type {
+			"Int" => 0,
+			"Float" => 1,
+			"Bool" => 2,
+			"String" => 3,
+			"Color" => 4,
+			"Point" => 5,
+			"EntityRef" => 6,
+			_ => if j_type.starts_with("LocalEnum") {
+				3
+			} else {
+				todo!()
+			},
+		};
+		buffer.push(kind);
 		parse_field_instance(j_part, j_type, buffer);
 	}
 
@@ -409,25 +444,22 @@ fn parse_field_instance(value: &Value, kind: &str, buffer: &mut Vec<u8>) {
 
 	match kind {
 		"Int" => {
-			buffer.push(0);
-			let make = value.as_i64().unwrap_or(0);
 			buffer.push(if value.is_null() { 1 } else { 0 });
+			let make = value.as_i64().unwrap_or(0);
 			buffer.extend_from_slice(&make.to_le_bytes());
 		},
 		"Float" => {
-			buffer.push(1);
-			let make: f64 = value.as_f64().unwrap_or(0.0);
 			buffer.push(if value.is_null() { 1 } else { 0 });
+			let make = value.as_f64().unwrap_or(0.0);
 			buffer.extend_from_slice(&make.to_le_bytes());
 		},
 		"Bool" => {
-			buffer.push(2);
-			let make = value.as_bool().unwrap_or(false);
 			buffer.push(if value.is_null() { 1 } else { 0 });
+			let make = value.as_bool().unwrap_or(false);
 			buffer.push(if make { 1 } else { 0 });
 		},
 		"Color" => {
-			buffer.push(4);
+			buffer.push(if value.is_null() { 1 } else { 0 });
 			let make = value.as_str().unwrap_or("#ffffff");
 			let make = make.trim_start_matches("#");
 			let r = make[0..2].parse::<u8>().unwrap_or(0);
@@ -438,7 +470,7 @@ fn parse_field_instance(value: &Value, kind: &str, buffer: &mut Vec<u8>) {
 			buffer.push(b);
 		},
 		"Point" => {
-			buffer.push(5);
+			buffer.push(if value.is_null() { 1 } else { 0 });
 			let make = value.as_object().unwrap();
 			let x = make.get("cx").unwrap().as_i64().unwrap() as u32;
 			let y = make.get("cy").unwrap().as_i64().unwrap() as u32;
@@ -446,7 +478,7 @@ fn parse_field_instance(value: &Value, kind: &str, buffer: &mut Vec<u8>) {
 			buffer.extend_from_slice(&y.to_le_bytes());
 		},
 		"EntityRef" => {
-			buffer.push(6);
+			buffer.push(if value.is_null() { 1 } else { 0 });
 			let make = value.as_object().unwrap();
 			let id = make.get("entityIid").unwrap().as_str().unwrap();
 			buffer.extend_from_slice(id.as_bytes());
@@ -454,9 +486,8 @@ fn parse_field_instance(value: &Value, kind: &str, buffer: &mut Vec<u8>) {
 		},
 		_ => {
 			if kind.starts_with("String") || kind.starts_with("LocalEnum") {
-				let make = value.as_str().unwrap_or("");
-				buffer.push(3);
 				buffer.push(if value.is_null() { 1 } else { 0 });
+				let make = value.as_str().unwrap_or("");
 				buffer.extend_from_slice(make.as_bytes());
 				buffer.push(0); // null terminated
 			} else {

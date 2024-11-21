@@ -206,6 +206,15 @@ function level_ldtk_buffer(_data, _buffer) {
 	vertex_end(_buffer)
 }
 
+#macro __oldbufferread buffer_read
+
+function __newbufferread(_buffer, _offset) {
+	var _o = __oldbufferread(_buffer, _offset);
+	show_debug_message($":: {buffer_tell(_buffer)} -> {_o}")
+	return _o;
+}
+
+#macro buffer_read __newbufferread
 
 /// @arg {id.Buffer} _buffer
 function level_unpack_field(_buffer) {
@@ -225,8 +234,10 @@ function level_unpack_field(_buffer) {
 				var _out = level_unpack_field_inner(_buffer, _array_type);
 				array_push(_value, _out);
 			}
+			break;
 		default:
 			_value = level_unpack_field_inner(_buffer, _type);
+			break;
 	}
 	
 	if _isnull _value = undefined;
@@ -274,12 +285,12 @@ function level_unpack_field_inner(_buffer, _type) {
 		case 6:
 			_value = buffer_read(_buffer, buffer_string);
 			break;
+		default:
+			show_debug_message($"impending doom... {_type}");
+			break;
 	}
 		
-	return {
-		name: _name,
-		value: _value,
-	};
+	return _value;
 	
 }
 
@@ -365,6 +376,12 @@ function level_unpack_main(_buffer) {
 		toc: _toc,
 	};
 }
+
+var _file = buffer_load("world.bin");
+
+show_debug_message(json_stringify(level_unpack_main(_file), true));
+
+buffer_delete(_file);
 
 
 /// @return {id.VertexFormat}

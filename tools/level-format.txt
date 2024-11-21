@@ -29,6 +29,7 @@ string = u8* + '\0'
 	u8 -> ArrayType
 	u8 -> ArrayLength
 	[ArrayLength]
+		u8			# is null
 		ArrayType ?
 			: 0
 		u64			# integer value
