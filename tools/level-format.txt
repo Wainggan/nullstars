@@ -49,7 +49,7 @@ string = u8* + '\0'
 
 .Main =
 	u32	-> RoomLength
-	[rooms]
+	[RoomLength]
 		string		# room name
 		string		# room id
 		u32			# x
@@ -59,7 +59,29 @@ string = u8* + '\0'
 		u8 -> FieldsLength
 		[FieldsLength]
 			.Field
-	
+	u32 -> TocLength
+	[TocLength]
+		string		# object name
+		string		# id
+		u32			# x
+		u32			# y
+		u32			# width
+		u32			# height
+		
+		u8 ?		# object type
+			: 0		# "obj_player"
+		
+			: 1		# "obj_checkpoint"
+		string		# checkpoint index
+		
+			: 2		# "obj_timer_start"
+		string		# timer name
+		f32			# timer duration
+		u8			# timer direction
+		string		# obj_timer_end id
+			
+			: 3		# "obj_timer_end"
+			
 
 .Room =
 	string		# room id
@@ -73,7 +95,7 @@ string = u8* + '\0'
 		: 0		# "IntGrid"
 	u32	-> TileLength
 	[TileLength]
-		u8		# tile data
+		u8 ?	# tile data
 	
 		: 1		# "Entities"
 	u32	-> EntityLength
