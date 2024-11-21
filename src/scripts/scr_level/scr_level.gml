@@ -611,7 +611,10 @@ function Level() constructor {
 		layer_front = layer_create(0)
 		layer_set_visible(layer_front, false)
 		tiles_front = layer_tilemap_create(layer_front, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
-				
+		
+		vb_front = _local.layers[$ "Tiles"].buffer;
+		vb_tiles_below = _local.layers[$ "TilesBelow"].buffer;
+		
 		layer_back = layer_create(110)
 		layer_set_visible(layer_back, false)
 		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
