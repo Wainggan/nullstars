@@ -86,7 +86,7 @@ string = u8* + '\0'
 
 .Room =
 	string		# room id
-	u32	-> LayersLength
+	u8	-> LayersLength
 	[LayersLength]
 		.Layer
 
@@ -94,13 +94,15 @@ string = u8* + '\0'
 	string		# layer name
 	u8 ?
 		: 0		# "IntGrid"
+	u32			# width of grid
 	u32	-> TileLength
 	[TileLength]
-		u8 ?	# tile data
+		u8*		# tile data
 	
 		: 1		# "Entities"
 	u32	-> EntityLength
-	.Entity[EntityLength]
+	[EntityLength]
+		.Entity
 		
 		: 2		# "Tiles"
 	u32	-> TileLength
