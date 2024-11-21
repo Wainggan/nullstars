@@ -365,6 +365,7 @@ function level_unpack_main(_buffer) {
 		
 		array_push(_toc, {
 			object: _toc_object,
+			id: _toc_id,
 			x: _toc_x, y: _toc_y,
 			width: _toc_width, height: _toc_height,
 			fields: _toc_fields,
@@ -376,12 +377,6 @@ function level_unpack_main(_buffer) {
 		toc: _toc,
 	};
 }
-
-var _file = buffer_load("world.bin");
-
-show_debug_message(json_stringify(level_unpack_main(_file), true));
-
-buffer_delete(_file);
 
 
 /// @return {id.VertexFormat}
