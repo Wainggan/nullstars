@@ -10,17 +10,21 @@ fn main() {
 		panic!("expected 2 parameters");
 	}
 
+	let mut tt_total_json = 0;
+	let mut tt_total_bin = 0;
+	let tt_time = std::time::Instant::now();
+
 	let file_input = PathBuf::from(&args[1]);
 	let file_output = PathBuf::from(&args[2]);
 
-	let file = match fs::read(&file_input) {
+	let json = match fs::read(&file_input) {
 		Ok(v) => v,
 		Err(e) => panic!("file \"{}\" doesn't exist: {}",
 			&file_input.to_str().unwrap_or("<>"), e
 		),
 	};
-
-	let json = match std::str::from_utf8(&file) {
+	tt_total_json += json.len();
+	let json = match std::str::from_utf8(&json) {
 		Ok(v) => v,
 		Err(e) => panic!("invalid utf8: {}", e),
 	};
@@ -30,6 +34,7 @@ fn main() {
 	};
 
 	let (buffer, refs) = parse_root(&json);
+	tt_total_bin += buffer.len();
 
 	match std::fs::write(&file_output, buffer) {
 		Ok(_) => 0,
@@ -49,11 +54,12 @@ fn main() {
 		in_dir.push("level");
 		in_dir.push(format!("{}.ldtkl", path));
 
-		let file = match fs::read(&in_dir) {
+		let json = match fs::read(&in_dir) {
 			Ok(v) => v,
 			Err(e) => panic!("file \"{}\" doesn't exist: {}", &path, e),
 		};
-		let json = match std::str::from_utf8(&file) {
+		tt_total_json += json.len();
+		let json = match std::str::from_utf8(&json) {
 			Ok(v) => v,
 			Err(e) => panic!("invalid utf8: {}", e),
 		};
@@ -63,6 +69,7 @@ fn main() {
 		};
 
 		let buffer = parse_room(&json);
+		tt_total_bin += buffer.len();
 
 		if !fs::exists(&out_dir).unwrap() {
 			fs::create_dir(&out_dir).unwrap();
@@ -77,6 +84,9 @@ fn main() {
 			),
 		};
 	}
+
+	println!("complete! in {}ms", tt_time.elapsed().as_millis());
+	println!("json {} kb => bin {} kb ;3", tt_total_json / 1024, tt_total_bin / 1024);
 
 }
 
