@@ -159,13 +159,6 @@ fn parse_root(json: &Value) -> (Vec<u8>, Vec<&str>) {
 		let item = item.as_object().unwrap();
 
 		let kind = item.get("identifier").unwrap().as_str().unwrap();
-		let kind: u8 = match kind {
-			"obj_player" => 0,
-			"obj_checkpoint" => 1,
-			"obj_timer_start" => 2,
-			"obj_timer_end" => 3,
-			_ => panic!("{} unimplemented", kind),
-		};
 
 		for item in item.get("instancesData").unwrap().as_array().unwrap() {
 			let item = item.as_object().unwrap();
@@ -180,7 +173,8 @@ fn parse_root(json: &Value) -> (Vec<u8>, Vec<&str>) {
 			let width = item.get("widPx").unwrap().as_u64().unwrap() as u32;
 			let height = item.get("heiPx").unwrap().as_u64().unwrap() as u32;
 
-			buffer.push(kind);
+			buffer.extend_from_slice(kind.as_bytes());
+			buffer.push(0);
 
 			buffer.extend_from_slice(id.as_bytes());
 			buffer.push(0);
@@ -194,13 +188,13 @@ fn parse_root(json: &Value) -> (Vec<u8>, Vec<&str>) {
 				.as_object().unwrap();
 
 			match kind {
-				1 => { // obj_checkpoint
+				"obj_checkpoint" => { // obj_checkpoint
 					let index = fields.get("index").unwrap().as_str().unwrap();
 
 					buffer.extend_from_slice(index.as_bytes());
 					buffer.push(0);
 				},
-				2 => { // obj_timer_start
+				"obj_timer_start" => { // obj_timer_start
 					let name = fields.get("name").unwrap().as_str().unwrap();
 					let time = fields.get("time").unwrap().as_f64().unwrap() as f32;
 					let dir = fields.get("dir").unwrap().as_str().unwrap();
@@ -262,7 +256,10 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 	buffer.extend_from_slice(name.as_bytes());
 	buffer.push(0); // null terminated
 
-	// IntGrid, Entities, Tiles or AutoLayer
+	let width = json.get("__cWid").unwrap().as_i64().unwrap();
+	let height = json.get("__cHei").unwrap().as_i64().unwrap();
+	buffer.extend_from_slice(&(width as i32).to_le_bytes());
+	buffer.extend_from_slice(&(height as i32).to_le_bytes());
 
 	let layertype = json.get("__type").unwrap().as_str().unwrap();
 
@@ -272,11 +269,7 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 
 			let grid = json.get("intGridCsv").unwrap().as_array().unwrap();
 
-			let width = json.get("__cWid").unwrap().as_i64().unwrap();
-			let height = json.get("__cHei").unwrap().as_i64().unwrap();
-
 			let size = width * height;
-			buffer.extend_from_slice(&(width as i32).to_le_bytes());
 			buffer.extend_from_slice(&(size as i32).to_le_bytes());
 
 			for t in grid {

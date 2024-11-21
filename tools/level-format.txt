@@ -62,7 +62,7 @@ string = u8* + '\0'
 			.Field
 	u32 -> TocLength
 	[TocLength]
-		u8 -> ObjectType
+		string -> ObjectType
 		string		# id
 		u32			# x
 		u32			# y
@@ -70,18 +70,18 @@ string = u8* + '\0'
 		u32			# height
 		
 		ObjectType ? # object type
-			: 0		# "obj_player"
+			: "obj_player"
 		
-			: 1		# "obj_checkpoint"
+			: "obj_checkpoint"
 		string		# checkpoint index
 		
-			: 2		# "obj_timer_start"
+			: "obj_timer_start"
 		string		# timer name
 		f32			# timer duration
 		string		# timer direction
 		string		# obj_timer_end id
 			
-			: 3		# "obj_timer_end"
+			: "obj_timer_end"
 			
 
 .Room =
@@ -92,9 +92,10 @@ string = u8* + '\0'
 
 .Layer =
 	string		# layer name
+	u32			# width of grid
+	u32			# height of grid
 	u8 ?
 		: 0		# "IntGrid"
-	u32			# width of grid
 	u32	-> TileLength
 	[TileLength]
 		u8*		# tile data
