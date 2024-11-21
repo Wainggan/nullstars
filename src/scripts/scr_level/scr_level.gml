@@ -206,6 +206,84 @@ function level_ldtk_buffer(_data, _buffer) {
 	vertex_end(_buffer)
 }
 
+
+/// @arg {id.Buffer} _buffer
+function level_unpack_field(_buffer) {
+	
+	var _name = buffer_read(_buffer, buffer_string);
+	var _type = buffer_read(_buffer, buffer_u8);
+	var _isnull = buffer_read(_buffer, buffer_bool);
+	
+	var _value;
+	
+	switch (_type) {
+		case 255:
+			var _array_type = buffer_read(_buffer, buffer_u8);
+			var _array_length = buffer_read(_buffer, buffer_u8);
+			_value = [];
+			for (var i = 0; i < _array_length; i++) {
+				var _out = level_unpack_field_inner(_buffer, _array_type);
+				array_push(_value, _out);
+			}
+		default:
+			_value = level_unpack_field_inner(_buffer, _type);
+	}
+	
+	if _isnull _value = undefined;
+	
+	return {
+		name: _name,
+		value: _value,
+	};
+	
+}
+
+/// @arg {id.Buffer} _buffer
+/// @arg {real} _type
+function level_unpack_field_inner(_buffer, _type) {
+	
+	var _value;
+	
+	switch _type {
+		case 0:
+			_value = buffer_read(_buffer, buffer_u64);
+			break;
+		case 1:
+			_value = buffer_read(_buffer, buffer_f64);
+			break;
+		case 2:
+			_value = buffer_read(_buffer, buffer_bool);
+			break;
+		case 3:
+			_value = buffer_read(_buffer, buffer_string);
+			break;
+		case 4:
+			var _r = buffer_read(_buffer, buffer_u8);
+			var _g = buffer_read(_buffer, buffer_u8);
+			var _b = buffer_read(_buffer, buffer_u8);
+			_value = make_color_rgb(_r, _g, _b);
+			break;
+		case 5:
+			var _x = buffer_read(_buffer, buffer_u32);
+			var _y = buffer_read(_buffer, buffer_u32);
+			_value = {
+				x: _x,
+				y: _y,
+			};
+			break;
+		case 6:
+			_value = buffer_read(_buffer, buffer_string);
+			break;
+	}
+		
+	return {
+		name: _name,
+		value: _value,
+	};
+	
+}
+
+
 /// @return {id.VertexFormat}
 function level_get_vf() {
 	static __out = -1;
