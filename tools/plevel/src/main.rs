@@ -244,7 +244,7 @@ fn parse_room(json: &Value) -> Vec<u8> {
 
 	let layers = json.get("layerInstances").unwrap().as_array().unwrap();
 
-	buffer.extend_from_slice(&(layers.len() as u32).to_le_bytes());
+	buffer.push(layers.len() as u8);
 
 	for layer in layers {
 		parse_layer(layer, &mut buffer);
@@ -276,6 +276,7 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 			let height = json.get("__cHei").unwrap().as_i64().unwrap();
 
 			let size = width * height;
+			buffer.extend_from_slice(&(width as i32).to_le_bytes());
 			buffer.extend_from_slice(&(size as i32).to_le_bytes());
 
 			for t in grid {
