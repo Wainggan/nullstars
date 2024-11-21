@@ -17,7 +17,9 @@ string = u8* + '\0'
 		: 3
 	string		# string value
 		: 4
-	u32			# color value
+	u8			# r
+	u8			# g
+	u8			# b
 		: 5
 	u32			# point x value
 	u32			# point y value
@@ -46,8 +48,8 @@ string = u8* + '\0'
 
 
 .Main =
-	u32			# length of rooms[]
-	rooms[]
+	u32	-> RoomLength
+	[rooms]
 		string		# room name
 		string		# room id
 		u32			# x
