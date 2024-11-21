@@ -1,0 +1,108 @@
+
+## ~ nullstars' level data format ~ ##
+
+string = u8* + '\0'
+
+.Field =
+	string		# field name
+	u8 -> FieldType
+	u8			# is null
+	FieldType ?
+		: 0
+	u64			# integer value
+		: 1
+	f64			# float value
+		: 2
+	u8			# boolean value
+		: 3
+	string		# string value
+		: 4
+	u32			# color value
+		: 5
+	u32			# point x value
+	u32			# point y value
+		: 6
+	string		# entity id value
+		: 255	# array
+	u8 -> ArrayType
+	u8 -> ArrayLength
+	[ArrayLength]
+		ArrayType ?
+			: 0
+		u64			# integer value
+			: 1
+		f64			# float value
+			: 2
+		u8			# boolean value
+			: 3
+		string		# string value
+			: 4
+		u32			# color value
+			: 5
+		u32			# point x value
+		u32			# point y value
+			: 6
+		string		# entity id value
+
+
+.Main =
+	u32			# length of rooms[]
+	rooms[]
+		string		# room name
+		string		# room id
+		u32			# x
+		u32			# y
+		u32			# width
+		u32			# height
+		u8 -> FieldsLength
+		[FieldsLength]
+			.Field
+	
+
+.Room =
+	string		# room id
+	u32	-> LayersLength
+	[LayersLength]
+		.Layer
+
+.Layer =
+	string		# layer name
+	u8 ?
+		: 0		# "IntGrid"
+	u32	-> TileLength
+	[TileLength]
+		u8		# tile data
+	
+		: 1		# "Entities"
+	u32	-> EntityLength
+	.Entity[EntityLength]
+		
+		: 2		# "Tiles"
+	u32	-> TileLength
+	[TileLength]
+		u32		# tile index
+		u32		# tile x
+		u32		# tile y
+		
+		: 3		# "AutoLayer"
+	u32	-> TileLength
+	[TileLength]
+		u32		# tile index
+		u32		# tile x
+		u32		# tile y
+
+.Entity =
+	string		# object name
+	string		# entity id
+	u8 -> TagsLength
+	[TagsLength]
+		string	# tag
+	u32			# x
+	u32			# y
+	u32			# width
+	u32			# height
+	u8	-> FieldsLength
+	[FieldsLength]
+		.Field
+	
+
