@@ -230,11 +230,25 @@ fn parse_room(json: &Value) -> Vec<u8> {
 	let json = json.as_object().unwrap();
 
 	let name = json.get("identifier").unwrap().as_str().unwrap();
+	let id = json.get("iid").unwrap().as_str().unwrap();
 
 	println!("{}", name);
 
+	let x = json.get("worldX").unwrap().as_i64().unwrap();
+	let y = json.get("worldY").unwrap().as_i64().unwrap();
+	let width = json.get("pxWid").unwrap().as_i64().unwrap();
+	let height = json.get("pxHei").unwrap().as_i64().unwrap();
+
 	buffer.extend_from_slice(name.as_bytes());
 	buffer.push(0); // null terminated
+
+	buffer.extend_from_slice(id.as_bytes());
+	buffer.push(0); // null terminated
+
+	buffer.extend_from_slice(&(x as i32).to_le_bytes());
+	buffer.extend_from_slice(&(y as i32).to_le_bytes());
+	buffer.extend_from_slice(&(width as i32).to_le_bytes());
+	buffer.extend_from_slice(&(height as i32).to_le_bytes());
 
 	let layers = json.get("layerInstances").unwrap().as_array().unwrap();
 
@@ -256,11 +270,6 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 	buffer.extend_from_slice(name.as_bytes());
 	buffer.push(0); // null terminated
 
-	let width = json.get("__cWid").unwrap().as_i64().unwrap();
-	let height = json.get("__cHei").unwrap().as_i64().unwrap();
-	buffer.extend_from_slice(&(width as i32).to_le_bytes());
-	buffer.extend_from_slice(&(height as i32).to_le_bytes());
-
 	let layertype = json.get("__type").unwrap().as_str().unwrap();
 
 	match layertype {
@@ -268,6 +277,9 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 			buffer.push(0);
 
 			let grid = json.get("intGridCsv").unwrap().as_array().unwrap();
+
+			let width = json.get("__cWid").unwrap().as_i64().unwrap();
+			let height = json.get("__cHei").unwrap().as_i64().unwrap();
 
 			let size = width * height;
 			buffer.extend_from_slice(&(size as i32).to_le_bytes());
