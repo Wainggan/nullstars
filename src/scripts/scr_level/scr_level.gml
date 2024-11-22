@@ -367,15 +367,18 @@ function level_unpack_bin_main(_buffer) {
 function level_unpack_bin_room(_buffer) {
 	
 	var _name = buffer_read(_buffer, buffer_string);
+	var _id = buffer_read(_buffer, buffer_string);
+	
+	var _room_x = buffer_read(_buffer, buffer_u32);
+	var _room_y = buffer_read(_buffer, buffer_u32);
+	var _room_width = buffer_read(_buffer, buffer_u32);
+	var _room_height = buffer_read(_buffer, buffer_u32);
 	
 	var _layers = {};
 	
 	var _layer_count = buffer_read(_buffer, buffer_u8);
 	repeat _layer_count {
 		var _layer_name = buffer_read(_buffer, buffer_string);
-		
-		var _tiles_width = buffer_read(_buffer, buffer_u32);
-		var _tiles_height = buffer_read(_buffer, buffer_u32);
 		
 		var _layer_type = buffer_read(_buffer, buffer_u8);
 		
@@ -390,16 +393,16 @@ function level_unpack_bin_room(_buffer) {
 				var _layer_id = layer_create(0);
 				layer_set_visible(_layer_id, false);
 				var _layer_tiles = layer_tilemap_create(
-						_layer_id, 0, 0, tl_tiles,
-						_tiles_width, _tiles_height
+						_layer_id, _room_x, _room_y, tl_tiles,
+						_room_width / TILESIZE, _room_height / TILESIZE
 					);
+				var _w = _room_width / TILESIZE;
 				
 				var _tile = undefined;
 				for (var i_tile = 0; i_tile < _tiles_count; i_tile++) {
 					var _tile = buffer_read(_buffer, buffer_u8);
-					tilemap_set(_layer_tiles, _tile, i_tile mod _tiles_width, i_tile div _tiles_width);
+					tilemap_set(_layer_tiles, _tile, i_tile mod _w, i_tile div _w);
 				}
-				if _tile != undefined show_debug_message($"{_layer_name} oh boy")
 			
 				_layer = {
 					layer: _layer_id,
@@ -462,7 +465,7 @@ function level_unpack_bin_room(_buffer) {
 				layer_set_visible(_layer_id, false);
 				var _layer_tiles = layer_tilemap_create(
 						_layer_id, 0, 0, tl_tiles,
-						_tiles_width, _tiles_height
+						_room_width / TILESIZE, _room_height / TILESIZE
 					);
 				
 				repeat _tiles_count {
