@@ -32,7 +32,7 @@ string = u8* + '\0'
 		u8			# is null
 		ArrayType ?
 			: 0
-		u64			# integer value
+		i32			# integer value
 			: 1
 		f64			# float value
 			: 2
@@ -87,10 +87,10 @@ string = u8* + '\0'
 .Room =
 	string		# room name
 	string		# room id
-	u32			# x offset
-	u32			# y offset
-	u32			# width of grid
-	u32			# height of grid
+	u32			# x
+	u32			# y
+	u32			# width
+	u32			# height
 	u8	-> LayersLength
 	[LayersLength]
 		.Layer

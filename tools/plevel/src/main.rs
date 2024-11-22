@@ -107,33 +107,29 @@ fn parse_root(json: &Value) -> (Vec<u8>, Vec<&str>) {
 
 		let name = level.get("identifier").unwrap()
 				.as_str().unwrap();
+		
+		let id = level.get("iid").unwrap()
+		.as_str().unwrap();
 
-		{
-			let id = level.get("iid").unwrap()
-				.as_str().unwrap();
+		buffer.extend_from_slice(name.as_bytes());
+		buffer.push(0); // null terminated
 
-			buffer.extend_from_slice(name.as_bytes());
-			buffer.push(0); // null terminated
+		buffer.extend_from_slice(id.as_bytes());
+		buffer.push(0);
 
-			buffer.extend_from_slice(id.as_bytes());
-			buffer.push(0);
-		}
+		let x = level.get("worldX").unwrap()
+			.as_u64().unwrap();
+		let y = level.get("worldY").unwrap()
+			.as_u64().unwrap();
+		let width = level.get("pxWid").unwrap()
+			.as_u64().unwrap();
+		let height = level.get("pxHei").unwrap()
+			.as_u64().unwrap();
 
-		{
-			let j_pos_x = level.get("worldX").unwrap()
-				.as_i64().unwrap() as i32;
-			let j_pos_y = level.get("worldY").unwrap()
-				.as_i64().unwrap() as i32;
-			let j_pos_w = level.get("pxWid").unwrap()
-				.as_i64().unwrap() as i32;
-			let j_pos_h = level.get("pxHei").unwrap()
-				.as_i64().unwrap() as i32;
-
-			buffer.extend_from_slice(&j_pos_x.to_le_bytes());
-			buffer.extend_from_slice(&j_pos_y.to_le_bytes());
-			buffer.extend_from_slice(&j_pos_w.to_le_bytes());
-			buffer.extend_from_slice(&j_pos_h.to_le_bytes());
-		}
+		buffer.extend_from_slice(&(x as u32).to_le_bytes());
+		buffer.extend_from_slice(&(y as u32).to_le_bytes());
+		buffer.extend_from_slice(&(width as u32).to_le_bytes());
+		buffer.extend_from_slice(&(height as u32).to_le_bytes());
 
 		parse_field(level.get("fieldInstances").unwrap(), &mut buffer);
 
@@ -234,10 +230,10 @@ fn parse_room(json: &Value) -> Vec<u8> {
 
 	println!("{}", name);
 
-	let x = json.get("worldX").unwrap().as_i64().unwrap();
-	let y = json.get("worldY").unwrap().as_i64().unwrap();
-	let width = json.get("pxWid").unwrap().as_i64().unwrap();
-	let height = json.get("pxHei").unwrap().as_i64().unwrap();
+	let x = json.get("worldX").unwrap().as_u64().unwrap();
+	let y = json.get("worldY").unwrap().as_u64().unwrap();
+	let width = json.get("pxWid").unwrap().as_u64().unwrap();
+	let height = json.get("pxHei").unwrap().as_u64().unwrap();
 
 	buffer.extend_from_slice(name.as_bytes());
 	buffer.push(0); // null terminated
@@ -245,10 +241,10 @@ fn parse_room(json: &Value) -> Vec<u8> {
 	buffer.extend_from_slice(id.as_bytes());
 	buffer.push(0); // null terminated
 
-	buffer.extend_from_slice(&(x as i32).to_le_bytes());
-	buffer.extend_from_slice(&(y as i32).to_le_bytes());
-	buffer.extend_from_slice(&(width as i32).to_le_bytes());
-	buffer.extend_from_slice(&(height as i32).to_le_bytes());
+	buffer.extend_from_slice(&(x as u32).to_le_bytes());
+	buffer.extend_from_slice(&(y as u32).to_le_bytes());
+	buffer.extend_from_slice(&(width as u32).to_le_bytes());
+	buffer.extend_from_slice(&(height as u32).to_le_bytes());
 
 	let layers = json.get("layerInstances").unwrap().as_array().unwrap();
 
@@ -278,14 +274,14 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 
 			let grid = json.get("intGridCsv").unwrap().as_array().unwrap();
 
-			let width = json.get("__cWid").unwrap().as_i64().unwrap();
-			let height = json.get("__cHei").unwrap().as_i64().unwrap();
+			let width = json.get("__cWid").unwrap().as_u64().unwrap();
+			let height = json.get("__cHei").unwrap().as_u64().unwrap();
 
 			let size = width * height;
-			buffer.extend_from_slice(&(size as i32).to_le_bytes());
+			buffer.extend_from_slice(&(size as u32).to_le_bytes());
 
 			for t in grid {
-				let t = t.as_i64().unwrap();
+				let t = t.as_u64().unwrap();
 				buffer.push(t as u8);
 			}
 		},
@@ -295,7 +291,7 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 			let entities = json.get("entityInstances").unwrap().as_array().unwrap();
 			
 			let size = entities.len();
-			buffer.extend_from_slice(&(size as i32).to_le_bytes());
+			buffer.extend_from_slice(&(size as u32).to_le_bytes());
 
 			for e in entities {
 				let e = e.as_object().unwrap();
@@ -305,10 +301,10 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 
 				let tags = e.get("__tags").unwrap().as_array().unwrap();
 				
-				let x = e.get("__worldX").unwrap().as_i64().unwrap();
-				let y = e.get("__worldY").unwrap().as_i64().unwrap();
-				let width = e.get("width").unwrap().as_i64().unwrap();
-				let height = e.get("height").unwrap().as_i64().unwrap();
+				let x = e.get("__worldX").unwrap().as_u64().unwrap();
+				let y = e.get("__worldY").unwrap().as_u64().unwrap();
+				let width = e.get("width").unwrap().as_u64().unwrap();
+				let height = e.get("height").unwrap().as_u64().unwrap();
 
 				buffer.extend_from_slice(name.as_bytes());
 				buffer.push(0); // null terminated
@@ -323,10 +319,10 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 					buffer.push(0);
 				}
 
-				buffer.extend_from_slice(&(x as i32).to_le_bytes());
-				buffer.extend_from_slice(&(y as i32).to_le_bytes());
-				buffer.extend_from_slice(&(width as i32).to_le_bytes());
-				buffer.extend_from_slice(&(height as i32).to_le_bytes());
+				buffer.extend_from_slice(&(x as u32).to_le_bytes());
+				buffer.extend_from_slice(&(y as u32).to_le_bytes());
+				buffer.extend_from_slice(&(width as u32).to_le_bytes());
+				buffer.extend_from_slice(&(height as u32).to_le_bytes());
 
 				parse_field(e.get("fieldInstances").unwrap(), buffer);
 
@@ -339,19 +335,19 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 			let tiles = json.get("autoLayerTiles").unwrap().as_array().unwrap();
 			
 			let size = tiles.len();
-			buffer.extend_from_slice(&(size as i32).to_le_bytes());
+			buffer.extend_from_slice(&(size as u32).to_le_bytes());
 
 			for t in tiles {
 				let t = t.as_object().unwrap();
 
 				let px = t.get("px").unwrap().as_array().unwrap();
-				let x = px[0].as_i64().unwrap();
-				let y = px[1].as_i64().unwrap();
-				let m = t.get("t").unwrap().as_i64().unwrap();
+				let x = px[0].as_u64().unwrap();
+				let y = px[1].as_u64().unwrap();
+				let m = t.get("t").unwrap().as_u64().unwrap();
 
-				buffer.extend_from_slice(&(x as i32).to_le_bytes());
-				buffer.extend_from_slice(&(y as i32).to_le_bytes());
-				buffer.extend_from_slice(&(m as i32).to_le_bytes());
+				buffer.extend_from_slice(&(m as u32).to_le_bytes());
+				buffer.extend_from_slice(&(x as u32).to_le_bytes());
+				buffer.extend_from_slice(&(y as u32).to_le_bytes());
 			}
 		},
 		"AutoLayer" => {
@@ -360,19 +356,19 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 			let tiles = json.get("gridTiles").unwrap().as_array().unwrap();
 			
 			let size = tiles.len();
-			buffer.extend_from_slice(&(size as i32).to_le_bytes());
+			buffer.extend_from_slice(&(size as u32).to_le_bytes());
 
 			for t in tiles {
 				let t = t.as_object().unwrap();
 
 				let px = t.get("px").unwrap().as_array().unwrap();
-				let x = px[0].as_i64().unwrap();
-				let y = px[1].as_i64().unwrap();
-				let m = t.get("t").unwrap().as_i64().unwrap();
+				let x = px[0].as_u64().unwrap();
+				let y = px[1].as_u64().unwrap();
+				let m = t.get("t").unwrap().as_u64().unwrap();
 
-				buffer.extend_from_slice(&(x as i32).to_le_bytes());
-				buffer.extend_from_slice(&(y as i32).to_le_bytes());
-				buffer.extend_from_slice(&(m as i32).to_le_bytes());
+				buffer.extend_from_slice(&(m as u32).to_le_bytes());
+				buffer.extend_from_slice(&(x as u32).to_le_bytes());
+				buffer.extend_from_slice(&(y as u32).to_le_bytes());
 			}
 		},
 		_ => panic!("what the fuck"),
@@ -459,7 +455,7 @@ fn parse_field_instance(value: &Value, kind: &str, buffer: &mut Vec<u8>) {
 		"Int" => {
 			buffer.push(if value.is_null() { 1 } else { 0 });
 			let make = value.as_i64().unwrap_or(0);
-			buffer.extend_from_slice(&make.to_le_bytes());
+			buffer.extend_from_slice(&(make as i32).to_le_bytes());
 		},
 		"Float" => {
 			buffer.push(if value.is_null() { 1 } else { 0 });
@@ -485,8 +481,8 @@ fn parse_field_instance(value: &Value, kind: &str, buffer: &mut Vec<u8>) {
 		"Point" => {
 			buffer.push(if value.is_null() { 1 } else { 0 });
 			let make = value.as_object().unwrap();
-			let x = make.get("cx").unwrap().as_i64().unwrap() as u32;
-			let y = make.get("cy").unwrap().as_i64().unwrap() as u32;
+			let x = make.get("cx").unwrap().as_u64().unwrap() as u32;
+			let y = make.get("cy").unwrap().as_u64().unwrap() as u32;
 			buffer.extend_from_slice(&x.to_le_bytes());
 			buffer.extend_from_slice(&y.to_le_bytes());
 		},
