@@ -1,3 +1,3 @@
 cd .\tools\plevel
-cargo run ..\..\map\level.ldtk ..\..\src\datafiles\world.bin
+cargo run --release ..\..\map\level.ldtk ..\..\src\datafiles\world.bin
 cd ..\..
