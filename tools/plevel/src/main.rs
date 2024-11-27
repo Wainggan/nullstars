@@ -1,10 +1,12 @@
 
+use pack::Pack;
 use serde_json::Value;
 use std::path::PathBuf;
 use std::fs;
 
 mod types;
 mod make;
+mod pack;
 
 fn main() {
 	let args: Vec<String> = std::env::args().collect();
@@ -36,60 +38,69 @@ fn main() {
 		Err(e) => panic!("invalid json: {}", e),
 	};
 
-	let test = make::make_main(&json);
-	println!("{:?}", test);
+	let makes = make::make_main(&json);
+	println!("{:?}", makes);
 
-	//let (buffer, refs) = parse_root(&json);
-	// tt_total_bin += buffer.len();
+	let buffer = makes.pack_new();
+	tt_total_bin += buffer.len();
 
-	// match std::fs::write(&file_output, buffer) {
-	// 	Ok(_) => 0,
-	// 	Err(e) => panic!("error writing to \"{}\": {}",
-	// 		&file_output.to_str().unwrap_or("<>"), e
-	// 	),
-	// };
+	match std::fs::write(&file_output, buffer) {
+		Ok(_) => (),
+		Err(e) => panic!("error writing to \"{}\": {}",
+			&file_output.to_str().unwrap_or("<>"), e
+		),
+	};
 
-	// for path in refs {
-	// 	let mut out_dir = file_output.clone();
-	// 	out_dir.pop();
-	// 	let out_ext = file_output.extension().unwrap();
-	// 	out_dir.push("room");
+	let mut refs = Vec::new();
+	for level in &json.levels {
+		refs.push(&level.identifier);
+	}
 
-	// 	let mut in_dir = file_input.clone();
-	// 	in_dir.pop();
-	// 	in_dir.push("level");
-	// 	in_dir.push(format!("{}.ldtkl", path));
+	for path in refs {
+		let mut out_dir = file_output.clone();
+		out_dir.pop();
+		let out_ext = file_output.extension().unwrap();
+		out_dir.push("room");
 
-	// 	let json = match fs::read(&in_dir) {
-	// 		Ok(v) => v,
-	// 		Err(e) => panic!("file \"{}\" doesn't exist: {}", &path, e),
-	// 	};
-	// 	tt_total_json += json.len();
-	// 	let json = match std::str::from_utf8(&json) {
-	// 		Ok(v) => v,
-	// 		Err(e) => panic!("invalid utf8: {}", e),
-	// 	};
-	// 	let json = match serde_json::from_str::<Value>(json) {
-	// 		Ok(v) => v,
-	// 		Err(e) => panic!("invalid json: {}", e),
-	// 	};
+		let mut in_dir = file_input.clone();
+		in_dir.pop();
+		in_dir.push("level");
+		in_dir.push(format!("{}.ldtkl", path));
 
-	// 	let buffer = parse_room(&json);
-	// 	tt_total_bin += buffer.len();
+		let json = match fs::read(&in_dir) {
+			Ok(v) => v,
+			Err(e) => panic!("file \"{}\" doesn't exist: {}", &path, e),
+		};
+		tt_total_json += json.len();
+		let json = match std::str::from_utf8(&json) {
+			Ok(v) => v,
+			Err(e) => panic!("invalid utf8: {}", e),
+		};
+		let json: types::Level = match serde_json::from_str(json) {
+			Ok(v) => v,
+			Err(e) => panic!("invalid json: {}", e),
+		};
 
-	// 	if !fs::exists(&out_dir).unwrap() {
-	// 		fs::create_dir(&out_dir).unwrap();
-	// 	}
+		println!("{}", &path);
 
-	// 	out_dir.push(format!("{}.{}", path, out_ext.to_str().unwrap()));
+		let makes = make::make_room(&json);
 
-	// 	match std::fs::write(&out_dir, buffer) {
-	// 		Ok(_) => 0,
-	// 		Err(e) => panic!("error writing to \"{}\": {}",
-	// 			&out_dir.to_string_lossy(), e
-	// 		),
-	// 	};
-	// }
+		let buffer = makes.pack_new();
+		tt_total_bin += buffer.len();
+
+		if !fs::exists(&out_dir).unwrap() {
+			fs::create_dir(&out_dir).unwrap()
+		}
+
+		out_dir.push(format!("{}.{}", path, out_ext.to_str().unwrap()));
+
+		match std::fs::write(&out_dir, buffer) {
+			Ok(_) => 0,
+			Err(e) => panic!("error writing to \"{}\": {}",
+				&out_dir.to_string_lossy(), e
+			),
+		};
+	}
 
 	println!("complete! in {}ms", tt_time.elapsed().as_millis());
 	println!("json {} kb => bin {} kb ;3", tt_total_json / 1024, tt_total_bin / 1024);
