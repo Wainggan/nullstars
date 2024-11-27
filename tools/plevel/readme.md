@@ -4,6 +4,19 @@
 simple tool for converting [ldtk json files](https://ldtk.io/json/) into a more friendly to parse format for nullstars.
 
 
+## how
+
+compile with cargo
+
+```sh
+cargo build --release
+```
+
+```sh
+cargo run --release path/to/input.ldtk path/to/output.bin
+```
+
+
 ## why
 
 the original naive solution to loading nullstars' map was to load every json file when the game starts, using `json_parse()`.
