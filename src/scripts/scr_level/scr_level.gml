@@ -249,7 +249,7 @@ function level_unpack_bin_field_inner(_buffer, _type) {
 	
 	switch _type {
 		case 0:
-			_value = buffer_read(_buffer, buffer_u64);
+			_value = buffer_read(_buffer, buffer_s32);
 			break;
 		case 1:
 			_value = buffer_read(_buffer, buffer_f64);
@@ -286,7 +286,7 @@ function level_unpack_bin_field_inner(_buffer, _type) {
 	
 }
 
-function level_unpack_bin_main(_buffer) {
+function level_unpack_bin_main(_buffer, _info) {
 	
 	var _rooms = [];
 	
@@ -364,6 +364,97 @@ function level_unpack_bin_main(_buffer) {
 	};
 }
 
+function level_unpack_bin_layer_grid(_buffer, _at, _tilemap) {
+	
+	buffer_seek(_buffer, buffer_seek_start, _at);
+	var _count = buffer_read(_buffer, buffer_u32);
+	
+	show_debug_message(_count);
+	
+	var _w = tilemap_get_width(_tilemap);
+	
+	for (var i_tile = 0; i_tile < _count; i_tile++) {
+		var _tile = buffer_read(_buffer, buffer_u8);
+		tilemap_set(_tilemap, _tile, i_tile mod _w, i_tile div _w);
+	}
+	
+}
+
+function level_unpack_bin_layer_free_map(_buffer, _at, _tilemap) {
+	
+	buffer_seek(_buffer, buffer_seek_start, _at);
+	var _count = buffer_read(_buffer, buffer_u32);
+	
+	show_debug_message(_count);
+	
+	repeat _count {
+		var _t = buffer_read(_buffer, buffer_u32);
+		var _t_x = round(buffer_read(_buffer, buffer_s32) / TILESIZE);
+		var _t_y = round(buffer_read(_buffer, buffer_s32) / TILESIZE);
+
+		tilemap_set(_tilemap, _t, _t_x, _t_y);
+	}
+	
+}
+
+/// @arg {id.Buffer} _buffer
+/// @arg {real} _at
+/// @arg {id.VertexBuffer} _vertex
+function level_unpack_bin_layer_free_vertex(_buffer, _at, _vertex) {
+	
+	buffer_seek(_buffer, buffer_seek_start, _at);
+	var _count = buffer_read(_buffer, buffer_u32);
+	
+	show_debug_message($"count @ {_at}: {_count}");
+	
+	vertex_begin(_vertex, level_get_vf());
+
+	var _ts_info = tileset_get_info(tl_tiles);
+	var _ts_width = _ts_info.tile_width + 2 * _ts_info.tile_horizontal_separator;
+	var _ts_height = _ts_info.tile_height + 2 * _ts_info.tile_vertical_separator;
+
+	var _tex_rx = texture_get_texel_width(_ts_info.texture);
+	var _tex_ry = texture_get_texel_height(_ts_info.texture);
+
+	var _uv_x = tileset_get_uvs(tl_tiles)[0];
+	var _uv_y = tileset_get_uvs(tl_tiles)[1];
+
+	repeat _count {
+		var _t = buffer_read(_buffer, buffer_u32);
+		var _t_x = buffer_read(_buffer, buffer_s32);
+		var _t_y = buffer_read(_buffer, buffer_s32);
+
+		var _ts_tile_x = (_t mod _ts_info.tile_columns) * _ts_width;
+		var _ts_tile_y = (_t div _ts_info.tile_columns) * _ts_height;
+
+		var _uv_t_x = _uv_x + _ts_tile_x * _tex_rx;
+		var _uv_t_y = _uv_y + _ts_tile_y * _tex_ry;
+
+		// tri 1
+		vertex_position(_vertex, _t_x, _t_y);
+		vertex_texcoord(_vertex, _uv_t_x, _uv_t_y);
+
+		vertex_position(_vertex, _t_x + TILESIZE, _t_y);
+		vertex_texcoord(_vertex, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y);
+
+		vertex_position(_vertex, _t_x + TILESIZE, _t_y + TILESIZE);
+		vertex_texcoord(_vertex, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y + TILESIZE * _tex_ry);
+
+		// tri 2
+		vertex_position(_vertex, _t_x, _t_y);
+		vertex_texcoord(_vertex, _uv_t_x, _uv_t_y);
+
+		vertex_position(_vertex, _t_x, _t_y + TILESIZE);
+		vertex_texcoord(_vertex, _uv_t_x, _uv_t_y + TILESIZE * _tex_ry);
+
+		vertex_position(_vertex, _t_x + TILESIZE, _t_y + TILESIZE);
+		vertex_texcoord(_vertex, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y + TILESIZE * _tex_ry);
+	}
+	
+	vertex_end(_vertex);
+	
+}
+
 function level_unpack_bin_room(_buffer) {
 	
 	var _name = buffer_read(_buffer, buffer_string);
@@ -373,12 +464,14 @@ function level_unpack_bin_room(_buffer) {
 	var _room_y = buffer_read(_buffer, buffer_u32);
 	var _room_width = buffer_read(_buffer, buffer_u32);
 	var _room_height = buffer_read(_buffer, buffer_u32);
-	
+
 	var _layers = {};
 	
 	var _layer_count = buffer_read(_buffer, buffer_u8);
 	repeat _layer_count {
 		var _layer_name = buffer_read(_buffer, buffer_string);
+		
+		//show_debug_message(_layer_name)
 		
 		var _layer_type = buffer_read(_buffer, buffer_u8);
 		
@@ -387,28 +480,17 @@ function level_unpack_bin_room(_buffer) {
 		var _layer;
 		
 		switch _layer_type {
-			case 0:
-				var _tiles_count = buffer_read(_buffer, buffer_u32);
-			
-				var _layer_id = layer_create(0);
-				layer_set_visible(_layer_id, false);
-				var _layer_tiles = layer_tilemap_create(
-						_layer_id, _room_x, _room_y, tl_tiles,
-						_room_width / TILESIZE, _room_height / TILESIZE
-					);
-				var _w = _room_width / TILESIZE;
+			case 0: {
+				var _offset = buffer_tell(_buffer);
 				
-				var _tile = undefined;
-				for (var i_tile = 0; i_tile < _tiles_count; i_tile++) {
-					var _tile = buffer_read(_buffer, buffer_u8);
-					tilemap_set(_layer_tiles, _tile, i_tile mod _w, i_tile div _w);
+				var _tiles_count = buffer_read(_buffer, buffer_u32);
+				show_debug_message($"pack (0) @ {_offset}: {_tiles_count}")
+				repeat _tiles_count {
+					buffer_read(_buffer, buffer_u8);
 				}
-			
-				_layer = {
-					layer: _layer_id,
-					tiles: _layer_tiles
-				};
-			break;
+				
+				_layer = _offset;
+			} break;
 			case 1:
 				var _entities = [];
 				var _entities_count = buffer_read(_buffer, buffer_u32);
@@ -449,99 +531,23 @@ function level_unpack_bin_room(_buffer) {
 				};
 			break;
 			case 2:
-				_layer_switcher ??= 0;
-			case 3:
-				if _layer_switcher == undefined {
-					if _layer_name == "Tiles" || _layer_name == "TilesBelow"
-						_layer_switcher = 1;
-				}
-				_layer_switcher ??= 0;
-				
-			if _layer_switcher == 0 {
-				
+			case 3: {
+				var _offset = buffer_tell(_buffer);
+			
 				var _tiles_count = buffer_read(_buffer, buffer_u32);
-				
-				var _layer_id = layer_create(0);
-				layer_set_visible(_layer_id, false);
-				var _layer_tiles = layer_tilemap_create(
-						_layer_id, 0, 0, tl_tiles,
-						_room_width / TILESIZE, _room_height / TILESIZE
-					);
-				
+				show_debug_message($"pack (3) @ {_offset}: {_tiles_count}")
 				repeat _tiles_count {
-					var _t = buffer_read(_buffer, buffer_u32)
-					var _t_x = round(buffer_read(_buffer, buffer_u32) / TILESIZE);
-					var _t_y = round(buffer_read(_buffer, buffer_u32) / TILESIZE);
-			
-					tilemap_set(_layer_tiles, _t, _t_x, _t_y);
+					buffer_read(_buffer, buffer_u32);
+					buffer_read(_buffer, buffer_u32);
+					buffer_read(_buffer, buffer_u32);
 				}
 				
-				_layer = {
-					layer: _layer_id,
-					tiles: _layer_tiles
-				};
-				
-			} else {
-			
-				var _tiles_count = buffer_read(_buffer, buffer_u32);	
-			
-				var _tiles_buffer = vertex_create_buffer();
-				vertex_begin(_tiles_buffer, level_get_vf());
-			
-				var _ts_info = tileset_get_info(tl_tiles);
-				var _ts_width = _ts_info.tile_width + 2 * _ts_info.tile_horizontal_separator;
-				var _ts_height = _ts_info.tile_height + 2 * _ts_info.tile_vertical_separator;
-			
-				var _tex_rx = texture_get_texel_width(_ts_info.texture);
-				var _tex_ry = texture_get_texel_height(_ts_info.texture);
-			
-				var _uv_x = tileset_get_uvs(tl_tiles)[0];
-				var _uv_y = tileset_get_uvs(tl_tiles)[1];
-			
-				repeat _tiles_count {
-					var _t = buffer_read(_buffer, buffer_u32);
-					var _t_x = buffer_read(_buffer, buffer_u32);
-					var _t_y = buffer_read(_buffer, buffer_u32);
-			
-					var _ts_tile_x = (_t mod _ts_info.tile_columns) * _ts_width;
-					var _ts_tile_y = (_t div _ts_info.tile_columns) * _ts_height;
-			
-					var _uv_t_x = _uv_x + _ts_tile_x * _tex_rx;
-					var _uv_t_y = _uv_y + _ts_tile_y * _tex_ry;
-			
-					// tri 1
-					vertex_position(_tiles_buffer, _t_x, _t_y);
-					vertex_texcoord(_tiles_buffer, _uv_t_x, _uv_t_y);
-			
-					vertex_position(_tiles_buffer, _t_x + TILESIZE, _t_y);
-					vertex_texcoord(_tiles_buffer, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y);
-			
-					vertex_position(_tiles_buffer, _t_x + TILESIZE, _t_y + TILESIZE);
-					vertex_texcoord(_tiles_buffer, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y + TILESIZE * _tex_ry);
-			
-					// tri 2
-					vertex_position(_tiles_buffer, _t_x, _t_y);
-					vertex_texcoord(_tiles_buffer, _uv_t_x, _uv_t_y);
-			
-					vertex_position(_tiles_buffer, _t_x, _t_y + TILESIZE);
-					vertex_texcoord(_tiles_buffer, _uv_t_x, _uv_t_y + TILESIZE * _tex_ry);
-			
-					vertex_position(_tiles_buffer, _t_x + TILESIZE, _t_y + TILESIZE);
-					vertex_texcoord(_tiles_buffer, _uv_t_x + TILESIZE * _tex_rx, _uv_t_y + TILESIZE * _tex_ry);
-				}
-				
-				vertex_end(_tiles_buffer);
-				
-				_layer = {
-					buffer: _tiles_buffer
-				};
-			}
-			break;
+				_layer = _offset;
+			} break;
 			default:
 				show_debug_message($"impending doom... {_name} {buffer_tell(_buffer)} : {_layer_type}");
 		}
 		
-		_layer.name = _layer_name;
 		_layers[$ _layer_name] = _layer;
 	}
 	
@@ -624,45 +630,61 @@ function Level() constructor {
 	shadow_vb = -1;
 	
 	/// run once after having created Level()
-	static init = function(_level, _local) {
+	static init = function(_level, _file) {
 		
 		var _lv_x = _level.x div TILESIZE,
 			_lv_y = _level.y div TILESIZE,
-			_lv_w = _level.height div TILESIZE,
-			_lv_h = _level.width div TILESIZE;
+			_lv_w = _level.width div TILESIZE,
+			_lv_h = _level.height div TILESIZE;
 	
 		x = _lv_x * TILESIZE;
 		y = _lv_y * TILESIZE;
 		width = _lv_w * TILESIZE;
 		height = _lv_h * TILESIZE;
 		
+		var _buffer = buffer_load(_file);
+		
+		var _info = level_unpack_bin_room(_buffer);
+		
+		//show_debug_message(_info.layers);
+		
 		fields = _level.fields;
 				
-		layer = _local.layers[$ "Collisions"].layer;
-		tiles = _local.layers[$ "Collisions"].tiles;
+		layer = layer_create(0);
+		tiles = layer_tilemap_create(layer, x, y, tl_debug, _lv_w, _lv_h);
+		level_unpack_bin_layer_grid(_buffer, _info.layers[$ "Collisions"], tiles);
 		
-		vb_front = _local.layers[$ "Tiles"].buffer;
-		vb_tiles_below = _local.layers[$ "TilesBelow"].buffer;
+		vb_front = vertex_create_buffer();
+		level_unpack_bin_layer_free_vertex(_buffer, _info.layers[$ "Tiles"], vb_front);
 		
-		layer_back = _local.layers[$ "Background"].layer;
-		tiles_back = _local.layers[$ "Background"].tiles;
+		vb_front_below = vertex_create_buffer();
+		level_unpack_bin_layer_free_vertex(_buffer, _info.layers[$ "TilesBelow"], vb_front_below);
+		
+		layer_back = layer_create(0);
+		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, _lv_w, _lv_h);
+		level_unpack_bin_layer_grid(_buffer, _info.layers[$ "Background"], tiles_back);
 		
 		layer_back_glass = layer_create(110)
 		layer_set_visible(layer_back_glass, false)
 		tiles_back_glass = layer_tilemap_create(layer_back_glass, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
 		
-		layer_tiles_above = _local.layers[$ "TilesAbove"].layer;
-		tiles_tiles_above = _local.layers[$ "TilesAbove"].tiles;
+		layer_tiles_above = layer_create(0);
+		tiles_tiles_above = layer_tilemap_create(layer_tiles_above, x, y, tl_tiles, _lv_w, _lv_h);
+		level_unpack_bin_layer_free_map(_buffer, _info.layers[$ "TilesAbove"], tiles_tiles_above);
 		
-		layer_decor = _local.layers[$ "Decor"].layer;
-		tiles_decor = _local.layers[$ "Decor"].tiles;
+		layer_decor = layer_create(0);
+		tiles_decor = layer_tilemap_create(layer_decor, x, y, tl_tiles, _lv_w, _lv_h);
+		level_unpack_bin_layer_free_map(_buffer, _info.layers[$ "Decor"], tiles_decor);
 		
-		layer_decor_under = _local.layers[$ "DecorUnder"].layer;
-		tiles_decor_under = _local.layers[$ "DecorUnder"].tiles;
+		layer_decor_under = layer_create(0);
+		tiles_decor_under = layer_tilemap_create(layer_decor_under, x, y, tl_tiles, _lv_w, _lv_h);
+		level_unpack_bin_layer_free_map(_buffer, _info.layers[$ "DecorUnder"], tiles_decor_under);
 		
-		layer_spike = _local.layers[$ "Spikes"].layer;
-		tiles_spike = _local.layers[$ "Spikes"].tiles;
+		layer_spike = layer_create(0);
+		tiles_spike = layer_tilemap_create(layer_spike, x, y, tl_debug_spikes, _lv_w, _lv_h);
+		level_unpack_bin_layer_grid(_buffer, _info.layers[$ "Spikes"], tiles_spike);
 		
+		buffer_delete(_buffer);
 		
 		var _time = get_timer();
 		

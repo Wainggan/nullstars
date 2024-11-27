@@ -9,7 +9,7 @@ string = u8* + '\0'
 	u8			# is null
 	FieldType ?
 		: 0
-	u64			# integer value
+	i32			# integer value
 		: 1
 	f64			# float value
 		: 2
@@ -112,15 +112,15 @@ string = u8* + '\0'
 	u32	-> TileLength
 	[TileLength]
 		u32		# tile index
-		u32		# tile x
-		u32		# tile y
+		i32		# tile x
+		i32		# tile y
 		
 		: 3		# "AutoLayer"
 	u32	-> TileLength
 	[TileLength]
 		u32		# tile index
-		u32		# tile x
-		u32		# tile y
+		i32		# tile x
+		i32		# tile y
 
 .Entity =
 	string		# object name

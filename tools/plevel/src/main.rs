@@ -3,6 +3,9 @@ use serde_json::Value;
 use std::path::PathBuf;
 use std::fs;
 
+mod types;
+mod make;
+
 fn main() {
 	let args: Vec<String> = std::env::args().collect();
 
@@ -28,67 +31,418 @@ fn main() {
 		Ok(v) => v,
 		Err(e) => panic!("invalid utf8: {}", e),
 	};
-	let json = match serde_json::from_str::<Value>(json) {
+	let json: types::LdtkJson = match serde_json::from_str(json) {
 		Ok(v) => v,
 		Err(e) => panic!("invalid json: {}", e),
 	};
 
-	let (buffer, refs) = parse_root(&json);
-	tt_total_bin += buffer.len();
+	let test = make::make_main(&json);
+	println!("{:?}", test);
 
-	match std::fs::write(&file_output, buffer) {
-		Ok(_) => 0,
-		Err(e) => panic!("error writing to \"{}\": {}",
-			&file_output.to_str().unwrap_or("<>"), e
-		),
-	};
+	//let (buffer, refs) = parse_root(&json);
+	// tt_total_bin += buffer.len();
 
-	for path in refs {
-		let mut out_dir = file_output.clone();
-		out_dir.pop();
-		let out_ext = file_output.extension().unwrap();
-		out_dir.push("room");
+	// match std::fs::write(&file_output, buffer) {
+	// 	Ok(_) => 0,
+	// 	Err(e) => panic!("error writing to \"{}\": {}",
+	// 		&file_output.to_str().unwrap_or("<>"), e
+	// 	),
+	// };
 
-		let mut in_dir = file_input.clone();
-		in_dir.pop();
-		in_dir.push("level");
-		in_dir.push(format!("{}.ldtkl", path));
+	// for path in refs {
+	// 	let mut out_dir = file_output.clone();
+	// 	out_dir.pop();
+	// 	let out_ext = file_output.extension().unwrap();
+	// 	out_dir.push("room");
 
-		let json = match fs::read(&in_dir) {
-			Ok(v) => v,
-			Err(e) => panic!("file \"{}\" doesn't exist: {}", &path, e),
-		};
-		tt_total_json += json.len();
-		let json = match std::str::from_utf8(&json) {
-			Ok(v) => v,
-			Err(e) => panic!("invalid utf8: {}", e),
-		};
-		let json = match serde_json::from_str::<Value>(json) {
-			Ok(v) => v,
-			Err(e) => panic!("invalid json: {}", e),
-		};
+	// 	let mut in_dir = file_input.clone();
+	// 	in_dir.pop();
+	// 	in_dir.push("level");
+	// 	in_dir.push(format!("{}.ldtkl", path));
 
-		let buffer = parse_room(&json);
-		tt_total_bin += buffer.len();
+	// 	let json = match fs::read(&in_dir) {
+	// 		Ok(v) => v,
+	// 		Err(e) => panic!("file \"{}\" doesn't exist: {}", &path, e),
+	// 	};
+	// 	tt_total_json += json.len();
+	// 	let json = match std::str::from_utf8(&json) {
+	// 		Ok(v) => v,
+	// 		Err(e) => panic!("invalid utf8: {}", e),
+	// 	};
+	// 	let json = match serde_json::from_str::<Value>(json) {
+	// 		Ok(v) => v,
+	// 		Err(e) => panic!("invalid json: {}", e),
+	// 	};
 
-		if !fs::exists(&out_dir).unwrap() {
-			fs::create_dir(&out_dir).unwrap();
-		}
+	// 	let buffer = parse_room(&json);
+	// 	tt_total_bin += buffer.len();
 
-		out_dir.push(format!("{}.{}", path, out_ext.to_str().unwrap()));
+	// 	if !fs::exists(&out_dir).unwrap() {
+	// 		fs::create_dir(&out_dir).unwrap();
+	// 	}
 
-		match std::fs::write(&out_dir, buffer) {
-			Ok(_) => 0,
-			Err(e) => panic!("error writing to \"{}\": {}",
-				&out_dir.to_string_lossy(), e
-			),
-		};
-	}
+	// 	out_dir.push(format!("{}.{}", path, out_ext.to_str().unwrap()));
+
+	// 	match std::fs::write(&out_dir, buffer) {
+	// 		Ok(_) => 0,
+	// 		Err(e) => panic!("error writing to \"{}\": {}",
+	// 			&out_dir.to_string_lossy(), e
+	// 		),
+	// 	};
+	// }
 
 	println!("complete! in {}ms", tt_time.elapsed().as_millis());
 	println!("json {} kb => bin {} kb ;3", tt_total_json / 1024, tt_total_bin / 1024);
 
 }
+
+
+
+fn pack_get_toc_length(toc: &Vec<types::LdtkTableOfContentEntry>) -> usize {
+
+	let mut toc_count = 0;
+	for item in toc {
+		toc_count += item.instances_data.len();
+	}
+
+	toc_count
+}
+
+fn pack_root(json: &types::LdtkJson) -> Vec<u8> {
+	let mut buffer = Vec::<u8>::new();
+
+	for level in &json.levels {
+		pack_root_level(level, &mut buffer);
+	}
+
+	pack_data_toc_header(&mut buffer, pack_get_toc_length(&json.toc) as u32);
+
+	for object in &json.toc {
+		let name = &object.identifier;
+		
+		for item in &object.instances_data {
+			let id = &item.iids.entity_iid;
+
+			let x = item.world_x as u32;
+			let y = item.world_y as u32;
+			let width = item.wid_px as u32;
+			let height = item.hei_px as u32;
+
+			let fields = item.fields.as_ref().unwrap();
+
+			pack_data_toc_item(&mut buffer, name, id, x, y, width, height, fields);
+		}
+	}
+
+	buffer
+}
+
+fn pack_root_level(level: &types::Level, buffer: &mut Vec<u8>) {
+	let name = &level.identifier;
+	let id = &level.iid;
+
+	let x = level.world_x as u32;
+	let y = level.world_y as u32;
+	let width = level.px_wid as u32;
+	let height = level.px_hei as u32;
+
+	pack_data_level_header(buffer, name, id, x, y, width, height);
+}
+
+fn pack_room(level: &types::Level) -> Vec<u8> {
+	let mut buffer = Vec::<u8>::new();
+
+	let name = &level.identifier;
+	let id = &level.iid;
+
+	let x = level.world_x as u32;
+	let y = level.world_y as u32;
+	let width = level.px_wid as u32;
+	let height = level.px_hei as u32;
+
+	pack_data_level_header(&mut buffer, name, id, x, y, width, height);
+
+	pack_room_layerlist(&mut buffer, level.layer_instances.as_ref().unwrap());
+
+	buffer
+}
+
+fn pack_room_layerlist(buffer: &mut Vec<u8>, layers: &Vec<types::LayerInstance>) {
+
+	pack_data_level_layerlist_header(buffer, layers.len() as u8);
+
+	for layer in layers {
+		pack_room_layerlist_item(buffer, layer);
+	}
+
+}
+
+fn pack_room_layerlist_item(buffer: &mut Vec<u8>, layer: &types::LayerInstance) {
+
+	let name = &layer.identifier;
+
+	match layer.layer_instance_type.as_str() {
+		"IntGrid" => {
+			pack_data_level_layer_header(buffer, name, 0);
+
+			let grid = &layer.int_grid_csv;
+			let size = layer.c_wid * layer.c_hei;
+
+			pack_data_level_layer_grid(
+				buffer, size as u32, 
+				|i| grid[i as usize] as u8
+			);
+		},
+		z @ "Tiles" | z @ "AutoLayer" => {
+			pack_data_level_layer_header(buffer, name, 1);
+
+			let tiles;
+			if z == "Tiles" {
+				tiles = &layer.grid_tiles;
+			} else {
+				tiles = &layer.auto_layer_tiles;
+			}
+
+			let size = tiles.len();
+
+			pack_data_level_layer_free(
+				buffer, size as u32,
+				|i| {
+					let t = &tiles[i as usize];
+					
+					let x = t.px[0] as i32;
+					let y = t.px[1] as i32;
+					let m = t.t as u32;
+
+					(m, x, y)
+				}
+			);
+		},
+		_ => todo!(),
+	}
+
+}
+
+fn pack_data_level_layer_header(buffer: &mut Vec<u8>, name: &str, kind: u8) {
+	buffer.extend_from_slice(name.as_bytes());
+	buffer.push(0); // null terminated
+
+	buffer.push(kind);
+}
+
+fn pack_data_level_layerlist_header(buffer: &mut Vec<u8>, size: u8) {
+	buffer.push(size);
+}
+
+fn pack_data_toc_header(buffer: &mut Vec<u8>, size: u32) {
+	buffer.extend_from_slice(&size.to_le_bytes());
+}
+
+fn pack_data_toc_item(
+	buffer: &mut Vec<u8>,
+	name: &str, id: &str,
+	x: u32, y: u32, width: u32, height: u32,
+	fields: &Value
+) {
+	let fields = fields.as_object().unwrap();
+
+	buffer.extend_from_slice(name.as_bytes());
+	buffer.push(0);
+
+	buffer.extend_from_slice(id.as_bytes());
+	buffer.push(0);
+
+	buffer.extend_from_slice(&x.to_le_bytes());
+	buffer.extend_from_slice(&y.to_le_bytes());
+	buffer.extend_from_slice(&width.to_le_bytes());
+	buffer.extend_from_slice(&height.to_le_bytes());
+
+	match name {
+		"obj_checkpoint" => {
+			pack_data_field_string(buffer, fields.get("index").unwrap());
+		},
+		"obj_timer_start" => {
+			pack_data_field_string(buffer, fields.get("name").unwrap());
+			pack_data_field_float(buffer, fields.get("time").unwrap());
+			pack_data_field_string(buffer, fields.get("dir").unwrap());
+			pack_data_field_string(
+				buffer, 
+				fields.get("ref").unwrap()
+					.as_object().unwrap()
+					.get("entityIid").unwrap(),
+			);
+		},
+		_ => (),
+	}
+}
+
+fn pack_data_field_instance(
+	buffer: &mut Vec<u8>,
+	value: &Value, kind: &str
+) {
+	if kind.starts_with("Array") {
+		let kind = kind
+			.trim_start_matches("Array<")
+			.trim_end_matches(">");
+
+		let value = value.as_array().unwrap();
+
+		buffer.push(255);
+		buffer.push(0);
+
+		buffer.push(value.len() as u8);
+
+		for val in value {
+			pack_data_field_value(buffer, val, kind);
+		}
+	} else {
+		pack_data_field_value(buffer, value, kind);
+	}
+}
+
+fn pack_data_field_value(
+	buffer: &mut Vec<u8>,
+	value: &Value, kind: &str,
+) {
+	match kind {
+		"Int" => {
+			pack_data_field_int(buffer, value);
+		},
+		"Float" => {
+			pack_data_field_float(buffer, value);
+		},
+		"Bool" => {
+			pack_data_field_bool(buffer, value);
+		},
+		"Color" => {
+			pack_data_field_color(buffer, value);
+		},
+		"Point" => {
+			pack_data_field_point(buffer, value);
+		}, 
+		"EntityRef" => {
+			pack_data_field_entity(buffer, value);
+		},
+		_ => {
+			if kind.starts_with("String") || kind.starts_with("LocalEnum") {
+				pack_data_field_string(buffer, value);
+			} else {
+				todo!("{}", kind);
+			}
+		}
+	}
+}
+
+fn pack_data_field_int(buffer: &mut Vec<u8>, value: &Value) {
+	buffer.push(0);
+	buffer.push(value.is_null() as u8);
+	
+	let make = value.as_i64().unwrap_or(0) as i32;
+
+	buffer.extend_from_slice(&make.to_le_bytes());
+}
+
+fn pack_data_field_float(buffer: &mut Vec<u8>, value: &Value) {
+	buffer.push(1);
+	buffer.push(value.is_null() as u8);
+	
+	let make = value.as_f64().unwrap_or(0.0);
+
+	buffer.extend_from_slice(&make.to_le_bytes());
+}
+
+fn pack_data_field_bool(buffer: &mut Vec<u8>, value: &Value) {
+	buffer.push(2);
+	buffer.push(value.is_null() as u8);
+	
+	let make = value.as_bool().unwrap_or(false) as u8;
+
+	buffer.push(make);
+}
+
+fn pack_data_field_string(buffer: &mut Vec<u8>, value: &Value) {
+	buffer.push(3);
+	buffer.push(value.is_null() as u8);
+
+	let make = value.as_str().unwrap_or("");
+
+	buffer.extend_from_slice(make.as_bytes());
+	buffer.push(0); // null terminated
+}
+
+fn pack_data_field_color(buffer: &mut Vec<u8>, value: &Value) {
+	buffer.push(4);
+	buffer.push(value.is_null() as u8);
+
+	let make = value.as_str().unwrap_or("#ffffff");
+	let make = make.trim_start_matches("#");
+	let r = make[0..2].parse::<u8>().unwrap_or(0);
+	let g = make[2..4].parse::<u8>().unwrap_or(0);
+	let b = make[4..6].parse::<u8>().unwrap_or(0);
+
+	buffer.push(r);
+	buffer.push(g);
+	buffer.push(b);
+}
+
+fn pack_data_field_point(buffer: &mut Vec<u8>, value: &Value) {
+	buffer.push(5);
+	buffer.push(value.is_null() as u8);
+
+	let make = value.as_object().unwrap();
+	let x = make.get("cx").unwrap().as_u64().unwrap() as u32;
+	let y = make.get("cy").unwrap().as_u64().unwrap() as u32;
+	
+	buffer.extend_from_slice(&x.to_le_bytes());
+	buffer.extend_from_slice(&y.to_le_bytes());
+}
+
+fn pack_data_field_entity(buffer: &mut Vec<u8>, value: &Value) {
+	buffer.push(6);
+	buffer.push(value.is_null() as u8);
+
+	let make = value.as_object().unwrap();
+	let id = make.get("entityIid").unwrap().as_str().unwrap();
+	
+	buffer.extend_from_slice(id.as_bytes());
+	buffer.push(0); // null terminated
+}
+
+fn pack_data_level_header(
+		buffer: &mut Vec<u8>,
+		name: &str, id: &str,
+		x: u32, y: u32, width: u32, height: u32,
+	) {
+	buffer.extend_from_slice(name.as_bytes());
+	buffer.push(0); // null terminated
+
+	buffer.extend_from_slice(id.as_bytes());
+	buffer.push(0);
+
+	buffer.extend_from_slice(&x.to_le_bytes());
+	buffer.extend_from_slice(&y.to_le_bytes());
+	buffer.extend_from_slice(&width.to_le_bytes());
+	buffer.extend_from_slice(&height.to_le_bytes());
+}
+
+fn pack_data_level_layer_grid(buffer: &mut Vec<u8>, size: u32, grab: impl Fn(u32) -> u8) {
+	buffer.extend_from_slice(&size.to_le_bytes());
+	for t in 0..size {
+		buffer.push(grab(t));
+	}
+}
+
+fn pack_data_level_layer_free(buffer: &mut Vec<u8>, size: u32, grab: impl Fn(u32) -> (u32, i32, i32)) {
+	buffer.extend_from_slice(&size.to_le_bytes());
+	for t in 0..size {
+		let (m, x, y) = grab(t);
+		buffer.extend_from_slice(&m.to_le_bytes());
+		buffer.extend_from_slice(&x.to_le_bytes());
+		buffer.extend_from_slice(&y.to_le_bytes());
+	}
+}
+
+fn pack_data_level_layer_entity(buffer: &mut Vec<u8>) {}
 
 fn parse_root(json: &Value) -> (Vec<u8>, Vec<&str>) {
 
@@ -219,6 +573,8 @@ fn parse_root(json: &Value) -> (Vec<u8>, Vec<&str>) {
 	(buffer, refs)
 }
 
+
+
 fn parse_room(json: &Value) -> Vec<u8> {
 
 	let mut buffer = Vec::<u8>::new();
@@ -332,43 +688,47 @@ fn parse_layer(json: &Value, buffer: &mut Vec<u8>) {
 		"Tiles" => {
 			buffer.push(2);
 
-			let tiles = json.get("autoLayerTiles").unwrap().as_array().unwrap();
-			
-			let size = tiles.len();
-			buffer.extend_from_slice(&(size as u32).to_le_bytes());
-
-			for t in tiles {
-				let t = t.as_object().unwrap();
-
-				let px = t.get("px").unwrap().as_array().unwrap();
-				let x = px[0].as_u64().unwrap();
-				let y = px[1].as_u64().unwrap();
-				let m = t.get("t").unwrap().as_u64().unwrap();
-
-				buffer.extend_from_slice(&(m as u32).to_le_bytes());
-				buffer.extend_from_slice(&(x as u32).to_le_bytes());
-				buffer.extend_from_slice(&(y as u32).to_le_bytes());
-			}
-		},
-		"AutoLayer" => {
-			buffer.push(3);
-
 			let tiles = json.get("gridTiles").unwrap().as_array().unwrap();
 			
 			let size = tiles.len();
 			buffer.extend_from_slice(&(size as u32).to_le_bytes());
 
+			println!("tile: {}", size);
+
 			for t in tiles {
 				let t = t.as_object().unwrap();
 
 				let px = t.get("px").unwrap().as_array().unwrap();
-				let x = px[0].as_u64().unwrap();
-				let y = px[1].as_u64().unwrap();
+				let x = px[0].as_i64().unwrap();
+				let y = px[1].as_i64().unwrap();
 				let m = t.get("t").unwrap().as_u64().unwrap();
 
 				buffer.extend_from_slice(&(m as u32).to_le_bytes());
-				buffer.extend_from_slice(&(x as u32).to_le_bytes());
-				buffer.extend_from_slice(&(y as u32).to_le_bytes());
+				buffer.extend_from_slice(&(x as i32).to_le_bytes());
+				buffer.extend_from_slice(&(y as i32).to_le_bytes());
+			}
+		},
+		"AutoLayer" => {
+			buffer.push(3);
+
+			let tiles = json.get("autoLayerTiles").unwrap().as_array().unwrap();
+			
+			let size = tiles.len();
+			buffer.extend_from_slice(&(size as u32).to_le_bytes());
+
+			println!("auto: {}", size);
+
+			for t in tiles {
+				let t = t.as_object().unwrap();
+
+				let px = t.get("px").unwrap().as_array().unwrap();
+				let x = px[0].as_i64().unwrap();
+				let y = px[1].as_i64().unwrap();
+				let m = t.get("t").unwrap().as_u64().unwrap();
+
+				buffer.extend_from_slice(&(m as u32).to_le_bytes());
+				buffer.extend_from_slice(&(x as i32).to_le_bytes());
+				buffer.extend_from_slice(&(y as i32).to_le_bytes());
 			}
 		},
 		_ => panic!("what the fuck"),

@@ -23,13 +23,9 @@ for (var i = 0; i < array_length(_file.rooms); i++) {
 	
 	var _time = get_timer();
 	
-	var _buffer = buffer_load($"room/{_file.rooms[i].name}.bin");
-	var _file_level = level_unpack_bin_room(_buffer);
-	buffer_delete(_buffer);
-	
 	show_debug_message("level file: {0}", (get_timer() - _time) / 1000)
 	
-	_level.init(_file.rooms[i], _file_level);
+	_level.init(_file.rooms[i], $"room/{_file.rooms[i].name}.bin");
 	
 	array_push(levels, _level);
 	
