@@ -695,7 +695,7 @@ function Level() constructor {
 		
 		level_unpack_bin_layer_free_map_filtered(
 			_buffer, _info.content.layers[$ "Background"].pointer,
-			tiles_back, tiles_back_glass,
+			tiles_back, tiles_back_glass
 		);
 		
 		layer_tiles_above = layer_create(0);
