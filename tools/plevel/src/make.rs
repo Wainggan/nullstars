@@ -373,9 +373,9 @@ pub fn make_field_kind_color(value: &serde_json::Value) -> FieldValue {
 		let make = value.as_str().unwrap_or("#ffffff")
 			.trim_start_matches("#");
 
-		let r = make[0..2].parse::<u8>().unwrap_or(0);
-		let g = make[2..4].parse::<u8>().unwrap_or(0);
-		let b = make[4..6].parse::<u8>().unwrap_or(0);
+		let r = u8::from_str_radix(&make[0..2], 16).unwrap_or(0);
+		let g = u8::from_str_radix(&make[2..4], 16).unwrap_or(0);
+		let b = u8::from_str_radix(&make[4..6], 16).unwrap_or(0);
 
 		(r, g, b)
 	})

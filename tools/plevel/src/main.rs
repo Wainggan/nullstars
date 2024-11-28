@@ -38,7 +38,6 @@ fn main() {
 	};
 
 	let makes = make::make_main(&json);
-	println!("{:?}", makes);
 
 	let buffer = makes.pack_new();
 	tt_total_bin += buffer.len();

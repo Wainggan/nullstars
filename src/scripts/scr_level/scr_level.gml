@@ -450,8 +450,6 @@ function level_unpack_bin_layer_grid(_buffer, _at, _tilemap) {
 	buffer_seek(_buffer, buffer_seek_start, _at);
 	var _count = buffer_read(_buffer, buffer_u32);
 	
-	show_debug_message($"grid {_count} @ {_at}");
-	
 	var _w = tilemap_get_width(_tilemap);
 	
 	for (var i_tile = 0; i_tile < _count; i_tile++) {
@@ -468,8 +466,6 @@ function level_unpack_bin_layer_free_map(_buffer, _at, _tilemap) {
 	
 	buffer_seek(_buffer, buffer_seek_start, _at);
 	var _count = buffer_read(_buffer, buffer_u32);
-	
-	show_debug_message($"map {_count} @ {_at}");
 	
 	repeat _count {
 		var _t = buffer_read(_buffer, buffer_u32);
@@ -488,8 +484,6 @@ function level_unpack_bin_layer_free_vertex(_buffer, _at, _vertex) {
 	
 	buffer_seek(_buffer, buffer_seek_start, _at);
 	var _count = buffer_read(_buffer, buffer_u32);
-	
-	show_debug_message($"vertex {_count} @ {_at}");
 	
 	vertex_begin(_vertex, level_get_vf());
 
