@@ -396,7 +396,7 @@ function level_unpack_bin_layer(_buffer) {
 			}
 		} break;
 		default: {
-			throw "huh";
+			throw $"huh {_type}";
 		}
 	}
 	
@@ -528,6 +528,14 @@ function level_unpack_bin_layer_free_vertex(_buffer, _at, _vertex) {
 	
 }
 
+function level_unpack_field_to_map(_fields) {
+	var _out = {};
+	for (var i = 0; i < array_length(_fields); i++) {
+		_out[$ _fields[i].name] = _fields[i].value;
+	}
+	return _out;
+}
+
 
 /// @return {id.VertexFormat}
 function level_get_vf() {
@@ -620,8 +628,8 @@ function Level() constructor {
 		
 		//show_debug_message(_info.layers);
 		
-		fields = _level.fields;
-				
+		fields = level_unpack_field_to_map(_info.content.fields);
+		
 		layer = layer_create(0);
 		tiles = layer_tilemap_create(layer, x, y, tl_debug, _lv_w, _lv_h);
 		level_unpack_bin_layer_grid(_buffer, _info.layers[$ "Collisions"], tiles);
