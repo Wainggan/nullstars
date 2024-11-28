@@ -209,158 +209,231 @@ function level_ldtk_buffer(_data, _buffer) {
 
 /// @arg {id.Buffer} _buffer
 function level_unpack_bin_field(_buffer) {
-	
 	var _name = buffer_read(_buffer, buffer_string);
-	var _type = buffer_read(_buffer, buffer_u8);
-	var _isnull = buffer_read(_buffer, buffer_bool);
-	
-	var _value;
-	
-	switch (_type) {
-		case 255:
-			var _array_type = buffer_read(_buffer, buffer_u8);
-			var _array_length = buffer_read(_buffer, buffer_u8);
-			_value = [];
-			for (var i = 0; i < _array_length; i++) {
-				buffer_read(_buffer, buffer_u8); // lol
-				var _out = level_unpack_bin_field_inner(_buffer, _array_type);
-				array_push(_value, _out);
-			}
-			break;
-		default:
-			_value = level_unpack_bin_field_inner(_buffer, _type);
-			break;
-	}
-	
-	if _isnull _value = undefined;
+	var _value = level_unpack_bin_field_value(_buffer);
 	
 	return {
 		name: _name,
 		value: _value,
 	};
-	
 }
 
-/// @arg {id.Buffer} _buffer
-/// @arg {real} _type
-function level_unpack_bin_field_inner(_buffer, _type) {
+function level_unpack_bin_field_value(_buffer) {
+	
+	var _type = buffer_read(_buffer, buffer_u8);
 	
 	var _value;
-	
 	switch _type {
-		case 0:
+		case 0x00: {
+			_value = undefined;
+		} break;
+		case 0x01: {
 			_value = buffer_read(_buffer, buffer_s32);
-			break;
-		case 1:
+		} break;
+		case 0x02: {
 			_value = buffer_read(_buffer, buffer_f64);
-			break;
-		case 2:
-			_value = buffer_read(_buffer, buffer_bool);
-			break;
-		case 3:
+		} break;
+		case 0x03: {
+			_value = buffer_read(_buffer, buffer_u8);
+		} break;
+		case 0x04: {
 			_value = buffer_read(_buffer, buffer_string);
-			break;
-		case 4:
+		} break;
+		case 0x05: {
 			var _r = buffer_read(_buffer, buffer_u8);
 			var _g = buffer_read(_buffer, buffer_u8);
 			var _b = buffer_read(_buffer, buffer_u8);
 			_value = make_color_rgb(_r, _g, _b);
-			break;
-		case 5:
+		} break;
+		case 0x06: {
 			var _x = buffer_read(_buffer, buffer_u32);
 			var _y = buffer_read(_buffer, buffer_u32);
-			_value = {
-				x: _x,
-				y: _y,
-			};
-			break;
-		case 6:
+			_value = [_x, _y];
+		} break;
+		case 0x07: {
 			_value = buffer_read(_buffer, buffer_string);
-			break;
-		default:
-			show_debug_message($"impending doom... {_type}");
-			break;
+		} break;
+		case 0xff: {
+			var _length = buffer_read(_buffer, buffer_u8);
+			var _array = array_create(_length);
+			for (var i = 0; i < _length; i++) {
+				_array[i] = level_unpack_bin_field_value(_buffer);
+			}
+			_value = _array;
+		} break;
+		default: {
+			throw "broked";
+		}
 	}
-		
-	return _value;
 	
+	return _value;
 }
 
-function level_unpack_bin_main(_buffer, _info) {
+function level_unpack_bin_room(_buffer) {
+	var _header = level_unpack_bin_room_header(_buffer);
+	var _content = level_unpack_bin_room_content(_buffer);
 	
-	var _rooms = [];
+	return {
+		header: _header,
+		content: _content,
+	};
+}
+
+function level_unpack_bin_room_header(_buffer) {
 	
-	var _room_count = buffer_read(_buffer, buffer_u32);
-	for (var i_room = 0; i_room < _room_count; i_room++) {
-		
-		var _room_name = buffer_read(_buffer, buffer_string);
-		var _room_id = buffer_read(_buffer, buffer_string);
-		
-		var _room_x = buffer_read(_buffer, buffer_u32);
-		var _room_y = buffer_read(_buffer, buffer_u32);
-		var _room_width = buffer_read(_buffer, buffer_u32);
-		var _room_height = buffer_read(_buffer, buffer_u32);
-		
-		var _room_fields = {};
-		
-		var _fields_count = buffer_read(_buffer, buffer_u8);
-		for (var i_field = 0; i_field < _fields_count; i_field++) {
-			var _field = level_unpack_bin_field(_buffer);
-			_room_fields[$ _field.name] = _field.value;
-		}
-		
-		array_push(_rooms, {
-			name: _room_name,
-			id: _room_id,
-			x: _room_x, y: _room_y,
-			width: _room_width, height: _room_height,
-			fields: _room_fields,
-		});
+	var _name = buffer_read(_buffer, buffer_string);
+	var _id = buffer_read(_buffer, buffer_string);
+	
+	var _x = buffer_read(_buffer, buffer_u32);
+	var _y = buffer_read(_buffer, buffer_u32);
+	var _width = buffer_read(_buffer, buffer_u32);
+	var _height = buffer_read(_buffer, buffer_u32);
+	
+	return {
+		name: _name,
+		id: _id,
+		x: _x, y: _y,
+		width: _width, height: _height,
+	};
+}
+
+function level_unpack_bin_room_content(_buffer) {
+	
+	var _layers_count = buffer_read(_buffer, buffer_u8);
+	var _layers = array_create(_layers_count);
+	for (var i_layer = 0; i_layer < _layers_count; i_layer++) {
+		_layers[i_layer] = level_unpack_bin_layer(_buffer);
 	}
 	
-	var _toc = [];
+	var _fields_count = buffer_read(_buffer, buffer_u8);
+	var _fields = array_create(_fields_count);
+	for (var i_field = 0; i_field < _fields_count; i_field++) {
+		_fields[i_field] = level_unpack_bin_field(_buffer);
+	}
+	
+	return {
+		layers: _layers,
+		fields: _fields,
+	};
+}
+
+function level_unpack_bin_toc(_buffer) {
+	var _object = buffer_read(_buffer, buffer_string);
+	var _id = buffer_read(_buffer, buffer_string);
+	
+	var _x = buffer_read(_buffer, buffer_u32);
+	var _y = buffer_read(_buffer, buffer_u32);
+	var _width = buffer_read(_buffer, buffer_u32);
+	var _height = buffer_read(_buffer, buffer_u32);
+	
+	var _field_count = buffer_read(_buffer, buffer_u8);
+	var _fields = array_create(_field_count);
+	for (var i_field = 0; i_field < _field_count; i_field++) {
+		_fields[i_field] = level_unpack_bin_field(_buffer);
+	}
+	
+	return {
+		object: _object,
+		id: _id,
+		x: _x, y: _y,
+		width: _width, height: _height,
+		fields: _fields,
+	};
+}
+
+function level_unpack_bin_main(_buffer) {
+	
+	var _room_count = buffer_read(_buffer, buffer_u32);
+	var _rooms = array_create(_room_count);
+	for (var i_room = 0; i_room < _room_count; i_room++) {
+		_rooms[i_room] = level_unpack_bin_room_header(_buffer);
+	}
 	
 	var _toc_count = buffer_read(_buffer, buffer_u32);
+	var _toc = array_create(_toc_count);
 	for (var i_toc = 0; i_toc < _toc_count; i_toc++) {
-		
-		var _toc_type = buffer_read(_buffer, buffer_string);
-		var _toc_id = buffer_read(_buffer, buffer_string);
-		
-		var _toc_x = buffer_read(_buffer, buffer_u32);
-		var _toc_y = buffer_read(_buffer, buffer_u32);
-		var _toc_width = buffer_read(_buffer, buffer_u32);
-		var _toc_height = buffer_read(_buffer, buffer_u32);
-		
-		var _toc_fields = {};
-		
-		switch _toc_type {
-			case nameof(obj_player):
-				break;
-			case nameof(obj_checkpoint):
-				_toc_fields.index = buffer_read(_buffer, buffer_string);
-				break;
-			case nameof(obj_timer_start):
-				_toc_fields.name = buffer_read(_buffer, buffer_string);
-				_toc_fields.time = buffer_read(_buffer, buffer_f32);
-				_toc_fields.dir = buffer_read(_buffer, buffer_string);
-				_toc_fields.ref = buffer_read(_buffer, buffer_string);
-				break;
-			case nameof(obj_timer_end):
-				break;
-		}
-		
-		array_push(_toc, {
-			object: _toc_type,
-			id: _toc_id,
-			x: _toc_x, y: _toc_y,
-			width: _toc_width, height: _toc_height,
-			fields: _toc_fields,
-		});
+		_toc[i_toc] = level_unpack_bin_toc(_buffer);
 	}
 	
 	return {
 		rooms: _rooms,
 		toc: _toc,
+	};
+}
+
+function level_unpack_bin_layer(_buffer) {
+	
+	var _name = buffer_read(_buffer, buffer_string);
+	
+	var _type = buffer_read(_buffer, buffer_u8);
+	
+	var _pointer = undefined;
+	var _entities = undefined;
+	
+	switch _type {
+		case 0x01: {
+			_pointer = buffer_tell(_buffer);
+			var _length = buffer_read(_buffer, buffer_u32);
+			repeat _length {
+				buffer_read(_buffer, buffer_u8);
+			}
+		} break;
+		case 0x02: {
+			_pointer = buffer_tell(_buffer);
+			var _length = buffer_read(_buffer, buffer_u32);
+			repeat _length {
+				buffer_read(_buffer, buffer_u32);
+				buffer_read(_buffer, buffer_s32);
+				buffer_read(_buffer, buffer_s32);
+			}
+		} break;
+		case 0x03: {
+			_pointer = buffer_tell(_buffer);
+			var _length = buffer_read(_buffer, buffer_u32);
+			_entities = array_create(_length);
+			for (var i = 0; i < _length; i++) {
+				_entities[i] = level_unpack_bin_entity(_buffer);
+			}
+		} break;
+		default: {
+			throw "huh";
+		}
+	}
+	
+	return {
+		name: _name,
+		pointer: _pointer,
+	};
+}
+
+function level_unpack_bin_entity(_buffer) {
+	var _name = buffer_read(_buffer, buffer_string);
+	var _id = buffer_read(_buffer, buffer_string);
+	
+	var _tags_count = buffer_read(_buffer, buffer_u8);
+	var _tags = array_create(_tags_count);
+	for (var i = 0; i < _tags_count; i++) {
+		_tags[i] = buffer_read(_buffer, buffer_string);
+	}
+	
+	var _x = buffer_read(_buffer, buffer_u32);
+	var _y = buffer_read(_buffer, buffer_u32);
+	var _width = buffer_read(_buffer, buffer_u32);
+	var _height = buffer_read(_buffer, buffer_u32);
+	
+	var _fields_count = buffer_read(_buffer, buffer_u8);
+	var _fields = array_create(_fields_count);
+	for (var i = 0; i < _fields_count; i++) {
+		_fields[i] = level_unpack_bin_field(_buffer);
+	}
+	
+	return {
+		name: _name,
+		id: _id,
+		tags: _tags,
+		x: _x, y: _y,
+		width: _width, height: _height,
+		fields: _fields,
 	};
 }
 
