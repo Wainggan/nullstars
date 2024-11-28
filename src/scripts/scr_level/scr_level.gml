@@ -634,6 +634,7 @@ function Level() constructor {
 		fields = _info.content.fields;
 		
 		layer = layer_create(0);
+		layer_set_visible(layer, false);
 		tiles = layer_tilemap_create(layer, x, y, tl_debug, _lv_w, _lv_h);
 		level_unpack_bin_layer_grid(_buffer, _info.content.layers[$ "Collisions"].pointer, tiles);
 		
@@ -644,6 +645,7 @@ function Level() constructor {
 		level_unpack_bin_layer_free_vertex(_buffer, _info.content.layers[$ "TilesBelow"].pointer, vb_tiles_below);
 		
 		layer_back = layer_create(0);
+		layer_set_visible(layer_back, false);
 		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, _lv_w, _lv_h);
 		level_unpack_bin_layer_grid(_buffer, _info.content.layers[$ "Background"].pointer, tiles_back);
 		
@@ -652,18 +654,22 @@ function Level() constructor {
 		tiles_back_glass = layer_tilemap_create(layer_back_glass, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
 		
 		layer_tiles_above = layer_create(0);
+		layer_set_visible(layer_tiles_above, false);
 		tiles_tiles_above = layer_tilemap_create(layer_tiles_above, x, y, tl_tiles, _lv_w, _lv_h);
 		level_unpack_bin_layer_free_map(_buffer, _info.content.layers[$ "TilesAbove"].pointer, tiles_tiles_above);
 		
 		layer_decor = layer_create(0);
+		layer_set_visible(layer_decor, false);
 		tiles_decor = layer_tilemap_create(layer_decor, x, y, tl_tiles, _lv_w, _lv_h);
 		level_unpack_bin_layer_free_map(_buffer, _info.content.layers[$ "Decor"].pointer, tiles_decor);
 		
 		layer_decor_under = layer_create(0);
+		layer_set_visible(layer_decor_under, false);
 		tiles_decor_under = layer_tilemap_create(layer_decor_under, x, y, tl_tiles, _lv_w, _lv_h);
 		level_unpack_bin_layer_free_map(_buffer, _info.content.layers[$ "DecorUnder"].pointer, tiles_decor_under);
 		
 		layer_spike = layer_create(0);
+		layer_set_visible(layer_spike, false);
 		tiles_spike = layer_tilemap_create(layer_spike, x, y, tl_debug_spikes, _lv_w, _lv_h);
 		level_unpack_bin_layer_grid(_buffer, _info.content.layers[$ "Spikes"].pointer, tiles_spike);
 		
