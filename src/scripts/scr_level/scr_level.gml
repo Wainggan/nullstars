@@ -647,7 +647,7 @@ function Level() constructor {
 		layer_back = layer_create(0);
 		layer_set_visible(layer_back, false);
 		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, _lv_w, _lv_h);
-		level_unpack_bin_layer_grid(_buffer, _info.content.layers[$ "Background"].pointer, tiles_back);
+		level_unpack_bin_layer_free_map(_buffer, _info.content.layers[$ "Background"].pointer, tiles_back);
 		
 		layer_back_glass = layer_create(110)
 		layer_set_visible(layer_back_glass, false)

@@ -213,7 +213,15 @@ pub fn make_layer(json: &types::LayerInstance) -> Layer {
 	let name = json.identifier.clone();
 	let kind;
 
-	match json.layer_instance_type.as_str() {
+	let insanity;
+
+	if name == "Background" {
+		insanity = "AutoLayer"; // ridiculous edge case
+	} else {
+		insanity = json.layer_instance_type.as_str();
+	}
+
+	match insanity {
 		"IntGrid" => {
 			let mut items = Vec::new();
 			for t in &json.int_grid_csv {
