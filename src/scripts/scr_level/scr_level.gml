@@ -300,15 +300,17 @@ function level_unpack_bin_room_header(_buffer) {
 function level_unpack_bin_room_content(_buffer) {
 	
 	var _layers_count = buffer_read(_buffer, buffer_u8);
-	var _layers = array_create(_layers_count);
+	var _layers = {};
 	for (var i_layer = 0; i_layer < _layers_count; i_layer++) {
-		_layers[i_layer] = level_unpack_bin_layer(_buffer);
+		var _temp = level_unpack_bin_layer(_buffer)
+		_layers[$ _temp.name] = _temp;
 	}
 	
 	var _fields_count = buffer_read(_buffer, buffer_u8);
-	var _fields = array_create(_fields_count);
+	var _fields = {};
 	for (var i_field = 0; i_field < _fields_count; i_field++) {
-		_fields[i_field] = level_unpack_bin_field(_buffer);
+		var _temp = level_unpack_bin_field(_buffer);
+		_fields[$ _temp.name] = _temp.value;
 	}
 	
 	return {
@@ -327,9 +329,10 @@ function level_unpack_bin_toc(_buffer) {
 	var _height = buffer_read(_buffer, buffer_u32);
 	
 	var _field_count = buffer_read(_buffer, buffer_u8);
-	var _fields = array_create(_field_count);
+	var _fields = {};
 	for (var i_field = 0; i_field < _field_count; i_field++) {
-		_fields[i_field] = level_unpack_bin_field(_buffer);
+		var _temp = level_unpack_bin_field(_buffer);
+		_fields[$ _temp.name] = _temp.value;
 	}
 	
 	return {
@@ -403,6 +406,7 @@ function level_unpack_bin_layer(_buffer) {
 	return {
 		name: _name,
 		pointer: _pointer,
+		entities: _entities,
 	};
 }
 
@@ -422,9 +426,10 @@ function level_unpack_bin_entity(_buffer) {
 	var _height = buffer_read(_buffer, buffer_u32);
 	
 	var _fields_count = buffer_read(_buffer, buffer_u8);
-	var _fields = array_create(_fields_count);
+	var _fields = {};
 	for (var i = 0; i < _fields_count; i++) {
-		_fields[i] = level_unpack_bin_field(_buffer);
+		var _temp = level_unpack_bin_field(_buffer);
+		_fields[$ _temp.name] = _temp.value;
 	}
 	
 	return {
@@ -437,12 +442,15 @@ function level_unpack_bin_entity(_buffer) {
 	};
 }
 
+/// @arg {id.Buffer} _buffer
+/// @arg {real} _at
+/// @arg {id.TileMapElement} _tilemap
 function level_unpack_bin_layer_grid(_buffer, _at, _tilemap) {
 	
 	buffer_seek(_buffer, buffer_seek_start, _at);
 	var _count = buffer_read(_buffer, buffer_u32);
 	
-	show_debug_message(_count);
+	show_debug_message($"grid {_count} @ {_at}");
 	
 	var _w = tilemap_get_width(_tilemap);
 	
@@ -453,12 +461,15 @@ function level_unpack_bin_layer_grid(_buffer, _at, _tilemap) {
 	
 }
 
+/// @arg {id.Buffer} _buffer
+/// @arg {real} _at
+/// @arg {id.TileMapElement} _tilemap
 function level_unpack_bin_layer_free_map(_buffer, _at, _tilemap) {
 	
 	buffer_seek(_buffer, buffer_seek_start, _at);
 	var _count = buffer_read(_buffer, buffer_u32);
 	
-	show_debug_message(_count);
+	show_debug_message($"map {_count} @ {_at}");
 	
 	repeat _count {
 		var _t = buffer_read(_buffer, buffer_u32);
@@ -478,7 +489,7 @@ function level_unpack_bin_layer_free_vertex(_buffer, _at, _vertex) {
 	buffer_seek(_buffer, buffer_seek_start, _at);
 	var _count = buffer_read(_buffer, buffer_u32);
 	
-	show_debug_message($"count @ {_at}: {_count}");
+	show_debug_message($"vertex {_count} @ {_at}");
 	
 	vertex_begin(_vertex, level_get_vf());
 
@@ -526,14 +537,6 @@ function level_unpack_bin_layer_free_vertex(_buffer, _at, _vertex) {
 	
 	vertex_end(_vertex);
 	
-}
-
-function level_unpack_field_to_map(_fields) {
-	var _out = {};
-	for (var i = 0; i < array_length(_fields); i++) {
-		_out[$ _fields[i].name] = _fields[i].value;
-	}
-	return _out;
 }
 
 
@@ -628,21 +631,21 @@ function Level() constructor {
 		
 		//show_debug_message(_info.layers);
 		
-		fields = level_unpack_field_to_map(_info.content.fields);
+		fields = _info.content.fields;
 		
 		layer = layer_create(0);
 		tiles = layer_tilemap_create(layer, x, y, tl_debug, _lv_w, _lv_h);
-		level_unpack_bin_layer_grid(_buffer, _info.layers[$ "Collisions"], tiles);
+		level_unpack_bin_layer_grid(_buffer, _info.content.layers[$ "Collisions"].pointer, tiles);
 		
 		vb_front = vertex_create_buffer();
-		level_unpack_bin_layer_free_vertex(_buffer, _info.layers[$ "Tiles"], vb_front);
+		level_unpack_bin_layer_free_vertex(_buffer, _info.content.layers[$ "Tiles"].pointer, vb_front);
 		
 		vb_front_below = vertex_create_buffer();
-		level_unpack_bin_layer_free_vertex(_buffer, _info.layers[$ "TilesBelow"], vb_front_below);
+		level_unpack_bin_layer_free_vertex(_buffer, _info.content.layers[$ "TilesBelow"].pointer, vb_front_below);
 		
 		layer_back = layer_create(0);
 		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, _lv_w, _lv_h);
-		level_unpack_bin_layer_grid(_buffer, _info.layers[$ "Background"], tiles_back);
+		level_unpack_bin_layer_grid(_buffer, _info.content.layers[$ "Background"].pointer, tiles_back);
 		
 		layer_back_glass = layer_create(110)
 		layer_set_visible(layer_back_glass, false)
@@ -650,19 +653,19 @@ function Level() constructor {
 		
 		layer_tiles_above = layer_create(0);
 		tiles_tiles_above = layer_tilemap_create(layer_tiles_above, x, y, tl_tiles, _lv_w, _lv_h);
-		level_unpack_bin_layer_free_map(_buffer, _info.layers[$ "TilesAbove"], tiles_tiles_above);
+		level_unpack_bin_layer_free_map(_buffer, _info.content.layers[$ "TilesAbove"].pointer, tiles_tiles_above);
 		
 		layer_decor = layer_create(0);
 		tiles_decor = layer_tilemap_create(layer_decor, x, y, tl_tiles, _lv_w, _lv_h);
-		level_unpack_bin_layer_free_map(_buffer, _info.layers[$ "Decor"], tiles_decor);
+		level_unpack_bin_layer_free_map(_buffer, _info.content.layers[$ "Decor"].pointer, tiles_decor);
 		
 		layer_decor_under = layer_create(0);
 		tiles_decor_under = layer_tilemap_create(layer_decor_under, x, y, tl_tiles, _lv_w, _lv_h);
-		level_unpack_bin_layer_free_map(_buffer, _info.layers[$ "DecorUnder"], tiles_decor_under);
+		level_unpack_bin_layer_free_map(_buffer, _info.content.layers[$ "DecorUnder"].pointer, tiles_decor_under);
 		
 		layer_spike = layer_create(0);
 		tiles_spike = layer_tilemap_create(layer_spike, x, y, tl_debug_spikes, _lv_w, _lv_h);
-		level_unpack_bin_layer_grid(_buffer, _info.layers[$ "Spikes"], tiles_spike);
+		level_unpack_bin_layer_grid(_buffer, _info.content.layers[$ "Spikes"].pointer, tiles_spike);
 		
 		buffer_delete(_buffer);
 		

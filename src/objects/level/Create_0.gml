@@ -18,7 +18,7 @@ x_max = room_width;
 y_max = room_height;
 
 // partition
-for (var i = 0; i < array_length(_file.rooms); i++) {
+for (var i = 0; i < 44/*array_length(_file.rooms)*/; i++) {
 	var _level = new Level();
 	
 	var _time = get_timer();
