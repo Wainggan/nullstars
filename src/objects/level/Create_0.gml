@@ -21,10 +21,6 @@ y_max = room_height;
 for (var i = 0; i < array_length(_file.rooms); i++) {
 	var _level = new Level();
 	
-	var _time = get_timer();
-	
-	show_debug_message("level file: {0}", (get_timer() - _time) / 1000)
-	
 	_level.init(_file.rooms[i], $"room/{_file.rooms[i].name}.bin");
 	
 	array_push(levels, _level);

@@ -627,7 +627,13 @@ function Level() constructor {
 		width = _lv_w * TILESIZE;
 		height = _lv_h * TILESIZE;
 		
+		var _time = get_timer();
+		
 		var _buffer = buffer_load(_file);
+			
+		show_debug_message("level: file: {0}", (get_timer() - _time) / 1000)
+		
+		_time = get_timer();
 		
 		global.UNPACKPOINTOFFSET_X = x;
 		global.UNPACKPOINTOFFSET_Y = y;
@@ -635,8 +641,10 @@ function Level() constructor {
 		global.UNPACKPOINTOFFSET_X = 0;
 		global.UNPACKPOINTOFFSET_Y = 0;
 		
-		//show_debug_message(_info.layers);
+		show_debug_message("level: unpack: {0}", (get_timer() - _time) / 1000)
 		
+		_time = get_timer();
+
 		fields = _info.content.fields;
 		
 		layer = layer_create(0);
@@ -680,8 +688,6 @@ function Level() constructor {
 		level_unpack_bin_layer_grid(_buffer, _info.content.layers[$ "Spikes"].pointer, tiles_spike);
 		
 		buffer_delete(_buffer);
-		
-		var _time = get_timer();
 		
 		entities = [];
 		
@@ -737,127 +743,7 @@ function Level() constructor {
 			}
 		}
 		
-		/*
-		
-		for (var i_layer = 0; i_layer < array_length(_level.layerInstances); i_layer++) {
-			var _layer = _level.layerInstances[i_layer];
-
-			switch _layer.__identifier {
-				
-				case "Tiles":
-					// construct stupid vertex buffer stuff
-					// the things i do for 2 pixels
-					vb_front = vertex_create_buffer()
-					level_ldtk_buffer(_layer.autoLayerTiles, vb_front)
-				
-					break;
-				case "TilesBelow":
-					vb_tiles_below = vertex_create_buffer()
-					level_ldtk_buffer(_layer.autoLayerTiles, vb_tiles_below)
-					
-					break;
-				case "TilesAbove":
-					level_ldtk_tiles(_layer.autoLayerTiles, tiles_tiles_above);
-					
-					break;
-				case "Decor":
-					level_ldtk_tiles(_layer.gridTiles, tiles_decor);
-					
-					break;
-				case "DecorUnder":
-					level_ldtk_tiles(_layer.gridTiles, tiles_decor_under);
-					
-					break;
-				case "Background": 
-					level_ldtk_tiles_window(_layer.autoLayerTiles, tiles_back, tiles_back_glass);
-					
-					break;
-				case "Collisions":
-					level_ldtk_intgrid(_layer, tiles);
-					
-					break;
-				case "Spikes":
-					level_ldtk_intgrid(_layer, tiles_spike);
-					
-					break;
-				
-				case "Bubbles":
-				case "Walls":
-				case "Lights":
-				case "Meta":
-				case "Instances":
-					
-					for (var i_entity = 0; i_entity < array_length(_layer.entityInstances); i_entity++) {
-						var _e = _layer.entityInstances[i_entity]
-						
-						if global.entities_toc[$ _e.iid] != undefined {
-							continue;
-						}
-						
-						var _object_index = asset_get_index(_e.__identifier);
-						
-						var _field = {};
-						
-						_field.uid = _e.iid;
-						
-						for (var i_field = 0; i_field < array_length(_e.fieldInstances); i_field++) {
-							var _f = _e.fieldInstances[i_field];
-							_field[$ _f.__identifier] = level_ldtk_field(_f, x, y);
-						}
-						
-						// @todo: rewrite
-						if array_contains(_e.__tags, "SIZE_TILE") {
-							_field.image_xscale = floor(_e.width / TILESIZE);
-							_field.image_yscale = floor(_e.height / TILESIZE);
-						} else {
-							// find the entity definition for some reason ???
-							var _def = array_find_index(_defs.entities, method({_e}, function(_i){
-								return _i.identifier == _e.__identifier;
-							}))
-							if _def != -1 {
-								_def = _defs.entities[_def];
-							} else {
-								if _def {
-									show_debug_message("what the fuck?");
-									_field.image_xscale = floor(_e.width / _def.width);
-									_field.image_yscale = floor(_e.height / _def.height);
-								} else {
-									_field.image_xscale = floor(_e.width / TILESIZE);
-									_field.image_yscale = floor(_e.height / TILESIZE);
-								}
-							}
-						}
-						
-						var _pos_x = _e.__worldX,
-							_pos_y = _e.__worldY;
-						
-						if array_contains(_e.__tags, "CENTERED") {
-							_pos_x += 8;
-							_pos_y += 8;
-						}
-						
-						var _collect = {
-							id: _e.iid,
-							x: _pos_x,
-							y: _pos_y,
-							layer: _layer.__identifier,
-							object: _object_index,
-							field: _field,
-						};
-
-						global.entities[$ _e.iid] = noone;
-						
-						array_push(entities, _collect);
-						
-					}
-					
-					break;
-				
-			}
-		}
-		*/
-		
-		show_debug_message("unpack: {0}", (get_timer() - _time) / 1000)
+		show_debug_message("level: parse: {0}", (get_timer() - _time) / 1000)
 	}
 	
 	/// creates tile data from file
