@@ -640,8 +640,8 @@ function Level() constructor {
 		vb_front = vertex_create_buffer();
 		level_unpack_bin_layer_free_vertex(_buffer, _info.content.layers[$ "Tiles"].pointer, vb_front);
 		
-		vb_front_below = vertex_create_buffer();
-		level_unpack_bin_layer_free_vertex(_buffer, _info.content.layers[$ "TilesBelow"].pointer, vb_front_below);
+		vb_tiles_below = vertex_create_buffer();
+		level_unpack_bin_layer_free_vertex(_buffer, _info.content.layers[$ "TilesBelow"].pointer, vb_tiles_below);
 		
 		layer_back = layer_create(0);
 		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, _lv_w, _lv_h);
