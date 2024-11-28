@@ -67,7 +67,8 @@ config = {
 	background: true,
 	tiles_decor: true,
 	
-	particles_enable: true,
+	particles_atmosphere: true,
+	particles_object: true,
 	particles_light: true,
 	
 	light_rim: true,
@@ -79,6 +80,7 @@ config = {
 	light_method_blur: false, // broken
 	
 	bubble_anim: true,
+	bubble_spike: true,
 	bubble_outline: true,
 	
 	water_anim_waves: true,

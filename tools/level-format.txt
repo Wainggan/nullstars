@@ -1,0 +1,139 @@
+
+## ~ nullstars' level data format ~ ##
+
+string = u8* + '\0'
+
+.Field =
+	string		# field name
+	u8 -> FieldType
+	u8			# is null
+	FieldType ?
+		: 0
+	i32			# integer value
+		: 1
+	f64			# float value
+		: 2
+	u8			# boolean value
+		: 3
+	string		# string value
+		: 4
+	u8			# r
+	u8			# g
+	u8			# b
+		: 5
+	u32			# point x value
+	u32			# point y value
+		: 6
+	string		# entity id value
+		: 255	# array
+	u8 -> ArrayType
+	u8 -> ArrayLength
+	[ArrayLength]
+		u8			# is null
+		ArrayType ?
+			: 0
+		i32			# integer value
+			: 1
+		f64			# float value
+			: 2
+		u8			# boolean value
+			: 3
+		string		# string value
+			: 4
+		u32			# color value
+			: 5
+		u32			# point x value
+		u32			# point y value
+			: 6
+		string		# entity id value
+
+
+.Main =
+	u32	-> RoomLength
+	[RoomLength]
+		string		# room name
+		string		# room id
+		u32			# x
+		u32			# y
+		u32			# width
+		u32			# height
+		u8 -> FieldsLength
+		[FieldsLength]
+			.Field
+	u32 -> TocLength
+	[TocLength]
+		string -> ObjectType
+		string		# id
+		u32			# x
+		u32			# y
+		u32			# width
+		u32			# height
+		
+		ObjectType ? # object type
+			: "obj_player"
+		
+			: "obj_checkpoint"
+		string		# checkpoint index
+		
+			: "obj_timer_start"
+		string		# timer name
+		f32			# timer duration
+		string		# timer direction
+		string		# obj_timer_end id
+			
+			: "obj_timer_end"
+			
+
+.Room =
+	string		# room name
+	string		# room id
+	u32			# x
+	u32			# y
+	u32			# width
+	u32			# height
+	u8	-> LayersLength
+	[LayersLength]
+		.Layer
+
+.Layer =
+	string		# layer name
+	u8 ?
+		: 0		# "IntGrid"
+	u32	-> TileLength
+	[TileLength]
+		u8*		# tile data
+	
+		: 1		# "Entities"
+	u32	-> EntityLength
+	[EntityLength]
+		.Entity
+		
+		: 2		# "Tiles"
+	u32	-> TileLength
+	[TileLength]
+		u32		# tile index
+		i32		# tile x
+		i32		# tile y
+		
+		: 3		# "AutoLayer"
+	u32	-> TileLength
+	[TileLength]
+		u32		# tile index
+		i32		# tile x
+		i32		# tile y
+
+.Entity =
+	string		# object name
+	string		# entity id
+	u8 -> TagsLength
+	[TagsLength]
+		string	# tag
+	u32			# x
+	u32			# y
+	u32			# width
+	u32			# height
+	u8	-> FieldsLength
+	[FieldsLength]
+		.Field
+	
+

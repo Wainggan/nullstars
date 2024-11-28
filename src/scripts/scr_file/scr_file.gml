@@ -174,11 +174,17 @@ function game_json_open(_filename) {
 	if file_exists(_filename) {
 		log(Log.hide, $"loading file {_filename}");
 		
+		var _time = get_timer();
 		var _buffer = buffer_load(_filename);
+		show_debug_message("buffer load: {0}", (get_timer() - _time) / 1000)
+		_time = get_timer();
 		var _string = buffer_read(_buffer, buffer_string);
+		show_debug_message("buffer read: {0}", (get_timer() - _time) / 1000)
 		buffer_delete(_buffer);
 		
+		_time = get_timer();
 		var _loadData = json_parse(_string, , true);
+		show_debug_message("buffer json: {0}", (get_timer() - _time) / 1000)
 		
 		return _loadData
 		

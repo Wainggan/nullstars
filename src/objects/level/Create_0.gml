@@ -1,5 +1,11 @@
 
-var _file = game_json_open("level.ldtk");
+var _time = get_timer();
+
+var _buffer = buffer_load("world.bin");
+var _file = level_unpack_bin_main(_buffer);
+buffer_delete(_buffer);
+
+show_debug_message("main file: {0}", (get_timer() - _time) / 1000);
 
 levels = [];
 
@@ -12,12 +18,10 @@ x_max = room_width;
 y_max = room_height;
 
 // partition
-for (var i = 0; i < array_length(_file.levels); i++) {
-	var _level = new Level()
+for (var i = 0; i < array_length(_file.rooms); i++) {
+	var _level = new Level();
 	
-	var _file_level = game_json_open(_file.levels[i].externalRelPath);
-	
-	_level.init(_file_level, _file.defs);
+	_level.init(_file.rooms[i], $"room/{_file.rooms[i].name}.bin");
 	
 	array_push(levels, _level);
 	
@@ -27,46 +31,42 @@ for (var i = 0; i < array_length(_file.levels); i++) {
 for (var i_table = 0; i_table < array_length(_file.toc); i_table++) {
 	
 	var _item = _file.toc[i_table]
+
+	var _field = {}
 	
-	for (var i_inst = 0; i_inst < array_length(_item.instancesData); i_inst++) {
-		
-		var _ent = _item.instancesData[i_inst]
-		var _field = {}
-		
-		var _val = _ent.fields;
-		
-		switch _item.identifier {
-			case nameof(obj_checkpoint):
-				_field.index = level_ldtk_field_item(_val.index, "String");
-				break;
-			case nameof(obj_timer_start):
-				_field.name = level_ldtk_field_item(_val.name, "String");
-				_field.time = level_ldtk_field_item(_val.time, "Float");
-				_field.dir = level_ldtk_field_item(_val.dir, "Enum");
-				_field.ref = level_ldtk_field_item(_val.ref, "EntityRef");
-				
-				_field.image_xscale = floor(_ent.widPx / TILESIZE);
-				_field.image_yscale = floor(_ent.heiPx / TILESIZE);
-				break;
-			case nameof(obj_timer_end):
-				_field.image_xscale = floor(_ent.widPx / TILESIZE);
-				_field.image_yscale = floor(_ent.heiPx / TILESIZE);
-				break;
-		}
-		
-		_field.uid = _ent.iids.entityIid;
-		
-		var _inst = instance_create_layer(
-			_ent.worldX, _ent.worldY,
-			"Instances",
-			asset_get_index(_item.identifier),
-			_field
-		);
-		
-		global.entities[$ _ent.iids.entityIid] = _inst
-		global.entities_toc[$ _ent.iids.entityIid] = _inst
-		
+	var _val = _item.fields;
+	
+	switch _item.object {
+		case nameof(obj_checkpoint):
+			_field.index = _val.index;
+			break;
+		case nameof(obj_timer_start):
+			_field.name = _val.name;
+			_field.time = _val.time;
+			_field.dir = _val.dir;
+			_field.ref = _val.ref;
+			
+			_field.image_xscale = floor(_item.width / TILESIZE);
+			_field.image_yscale = floor(_item.height / TILESIZE);
+			break;
+		case nameof(obj_timer_end):
+			_field.image_xscale = floor(_item.width / TILESIZE);
+			_field.image_yscale = floor(_item.height / TILESIZE);
+			break;
 	}
+	
+	_field.uid = _item.id;
+	
+	var _inst = instance_create_layer(
+		_item.x, _item.y,
+		"Instances",
+		asset_get_index(_item.object),
+		_field
+	);
+	
+	global.entities[$ _item.id] = _inst
+	global.entities_toc[$ _item.id] = _inst
+		
 }
 
 
@@ -91,36 +91,6 @@ unload = function (_base) {
 	_base.unload()
 	
 	array_delete(loaded, array_get_index(loaded, _base), 1);
-	
-	return;
-	
-	if !_base.loaded {
-		return;
-	}
-	_base.loaded = false;
-	_base.part.loaded = false;
-	
-	array_delete(loaded, array_get_index(loaded, _base), 1);
-	
-	if _base.part.vb vertex_delete_buffer(_base.part.vb)
-	
-	layer_destroy(_base.part.layer)
-	layer_tilemap_destroy(_base.part.tiles)
-	
-	layer_destroy(_base.part.decor_layer)
-	layer_tilemap_destroy(_base.part.decor_tiles)
-	
-	layer_destroy(_base.part.spikes_layer)
-	layer_tilemap_destroy(_base.part.spikes_tiles)
-	
-	layer_destroy(_base.part.tilemap_layer)
-	layer_tilemap_destroy(_base.part.tilemap_tiles)
-	
-	layer_destroy(_base.part.decor_back_layer)
-	layer_tilemap_destroy(_base.part.decor_back_tiles)
-	
-	layer_destroy(_base.part.background_layer)
-	layer_tilemap_destroy(_base.part.background_tiles)
 	
 	// instances get destroyed by cultural osmosis later
 	// (allows things like boxes to be moved outside an unloaded level without getting destroyed)
