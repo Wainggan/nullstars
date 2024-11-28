@@ -681,16 +681,18 @@ function Level() constructor {
 		
 		vb_front = vertex_create_buffer();
 		level_unpack_bin_layer_free_vertex(_buffer, _info.content.layers[$ "Tiles"].pointer, vb_front);
+		if vertex_get_number(vb_front) > 0 vertex_freeze(vb_front);
 		
 		vb_tiles_below = vertex_create_buffer();
 		level_unpack_bin_layer_free_vertex(_buffer, _info.content.layers[$ "TilesBelow"].pointer, vb_tiles_below);
+		if vertex_get_number(vb_tiles_below) > 0 vertex_freeze(vb_tiles_below);
 		
 		layer_back = layer_create(0);
 		layer_set_visible(layer_back, false);
 		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, _lv_w, _lv_h);
 		
-		layer_back_glass = layer_create(110)
-		layer_set_visible(layer_back_glass, false)
+		layer_back_glass = layer_create(0);
+		layer_set_visible(layer_back_glass, false);
 		tiles_back_glass = layer_tilemap_create(layer_back_glass, x, y, tl_tiles, _lv_w, _lv_h);
 		
 		level_unpack_bin_layer_free_map_filtered(
