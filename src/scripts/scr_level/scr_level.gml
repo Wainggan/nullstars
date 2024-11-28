@@ -677,7 +677,59 @@ function Level() constructor {
 		
 		var _time = get_timer();
 		
-		entities = []
+		entities = [];
+		
+		var _layernames = struct_get_names(_info.content.layers);
+		for (var i_layer = 0; i_layer < array_length(_layernames); i_layer++) {
+			switch _layernames[i_layer] {
+				case "Bubbles":
+				case "Walls":
+				case "Lights":
+				case "Meta":
+				case "Instances": {
+					var _entities = _info.content.layers[$ _layernames[i_layer]].entities;
+					for (var i_entity = 0; i_entity < array_length(_entities); i_entity++) {
+						var _e = _entities[i_entity];
+						
+						if global.entities_toc[$ _e.id] != undefined {
+							continue;
+						}
+						
+						var _object_index = asset_get_index(_e.name);
+						
+						var _field = _e.fields; // this just seems like such a good idea!
+						_field.uid = _e.id;
+						
+						// @todo: rewrite
+						if array_contains(_e.tags, "SIZE_TILE") {
+							_field.image_xscale = floor(_e.width / TILESIZE);
+							_field.image_yscale = floor(_e.height / TILESIZE);
+						}
+						
+						var _pos_x = _e.x,
+							_pos_y = _e.y;
+						
+						if array_contains(_e.tags, "CENTERED") {
+							_pos_x += 8;
+							_pos_y += 8;
+						}
+						
+						var _collect = {
+							id: _e.id,
+							x: _pos_x,
+							y: _pos_y,
+							layer: _layernames[i_layer],
+							object: _object_index,
+							field: _field,
+						};
+			
+						global.entities[$ _e.id] = noone;
+						
+						array_push(entities, _collect);
+					}
+				}
+			}
+		}
 		
 		/*
 		
