@@ -487,6 +487,33 @@ function level_unpack_bin_layer_free_map(_buffer, _at, _tilemap) {
 
 /// @arg {id.Buffer} _buffer
 /// @arg {real} _at
+/// @arg {id.TileMapElement} _tilemap_normal
+/// @arg {id.TileMapElement} _tilemap_clear
+function level_unpack_bin_layer_free_map_filtered(_buffer, _at, _tilemap_normal, _tilemap_clear) {
+	
+	buffer_seek(_buffer, buffer_seek_start, _at);
+	var _count = buffer_read(_buffer, buffer_u32);
+	
+	repeat _count {
+		var _t = buffer_read(_buffer, buffer_u32);
+		var _t_x = round(buffer_read(_buffer, buffer_s32) / TILESIZE);
+		var _t_y = round(buffer_read(_buffer, buffer_s32) / TILESIZE);
+		
+		var _p_w = sprite_get_width(spr_tiles) / TILESIZE;
+		var _p_x = _t mod _p_w;
+		var _p_y = _t div _p_w;
+		
+		if 4 <= _p_x && _p_x <= 7 && 13 <= _p_y && _p_y <= 20 {
+			tilemap_set(_tilemap_clear, _t, _t_x, _t_y);
+		} else {
+			tilemap_set(_tilemap_normal, _t, _t_x, _t_y);
+		}
+	}
+	
+}
+
+/// @arg {id.Buffer} _buffer
+/// @arg {real} _at
 /// @arg {id.VertexBuffer} _vertex
 function level_unpack_bin_layer_free_vertex(_buffer, _at, _vertex) {
 	
@@ -661,11 +688,15 @@ function Level() constructor {
 		layer_back = layer_create(0);
 		layer_set_visible(layer_back, false);
 		tiles_back = layer_tilemap_create(layer_back, x, y, tl_tiles, _lv_w, _lv_h);
-		level_unpack_bin_layer_free_map(_buffer, _info.content.layers[$ "Background"].pointer, tiles_back);
 		
 		layer_back_glass = layer_create(110)
 		layer_set_visible(layer_back_glass, false)
-		tiles_back_glass = layer_tilemap_create(layer_back_glass, x, y, tl_tiles, width / TILESIZE, height / TILESIZE);
+		tiles_back_glass = layer_tilemap_create(layer_back_glass, x, y, tl_tiles, _lv_w, _lv_h);
+		
+		level_unpack_bin_layer_free_map_filtered(
+			_buffer, _info.content.layers[$ "Background"].pointer,
+			tiles_back, tiles_back_glass,
+		);
 		
 		layer_tiles_above = layer_create(0);
 		layer_set_visible(layer_tiles_above, false);
