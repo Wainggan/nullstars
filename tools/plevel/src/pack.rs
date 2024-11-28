@@ -97,7 +97,7 @@ impl Pack for make::Layer {
 			make::LayerKinds::Grid(v) => {
 				push_u8(buffer, 0x01);
 				push_u32(buffer, v.items.len() as u32);
-				
+
 				for t in &v.items {
 					push_u8(buffer, *t);
 				}
@@ -109,7 +109,7 @@ impl Pack for make::Layer {
 				for t in &v.items {
 					push_u32(buffer, t.0);
 					push_i32(buffer, t.1);
-					push_i32(buffer, t.1);
+					push_i32(buffer, t.2);
 				}
 			},
 			make::LayerKinds::Entity(v) => {
