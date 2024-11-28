@@ -207,6 +207,9 @@ function level_ldtk_buffer(_data, _buffer) {
 }
 
 
+global.UNPACKPOINTOFFSET_X = 0;
+global.UNPACKPOINTOFFSET_Y = 0;
+
 /// @arg {id.Buffer} _buffer
 function level_unpack_bin_field(_buffer) {
 	var _name = buffer_read(_buffer, buffer_string);
@@ -248,7 +251,12 @@ function level_unpack_bin_field_value(_buffer) {
 		case 0x06: {
 			var _x = buffer_read(_buffer, buffer_u32);
 			var _y = buffer_read(_buffer, buffer_u32);
-			_value = { x: _x, y: _y };
+			// oooohhhh hoho this is a fucking terrible idea
+			// quite devious ill say
+			_value = {
+				x: _x * TILESIZE + global.UNPACKPOINTOFFSET_X,
+				y: _y * TILESIZE + global.UNPACKPOINTOFFSET_Y,
+			};
 		} break;
 		case 0x07: {
 			_value = buffer_read(_buffer, buffer_string);
@@ -621,7 +629,11 @@ function Level() constructor {
 		
 		var _buffer = buffer_load(_file);
 		
+		global.UNPACKPOINTOFFSET_X = x;
+		global.UNPACKPOINTOFFSET_Y = y;
 		var _info = level_unpack_bin_room(_buffer);
+		global.UNPACKPOINTOFFSET_X = 0;
+		global.UNPACKPOINTOFFSET_Y = 0;
 		
 		//show_debug_message(_info.layers);
 		
