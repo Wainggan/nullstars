@@ -248,7 +248,7 @@ function level_unpack_bin_field_value(_buffer) {
 		case 0x06: {
 			var _x = buffer_read(_buffer, buffer_u32);
 			var _y = buffer_read(_buffer, buffer_u32);
-			_value = [_x, _y];
+			_value = { x: _x, y: _y };
 		} break;
 		case 0x07: {
 			_value = buffer_read(_buffer, buffer_string);
