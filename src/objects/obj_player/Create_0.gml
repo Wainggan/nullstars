@@ -221,6 +221,7 @@ grace_vel = 0
 grace_vel_timer = 0
 
 gravity_hold = false;
+gravity_hold_buffer = 0;
 
 key_hold = 0;
 key_hold_timer = 0;
@@ -454,6 +455,7 @@ jump = function(){
 	grace = 0;
 	grace_target = noone;
 	gravity_hold = false;
+	gravity_hold_buffer = 0;
 	//actor_move_y(grace_y - y)
 	
 	dash_left = defs.dash_total;
@@ -498,6 +500,7 @@ jumpbounce = function(_dir){
 	grace = 0;
 	grace_target = noone;
 	gravity_hold = false;
+	gravity_hold_buffer = 0;
 	//actor_move_y(grace_y - y)
 	
 	if dash_recover < 0 {
@@ -567,6 +570,7 @@ jumpdash = function(){
 	buffer = 0;
 	buffer_dash = 0;
 	gravity_hold = false;
+	gravity_hold_buffer = 0;
 			
 	if dash_dir_y == 0 {
 		
@@ -623,6 +627,7 @@ wallbounce = function(_dir){
 	grace = 0;
 	dash_grace = 0;
 	gravity_hold = false;
+	gravity_hold_buffer = 0;
 	
 	dash_left = defs.dash_total
 	
@@ -648,6 +653,7 @@ walljump = function(_dir){
 	buffer = 0
 	grace = 0;
 	gravity_hold = false;
+	gravity_hold_buffer = 0;
 	//actor_move_y(grace_y - y)
 	
 	dash_left = defs.dash_total;
@@ -670,6 +676,7 @@ walljump = function(_dir){
 	scale_y = 1.2;
 	
 	gravity_hold = true;
+	gravity_hold_buffer = 12;
 	
 	ledge_keybuffer = dir
 	
@@ -689,6 +696,7 @@ bounce = function(_dir = 0){
 	
 	grace = 0;
 	gravity_hold = false;
+	gravity_hold_buffer = 0;
 	
 	dash_left = defs.dash_total;
 	
@@ -765,6 +773,7 @@ state_base = state.add()
 	dash_kick_buffer -= 1;
 	hold_cooldown -= 1;
 	grace_vel_timer -= 1;
+	gravity_hold_buffer -= 1;
 	
 	if INPUT.check_pressed("jump") || INPUT.check_released("jump") {
 		gravity_hold = false;
@@ -1040,7 +1049,7 @@ state_free = state_base.add()
 	var _y_accel = 0;
 	
 	var _jump = INPUT.check("jump");
-	if gravity_hold {
+	if gravity_hold || gravity_hold_buffer > 0 {
 		_jump = true;
 	}
 
@@ -1089,6 +1098,7 @@ state_free = state_base.add()
 		grace_y = y;
 		
 		gravity_hold = false;
+		gravity_hold_buffer = 0;
 		
 		if dash_recover < 0
 			dash_left = defs.dash_total;
