@@ -1,0 +1,59 @@
+
+// comment
+/*
+comment
+*/
+
+// variable declarations
+let i = 0
+let i: i32 = 0
+
+// functions
+let add = fn (a: i32, b: i32): i32 => a + b
+let add: fn(i32, i32): i32 = fn (a, b) => a + b
+
+// type casting
+let i = 10: u8
+let j = (i + 1: u8): u16
+let k = i + j // error: mismatched types u8 + u16
+let k = i: u16 + j
+
+// type declarations
+let Type := u32
+let i: Type = 0
+
+// generic type
+let Temp := <T>(T)
+
+// generic instantiation
+let i = Temp<i32> // error: no value provided
+let i = 0: Temp<i32>
+
+// generic default
+let Temp := 0 : <T>(T)
+let Temp := (0: T) : <T>()
+let i = Temp<i32> // i == 0
+
+// generic default overide
+let i = 10: Temp<i32> // i == 10
+
+// generic functions
+let Temp := (fn (a, b) => a + b): <T>(fn(T, T): T)
+let Temp := (fn (a: T, b: T): T => a + b): <T>()
+
+// generic function sugar
+let Temp := fn <T>(a: T, b: T): T => a + b
+
+// generic function instantiation
+let add_u = Temp<u32>
+let add_i = Temp<i32>
+let i = add_u(10, 20)
+let i = add_i(30, 40)
+
+let i = Temp<u8>(4, 5)
+
+
+// //
+
+let a = fn (a: u32) => fn (b: u32) => a + b
+

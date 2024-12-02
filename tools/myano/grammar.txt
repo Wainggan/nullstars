@@ -1,0 +1,43 @@
+
+
+module := expression*
+
+
+type := identifier
+
+
+
+expression := equality
+
+equality := comparison ( (">" | ">=" | "<=" | "<") comparison )*
+
+comparison := factor ( ("==" | "!=") factor )*
+
+factor := term ( ("*" | "/") term )*
+
+term := unary ( ("+" | "-") unary )*
+
+unary := ("-" | "!") unary | cast
+
+cast := call (":" type)?
+
+call := primary ( "(" call_arguments? ")" | "<" call_templates? ">" )*
+call_arguments := expression ("," expression)* ","?
+call_templates := type ("," type)* ","?
+
+primary := "(" expression ")"
+	| identifier
+	| literal_number
+
+
+literal_number := [0-9]+ ( "." [0-9]* )?
+
+literal_string := // something idk
+
+literal_function := "fn" ( "<" literal_function_templates? ">" )? "(" literal_function_parameter? ")" ( ":" type )? "=>" expression
+literal_function_parameter := literal_function_parameter_item ( "," literal_function_parameter_item )*
+literal_function_parameter_item := identifier (":" type)?
+literal_function_templates := identifier ( "," identifier )*
+
+identifier := ([a-z] | [A-Z]) ([a-z] | [A-Z] | [0-9])*
+
