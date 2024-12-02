@@ -88,7 +88,32 @@
 			"seed": 5445059,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
-			"entityInstances": []
+			"entityInstances": [
+				{
+					"__identifier": "obj_camera_room",
+					"__grid": [1,1],
+					"__pivot": [0,0],
+					"__tags": [ "SIZE_TILE", "camera", "flag" ],
+					"__tile": { "tilesetUid": 8, "x": 288, "y": 256, "w": 16, "h": 16 },
+					"__smartColor": "#D77643",
+					"iid": "80918ff0-9b00-11ef-805e-bf3884f1a08b",
+					"width": 1120,
+					"height": 768,
+					"defUid": 6,
+					"px": [16,16],
+					"fieldInstances": [
+						{ "__identifier": "crop_x1", "__type": "Int", "__value": 0, "__tile": null, "defUid": 48, "realEditorValues": [] },
+						{ "__identifier": "crop_x2", "__type": "Int", "__value": 0, "__tile": null, "defUid": 52, "realEditorValues": [] },
+						{ "__identifier": "crop_y1", "__type": "Int", "__value": 0, "__tile": null, "defUid": 50, "realEditorValues": [] },
+						{ "__identifier": "crop_y2", "__type": "Int", "__value": 0, "__tile": null, "defUid": 51, "realEditorValues": [] },
+						{ "__identifier": "unlock_x", "__type": "Bool", "__value": true, "__tile": null, "defUid": 59, "realEditorValues": [] },
+						{ "__identifier": "unlock_y", "__type": "Bool", "__value": true, "__tile": null, "defUid": 60, "realEditorValues": [] },
+						{ "__identifier": "priority", "__type": "Int", "__value": 0, "__tile": null, "defUid": 477, "realEditorValues": [] }
+					],
+					"__worldX": 28752,
+					"__worldY": 7920
+				}
+			]
 		},
 		{
 			"__identifier": "Instances",
