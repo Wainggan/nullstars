@@ -6,6 +6,7 @@ glue_parent_setup();
 
 vel = 0;
 accel = 0;
+time = 0;
 
 anim_vel = 0;
 
@@ -33,10 +34,15 @@ reset = function(){
 state = new State();
 
 state_idle = state.add()
+.set("enter", function() {
+	time = 10;
+})
 .set("step", function(){
 	
 	var _activate = false;
-	with obj_player {
+	
+	time -= 1;
+	if time < 0 with obj_player {
 		if riding(other) _activate = true;
 	}
 	
@@ -80,18 +86,22 @@ state_retract = state.add()
 .set("enter", function(){
 	vel = 0;
 	accel = 0;
+	time = 10;
 })
 .set("step", function(){
 	
 	var _dir = point_direction(target_x, target_y, start_x, start_y)
 	
-	accel = approach(accel, 0.04, 0.002);
-	vel = approach(vel, 2, accel);
-	
-	anim_vel -= vel;
-	
-	solid_move(lengthdir_x(vel, _dir), lengthdir_y(vel, _dir));
-	glue_parent_moved(x, y);
+	time -= 1;
+	if time < 0 {
+		accel = approach(accel, 0.04, 0.002);
+		vel = approach(vel, 2, accel);
+		
+		anim_vel -= vel;
+		
+		solid_move(lengthdir_x(vel, _dir), lengthdir_y(vel, _dir));
+		glue_parent_moved(x, y);
+	}
 	
 	if (start_x == target_x || sign(x - start_x) != sign(target_x - start_x))
 	&& (start_y == target_y || sign(y - start_y) != sign(target_y - start_y)) {
