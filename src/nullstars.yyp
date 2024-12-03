@@ -213,6 +213,7 @@
     {"id":{"name":"scr_data_music","path":"scripts/scr_data_music/scr_data_music.yy",},},
     {"id":{"name":"scr_data_sound","path":"scripts/scr_data_sound/scr_data_sound.yy",},},
     {"id":{"name":"scr_draw","path":"scripts/scr_draw/scr_draw.yy",},},
+    {"id":{"name":"scr_entity","path":"scripts/scr_entity/scr_entity.yy",},},
     {"id":{"name":"scr_event","path":"scripts/scr_event/scr_event.yy",},},
     {"id":{"name":"scr_file","path":"scripts/scr_file/scr_file.yy",},},
     {"id":{"name":"scr_game","path":"scripts/scr_game/scr_game.yy",},},
