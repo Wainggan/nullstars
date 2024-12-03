@@ -1,4 +1,38 @@
 
+function actor_lift_get_x() {
+	if lift_x == 0 && lift_y == 0 {
+		return lift_last_x;
+	}
+	return lift_x;
+}
+function actor_lift_get_y() {
+	if lift_x == 0 && lift_y == 0 {
+		return lift_last_y;
+	}
+	return lift_y;
+}
+
+function actor_lift_set(_x, _y) {
+	lift_x = _x;
+	lift_y = _y;
+	if _x != 0 && _y != 0 {
+		lift_last_x = _x;
+		lift_last_y = _y;
+		lift_last_time = 10;
+	}
+}
+
+/// should be called *after* the object has completed its main update
+function actor_lift_update() {
+	actor_lift_set(0, 0);
+	lift_last_time -= 1;
+	if lift_last_time <= 0 {
+		lift_last_x = 0;
+		lift_last_y = 0;
+	}
+}
+
+
 function actor_move_x(_amount, _callback = undefined) {
 	
 	x_rem += _amount;

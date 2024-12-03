@@ -203,19 +203,48 @@ event = new Event()
 scale_x = 0;
 scale_y = 0;
 
+// last frame's position
 x_last = xstart;
 y_last = ystart;
 
+// at the end of state_base, total movement
+// between that and the next loop
 x_delta = 0;
 y_delta = 0;
 
+// facing direction. -1 = left, 1 = right
 dir = 1;
 
-grace = 0;
-grace_y = y;
-grace_solid = noone;
-buffer = 0;
+// buffer inputs
+buffer_jump = 0;
 buffer_dash = 0;
+
+// time since touched ground
+grace = 0;
+
+// "ground" info
+// info on the last bit of ground the player is on
+// ground includes ledge grabbing
+ground_x = x;
+ground_y = y;
+ground_owner = noone;
+
+sync_ground = function () {
+	ground_x = x;
+	ground_y = y;
+	if state.is(state_idle) {
+		ground_owner = instance_place(x, y - 1, obj_Solid);
+	} else if state.is(state_ledge) {
+		ground_owner = instance_place(x + dir, y, obj_Solid);
+	} else {
+		ground_owner = noone;
+	}
+	
+	grace = defs.grace;
+}
+
+grace_y = y;
+
 
 grace_vel = 0
 grace_vel_timer = 0
@@ -231,8 +260,6 @@ crouched = false;
 momentum_grace = 0;
 momentum_grace_amount = 0;
 
-climb_away = 0;
-
 dash_dir_x = 0;
 dash_dir_x_vel = 0;
 dash_dir_y = 0;
@@ -244,6 +271,17 @@ dash_kick_buffer = 0;
 dash_start_x_vel = x_vel;
 dash_start_y_vel = y_vel;
 
+// "dashed" info
+// updated to whatever the last dash was
+dashed_dir_x = 0; // unit of dash direction
+dashed_dir_y = 0;
+dashed_x_vel = 0; // real of dash velocity
+dashed_x_vel = 0;
+dashed_pre_x_vel = 0; // real of velocity before dash
+dashed_pre_y_vel = 0;
+dashed_timer = 0; // time from end of dash (negative if dashing)
+
+// amount of dashes left
 dash_left = 0;
 
 holding = noone;
@@ -259,8 +297,7 @@ swim_bullet = false;
 ledge_keybuffer = 0;
 ledge_stick = 0;
 
-spike_buffer = 0;
-
+// kill timer when you press the menu button
 respawn_timer = 0;
 
 anim_dive_timer = 0;
@@ -271,6 +308,19 @@ anim_runjump_timer = 0;
 
 cam_ground_x = x;
 cam_ground_y = y;
+
+
+
+kind_free = {
+	crouched: false,
+};
+
+kind_swim = {
+	bullet: false,
+	angle: 0,
+};
+
+kind = noone;
 
 depth -= 10;
 mask_index = spr_debug_player;
@@ -441,7 +491,7 @@ jump = function(){
 	
 	var _kh = INPUT.check("right") - INPUT.check("left");
 	
-	buffer = 0
+	buffer_jump = 0
 	if grace && grace_target {
 		if grace_target.object_index == obj_box {
 			grace_target.x_vel = 0
@@ -464,17 +514,8 @@ jump = function(){
 	if _kh != 0 && abs(x_vel) < defs.move_speed x_vel = defs.move_speed * _kh;
 	x_vel += (defs.jump_move_boost + defs.move_accel) * sign(x_vel);
 	
-	if x_lift == 0 && y_lift == 0 {
-		with instance_place(x, y + 1, obj_Solid) {
-			other.x_lift = x_lift;
-			other.y_lift = y_lift;
-		}
-	}
-	x_lift = clamp(x_lift, -defs.boost_limit_x, defs.boost_limit_x); // temp
-	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
-	x_vel += x_lift;
-	y_vel += y_lift;
-	lifter = noone;
+	x_vel += get_lift_x();
+	y_vel += get_lift_y();
 	
 	scale_x = 0.8;
 	scale_y = 1.2;
@@ -496,7 +537,7 @@ jumpbounce = function(_dir){
 	
 	var _kh = INPUT.check("right") - INPUT.check("left");
 	
-	buffer = 0
+	buffer_jump = 0
 	grace = 0;
 	grace_target = noone;
 	gravity_hold = false;
@@ -519,18 +560,8 @@ jumpbounce = function(_dir){
 	
 	key_hold = -_dir;
 	
-	
-	if x_lift == 0 && y_lift == 0 {
-		with instance_place(x + _dir * defs.wall_distance, y, obj_Solid) {
-			other.x_lift = x_lift;
-			other.y_lift = y_lift;
-		}
-	}
-	x_lift = clamp(x_lift, -defs.boost_limit_x, defs.boost_limit_x); // temp
-	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
-	x_vel += x_lift;
-	y_vel += y_lift;
-	lifter = noone;
+	x_vel += get_lift_x();
+	y_vel += get_lift_y();
 	
 	scale_x = 0.8;
 	scale_y = 1.2;
@@ -567,7 +598,7 @@ jumpdash = function(){
 	grace = 0;
 	grace_target = noone;
 	dash_grace = 0;
-	buffer = 0;
+	buffer_jump = 0;
 	buffer_dash = 0;
 	gravity_hold = false;
 	gravity_hold_buffer = 0;
@@ -596,16 +627,8 @@ jumpdash = function(){
 		key_hold_timer = 6;
 	}
 	
-	if x_lift == 0 && y_lift == 0 {
-		with instance_place(x, y + 1, obj_Solid) {
-			other.x_lift = x_lift;
-			other.y_lift = y_lift;
-		}
-	}
-	x_lift = clamp(x_lift, -defs.boost_limit_x, defs.boost_limit_x); // temp
-	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
-	x_vel += x_lift;
-	y_vel += y_lift;
+	x_vel += get_lift_x();
+	y_vel += get_lift_y();
 	
 	scale_x = 0.9;
 	scale_y = 1.1;
@@ -623,7 +646,7 @@ jumpdash = function(){
 
 wallbounce = function(_dir){
 	
-	buffer = 0
+	buffer_jump = 0
 	grace = 0;
 	dash_grace = 0;
 	gravity_hold = false;
@@ -650,7 +673,7 @@ wallbounce = function(_dir){
 
 walljump = function(_dir){
 	
-	buffer = 0
+	buffer_jump = 0
 	grace = 0;
 	gravity_hold = false;
 	gravity_hold_buffer = 0;
@@ -661,16 +684,14 @@ walljump = function(_dir){
 	y_vel = defs.jump_vel;
 	//x_vel += (defs.jump_move_boost + defs.move_accel) * _dir;
 	
-	if x_lift == 0 && y_lift == 0 {
-		with instance_place(x + _dir * defs.wall_distance, y, obj_Solid) {
-			other.x_lift = x_lift;
-			other.y_lift = y_lift;
+	if actor_lift_get_x() == 0 && actor_lift_get_y() == 0 {
+		var _inst = instance_place(x + _dir * defs.wall_distance, y, obj_Solid)
+		if _inst != noone {
+			actor_lift_set(_inst.lift_x, _inst.lift_y);
 		}
 	}
-	x_lift = clamp(x_lift, -defs.boost_limit_x, defs.boost_limit_x); // temp
-	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
-	x_vel += x_lift;
-	y_vel += y_lift;
+	x_vel += get_lift_x();
+	y_vel += get_lift_y();
 	
 	scale_x = 0.8;
 	scale_y = 1.2;
@@ -744,6 +765,16 @@ canUncrouch = function(){
 	return !_check;
 }
 
+get_lift_x = function() {
+	var _out = actor_lift_get_x();
+	return clamp(_out, -defs.boost_limit_x, defs.boost_limit_x);
+}
+get_lift_y = function() {
+	var _out = actor_lift_get_y();
+	return clamp(_out, -defs.boost_limit_y, 0);
+}
+
+
 #endregion
 
 // state machine
@@ -753,7 +784,7 @@ state = new State();
 state_base = state.add()
 .set("step", function(){
 	
-	if INPUT.check_pressed("jump") buffer = defs.buffer + 1;
+	if INPUT.check_pressed("jump") buffer_jump = defs.buffer + 1;
 	if INPUT.check_pressed("dash") buffer_dash = defs.buffer + 1;
 	
 	if place_meeting(x, y, obj_flag_stop) && !state.is(state_stuck) {
@@ -764,7 +795,7 @@ state_base = state.add()
 		return;
 	}
 	
-	buffer -= 1;
+	buffer_jump -= 1;
 	buffer_dash -= 1;
 	grace -= 1;
 	key_hold_timer -= 1;
@@ -785,9 +816,6 @@ state_base = state.add()
 
 	scale_x = lerp(scale_x, 1, 0.2);
 	scale_y = lerp(scale_y, 1, 0.2);
-	
-	x_lift = clamp(x_lift, -defs.boost_limit_x, defs.boost_limit_x);
-	y_lift = clamp(y_lift, -defs.boost_limit_y, 0);
 	
 	state.child();
 	
@@ -887,7 +915,7 @@ state_base = state.add()
 	
 	if state.is(state_free) || state.is(state_dash) {
 		
-		if anim_jab_timer && !buffer {		
+		if anim_jab_timer && !buffer_jump {		
 			var _inst = instance_place(x, y, __boxable);
 			if _inst {
 				game_set_pause(4)
@@ -950,10 +978,8 @@ state_base = state.add()
 	}
 	
 	
-	// this will almost certainly cause an issue later. 
-	// todo: figure out how to reset a_lift when touching tiles
-	x_lift = 0;
-	y_lift = 0;
+
+	actor_lift_update();
 	
 	x_delta = x - x_last;
 	y_delta = y - y_last;
@@ -1131,7 +1157,7 @@ state_free = state_base.add()
 	
 	
 	// hell
-	if buffer > 0 {
+	if buffer_jump > 0 {
 		if grace > 0 {
 			if dash_grace > 0 {
 				jumpdash();
@@ -1293,7 +1319,7 @@ state_ledge = state_base.add()
 	
 	dash_left = defs.dash_total
 	
-	if buffer > 0 {
+	if buffer_jump > 0 {
 		walljump(dir);
 		return;
 	}
@@ -1457,7 +1483,7 @@ state_dash = state_base.add()
 
 	//actor_move_x(x_vel);
 	
-	if buffer > 0 {
+	if buffer_jump > 0 {
 		if grace > 0 {
 			if _kh != dir && dash_timer <= 3 {
 				jumpdash();
@@ -1636,7 +1662,7 @@ state_menu = state_base.add()
 	y_vel = approach(y_vel, defs.terminal_vel, defs.gravity);
 	
 	buffer_dash = 0;
-	buffer = 0;
+	buffer_jump = 0;
 	
 	with obj_menu system.update();
 	

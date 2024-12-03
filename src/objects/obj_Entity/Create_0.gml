@@ -1,9 +1,23 @@
 
-event_inherited()
+event_inherited();
 
-cam = function(){
-	camera.target_x = x;
-	camera.target_y = y;
+/*
+ * object representing something that can meaningfully
+ * do literally anything
+ * 
+ * see `scr_entity`
+ */
+
+collidable = true;
+
+// runs when the scene "resets".
+// the object should return to the same state it was
+// initialized.
+reset = function(){};
+
+// camera offset
+cam = function(_out) {
+	_out.x = x;
+	_out.y = y;
 }
 
-reset = function(){}

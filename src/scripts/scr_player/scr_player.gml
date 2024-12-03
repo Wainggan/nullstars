@@ -1,4 +1,5 @@
 
+
 function game_player_kill() {
 	
 	if !instance_exists(obj_player) return;
