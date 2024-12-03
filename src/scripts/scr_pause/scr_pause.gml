@@ -9,7 +9,8 @@ function game_get_pause() {
 
 // game_get_pause() and game_pause() only change once game_pause_update() is run
 function game_set_pause(_pause) {
-	global.pause_defer = max(_pause, global.pause_defer);
+	// + 1 to make sure the first frame paused is preserved after update
+	global.pause_defer = max(_pause + 1, global.pause_defer);
 }
 
 function game_set_freeze(_pause) {
