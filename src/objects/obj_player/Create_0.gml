@@ -309,6 +309,8 @@ anim_runjump_timer = 0;
 cam_ground_x = x;
 cam_ground_y = y;
 
+onground_last = true;
+
 
 
 kind_free = {
@@ -1131,6 +1133,11 @@ state_free = state_base.add()
 		
 		event.call("ground")
 	}
+	
+	if !actor_collision(x, y + 1) && onground_last && y_vel >= 0 {
+		y_vel += get_lift_y();
+	}
+	onground_last = actor_collision(x, y + 1);
 	
 	if dash_grace <= 0 && actor_collision(x, y + 1) {
 		if INPUT.check("down") {
