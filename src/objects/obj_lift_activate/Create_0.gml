@@ -68,7 +68,7 @@ state_active = state.add()
 	
 	if (start_x == target_x || sign(x - target_x) != sign(start_x - target_x))
 	&& (start_y == target_y || sign(y - target_y) != sign(start_y - target_y)) {
-		solid_move(target_x - x, target_y - y);
+		solid_move(target_x - x, target_y - y, false);
 		glue_parent_moved(x, y);
 		game_camera_set_shake(4, 0.4)
 		state.change(state_retract)
@@ -95,7 +95,7 @@ state_retract = state.add()
 	
 	if (start_x == target_x || sign(x - start_x) != sign(target_x - start_x))
 	&& (start_y == target_y || sign(y - start_y) != sign(target_y - start_y)) {
-		solid_move(start_x - x, start_y - y);
+		solid_move(start_x - x, start_y - y, false);
 		glue_parent_moved(x, y);
 		game_camera_set_shake(2, 0.4)
 		state.change(state_idle)
