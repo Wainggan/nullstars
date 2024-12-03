@@ -15,7 +15,7 @@ function actor_lift_get_y() {
 function actor_lift_set(_x, _y) {
 	lift_x = _x;
 	lift_y = _y;
-	if _x != 0 && _y != 0 {
+	if _x != 0 || _y != 0 {
 		lift_last_x = _x;
 		lift_last_y = _y;
 		lift_last_time = 10;
