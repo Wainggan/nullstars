@@ -75,6 +75,7 @@
     {"name":"obj_oo_on","order":1,"path":"objects/obj_oo_on/obj_oo_on.yy",},
     {"name":"obj_ooswitch_place","order":2,"path":"objects/obj_ooswitch_place/obj_ooswitch_place.yy",},
     {"name":"obj_player_death","order":1,"path":"objects/obj_player_death/obj_player_death.yy",},
+    {"name":"obj_player","order":3,"path":"objects/obj_player/obj_player.yy",},
     {"name":"obj_Position","order":6,"path":"objects/obj_Position/obj_Position.yy",},
     {"name":"obj_room_portal","order":5,"path":"objects/obj_room_portal/obj_room_portal.yy",},
     {"name":"obj_show_name_area","order":18,"path":"objects/obj_show_name_area/obj_show_name_area.yy",},
