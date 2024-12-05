@@ -84,6 +84,9 @@ hold_jump = false;
 hold_jump_vel = 0;
 hold_jump_timer = 0;
 
+key_force = 0;
+key_force_timer = 0;
+
 walljump_grace = 0;
 walljump_grace_dir = 0;
 
@@ -91,6 +94,16 @@ ledge_key = 0;
 ledge_buffer_dir = 0;
 ledge_buffer_dir_timer = 0;
 ledge_stick = 0;
+
+dash_dir_x = 0;
+dash_dir_y = 0;
+dash_dir_x_vel = 0;
+dash_dir_y_vel = 0;
+dash_pre_x_vel = 0;
+dash_pre_y_vel = 0;
+dash_timer = 0;
+dash_frame = 0;
+dash_grace = 0;
 
 
 get_check_wall = function(_dir, _dist = defs.wall_distance) {
@@ -158,8 +171,16 @@ state_base = state.add()
 	
 	buffer_jump -= 1;
 	buffer_dash -= 1;
-	if INPUT.check_pressed("jump") buffer_jump = defs.buffer + 1;
-	if INPUT.check_pressed("dash") buffer_dash = defs.buffer + 1;
+	if INPUT.check_pressed("jump") {
+		buffer_jump = defs.buffer + 1;
+	}
+	if INPUT.check_pressed("dash") {
+		buffer_dash = defs.buffer + 1;
+	}
+	
+	if game_paused() {
+		return;
+	}
 	
 	x_delta = x - x_last;
 	y_delta = y - y_last;
@@ -207,6 +228,7 @@ state_base = state.add()
 	actor_lift_update();
 	
 	onground_last = onground;
+	dash_grace -= 1;
 	
 });
 
@@ -218,6 +240,10 @@ state_free = state_base.add()
 	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	var _k_move = _kh;
+	key_force_timer -= 1;
+	if key_force_timer > 0 {
+		_k_move = key_force;
+	}
 	if onground && nat_crouch() {
 		_k_move = 0;
 	}
@@ -348,6 +374,11 @@ state_free = state_base.add()
 		}
 	}
 	
+	if buffer_dash > 0 {
+		state.change(state_dash);
+		return;
+	}
+	
 	if buffer_jump > 0 {
 		if grace > 0 {
 			action_jump();
@@ -445,6 +476,109 @@ state_ledge = state_base.add()
 	if _kh != dir && ledge_stick <= 0 {
 		x_vel += get_lift_x();
 		y_vel += get_lift_y();
+		state.change(state_free);
+		return;
+	}
+	
+});
+
+state_dash = state_base.add()
+.set("enter", function() {
+	
+	game_set_pause(3);
+	
+	buffer_dash = 0;
+	
+	dash_pre_x_vel = x_vel;
+	dash_pre_y_vel = y_vel;
+	
+	dash_dir_x = 0;
+	dash_dir_y = 0;
+	
+	dash_dir_x_vel = 0;
+	dash_dir_y_vel = 0;
+	
+	x_vel = 0;
+	y_vel = 0;
+	
+	dash_timer = 6;
+	dash_frame = 0; // this is stupid
+	dash_grace = 14;
+	
+	
+})
+.set("leave", function() {
+	
+	if get_can_uncrouch() {
+		nat_crouch(false);
+	}
+	
+	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+	
+	if dash_dir_y == 0 {
+		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.8) * sign(x_vel);
+		y_vel = 0;
+		
+		hold_jump = true;
+		hold_jump_vel = 0;
+		hold_jump_timer = 4;
+	} else if dash_dir_y == -1  {
+		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.6) * sign(x_vel);
+		
+		hold_jump = true;
+		hold_jump_vel = 0;
+		hold_jump_timer = 4;
+		
+		key_force = dash_dir_x;
+		key_force_timer = 6;
+	} else {
+		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.2) * sign(x_vel);
+		//x_vel *= 0.9;
+	}
+	
+})
+.set("step", function() {
+	
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
+	
+	if dash_frame == 0 {
+		if _kh == 0 && _kv == 0 {
+			dash_dir_x = dir;
+		} else {
+			dash_dir_x = dir;//_kh;
+		}
+		dash_dir_y = _kv;
+		
+		if dash_dir_x != 0 {
+			dir = dash_dir_x;
+		}
+		
+		var _dir = point_direction(0, 0, dash_dir_x, dash_dir_y);
+		
+		x_vel = abs(dash_pre_x_vel);
+		if dash_dir_x == sign(dash_pre_x_vel) {
+			x_vel *= 0.5;
+		} else {
+			if dash_dir_y == -1 {
+				x_vel *= 0.75;
+			} else {
+				x_vel *= 0.9;
+			}
+		}
+		x_vel += abs(lengthdir_x(7, _dir));
+		x_vel = max(abs(x_vel), abs(dash_pre_x_vel)) * sign(dash_dir_x);
+		
+		y_vel = 0;
+		y_vel += lengthdir_y(7, _dir);
+		if dash_dir_y == -1 {
+			y_vel *= 0.75;
+		}
+	}
+	
+	dash_frame += 1;
+	dash_timer -= 1;
+	if dash_timer <= 0 {
 		state.change(state_free);
 		return;
 	}
