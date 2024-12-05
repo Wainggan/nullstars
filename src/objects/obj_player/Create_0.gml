@@ -187,19 +187,19 @@ action_walljump = function() {
 	
 };
 
-action_dashjump = function(_dir) {
+action_dashjump = function(_key_dir) {
 	
 	action_jump_shared();
 	
 	if dash_dir_y == 0 {
-		if _dir == dash_dir_x {
+		if _key_dir == dash_dir_x {
 			y_vel = defs.jump_vel;
 			
-			x_vel = abs(dash_dir_x_vel * 0.8) * _dir;
+			x_vel = abs(dash_dir_x_vel * 0.8) * _key_dir;
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 		} else {
 			y_vel = -5.4;
-			x_vel = abs(dash_dir_x_vel * 0.4) * _dir;
+			x_vel = abs(dash_dir_x_vel * 0.4) * _key_dir;
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 		}
 	} else {
@@ -207,7 +207,7 @@ action_dashjump = function(_dir) {
 		
 		var _idk = x_vel; // ????
 		var _test = abs(dash_dir_x_vel) * 0.7 + 4;
-		x_vel = max(abs(x_vel), _test) * _dir;
+		x_vel = max(abs(x_vel), _test) * _key_dir;
 		
 		key_force = sign(x_vel);
 		key_force_timer = 6;
@@ -232,7 +232,41 @@ action_dashjump = function(_dir) {
 	
 };
 
-action_dashjump_wall = function(_dir) {
+action_dashjump_wall = function(_key_dir, _wall_dir) {
+	
+	action_jump_shared();
+	
+	if dash_recover <= 0 {
+		dash_left = defs.dash_total;
+	}
+	
+	if _key_dir == _wall_dir {
+		y_vel = min(-6.5, y_vel, -min(abs(dash_dir_x_vel) + 1, 8));
+		x_vel = -_wall_dir * 2;
+		
+		key_force_timer = 9;
+	} else {
+		y_vel = min(-6.2, y_vel, -min(abs(dash_dir_x_vel) + 1, 9));
+		x_vel = -_wall_dir * 4;
+		
+		key_force_timer = 5;
+	}
+	
+	key_force = -_wall_dir;
+	dir = -_wall_dir;
+	
+	hold_jump = false;
+	hold_jump_vel = y_vel;
+	hold_jump_timer = 4;
+	
+	vel_grace = 0;
+	vel_grace_timer = 0;
+	
+	x_vel += get_lift_x();
+	y_vel += get_lift_y();
+	
+	scale_x = 0.8;
+	scale_y = 1.2;
 	
 };
 
@@ -466,6 +500,10 @@ state_free = state_base.add()
 		} else {
 			if dash_grace > 0 && dash_dir_y != -1 {
 				action_dashjump(_kh == 0 ? dir : _kh);
+			} else if dash_grace > 0 && dash_dir_y == -1 {
+				if get_check_wall(dir) {
+					action_dashjump_wall(_kh, dir);
+				}
 			} else {
 				if get_check_wall(1) || get_check_wall(-1) {
 					action_walljump();
@@ -686,7 +724,11 @@ state_dash = state_base.add()
 		} else {
 			if get_check_wall(dir) {
 				action_dash_end();
-				action_walljump();
+				if dash_dir_y == -1 {
+					action_dashjump_wall(_kh, dir);
+				} else {
+					action_walljump();
+				}
 				state.change(state_free);
 				return;
 			}
