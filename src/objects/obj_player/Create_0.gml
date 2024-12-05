@@ -220,6 +220,10 @@ action_dashjump = function(_dir) {
 	hold_jump_vel = y_vel;
 	hold_jump_timer = 4;
 	
+	if get_can_uncrouch() {
+		nat_crouch(false);
+	}
+	
 	x_vel += get_lift_x();
 	y_vel += get_lift_y();
 	
