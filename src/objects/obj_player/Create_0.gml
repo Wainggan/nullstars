@@ -144,7 +144,7 @@ action_jump_shared = function() {
 	dash_grace_kick = 0;
 	
 	hold_jump = false;
-	hold_jump_vel = 0;
+	hold_jump_vel = defs.terminal_vel;
 	hold_jump_timer = 0;
 	
 };
@@ -652,8 +652,8 @@ action_dash_end = function() {
 		y_vel = 0;
 		
 		hold_jump = true;
-		hold_jump_vel = 0;
-		hold_jump_timer = 4;
+		hold_jump_vel = defs.terminal_vel;
+		hold_jump_timer = 12;
 		
 		key_force = dash_dir_x;
 		key_force_timer = 3;
@@ -662,8 +662,8 @@ action_dash_end = function() {
 		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.7) * sign(x_vel);
 		
 		hold_jump = true;
-		hold_jump_vel = 0;
-		hold_jump_timer = 12;
+		hold_jump_vel = defs.terminal_vel;
+		hold_jump_timer = 28;
 		
 		key_force = dash_dir_x;
 		key_force_timer = 5;
@@ -748,7 +748,7 @@ state_dash = state_base.add()
 		y_vel += lengthdir_y(7, _dir);
 		if dash_dir_y == -1 {
 			dash_grace_kick = 24;
-			y_vel *= 0.75;
+			y_vel *= 0.7;
 		}
 	}
 	
@@ -776,7 +776,7 @@ state_dash = state_base.add()
 				state.change(state_free);
 				return;
 			}
-			if _kh != dir && dash_timer <= 1 {
+			if _kh != dir && dash_timer <= 2 {
 				action_dash_end();
 				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 				state.change(state_free);
