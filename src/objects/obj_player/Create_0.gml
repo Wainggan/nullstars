@@ -322,6 +322,11 @@ state_free = state_base.add()
 		y_vel = approach(y_vel, _termvel, _y_accel);
 	}
 	
+	if !onground && onground_last && y_vel >= 0 {
+		x_vel += get_lift_x();
+		y_vel += get_lift_y();
+	}
+	
 	if nat_crouch() {
 		if get_can_uncrouch() {
 			if onground && !INPUT.check("down") {
@@ -451,7 +456,7 @@ squish = function(){
 };
 
 riding = function(_solid){
-	return place_meeting(x, y + 1, _solid) || false && (state.is(state_ledge) && place_meeting(x + dir, y, _solid));
+	return place_meeting(x, y + 1, _solid) || (state.is(state_ledge) && place_meeting(x + dir, y, _solid));
 };
 
 
