@@ -13,7 +13,7 @@ defs = {
 	move_slowdown_air: 0.04,
 	
 	gravity: 0.45,
-	gravity_hold: 0.23,
+	gravity_hold: 0.3,
 	gravity_peak: 0.12,
 	gravity_peak_thresh: 0.36,
 	gravity_term: 0.12,
@@ -101,12 +101,15 @@ action_jump = function() {
 	buffer_jump = false;
 	grace = false;
 	
-	x_vel += (defs.jump_move_boost + defs.move_accel) * _kh
+	if _kh != 0 && abs(x_vel) < defs.move_speed {
+		x_vel = defs.move_speed * _kh;
+	}
+	x_vel += (defs.jump_move_boost + defs.move_accel) * _kh;
 	y_vel = min(y_vel, defs.jump_vel);
 	
 	hold_jump = false;
-	hold_jump_vel = 0;
-	hold_jump_timer = 0;
+	hold_jump_vel = y_vel;
+	hold_jump_timer = 4;
 	
 	x_vel += get_lift_x();
 	y_vel += get_lift_y();
@@ -114,7 +117,7 @@ action_jump = function() {
 	scale_x = 0.8;
 	scale_y = 1.2;
 	
-}
+};
 
 state = new State();
 
