@@ -13,7 +13,7 @@ defs = {
 	move_slowdown_air: 0.04,
 	
 	gravity: 0.45,
-	gravity_hold: 0.3,
+	gravity_hold: 0.34,
 	gravity_peak: 0.12,
 	gravity_peak_thresh: 0.36,
 	gravity_term: 0.12,
