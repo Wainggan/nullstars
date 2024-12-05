@@ -532,16 +532,20 @@ state_free = state_base.add()
 			}
 		} else {
 			var _close = actor_collision(x, y + 24) ||
-				get_check_wall(-1, 12) ||
-				get_check_wall(1, 12);
+				get_check_wall(-1, 24) ||
+				get_check_wall(1, 24);
 			if _close && dash_grace > 0 {
-				dash_grace = 1;
+				dash_grace = 2;
 			}
-			if dash_grace > 0 && dash_dir_y != -1 {
+			if dash_grace > 0 && dash_dir_y != -1 && 
+				((_close && grace > 0) || !_close || dash_dir_y == 0) &&
+				!get_check_wall(sign(x_vel), 6) {
 				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 			} else if dash_grace_kick > 0 && dash_dir_y == -1 {
 				if get_check_wall(dir) {
 					action_dashjump_wall(_kh, dir);
+				} else if get_check_wall(-dir) {
+					action_dashjump_wall(_kh, -dir);
 				}
 			} else {
 				if get_check_wall(1) || get_check_wall(-1) {
@@ -603,6 +607,11 @@ state_ledge = state_base.add()
 		if !actor_collision(x + dir, y - 20) {
 			y_vel = -1
 		}
+	}
+	
+	if buffer_dash > 0 && dash_left > 0 {
+		state.change(state_dash);
+		return;
 	}
 	
 	if buffer_jump > 0 {
