@@ -493,13 +493,13 @@ state_free = state_base.add()
 	if buffer_jump > 0 {
 		if grace > 0 {
 			if dash_grace > 0 {
-				action_dashjump(_kh == 0 ? dir : _kh);
+				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 			} else {
 				action_jump();
 			}
 		} else {
 			if dash_grace > 0 && dash_dir_y != -1 {
-				action_dashjump(_kh == 0 ? dir : _kh);
+				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 			} else if dash_grace > 0 && dash_dir_y == -1 {
 				if get_check_wall(dir) {
 					action_dashjump_wall(_kh, dir);
@@ -712,7 +712,7 @@ state_dash = state_base.add()
 		if grace > 0 {
 			if _kh != dir && dash_timer <= 3 {
 				action_dash_end();
-				action_dashjump(_kh == 0 ? dir : _kh);
+				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 				state.change(state_free);
 				return;
 			} else if _kh == dir {
@@ -734,7 +734,7 @@ state_dash = state_base.add()
 			}
 			if _kh != dir && dash_timer <= 1 {
 				action_dash_end();
-				action_dashjump(_kh == 0 ? dir : _kh);
+				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 				state.change(state_free);
 				return;
 			}
