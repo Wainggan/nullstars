@@ -216,7 +216,7 @@ action_dashjump = function(_key_dir) {
 			
 			y_vel = defs.jump_vel;
 			
-			x_vel = abs(dash_dir_x_vel * 0.6) * _key_dir;
+			x_vel = min(abs(dash_dir_x_vel * 0.6), 5) * _key_dir;
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 			
 			hold_jump_timer = defs.dashjump_time;
@@ -225,7 +225,7 @@ action_dashjump = function(_key_dir) {
 			
 			y_vel = defs.jump_vel;
 			
-			x_vel = abs(dash_dir_x_vel * 0.6) * _key_dir;
+			x_vel = abs(dash_dir_x_vel * 0.4) * _key_dir;
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 			
 			hold_jump_timer = defs.dashjump_high_time;
@@ -640,6 +640,7 @@ state_ledge = state_base.add()
 
 
 action_dash_end = function() {
+	
 	dash_dir_x_vel = x_vel;
 	dash_dir_y_vel = y_vel;
 	
@@ -647,8 +648,7 @@ action_dash_end = function() {
 	
 	if dash_dir_y == 0 {
 		// side dash
-		
-		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.9) * sign(x_vel);
+		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.8) * sign(x_vel);
 		y_vel = 0;
 		
 		hold_jump = true;
@@ -659,22 +659,20 @@ action_dash_end = function() {
 		key_force_timer = 3;
 	} else if dash_dir_y == -1  {
 		// up dash
-		
 		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.7) * sign(x_vel);
 		
 		hold_jump = true;
 		hold_jump_vel = 0;
-		hold_jump_timer = 4;
+		hold_jump_timer = 12;
 		
 		key_force = dash_dir_x;
 		key_force_timer = 5;
 	} else {
 		// dive dash + down dash
-		
-		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.3) * sign(x_vel);
-		//x_vel *= 0.9;
+		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.2) * sign(x_vel);
 	}
-}
+	
+};
 
 state_dash = state_base.add()
 .set("enter", function() {
@@ -698,8 +696,8 @@ state_dash = state_base.add()
 	
 	dash_timer = 6;
 	dash_frame = 0; // this is stupid
-	dash_grace = 14;
-	dash_recover = 8;
+	dash_grace = 15;
+	dash_recover = 9;
 	
 })
 .set("leave", function() {
