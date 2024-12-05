@@ -5,3 +5,4 @@ draw_sprite_ext(
 	scale_x * dir, scale_y,
 	0, c_white, image_alpha
 );
+

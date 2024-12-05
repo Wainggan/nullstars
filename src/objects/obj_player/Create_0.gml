@@ -59,7 +59,7 @@ dir = 1;
 light = instance_create_layer(x, y, "Lights", obj_light, {
 	color: #ffffff,
 	size: 60,
-	intensity: 0.5
+	intensity: 0.5,
 });
 
 buffer_jump = 0;
@@ -124,6 +124,8 @@ dash_grace_kick = 0;
 dash_recover = 0;
 
 dash_left = defs.dash_total;
+
+respawn_timer = 0;
 
 
 get_check_wall = function(_dir, _dist = defs.wall_distance) {
@@ -385,8 +387,32 @@ state_base = state.add()
 	dash_grace_kick -= 1;
 	vel_grace_timer -= 1;
 	
+	if state.is(state_free) && !nat_crouch() {
+		if INPUT.check_pressed("menu") && place_meeting(x, y, obj_checkpoint) {
+			state.change(state_menu)
+			return;
+		} else if INPUT.check("menu") {
+			respawn_timer += 1;
+			if respawn_timer > 17 {
+				game_player_kill();
+			}
+		} else {
+			respawn_timer = approach(respawn_timer, 0, 2);
+		}
+	} else {
+		respawn_timer = approach(respawn_timer, 0, 2);
+	}
+	
 });
 
+state_stuck = state_base.add()
+.set("step", function(){
+	x_vel = approach(x_vel, 0, 0.5);
+	y_vel = approach(y_vel, defs.terminal_vel, defs.gravity);
+	if actor_collision(x, y + 1) {
+		state.change(state_free);
+	}
+});
 
 state_free = state_base.add()
 .set("step", function () {
@@ -808,6 +834,33 @@ state_dash = state_base.add()
 	dash_timer -= 1;
 	if dash_timer <= 0 {
 		action_dash_end();
+		state.change(state_free);
+		return;
+	}
+	
+});
+
+state_menu = state_base.add()
+.set("enter", function(){
+	with obj_menu system.open(page_none);
+})
+.set("step", function(){
+	x_vel = approach(x_vel, 0, defs.move_accel);
+	y_vel = approach(y_vel, defs.terminal_vel, defs.gravity);
+	
+	buffer_dash = 0;
+	buffer_jump = 0;
+	
+	with obj_menu system.update();
+	
+	if array_length(obj_menu.system.stack) == 0 {
+		obj_menu.system.stop();
+		state.change(state_free);
+		return;
+	}
+	
+	if !place_meeting(x, y, obj_checkpoint) {
+		obj_menu.system.stop();
 		state.change(state_free);
 		return;
 	}
