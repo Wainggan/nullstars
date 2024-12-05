@@ -87,6 +87,11 @@ hold_jump_timer = 0;
 walljump_grace = 0;
 walljump_grace_dir = 0;
 
+ledge_key = 0;
+ledge_buffer_dir = 0;
+ledge_buffer_dir_timer = 0;
+ledge_stick = 0;
+
 
 get_check_wall = function(_dir, _dist = defs.wall_distance) {
 	return actor_collision(x + _dir * _dist, y);
@@ -104,8 +109,8 @@ get_lift_y = function() {
 
 action_jump = function() {
 	
-	var _kh = round(INPUT.check_raw("horizontal"));
-	var _kv = round(INPUT.check_raw("vertical"));
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	buffer_jump = false;
 	grace = false;
@@ -141,10 +146,10 @@ action_walljump = function() {
 	
 	hold_jump = true;
 	
-	walljump_grace = 6;
+	walljump_grace = 5;
 	walljump_grace_dir = dir;
 	
-}
+};
 
 state = new State();
 
@@ -209,8 +214,8 @@ state_base = state.add()
 state_free = state_base.add()
 .set("step", function () {
 	
-	var _kh = round(INPUT.check_raw("horizontal"));
-	var _kv = round(INPUT.check_raw("vertical"));
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	var _k_move = _kh;
 	if onground && nat_crouch() {
@@ -352,6 +357,91 @@ state_free = state_base.add()
 				}
 			}
 		}
+	}
+	
+	var _kh_p = INPUT.check_pressed("right") - INPUT.check_pressed("left");
+	
+	ledge_buffer_dir_timer -= 1;
+	if _kh_p != 0 {
+		ledge_buffer_dir = _kh_p;
+		ledge_buffer_dir_timer = 4;
+	}
+	
+	if y_vel <= -1 && _kh != 0 {
+		ledge_key = _kh;
+	}
+	if y_vel > -1 {
+		if (
+			!onground && get_check_wall(_kh, 1) && !INPUT.check("down")
+		) && (
+			(ledge_buffer_dir_timer > 0 && ledge_buffer_dir == dir) ||
+			ledge_key == dir
+		) {
+			ledge_buffer_dir_timer = 0;
+			ledge_key = 0;
+			state.change(state_ledge);
+			return;
+		} else {
+			if y_vel > 2 {
+				ledge_key = 0;
+			}
+		}
+	}
+	
+});
+
+state_ledge = state_base.add()
+.set("enter", function(){
+	ledge_stick = 1;
+})
+.set("leave", function(){
+	ledge_stick = 0;
+})
+.set("step", function() {
+	
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
+	
+	x_vel = dir;
+	
+	y_vel = 0;
+	if !actor_collision(x + dir, y - 22) {
+		y_vel = 1
+	} else {
+		if !actor_collision(x + dir, y - 20) {
+			y_vel = -1
+		}
+	}
+	
+	if buffer_jump > 0 {
+		action_walljump();
+		state.change(state_free);
+		return;
+	}
+	
+	if !get_check_wall(dir, 1) {
+		x_vel += get_lift_x();
+		y_vel += get_lift_y();
+		state.change(state_free);
+		return;
+	}
+	if onground {
+		x_vel += get_lift_x();
+		y_vel += get_lift_y();
+		state.change(state_free);
+		return;
+	}
+	
+	if _kh != dir {
+		ledge_stick -= 1;
+	} else {
+		ledge_stick = 4;
+	}
+	if _kh != dir && ledge_stick <= 0 {
+		x_vel += get_lift_x();
+		y_vel += get_lift_y();
+		state.change(state_free);
+		return;
 	}
 	
 });
