@@ -56,6 +56,11 @@ y_delta = 0;
 
 dir = 1;
 
+light = instance_create_layer(x, y, "Lights", obj_light, {
+	color: #ffffff,
+	size: 60,
+	intensity: 0.5
+});
 
 buffer_jump = 0;
 buffer_dash = 0;
@@ -368,6 +373,11 @@ state_base = state.add()
 	};
 	actor_move_x(x_vel, __collide_x);
 	
+	if instance_exists(light) {
+		light.x = x;
+		light.y = y - (nat_crouch() ? 14 : 22);
+	}
+	
 	actor_lift_update();
 	
 	onground_last = onground;
@@ -532,8 +542,8 @@ state_free = state_base.add()
 			}
 		} else {
 			var _close = actor_collision(x, y + 24) ||
-				get_check_wall(-1, 24) ||
-				get_check_wall(1, 24);
+				get_check_wall(-1, 20) ||
+				get_check_wall(1, 20);
 			if _close && dash_grace > 0 {
 				dash_grace = 2;
 			}
