@@ -146,6 +146,10 @@ action_jump = function() {
 	action_jump_shared();
 	
 	y_vel = min(y_vel, defs.jump_vel);
+	if !INPUT.check("jump") {
+		y_vel *= defs.jump_damp;
+	}
+	
 	if _kh != 0 && abs(x_vel) < defs.move_speed {
 		x_vel = defs.move_speed * _kh;
 	}
@@ -202,6 +206,9 @@ action_dashjump = function(_dir) {
 		key_force = sign(x_vel);
 		key_force_timer = 6;
 	}
+	if !INPUT.check("jump") {
+		y_vel *= defs.jump_damp;
+	}
 	
 	hold_jump = false;
 	hold_jump_vel = y_vel;
@@ -219,6 +226,10 @@ action_dashjump_high = function(_dir) {
 	y_vel = -5.4;
 	x_vel = dash_dir_x_vel * 0.4
 	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+	
+	if !INPUT.check("jump") {
+		y_vel *= defs.jump_damp;
+	}
 	
 	hold_jump = true;
 	hold_jump_vel = 0;
@@ -455,9 +466,6 @@ state_free = state_base.add()
 				action_dashjump(dir);
 			} else {
 				action_jump();
-				if !INPUT.check("jump") {
-					y_vel *= defs.jump_damp;
-				}
 			}
 		} else {
 			if dash_grace > 0 && dash_dir_y != -1 {
@@ -465,9 +473,6 @@ state_free = state_base.add()
 			} else {
 				if get_check_wall(1) || get_check_wall(-1) {
 					action_walljump();
-					if !INPUT.check("jump") {
-						y_vel *= defs.jump_damp;
-					}
 				}
 			}
 		}
@@ -671,28 +676,29 @@ state_dash = state_base.add()
 	
 	if buffer_jump > 0 {
 		if grace > 0 {
-			if dash_grace > 0 {
+			if _kh != dir && dash_timer <= 3 {
 				action_dash_end();
-				action_dashjump(dir);
+				action_dashjump(_kh);
+				state.change(state_free);
+				return;
+			} else if _kh == dir {
+				action_dash_end();
+				action_dashjump(_kh);
 				state.change(state_free);
 				return;
 			}
 		} else {
-			if dash_grace > 0 && dash_dir_y != -1 {
+			if get_check_wall(dir) {
 				action_dash_end();
-				action_dashjump(dir);
+				action_walljump();
 				state.change(state_free);
 				return;
-			} else {
-				if get_check_wall(1) || get_check_wall(-1) {
-					action_dash_end();
-					action_walljump();
-					if !INPUT.check("jump") {
-						y_vel *= defs.jump_damp;
-					}
-					state.change(state_free);
-					return;
-				}
+			}
+			if _kh != dir && dash_timer <= 1 {
+				action_dash_end();
+				action_dashjump(_kh);
+				state.change(state_free);
+				return;
 			}
 		}
 	}
