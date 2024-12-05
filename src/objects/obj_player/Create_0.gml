@@ -77,6 +77,7 @@ onground = false;
 onground_last = false;
 
 grace = 0;
+grace_y = 0;
 
 vel_keygrace = 0;
 vel_grace = 0;
@@ -145,6 +146,10 @@ action_jump = function() {
 	var _kh = INPUT.check("right") - INPUT.check("left");
 	var _kv = INPUT.check("down") - INPUT.check("up");
 	
+	if grace > 0 {
+		actor_move_y(grace_y - y);
+	}
+	
 	action_jump_shared();
 	
 	y_vel = min(y_vel, defs.jump_vel);
@@ -190,6 +195,10 @@ action_walljump = function() {
 };
 
 action_dashjump = function(_key_dir) {
+	
+	if grace > 0 {
+		actor_move_y(grace_y - y);
+	}
 	
 	action_jump_shared();
 	
@@ -315,9 +324,10 @@ state_base = state.add()
 	dash_recover -= 1;
 	if onground {
 		grace = defs.grace;
+		grace_y = y;
 	}
 	
-	if (onground && dash_recover <= 0) || (state.is(state_ledge)) {
+	if (grace > 0 && dash_recover <= 0) || (state.is(state_ledge)) {
 		dash_left = defs.dash_total;
 	}
 	
