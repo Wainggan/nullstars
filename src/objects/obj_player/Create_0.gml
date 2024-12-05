@@ -23,10 +23,12 @@ defs = {
 	
 	jump_vel: -4.8,
 	jump_damp: 0.6,
-	jump_move_boost: 0.2,
+	jump_move_boost: 0.4,
 	
 	terminal_vel: global.defs.terminal_vel,
 	terminal_vel_fast: 6,
+	
+	wall_distance: 4,
 	
 	buffer: 10,
 	grace: 10,
@@ -82,6 +84,13 @@ hold_jump = false;
 hold_jump_vel = 0;
 hold_jump_timer = 0;
 
+walljump_grace = 0;
+walljump_grace_dir = 0;
+
+
+get_check_wall = function(_dir, _dist = defs.wall_distance) {
+	return actor_collision(x + _dir * _dist, y);
+};
 
 get_lift_x = function() {
 	var _out = actor_lift_get_x();
@@ -101,11 +110,11 @@ action_jump = function() {
 	buffer_jump = false;
 	grace = false;
 	
+	y_vel = min(y_vel, defs.jump_vel);
 	if _kh != 0 && abs(x_vel) < defs.move_speed {
 		x_vel = defs.move_speed * _kh;
 	}
-	x_vel += (defs.jump_move_boost + defs.move_accel) * _kh;
-	y_vel = min(y_vel, defs.jump_vel);
+	x_vel += defs.jump_move_boost * _kh;
 	
 	hold_jump = false;
 	hold_jump_vel = y_vel;
@@ -118,6 +127,24 @@ action_jump = function() {
 	scale_y = 1.2;
 	
 };
+
+action_walljump = function() {
+	
+	if actor_lift_get_x() == 0 && actor_lift_get_y() == 0 {
+		var _inst = instance_place(x + dir * defs.wall_distance, y, obj_Solid);
+		if _inst != noone {
+			actor_lift_set(_inst.lift_x, _inst.lift_y);
+		}
+	}
+	
+	action_jump();
+	
+	hold_jump = true;
+	
+	walljump_grace = 6;
+	walljump_grace_dir = dir;
+	
+}
 
 state = new State();
 
@@ -153,6 +180,12 @@ state_base = state.add()
 	
 	
 	static __collide_y = function() {
+		if y_vel > 0 {
+			if y_vel > 1 {
+				scale_x = 1.2;
+				scale_y = 0.8;
+			}
+		}
 		y_vel = 0;
 	};
 	actor_move_y(y_vel, __collide_y);
@@ -212,6 +245,16 @@ state_free = state_base.add()
 			_x_accel = defs.move_slowdown;
 		} else {
 			_x_accel = defs.move_slowdown_air;
+		}
+	}
+	
+	walljump_grace -= 1;
+	if walljump_grace > 0 {
+		if walljump_grace_dir == -dir {
+			if dir != 0 && abs(x_vel) < defs.move_speed {
+				x_vel = defs.move_speed * dir;
+				x_vel += defs.jump_move_boost * dir;
+			}
 		}
 	}
 	
@@ -300,6 +343,13 @@ state_free = state_base.add()
 			action_jump();
 			if !INPUT.check("jump") {
 				y_vel *= defs.jump_damp;
+			}
+		} else {
+			if get_check_wall(1) || get_check_wall(-1) {
+				action_walljump();
+				if !INPUT.check("jump") {
+					y_vel *= defs.jump_damp;
+				}
 			}
 		}
 	}
