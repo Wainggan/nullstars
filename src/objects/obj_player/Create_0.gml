@@ -192,10 +192,16 @@ action_dashjump = function(_dir) {
 	action_jump_shared();
 	
 	if dash_dir_y == 0 {
-		y_vel = defs.jump_vel;
-		
-		x_vel = abs(dash_dir_x_vel * 0.8) * _dir;
-		x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+		if _dir == dash_dir_x {
+			y_vel = defs.jump_vel;
+			
+			x_vel = abs(dash_dir_x_vel * 0.8) * _dir;
+			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+		} else {
+			y_vel = -5.4;
+			x_vel = abs(dash_dir_x_vel * 0.4) * _dir;
+			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+		}
 	} else {
 		y_vel = -3;
 		
@@ -220,20 +226,6 @@ action_dashjump = function(_dir) {
 	scale_x = 0.9;
 	scale_y = 1.1;
 	
-};
-
-action_dashjump_high = function(_dir) {
-	y_vel = -5.4;
-	x_vel = dash_dir_x_vel * 0.4
-	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
-	
-	if !INPUT.check("jump") {
-		y_vel *= defs.jump_damp;
-	}
-	
-	hold_jump = true;
-	hold_jump_vel = 0;
-	hold_jump_timer = 6;
 };
 
 action_dashjump_wall = function(_dir) {
@@ -463,13 +455,13 @@ state_free = state_base.add()
 	if buffer_jump > 0 {
 		if grace > 0 {
 			if dash_grace > 0 {
-				action_dashjump(dir);
+				action_dashjump(_kh);
 			} else {
 				action_jump();
 			}
 		} else {
 			if dash_grace > 0 && dash_dir_y != -1 {
-				action_dashjump(dir);
+				action_dashjump(_kh);
 			} else {
 				if get_check_wall(1) || get_check_wall(-1) {
 					action_walljump();
