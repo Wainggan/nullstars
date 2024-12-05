@@ -125,6 +125,9 @@ dash_recover = 0;
 
 dash_left = defs.dash_total;
 
+cam_ground_x = x;
+cam_ground_y = y;
+
 respawn_timer = 0;
 
 
@@ -867,14 +870,39 @@ state_menu = state_base.add()
 	
 });
 
-squish = function(){
+squish = function() {
 	game_player_kill();
 };
 
-riding = function(_solid){
+riding = function(_solid) {
 	return place_meeting(x, y + 1, _solid) ||
 		(state.is(state_ledge) && place_meeting(x + dir, y, _solid));
 };
+
+cam = function(_out) {
+	
+	if (state.is(state_free) && actor_collision(x, y + 1)) {
+		cam_ground_x = x + dir * 64;
+		cam_ground_y = y - 32;
+	}
+	
+	var _dist = point_distance(cam_ground_x, cam_ground_y, x, y);
+	
+	var _x = x + power(abs(x_vel), 1.4) * sign(x_vel);
+	var _y = y - 32;
+	
+	/*
+	if state.is(state_menu) {
+		_x += 48 + (array_length(menu.stack) - 1) * 12;
+		_y += -4;
+	}*/
+	
+	_out.x = lerp(cam_ground_x, _x, 1 - max(0, 1 - power(_dist / 64, 2)) * 0.0);
+	_out.y = lerp(cam_ground_y, _y, 1 - max(0, 1 - power(_dist / 128, 2)) * 0.8);
+	
+}
+
+outside = function() { return false; };
 
 
 state.change(state_free);
