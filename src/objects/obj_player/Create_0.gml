@@ -640,7 +640,7 @@ state_dash = state_base.add()
 		if _kh == 0 && _kv == 0 {
 			dash_dir_x = dir;
 		} else {
-			dash_dir_x = dir;//_kh;
+			dash_dir_x = _kv == 1 ? _kh : dir;//_kh;
 		}
 		dash_dir_y = _kv;
 		
