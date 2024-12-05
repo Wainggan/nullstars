@@ -106,6 +106,7 @@ dash_pre_y_vel = 0;
 dash_timer = 0;
 dash_frame = 0;
 dash_grace = 0;
+dash_grace_kick = 0;
 dash_recover = 0;
 
 dash_left = defs.dash_total;
@@ -131,6 +132,7 @@ action_jump_shared = function() {
 	grace = 0;
 	
 	dash_grace = 0;
+	dash_grace_kick = 0;
 	
 	hold_jump = false;
 	hold_jump_vel = 0;
@@ -197,10 +199,15 @@ action_dashjump = function(_key_dir) {
 			
 			x_vel = abs(dash_dir_x_vel * 0.8) * _key_dir;
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+			
+			hold_jump_timer = 4;
 		} else {
-			y_vel = -5.4;
+			y_vel = defs.jump_vel;
+			
 			x_vel = abs(dash_dir_x_vel * 0.4) * _key_dir;
 			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+			
+			hold_jump_timer = 8;
 		}
 	} else {
 		y_vel = -3;
@@ -211,6 +218,8 @@ action_dashjump = function(_key_dir) {
 		
 		key_force = sign(x_vel);
 		key_force_timer = 6;
+		
+		hold_jump_timer = 4;
 	}
 	if !INPUT.check("jump") {
 		y_vel *= defs.jump_damp;
@@ -218,7 +227,6 @@ action_dashjump = function(_key_dir) {
 	
 	hold_jump = false;
 	hold_jump_vel = y_vel;
-	hold_jump_timer = 4;
 	
 	if get_can_uncrouch() {
 		nat_crouch(false);
@@ -257,7 +265,7 @@ action_dashjump_wall = function(_key_dir, _wall_dir) {
 	
 	hold_jump = false;
 	hold_jump_vel = y_vel;
-	hold_jump_timer = 4;
+	hold_jump_timer = 6;
 	
 	vel_grace = 0;
 	vel_grace_timer = 0;
@@ -265,8 +273,8 @@ action_dashjump_wall = function(_key_dir, _wall_dir) {
 	x_vel += get_lift_x();
 	y_vel += get_lift_y();
 	
-	scale_x = 0.8;
-	scale_y = 1.2;
+	scale_x = 0.6;
+	scale_y = 1.4;
 	
 };
 
@@ -340,6 +348,7 @@ state_base = state.add()
 	
 	onground_last = onground;
 	dash_grace -= 1;
+	dash_grace_kick -= 1;
 	vel_grace_timer -= 1;
 	
 });
@@ -506,7 +515,7 @@ state_free = state_base.add()
 			}
 			if dash_grace > 0 && dash_dir_y != -1 {
 				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
-			} else if dash_grace > 0 && dash_dir_y == -1 {
+			} else if dash_grace_kick > 0 && dash_dir_y == -1 {
 				if get_check_wall(dir) {
 					action_dashjump_wall(_kh, dir);
 				}
@@ -710,6 +719,7 @@ state_dash = state_base.add()
 		y_vel = 0;
 		y_vel += lengthdir_y(7, _dir);
 		if dash_dir_y == -1 {
+			dash_grace_kick = 24;
 			y_vel *= 0.75;
 		}
 	}
