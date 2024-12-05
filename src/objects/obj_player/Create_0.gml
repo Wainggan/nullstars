@@ -310,6 +310,7 @@ state_base = state.add()
 	
 	onground_last = onground;
 	dash_grace -= 1;
+	vel_grace_timer -= 1;
 	
 });
 
@@ -330,8 +331,7 @@ state_free = state_base.add()
 	}
 	
 	if vel_grace_timer > 0 {
-		vel_grace_timer -= 1;
-		if x_vel != 0 && sign(x_vel) == -sign(vel_grace) {
+		if _kh != sign(vel_grace) {
 			vel_grace_timer = 0;
 		} else if !actor_collision(x + _kh, y) {
 			x_vel = vel_grace;
