@@ -560,6 +560,38 @@ state_ledge = state_base.add()
 	
 });
 
+
+action_dash_end = function() {
+	dash_dir_x_vel = x_vel;
+	dash_dir_y_vel = y_vel;
+	
+	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
+	
+	if dash_dir_y == 0 {
+		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.8) * sign(x_vel);
+		y_vel = 0;
+		
+		hold_jump = true;
+		hold_jump_vel = 0;
+		hold_jump_timer = 4;
+		
+		key_force = dash_dir_x;
+		key_force_timer = 3;
+	} else if dash_dir_y == -1  {
+		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.6) * sign(x_vel);
+		
+		hold_jump = true;
+		hold_jump_vel = 0;
+		hold_jump_timer = 4;
+		
+		key_force = dash_dir_x;
+		key_force_timer = 5;
+	} else {
+		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.2) * sign(x_vel);
+		//x_vel *= 0.9;
+	}
+}
+
 state_dash = state_base.add()
 .set("enter", function() {
 	
@@ -590,35 +622,6 @@ state_dash = state_base.add()
 	
 	if get_can_uncrouch() {
 		nat_crouch(false);
-	}
-	
-	dash_dir_x_vel = x_vel;
-	dash_dir_y_vel = y_vel;
-	
-	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
-	
-	if dash_dir_y == 0 {
-		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.8) * sign(x_vel);
-		y_vel = 0;
-		
-		hold_jump = true;
-		hold_jump_vel = 0;
-		hold_jump_timer = 4;
-		
-		key_force = dash_dir_x;
-		key_force_timer = 3;
-	} else if dash_dir_y == -1  {
-		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.6) * sign(x_vel);
-		
-		hold_jump = true;
-		hold_jump_vel = 0;
-		hold_jump_timer = 4;
-		
-		key_force = dash_dir_x;
-		key_force_timer = 5;
-	} else {
-		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.2) * sign(x_vel);
-		//x_vel *= 0.9;
 	}
 	
 })
@@ -666,9 +669,38 @@ state_dash = state_base.add()
 		}
 	}
 	
+	if buffer_jump > 0 {
+		if grace > 0 {
+			if dash_grace > 0 {
+				action_dash_end();
+				action_dashjump(dir);
+				state.change(state_free);
+				return;
+			}
+		} else {
+			if dash_grace > 0 && dash_dir_y != -1 {
+				action_dash_end();
+				action_dashjump(dir);
+				state.change(state_free);
+				return;
+			} else {
+				if get_check_wall(1) || get_check_wall(-1) {
+					action_dash_end();
+					action_walljump();
+					if !INPUT.check("jump") {
+						y_vel *= defs.jump_damp;
+					}
+					state.change(state_free);
+					return;
+				}
+			}
+		}
+	}
+	
 	dash_frame += 1;
 	dash_timer -= 1;
 	if dash_timer <= 0 {
+		action_dash_end();
 		state.change(state_free);
 		return;
 	}
