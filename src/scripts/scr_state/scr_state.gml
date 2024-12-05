@@ -37,6 +37,7 @@ function StateChild(_parent = undefined, _top) constructor {
 	
 }
 
+/// a state machine
 function State() constructor {
 	
 	__stack = [];
@@ -58,6 +59,7 @@ function State() constructor {
 	__time_total = 0;
 	
 	
+	/// returns a new child state
 	static add = function(){
 		var _child = new StateChild(undefined, self);
 		return _child;
