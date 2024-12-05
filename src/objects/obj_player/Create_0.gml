@@ -33,7 +33,7 @@ defs = {
 	dash_total: 1,
 	
 	buffer: 10,
-	grace: 10,
+	grace: 5,
 };
 
 
