@@ -498,6 +498,12 @@ state_free = state_base.add()
 				action_jump();
 			}
 		} else {
+			var _close = actor_collision(x, y + 24) ||
+				get_check_wall(-1, 12) ||
+				get_check_wall(1, 12);
+			if _close && dash_grace > 0 {
+				dash_grace = 1;
+			}
 			if dash_grace > 0 && dash_dir_y != -1 {
 				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 			} else if dash_grace > 0 && dash_dir_y == -1 {
