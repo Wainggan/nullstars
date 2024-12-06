@@ -1106,7 +1106,7 @@ action_dash_end = function() {
 		hold_jump_timer = 12;
 		
 		key_force = dash_dir_x;
-		key_force_timer = 3;
+		key_force_timer = 4;
 	} else if dash_dir_y == -1  {
 		// up dash
 		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.7) * sign(x_vel);
@@ -1116,7 +1116,7 @@ action_dash_end = function() {
 		hold_jump_timer = 28;
 		
 		key_force = dash_dir_x;
-		key_force_timer = 5;
+		key_force_timer = 4;
 	} else {
 		// dive dash + down dash
 		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.2) * sign(x_vel);
@@ -1151,10 +1151,6 @@ state_dash = state_base.add()
 	
 })
 .set("leave", function() {
-	
-	if get_can_uncrouch() {
-		nat_crouch(false);
-	}
 	
 })
 .set("step", function() {
@@ -1209,6 +1205,14 @@ state_dash = state_base.add()
 		if dash_dir_y == -1 {
 			dash_grace_kick = 24;
 			y_vel *= 0.7;
+		}
+		
+		if onground && INPUT.check("down") {
+			nat_crouch(true);
+		} else {
+			if get_can_uncrouch() {
+				nat_crouch(false);
+			}
 		}
 		
 		action_anim_dash();
@@ -1269,7 +1273,9 @@ state_menu = state_base.add()
 	buffer_dash = 0;
 	buffer_jump = 0;
 	
-	with obj_menu system.update();
+	with obj_menu {
+		system.update();
+	}
 	
 	if array_length(obj_menu.system.stack) == 0 {
 		obj_menu.system.stop();
