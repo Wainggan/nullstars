@@ -42,6 +42,10 @@ defs = {
 	
 	buffer: 10,
 	grace: 5,
+	
+	anim_dive_time: 20,
+	anim_jab_time: 20,
+	anim_longjump_time: 30,
 };
 
 
@@ -131,6 +135,150 @@ cam_ground_y = y;
 respawn_timer = 0;
 
 
+var _s_stand = 0,
+	_s_walk_a1 = 3,
+	_s_walk_a2 = 4,
+	_s_walk_b1 = 1,
+	_s_walk_b2 = 2,
+	_s_jump = 5,
+	_s_fall = 6,
+	_s_dive = 7,
+	_s_dash = 9,
+	_s_long = 8,
+	_s_swim_idle_1 = 11,
+	_s_swim_idle_2 = 12,
+	_s_swim_1 = 13,
+	_s_swim_2 = 14,
+	_s_swim_bullet = 15,
+	_s_ledge = 16,
+	_s_crouch = 17,
+	_s_flip_1 = 18,
+	_s_flip_2 = 19,
+	_s_run_1 = 21,
+	_s_run_2 = 22,
+	_s_run_3 = 23,
+	_s_run_jump = 21,
+	_s_run_fall = 24;
+
+anim = new AnimController();
+anim.add("idle", new AnimLevel([_s_stand]))
+.add("walk", new AnimLevel([
+		_s_walk_a1, _s_walk_b1,
+		_s_walk_a2, _s_walk_b2
+	], 12))
+.add("jump", new AnimLevel([_s_jump]))
+.add("fall", new AnimLevel([_s_fall]))
+.add("dive", new AnimLevel([_s_dive]))
+.add("jab", new AnimLevel([_s_dash]))
+.add("longjump", new AnimLevel([_s_long]))
+.add("swim", new AnimLevel([_s_swim_idle_1, _s_swim_idle_2], 1 / 60))
+.add("swimming", new AnimLevel([_s_swim_1, _s_swim_2], 1 / 60))
+.add("swimbullet", new AnimLevel([_s_swim_bullet]))
+.add("ledge", new AnimLevel([_s_ledge]))
+.add("crouch", new AnimLevel([_s_crouch]))
+.add("flip", new AnimLevel([_s_flip_1, _s_flip_2], 1 / 14, 0))
+.add("run", new AnimLevel([
+		_s_run_1, _s_run_1,
+		_s_run_2, _s_run_2, _s_run_2,
+		_s_run_3, _s_run_3
+	], 1/12))
+.add("runjump", new AnimLevel([_s_run_jump]))
+.add("runfall", new AnimLevel([_s_run_fall]))
+
+.meta_default({
+	x: -2, y: -16,
+	front: false,
+})
+.meta_items([_s_walk_a1, _s_walk_a2], {
+	y: -15,
+})
+.meta_items([_s_jump, _s_fall], {
+	y: -17,
+})
+.meta_items([_s_dive], {
+	x: -4, y: -21,
+	front: true,
+})
+.meta_items([_s_long], {
+	x: -8, y: -16,
+})
+.meta_items([_s_dash], {
+	x: 3, y: -11,
+})
+.meta_items([_s_swim_idle_1], {
+	x: -4, y: -17,
+})
+.meta_items([_s_swim_idle_2], {
+	x: -5, y: -15,
+})
+.meta_items([_s_swim_1], {
+	x: -4, y: -16,
+})
+.meta_items([_s_swim_2], {
+	x: -4, y: -17,
+})
+.meta_items([_s_swim_bullet], {
+	x: 0, y: -16,
+})
+.meta_items([_s_ledge], {
+	x: -4, y: -17,
+})
+.meta_items([_s_crouch], {
+	x: -5, y: -6,
+})
+.meta_items([_s_flip_1, _s_flip_2], {
+	x: -2, y: -15,
+})
+.meta_items([_s_run_2], {
+	x: -5, y: -13,
+})
+.meta_items([_s_run_3], {
+	x: -8, y: -16,
+})
+.meta_items([_s_run_1], {
+	x: -8, y: -16,
+})
+.meta_items([_s_run_fall], {
+	x: -3, y: -15,
+});
+
+anim_dive_timer = 0;
+anim_jab_timer = 0;
+anim_longjump_timer = 0;
+anim_flip_timer = 0;
+anim_runjump_timer = 0;
+
+action_anim_onground = function() {
+	anim_longjump_timer = 0;
+	anim_flip_timer = 0;
+	anim_runjump_timer = 0;
+};
+action_anim_ledge = function() {
+	anim_longjump_timer = 0;
+	anim_flip_timer = 0;
+};
+action_anim_jump = function() {
+	anim_dive_timer = 0;
+	anim_jab_timer = 0;
+	anim_flip_timer = 0;
+	anim_runjump_timer = 0;
+};
+action_anim_dashjump = function() {
+	anim_longjump_timer = defs.anim_longjump_time;
+};
+action_anim_dashjump_wall = function() {
+	anim_flip_timer = 30;
+};
+action_anim_dash = function() {
+	anim_runjump_timer = 0;
+	if dash_dir_y > 0 {
+		anim_dive_timer = defs.anim_dive_time;
+	} else {
+		anim_jab_timer = defs.anim_jab_time;
+	}
+};
+
+
 tail_length = 12;
 tail = yarn_create(tail_length, function(_p, i) {
 	//_p.len = min(power(max(i - 4, 0) , 1.12) + 4, 8)
@@ -182,10 +330,7 @@ action_tail_update_point = function(_p, i, _points) {
 	//}
 };
 
-action_tail_draw_point = function(_p, i, _points) {
-	var _tip = dash_left == 0 ? #00ffff : #ff00ff;
-	var _blend = dash_left == 0 ? #ddccdd : c_white;
-	
+action_tail_draw_point = function(_p, i, _points, _tip, _blend) {
 	var _c = merge_color(c_white, _tip, clamp(i - 3, 0, tail_length) / tail_length);
 	_c = multiply_color(_c, _blend);
 	draw_sprite_ext(
@@ -197,18 +342,10 @@ action_tail_draw_point = function(_p, i, _points) {
 	);
 };
 
-action_tail_draw = function() {
+action_tail_draw = function(_color, _mult) {
 	for (var i = array_length(tail.points) - 1; i >= 0; i--) {
-		action_tail_draw_point(tail.points[i], i, tail.points);
+		action_tail_draw_point(tail.points[i], i, tail.points, _color, _mult);
 	}
-}
-
-
-action_update_sprite = function() {
-	
-	tail.position(x, y);
-	tail.update(, action_tail_update_point);
-	
 };
 
 
@@ -343,6 +480,8 @@ action_jump_shared = function() {
 	hold_jump_vel = defs.terminal_vel;
 	hold_jump_timer = 0;
 	
+	action_anim_jump();
+	
 };
 
 action_jump = function() {
@@ -375,8 +514,12 @@ action_jump = function() {
 	
 	dash_left = defs.dash_total;
 	
-	scale_x = 0.7;
-	scale_y = 1.3;
+	scale_x = 0.8;
+	scale_y = 1.2;
+	
+	if abs(x_vel) > defs.move_speed + 2 {
+		anim_runjump_timer = 120;
+	}
 	
 };
 
@@ -390,6 +533,8 @@ action_walljump = function() {
 	}
 	
 	action_jump();
+	
+	anim_runjump_timer = 0;
 	
 	hold_jump = true;
 	
@@ -405,6 +550,8 @@ action_dashjump = function(_key_dir) {
 	}
 	
 	action_jump_shared();
+	
+	action_anim_dashjump();
 	
 	if dash_dir_y == 0 {
 		if _key_dir == dash_dir_x {
@@ -462,6 +609,8 @@ action_dashjump = function(_key_dir) {
 action_dashjump_wall = function(_key_dir, _wall_dir) {
 	
 	action_jump_shared();
+	
+	action_anim_dashjump_wall();
 	
 	if dash_recover <= 0 {
 		dash_left = defs.dash_total;
@@ -536,6 +685,8 @@ state_base = state.add()
 	if onground {
 		grace = defs.grace;
 		grace_y = y;
+		
+		action_anim_onground();
 	}
 	
 	if (grace > 0 && dash_recover <= 0) || (state.is(state_ledge)) {
@@ -628,8 +779,6 @@ state_base = state.add()
 	if get_check_death(x, y) {
 		game_player_kill();
 	}
-	
-	action_update_sprite();
 	
 	actor_lift_update();
 	
@@ -782,6 +931,7 @@ state_free = state_base.add()
 	if !onground && onground_last && y_vel >= 0 {
 		x_vel += get_lift_x();
 		y_vel += get_lift_y();
+		anim_runjump_timer = 120;
 	}
 	
 	if nat_crouch() {
@@ -895,6 +1045,8 @@ state_ledge = state_base.add()
 			y_vel = -1
 		}
 	}
+	
+	action_anim_ledge();
 	
 	if buffer_dash > 0 && dash_left > 0 {
 		state.change(state_dash);
@@ -1046,6 +1198,9 @@ state_dash = state_base.add()
 			dash_grace_kick = 24;
 			y_vel *= 0.7;
 		}
+		
+		action_anim_dash();
+		
 	}
 	
 	if buffer_jump > 0 {
