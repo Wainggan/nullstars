@@ -28,7 +28,7 @@ defs = {
 	
 	walljump_grace: 5,
 	
-	dashjump_time: 4,
+	dashjump_time: 3,
 	dashjump_fast_vel: -3.2,
 	dashjump_fast_key_force: 6,
 	dashjump_high_time: 8,
@@ -569,34 +569,27 @@ action_dashjump = function(_key_dir) {
 		if _key_dir == dash_dir_x {
 			// normal long jump
 			
+			x_vel = clamp(abs(x_vel), defs.move_speed + 1, 5) * _key_dir;
+			
 			y_vel = defs.jump_vel;
-			
-			x_vel = min(abs(dash_dir_x_vel * 0.6), 5) * _key_dir;
-			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
-			
 			hold_jump_timer = defs.dashjump_time;
 		} else {
 			// high jump
 			
+			x_vel = abs(x_vel) * 0.8 * _key_dir;
+			
 			y_vel = defs.jump_vel;
-			
-			x_vel = abs(dash_dir_x_vel * 0.4) * _key_dir;
-			x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
-			
 			hold_jump_timer = defs.dashjump_high_time;
 		}
 	} else {
 		// fast long jump
 		
-		y_vel = defs.dashjump_fast_vel;
+		x_vel = max(abs(x_vel) * 1, 8) * _key_dir;
 		
-		var _idk = x_vel; // ????
-		var _test = abs(dash_dir_x_vel) * 0.7 + 4;
-		x_vel = max(abs(x_vel), _test) * _key_dir;
-		
-		key_force = sign(x_vel);
+		key_force = _key_dir;
 		key_force_timer = defs.dashjump_fast_key_force;
 		
+		y_vel = defs.dashjump_fast_vel;
 		hold_jump_timer = defs.dashjump_time;
 	}
 	if !INPUT.check("jump") {
@@ -1105,35 +1098,74 @@ state_ledge = state_base.add()
 
 action_dash_end = function() {
 	
-	dash_dir_x_vel = x_vel;
-	dash_dir_y_vel = y_vel;
 	
 	x_vel = max(abs(x_vel), defs.move_speed) * sign(x_vel);
 	
-	if dash_dir_y == 0 {
-		// side dash
-		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.8) * sign(x_vel);
-		y_vel = 0;
+	if true {
 		
-		hold_jump = true;
-		hold_jump_vel = defs.terminal_vel;
-		hold_jump_timer = 12;
+		x_vel = dash_dir_x * 3;
+		if y_vel <= 0 {
+			y_vel = dash_dir_y * 3;
+		}
 		
-		key_force = dash_dir_x;
-		key_force_timer = 4;
-	} else if dash_dir_y == -1  {
-		// up dash
-		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.7) * sign(x_vel);
+		if dash_dir_y == 0 {
+			x_vel = lerp(abs(x_vel), abs(dash_dir_x_vel), 0.75) * sign(x_vel);
+			
+			hold_jump = true;
+			hold_jump_vel = defs.terminal_vel;
+			hold_jump_timer = 12;
+			
+			key_force = dash_dir_x;
+			key_force_timer = 4;
+		} else if dash_dir_y == -1 {
+			x_vel = lerp(abs(x_vel), abs(dash_dir_x_vel), 0.75) * sign(x_vel);
+			
+			hold_jump = true;
+			hold_jump_vel = defs.terminal_vel;
+			hold_jump_timer = 24;
+			
+			key_force = dash_dir_x;
+			key_force_timer = 4;
+		} else if dash_dir_y == 1 {
+			if -sign(dash_dir_x_vel) == sign(dash_pre_x_vel) {
+				x_vel = lerp(abs(x_vel), abs(dash_dir_x_vel), 0.95) * sign(x_vel);
+			} else {
+				x_vel = lerp(abs(x_vel), abs(dash_dir_x_vel), 0.8) * sign(x_vel);
+			}
+		}
 		
-		hold_jump = true;
-		hold_jump_vel = defs.terminal_vel;
-		hold_jump_timer = 28;
+		if y_vel > 0 {
+			y_vel *= 0.9;
+		}
 		
-		key_force = dash_dir_x;
-		key_force_timer = 4;
 	} else {
-		// dive dash + down dash
-		x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.2) * sign(x_vel);
+	
+		if dash_dir_y == 0 {
+			// side dash
+			x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.8) * sign(x_vel);
+			y_vel = 0;
+			
+			hold_jump = true;
+			hold_jump_vel = defs.terminal_vel;
+			hold_jump_timer = 12;
+			
+			key_force = dash_dir_x;
+			key_force_timer = 4;
+		} else if dash_dir_y == -1  {
+			// up dash
+			x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.7) * sign(x_vel);
+			
+			hold_jump = true;
+			hold_jump_vel = defs.terminal_vel;
+			hold_jump_timer = 28;
+			
+			key_force = dash_dir_x;
+			key_force_timer = 4;
+		} else {
+			// dive dash + down dash
+			//x_vel = lerp(abs(x_vel), abs(dash_pre_x_vel), 0.2) * sign(x_vel);
+		}
+		
 	}
 	
 };
@@ -1201,25 +1233,48 @@ state_dash = state_base.add()
 		
 		var _dir = point_direction(0, 0, dash_dir_x, dash_dir_y);
 		
-		x_vel = abs(dash_pre_x_vel);
-		if dash_dir_x == sign(dash_pre_x_vel) {
-			x_vel *= 0.4;
-		} else {
-			if dash_dir_y == -1 {
-				x_vel *= 0.7;
-			} else {
-				x_vel *= 0.9;
-			}
-		}
-		x_vel += abs(lengthdir_x(7, _dir));
-		x_vel = max(abs(x_vel), abs(dash_pre_x_vel)) * sign(dash_dir_x);
+		if true {
 		
-		y_vel = 0;
-		y_vel += lengthdir_y(7, _dir);
-		if dash_dir_y == -1 {
-			dash_grace_kick = 24;
-			y_vel *= 0.7;
+			x_vel = 0;
+			y_vel = 0;
+			
+			x_vel = abs(dash_pre_x_vel) * dash_dir_x;
+			
+			x_vel += lengthdir_x(7, _dir);
+			y_vel += lengthdir_y(7, _dir);
+			
+			if dash_dir_y == -1 {
+				dash_grace_kick = 20;
+				y_vel *= 0.7;
+			}
+			
+		} else {
+		
+			x_vel = abs(dash_pre_x_vel);
+			if dash_dir_x == sign(dash_pre_x_vel) {
+				x_vel *= 0.4;
+			} else {
+				if dash_dir_y == -1 {
+					x_vel *= 0.7;
+				} else {
+					x_vel *= 0.9;
+				}
+			}
+			x_vel += abs(lengthdir_x(7, _dir));
+			x_vel = max(abs(x_vel), abs(dash_pre_x_vel)) * sign(dash_dir_x);
+			
+			y_vel = 0;
+			y_vel += lengthdir_y(7, _dir);
+			
+			if dash_dir_y == -1 {
+				dash_grace_kick = 20;
+				y_vel *= 0.7;
+			}
+			
 		}
+		
+		dash_dir_x_vel = x_vel;
+		dash_dir_y_vel = y_vel;
 		
 		if onground && INPUT.check("down") {
 			nat_crouch(true);
