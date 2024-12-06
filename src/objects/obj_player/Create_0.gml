@@ -144,6 +144,110 @@ get_lift_y = function() {
 	return clamp(_out, -defs.boost_limit_y, 0);
 };
 
+get_check_death = function(_x, _y) {
+	
+	var _inst = instance_place(_x, _y, obj_spike);
+	with _inst {
+		if object_index == obj_spike_up && other.y_vel >= 0 return true;
+		if object_index == obj_spike_down && other.y_vel <= 0 return true;
+		if object_index == obj_spike_left && other.x_vel >= 0 return true;
+		if object_index == obj_spike_right && other.x_vel <= 0 return true;
+		return true;
+	}
+	
+	static __size = 5;
+	
+	var _left = bbox_left + 1;
+	var _top = bbox_top + 1;
+	var _right = bbox_right - 1;
+	var _bottom = bbox_bottom - 1;
+	
+	for (var i_level = 0; i_level < array_length(level.loaded); i_level++) {
+		
+		var _tm = level.loaded[i_level].tiles_spike;
+		var _l_x = level.loaded[i_level].x;
+		var _l_y = level.loaded[i_level].y;
+		var _width = tilemap_get_width(_tm);
+		var _height = tilemap_get_height(_tm);
+		
+		for (var _yy = max(0, (_top - _l_y) div TILESIZE - 1),
+			_yy_l = min(_height, (_bottom - _l_y) div TILESIZE + 1);
+			_yy < _yy_l; _yy++;
+		) {
+			for (var _xx = max(0, (_left - _l_x) div TILESIZE - 1),
+				_xx_l = min(_width, (_right - _l_x) div TILESIZE + 1);
+				_xx < _xx_l; _xx++;
+			) {
+				
+				var _tile = tilemap_get(_tm, _xx, _yy);
+				
+				var _xp = _xx * TILESIZE + _l_x;
+				var _yp = _yy * TILESIZE + _l_y;
+				
+				if _tile == 0 {
+					continue;
+				}
+				
+				switch _tile {
+					case 1: {
+						if x_vel > 0 {
+							break;
+						}
+						if !rectangle_in_rectangle(
+							_left, _top, _right, _bottom,
+							_xp, _yp, _xp + __size, _yp + 16
+						) {
+							break;
+						}
+						return true;
+					}
+					case 2: {
+						if y_vel < 0 {
+							break;
+						}
+						if !rectangle_in_rectangle(
+							_left, _top, _right, _bottom,
+							_xp, _yp + 16 - __size, _xp + 16, _yp + 16
+						) {
+							break;
+						}
+						return true;
+					}
+					case 3: {
+						if x_vel < 0 {
+							break;
+						}
+						if !rectangle_in_rectangle(
+							_left, _top, _right, _bottom,
+							_xp + 16 - __size, _yp, _xp + 16, _yp + 16
+						) {
+							break;
+						}
+						return true;
+					}
+					case 4: {
+						if y_vel > 0 {
+							break;
+						}
+						if !rectangle_in_rectangle(
+							_left, _top, _right, _bottom,
+							_xp, _yp, _xp + 16, _yp + __size
+						) {
+							break;
+						}
+						return true;
+					}
+				}
+				
+			}
+		}
+		
+	}
+	
+	return false;
+	
+};
+
 
 action_jump_shared = function() {
 	
@@ -436,6 +540,10 @@ state_base = state.add()
 	if instance_exists(light) {
 		light.x = x;
 		light.y = y - (nat_crouch() ? 14 : 22);
+	}
+	
+	if get_check_death(x, y) {
+		game_player_kill();
 	}
 	
 	actor_lift_update();
