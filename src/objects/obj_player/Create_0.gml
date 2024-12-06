@@ -579,7 +579,7 @@ action_dashjump = function(_key_dir) {
 		y_vel = defs.dashjump_fast_vel;
 		
 		var _idk = x_vel; // ????
-		var _test = abs(dash_dir_x_vel) * 0.7 + 3;
+		var _test = abs(dash_dir_x_vel) * 0.7 + 4;
 		x_vel = max(abs(x_vel), _test) * _key_dir;
 		
 		key_force = sign(x_vel);
@@ -931,7 +931,9 @@ state_free = state_base.add()
 	if !onground && onground_last && y_vel >= 0 {
 		x_vel += get_lift_x();
 		y_vel += get_lift_y();
-		anim_runjump_timer = 120;
+		if abs(x_vel) > defs.move_speed + 2 {
+			anim_runjump_timer = 120;
+		}
 	}
 	
 	if nat_crouch() {
