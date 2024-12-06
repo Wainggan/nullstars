@@ -135,6 +135,8 @@ cam_ground_y = y;
 respawn_timer = 0;
 
 
+#region animation
+
 var _s_stand = 0,
 	_s_walk_a1 = 3,
 	_s_walk_a2 = 4,
@@ -278,6 +280,10 @@ action_anim_dash = function() {
 	}
 };
 
+#endregion
+
+
+#region tail
 
 tail_length = 12;
 tail = yarn_create(tail_length, function(_p, i) {
@@ -348,6 +354,9 @@ action_tail_draw = function(_color, _mult) {
 	}
 };
 
+#endregion
+
+#region methods
 
 get_check_wall = function(_dir, _dist = defs.wall_distance) {
 	return actor_collision(x + _dir * _dist, y);
@@ -467,6 +476,9 @@ get_check_death = function(_x, _y) {
 	
 };
 
+#endregion
+
+#region methods: jumps
 
 action_jump_shared = function() {
 	
@@ -645,6 +657,8 @@ action_dashjump_wall = function(_key_dir, _wall_dir) {
 	scale_y = 1.4;
 	
 };
+
+#endregion
 
 
 state = new State();
