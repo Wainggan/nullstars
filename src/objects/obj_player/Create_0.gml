@@ -1168,12 +1168,22 @@ state_dash = state_base.add()
 			dir = _kh;
 		}
 		
-		if _kh == 0 && _kv == 0 {
-			dash_dir_x = dir;
+		if false {
+			// allow dash
+			if _kh == 0 && _kv == 0 {
+				dash_dir_x = dir;
+			} else {
+				dash_dir_x = _kv == 1 ? _kh : dir;
+			}
+			dash_dir_y = _kv;
 		} else {
-			dash_dir_x = _kv == 1 ? _kh : dir;
+			if _kh == 0 {
+				dash_dir_x = dir;
+			} else {
+				dash_dir_x = _kh;
+			}
+			dash_dir_y = _kv;
 		}
-		dash_dir_y = _kv;
 		
 		if dash_dir_x != 0 {
 			dir = dash_dir_x;
@@ -1229,7 +1239,7 @@ state_dash = state_base.add()
 				state.change(state_free);
 				return;
 			}
-			if _kh != dir && dash_timer <= 2 {
+			if _kh != dir && dash_timer <= 1 {
 				action_dash_end();
 				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 				state.change(state_free);
