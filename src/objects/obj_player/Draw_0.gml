@@ -1,4 +1,6 @@
 
+action_tail_draw();
+
 draw_sprite_ext(
 	nat_crouch() ? spr_debug_player_crouch : spr_debug_player,
 	0, x, y,
