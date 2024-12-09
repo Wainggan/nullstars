@@ -1,55 +1,68 @@
 
-use std::fmt::Binary;
-
 use crate::error;
 use crate::token;
 
 
-mod ast {
-    use crate::token;
+pub enum Node {
+	Module(Vec<Node>),
+	Binary(token::Token, Box<Node>, Box<Node>),
+	Lit_Int(u64),
+	Lit_Flt(f64),
+}
 
-	pub struct Module {
-		pub stmts: Vec<Box<Expression>>,
+pub trait Visitor<T> {
+	fn accept(&mut self, node: &Node) -> T;
+}
+
+pub struct Evaluate;
+impl Evaluate {
+	fn visit_module(&mut self, stmts: &Vec<Node>) -> u64 {
+		let mut out = 0;
+		for stmt in stmts {
+			out = self.accept(stmt);
+		}
+		return out;
 	}
-
-	pub enum Expression {
-		Binary {
-			left: Box<Expression>,
-			op: token::Token,
-			right: Box<Expression>,
-		},
-		Literal_Int(u64),
-		Literal_Flt(f64),
+	fn visit_binary(&mut self, op: &token::Token, left: &Node, right: &Node) -> u64 {
+		self.accept(left) + self.accept(right)
+	}
+}
+impl Visitor<u64> for Evaluate {
+	fn accept(&mut self, node: &Node) -> u64 {
+		match node {
+			Node::Module(stmts) => self.visit_module(stmts),
+			Node::Binary(op, left, right) => self.visit_binary(op, left, right),
+			Node::Lit_Int(value) => *value,
+			Node::Lit_Flt(value) => *value as u64,
+		}
 	}
 }
 
-mod visit {
-	use super::ast::*;
 
-	pub trait Visitor<T> {
-		fn visit_module(&mut self, node: &Module) -> T;
-		fn visit_expression(&mut self, node: &Expression) -> T;
-	}
-}
+/*
 
 struct Parser;
+impl Parse {
+	fn accept(&self, node: impl ast::Expression) -> u64 {
+		match node {
+
+		}
+	}
+}
 impl visit::Visitor<u64> for Parser {
 	fn visit_module(&mut self, node: &ast::Module) -> u64 {
-		let mut out: u64 = 0;
-		for statement in &node.stmts {
-			out = self.visit_expression(statement);
-		}
-		out
+		0
 	}
-	fn visit_expression(&mut self, node: &ast::Expression) -> u64 {
+	fn visit_binary(&mut self, node: &ast::Binary) -> u64 {
+		self.accept(node.left);
+	}
+	fn visit_number(&mut self, node: &ast::Number) -> u64 {
 		match node {
-			ast::Expression::Binary {left, op, right} => {
-				self.visit_expression(left) + self.visit_expression(right)
-			},
-			ast::Expression::Literal_Flt(n) => *n as u64,
-			ast::Expression::Literal_Int(n) => *n as u64,
+			&ast::Number::Int(n) => n,
+			&ast::Number::Flt(n) => n as u64,
 		}
 	}
 }
 
+*/
 
