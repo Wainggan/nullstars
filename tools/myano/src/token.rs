@@ -1,12 +1,18 @@
 
 use crate::error;
 
-#[derive(Debug, PartialEq, Clone)]
-pub enum Token {
+#[derive(Debug, Clone)]
+pub struct Token {
+	pub kind: TT,
+	pub innr: String,
+}
+
+#[derive(Debug, PartialEq, Clone, Copy)]
+pub enum TT {
 	Eof,
 	Semicolon,
-	Integer(String),
-	Float(String),
+	Integer,
+	Float,
 	Add,
 	Sub,
 	Star,
@@ -27,25 +33,25 @@ impl std::fmt::Display for Token {
 	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 		write!(f,
 			"({})",
-			match self {
-				Token::Eof => "<eof>",
-				Token::Semicolon => ";",
-				Token::Add => "+",
-				Token::Sub => "-",
-				Token::Star => "*",
-				Token::Slash => "/",
-				Token::Equal => "=",
-				Token::EqualEqual => "==",
-				Token::Lesser => "<",
-				Token::Greater => ">",
-				Token::LesserEqual => "<=",
-				Token::GreaterEqual => ">=",
-				Token::Bang => "!",
-				Token::BangEqual => "!=",
-				Token::LParen => "'('",
-				Token::RParen => "')'",
-				Token::Integer(n) => n,
-				Token::Float(n) => n,
+			match self.kind {
+				TT::Eof => "<eof>",
+				TT::Semicolon => ";",
+				TT::Add => "+",
+				TT::Sub => "-",
+				TT::Star => "*",
+				TT::Slash => "/",
+				TT::Equal => "=",
+				TT::EqualEqual => "==",
+				TT::Lesser => "<",
+				TT::Greater => ">",
+				TT::LesserEqual => "<=",
+				TT::GreaterEqual => ">=",
+				TT::Bang => "!",
+				TT::BangEqual => "!=",
+				TT::LParen => "'('",
+				TT::RParen => "')'",
+				TT::Integer => &self.innr,
+				TT::Float => &self.innr,
 			},
 		)
 	}
@@ -127,8 +133,11 @@ impl Lexer<'_> {
 		}
 	}
 
-	fn add(&mut self, token: Token) {
-		self.tokens.push(token);
+	fn add(&mut self, kind: TT) {
+		self.tokens.push(Token {
+			kind,
+			innr: self.source[self.start..self.current].to_string()
+		});
 	}
 
 	fn consume_whitespace(&mut self) {
@@ -137,7 +146,7 @@ impl Lexer<'_> {
 		}
 	}
 
-	fn consume_number(&mut self) -> Token {
+	fn consume_number(&mut self) {
 		while self.is_number(self.peek()) {
 			self.advance();
 		}
@@ -146,9 +155,9 @@ impl Lexer<'_> {
 			while self.is_number(self.peek()) {
 				self.advance();
 			}
-			Token::Float(self.source[self.start..self.current].to_string())
+			self.add(TT::Float);
 		} else {
-			Token::Integer(self.source[self.start..self.current].to_string())
+			self.add(TT::Integer);
 		}
 	}
 
@@ -161,37 +170,37 @@ impl Lexer<'_> {
 		};
 
 		match c {
-			';' => self.add(Token::Semicolon),
+			';' => self.add(TT::Semicolon),
 
-			'+' => self.add(Token::Add),
-			'-' => self.add(Token::Sub),
-			'*' => self.add(Token::Star),
-			'/' => self.add(Token::Slash),
+			'+' => self.add(TT::Add),
+			'-' => self.add(TT::Sub),
+			'*' => self.add(TT::Star),
+			'/' => self.add(TT::Slash),
 
 			'!' => if self.compare('=') {
-				self.add(Token::BangEqual)
+				self.add(TT::BangEqual)
 			} else {
-				self.add(Token::Bang)
+				self.add(TT::Bang)
 			},
 			'=' => if self.compare('=') {
-				self.add(Token::EqualEqual)
+				self.add(TT::EqualEqual)
 			} else {
-				self.add(Token::Equal)
+				self.add(TT::Equal)
 			},
 
 			'<' => if self.compare('=') {
-				self.add(Token::LesserEqual)
+				self.add(TT::LesserEqual)
 			} else {
-				self.add(Token::Lesser)
+				self.add(TT::Lesser)
 			},
 			'>' => if self.compare('=') {
-				self.add(Token::GreaterEqual)
+				self.add(TT::GreaterEqual)
 			} else {
-				self.add(Token::Greater)
+				self.add(TT::Greater)
 			},
 
-			'(' => self.add(Token::LParen),
-			')' => self.add(Token::RParen),
+			'(' => self.add(TT::LParen),
+			')' => self.add(TT::RParen),
 
 			_ => {
 				if c.is_whitespace() {
@@ -199,8 +208,7 @@ impl Lexer<'_> {
 					return;
 				}
 				if c.is_numeric() {
-					let token = self.consume_number();
-					self.add(token);
+					self.consume_number();
 					return;
 				}
 				self.reporter.error(format!("unknown character: {}", c));
@@ -213,7 +221,7 @@ impl Lexer<'_> {
 		while !self.at_end() {
 			self.next();
 		}
-		self.add(Token::Eof);
+		self.add(TT::Eof);
 	}
 }
 

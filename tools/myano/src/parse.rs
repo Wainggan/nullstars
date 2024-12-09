@@ -1,6 +1,6 @@
 
 use crate::error::Reporter;
-use crate::token::{self, Token};
+use crate::token::{self, Token, TT};
 
 #[derive(Debug)]
 pub enum Node {
@@ -29,7 +29,7 @@ impl Parser<'_> {
 	}
 
 	fn at_end(&self) -> bool {
-		*self.peek() == Token::Eof
+		self.peek().kind == TT::Eof
 	}
 
 	fn peek(&self) -> &Token {
@@ -46,17 +46,17 @@ impl Parser<'_> {
 		self.previous()
 	}
 
-	fn check(&self, check: Token) -> bool {
+	fn check(&self, check: TT) -> bool {
 		if self.at_end() {
 			false
 		} else {
-			*self.peek() == check
+			self.peek().kind == check
 		}
 	}
 
-	fn compare(&mut self, check: &[Token]) -> bool {
+	fn compare(&mut self, check: &[TT]) -> bool {
 		for tt in check {
-			if self.check(tt.clone()) {
+			if self.check(*tt) {
 				self.advance();
 				return true;
 			}
@@ -68,7 +68,7 @@ impl Parser<'_> {
 		let mut stmts = Vec::new();
 
 		while !self.at_end() {
-			if self.compare(&[Token::Semicolon]) {}
+			if self.compare(&[TT::Semicolon]) {}
 			else {
 				stmts.push(self.parse_statement());
 			}
@@ -88,7 +88,7 @@ impl Parser<'_> {
 	fn parse_term(&mut self) -> Node {
 		let mut expr = self.parse_factor();
 
-		while self.compare(&[Token::Add, Token::Sub]) {
+		while self.compare(&[TT::Add, TT::Sub]) {
 			let op = self.previous().clone();
 			let right = self.parse_factor();
 			expr = Node::Binary(op, Box::new(expr), Box::new(right));
@@ -100,7 +100,7 @@ impl Parser<'_> {
 	fn parse_factor(&mut self) -> Node {
 		let mut expr = self.parse_unary();
 
-		while self.compare(&[Token::Star, Token::Slash]) {
+		while self.compare(&[TT::Star, TT::Slash]) {
 			let op = self.previous().clone();
 			let right = self.parse_unary();
 			expr = Node::Binary(op, Box::new(expr), Box::new(right));
@@ -110,7 +110,7 @@ impl Parser<'_> {
 	}
 
 	fn parse_unary(&mut self) -> Node {
-		if self.compare(&[Token::Sub, Token::Bang]) {
+		if self.compare(&[TT::Sub, TT::Bang]) {
 			let op = self.previous().clone();
 			let right = self.parse_unary();
 			return Node::Unary(op, Box::new(right));
