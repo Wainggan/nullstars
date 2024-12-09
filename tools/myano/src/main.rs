@@ -1,12 +1,18 @@
 
+mod error;
 mod token;
+mod parse;
 
 #[cfg(test)]
 mod test;
 
 fn main() {
-	let tokens = token::tokenize("1 + 1 - 2 + 3.3 --4 -- 3 33 4");
+	let mut reporter = error::Reporter::new();
+
+	let tokens = token::tokenize(&mut reporter, "(2 - 3) < > == >= <= ! * 2");
+
+	reporter.print();
+
 	println!("{:?}", tokens);
 }
-
 

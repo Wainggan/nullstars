@@ -1,4 +1,6 @@
 
+use crate::error;
+
 #[derive(Debug, PartialEq)]
 pub enum Token {
 	Eof,
@@ -8,6 +10,16 @@ pub enum Token {
 	Sub,
 	Star,
 	Slash,
+	Equal,
+	EqualEqual,
+	Lesser,
+	Greater,
+	LesserEqual,
+	GreaterEqual,
+	Bang,
+	BangEqual,
+	LParen,
+	RParen,
 }
 
 impl std::fmt::Display for Token {
@@ -20,6 +32,16 @@ impl std::fmt::Display for Token {
 				Token::Sub => "-",
 				Token::Star => "*",
 				Token::Slash => "/",
+				Token::Equal => "=",
+				Token::EqualEqual => "==",
+				Token::Lesser => "<",
+				Token::Greater => ">",
+				Token::LesserEqual => "<=",
+				Token::GreaterEqual => ">=",
+				Token::Bang => "!",
+				Token::BangEqual => "!=",
+				Token::LParen => "'('",
+				Token::RParen => "')'",
 				Token::Integer(n) => n,
 				Token::Float(n) => n,
 			},
@@ -27,24 +49,26 @@ impl std::fmt::Display for Token {
 	}
 }
 
-pub fn tokenize(source: &str) -> Vec<Token> {
-	let mut lexer = Lexer::new(source);
+pub fn tokenize(reporter: &mut error::Reporter, source: &str) -> Vec<Token> {
+	let mut lexer = Lexer::new(source, reporter);
 	lexer.run();
 	lexer.tokens
 }
 
 
-struct Lexer {
+struct Lexer<'a> {
 	tokens: Vec<Token>,
+	reporter: &'a mut error::Reporter,
 	source: String,
 	current: usize,
 	start: usize,
 }
 
-impl Lexer {
-	fn new(src: &str) -> Lexer {
+impl Lexer<'_> {
+	fn new<'a>(src: &str, reporter: &'a mut error::Reporter) -> Lexer<'a> {
 		Lexer {
 			tokens: Vec::new(),
+			reporter,
 			source: src.to_string(),
 			current: 0,
 			start: 0,
@@ -139,6 +163,32 @@ impl Lexer {
 			'-' => self.add(Token::Sub),
 			'*' => self.add(Token::Star),
 			'/' => self.add(Token::Slash),
+
+			'!' => if self.compare('=') {
+				self.add(Token::BangEqual)
+			} else {
+				self.add(Token::Bang)
+			},
+			'=' => if self.compare('=') {
+				self.add(Token::EqualEqual)
+			} else {
+				self.add(Token::Equal)
+			},
+
+			'<' => if self.compare('=') {
+				self.add(Token::LesserEqual)
+			} else {
+				self.add(Token::Lesser)
+			},
+			'>' => if self.compare('=') {
+				self.add(Token::GreaterEqual)
+			} else {
+				self.add(Token::Greater)
+			},
+
+			'(' => self.add(Token::LParen),
+			')' => self.add(Token::RParen),
+
 			_ => {
 				if c.is_whitespace() {
 					self.consume_whitespace();
@@ -149,7 +199,7 @@ impl Lexer {
 					self.add(token);
 					return;
 				}
-				panic!("oops {}", c);
+				self.reporter.error(format!("unknown character: {}", c));
 			}
 		}
 
@@ -159,6 +209,7 @@ impl Lexer {
 		while !self.at_end() {
 			self.next();
 		}
+		self.add(Token::Eof);
 	}
 }
 
