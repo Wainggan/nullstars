@@ -140,6 +140,14 @@ impl Parser<'_> {
 			return Node::LitInt(value);
 		}
 
+		if self.compare(&[TT::Float]) {
+			let inner = &self.previous().innr;
+			use std::str::FromStr;
+			let value = f64::from_str(inner)
+				.unwrap_or(0.0);
+			return Node::LitFlt(value);
+		}
+
 		if self.compare(&[TT::LParen]) {
 			let node = self.parse_expression();
 			self.consume(TT::RParen, "expected ')'", self.current);
