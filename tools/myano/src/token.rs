@@ -1,9 +1,10 @@
 
 use crate::error;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum Token {
 	Eof,
+	Semicolon,
 	Integer(String),
 	Float(String),
 	Add,
@@ -28,6 +29,7 @@ impl std::fmt::Display for Token {
 			"({})",
 			match self {
 				Token::Eof => "<eof>",
+				Token::Semicolon => ";",
 				Token::Add => "+",
 				Token::Sub => "-",
 				Token::Star => "*",
@@ -159,6 +161,8 @@ impl Lexer<'_> {
 		};
 
 		match c {
+			';' => self.add(Token::Semicolon),
+
 			'+' => self.add(Token::Add),
 			'-' => self.add(Token::Sub),
 			'*' => self.add(Token::Star),

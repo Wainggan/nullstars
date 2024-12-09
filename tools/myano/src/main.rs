@@ -13,18 +13,9 @@ fn main() {
 
 	let tokens = token::tokenize(&mut reporter, "(2 - 3) < > == >= <= ! * 2");
 
-	let ast = parse::Node::Module(vec![
-		parse::Node::Binary(
-			token::Token::Add,
-			Box::new(parse::Node::LitInt(10)),
-			Box::new(parse::Node::LitInt(10)),
-		)
-	]);
+	let ast = parse::parse(&mut reporter, &tokens);
 
-	let mut eval = parse::Evaluate;
-	let out = eval.accept(&ast);
-
-	println!("=> {}", out);
+	println!("{:?}", ast);
 
 	reporter.print();
 
