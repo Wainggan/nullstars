@@ -58,6 +58,9 @@ impl std::fmt::Display for Token {
 }
 
 pub fn tokenize(reporter: &mut error::Reporter, source: &str) -> Vec<Token> {
+	if !reporter.valid() {
+		return Vec::new();
+	}
 	let mut lexer = Lexer::new(source, reporter);
 	lexer.run();
 	lexer.tokens

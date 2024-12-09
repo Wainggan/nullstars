@@ -4,6 +4,7 @@ use crate::token::{self, Token, TT};
 
 #[derive(Debug)]
 pub enum Node {
+	None,
 	Module(Vec<Node>),
 	Group(Box<Node>),
 	Binary(Token, Box<Node>, Box<Node>),
@@ -151,10 +152,11 @@ impl Parser<'_> {
 
 
 pub fn parse(reporter: &mut Reporter, tokens: &Vec<Token>) -> Node {
+	if !reporter.valid() {
+		return Node::None;
+	}
 	let mut parser = Parser::new(tokens);
-
 	let ast = parser.parse_module();
-
 	ast
 }
 

@@ -19,9 +19,17 @@ impl Reporter {
 		});
 	}
 
+	pub fn valid(&self) -> bool {
+		!self.error
+	}
+
 	pub fn print(&self) {
-		for error in &self.list {
-			println!("error: {}", error.message);
+		if self.error {
+			for error in &self.list {
+				println!("error: {}", error.message);
+			}
+		} else {
+			println!("no errors!! :3")
 		}
 	}
 }
