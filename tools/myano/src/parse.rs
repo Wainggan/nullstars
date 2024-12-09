@@ -6,8 +6,8 @@ use crate::token;
 pub enum Node {
 	Module(Vec<Node>),
 	Binary(token::Token, Box<Node>, Box<Node>),
-	Lit_Int(u64),
-	Lit_Flt(f64),
+	LitInt(u64),
+	LitFlt(f64),
 }
 
 pub trait Visitor<T> {
@@ -32,8 +32,8 @@ impl Visitor<u64> for Evaluate {
 		match node {
 			Node::Module(stmts) => self.visit_module(stmts),
 			Node::Binary(op, left, right) => self.visit_binary(op, left, right),
-			Node::Lit_Int(value) => *value,
-			Node::Lit_Flt(value) => *value as u64,
+			Node::LitInt(value) => *value,
+			Node::LitFlt(value) => *value as u64,
 		}
 	}
 }

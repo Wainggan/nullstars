@@ -16,8 +16,8 @@ fn main() {
 	let ast = parse::Node::Module(vec![
 		parse::Node::Binary(
 			token::Token::Add,
-			Box::new(parse::Node::Lit_Int(10)),
-			Box::new(parse::Node::Lit_Int(10)),
+			Box::new(parse::Node::LitInt(10)),
+			Box::new(parse::Node::LitInt(10)),
 		)
 	]);
 
