@@ -147,6 +147,7 @@ impl Parser<'_> {
 		}
 
 		self.reporter.error(format!("unexpected token: {}", self.peek()));
+		self.advance();
 		return Node::None;
 	}
 
