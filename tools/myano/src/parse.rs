@@ -103,7 +103,6 @@ impl Parser<'_> {
 			let op = self.previous().clone();
 			let right = self.parse_factor();
 			expr = Node::Binary(op, Box::new(expr), Box::new(right));
-			println!("{:?}", expr);
 		}
 
 		return expr;
