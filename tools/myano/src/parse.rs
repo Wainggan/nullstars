@@ -1,5 +1,5 @@
 
-use crate::error::Reporter;
+use crate::error;
 use crate::token::{self, Token, TT};
 
 #[derive(Debug)]
@@ -19,14 +19,16 @@ pub trait Visitor<T> {
 
 
 struct Parser<'a> {
-	current: usize,
 	tokens: &'a Vec<Token>,
+	reporter: &'a mut error::Reporter,
+	current: usize,
 }
 impl Parser<'_> {
-	fn new<'a>(tokens: &'a Vec<Token>) -> Parser<'a> {
+	fn new<'a>(tokens: &'a Vec<Token>, reporter: &'a mut error::Reporter) -> Parser<'a> {
 		Parser {
 			current: 0,
-			tokens
+			reporter,
+			tokens,
 		}
 	}
 
@@ -72,7 +74,8 @@ impl Parser<'_> {
 		if self.check(check) {
 			return self.advance();
 		}
-		panic!("oops {} @ {}", message, pos);
+		self.reporter.error(format!("expected token: {}", self.peek()));
+		return self.peek();
 	}
 
 	fn parse_module(&mut self) -> Node {
@@ -143,18 +146,19 @@ impl Parser<'_> {
 			return Node::Group(Box::new(node));
 		}
 
-		panic!("woag {}", self.peek());
+		self.reporter.error(format!("unexpected token: {}", self.peek()));
+		return Node::None;
 	}
 
 }
 
 
 
-pub fn parse(reporter: &mut Reporter, tokens: &Vec<Token>) -> Node {
+pub fn parse(reporter: &mut error::Reporter, tokens: &Vec<Token>) -> Node {
 	if !reporter.valid() {
 		return Node::None;
 	}
-	let mut parser = Parser::new(tokens);
+	let mut parser = Parser::new(tokens, reporter);
 	let ast = parser.parse_module();
 	ast
 }
