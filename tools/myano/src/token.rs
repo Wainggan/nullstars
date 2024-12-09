@@ -136,7 +136,7 @@ impl Lexer<'_> {
 	fn is_alpha(&self, c: Option<char>) -> bool {
 		match c {
 			None => false,
-			Some(c) => c.is_alphabetic()
+			Some(c) => c == '_' || c.is_alphabetic()
 		}
 	}
 	fn is_number(&self, c: Option<char>) -> bool {
@@ -233,15 +233,15 @@ impl Lexer<'_> {
 			')' => self.add(TT::RParen),
 
 			_ => {
-				if c.is_whitespace() {
+				if self.is_whitespace(Some(c)) {
 					self.consume_whitespace();
 					return;
 				}
-				if c.is_numeric() {
+				if self.is_number(Some(c)) {
 					self.consume_number();
 					return;
 				}
-				if c.is_alphabetic() {
+				if self.is_alpha(Some(c)) {
 					self.consume_identifier();
 					return;
 				}
