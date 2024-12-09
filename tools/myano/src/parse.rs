@@ -5,6 +5,7 @@ use crate::token::{self, Token, TT};
 #[derive(Debug)]
 pub enum Node {
 	Module(Vec<Node>),
+	Group(Box<Node>),
 	Binary(Token, Box<Node>, Box<Node>),
 	Unary(Token, Box<Node>),
 	LitInt(u64),
@@ -36,7 +37,11 @@ impl Parser<'_> {
 		&self.tokens[self.current]
 	}
 	fn previous(&self) -> &Token {
-		&self.tokens[self.current - 1]
+		if self.current == 0 {
+			&self.tokens[self.current]
+		} else {
+			&self.tokens[self.current - 1]
+		}	
 	}
 
 	fn advance(&mut self) -> &Token {
@@ -62,6 +67,13 @@ impl Parser<'_> {
 			}
 		}
 		return false;
+	}
+
+	fn consume(&mut self, check: TT, message: &str, pos: usize) -> &Token {
+		if self.check(check) {
+			return self.advance();
+		}
+		panic!("oops {} @ {}", message, pos);
 	}
 
 	fn parse_module(&mut self) -> Node {
@@ -119,9 +131,20 @@ impl Parser<'_> {
 	}
 
 	fn parse_primary(&mut self) -> Node {
-		Node::LitInt(10)
-	}
+		if self.check(TT::Integer) {
+			let value = u64::from_str_radix(&self.previous().innr, 10)
+				.unwrap_or(0);
+			return Node::LitInt(value);
+		}
 
+		if self.check(TT::LParen) {
+			let node = self.parse_expression();
+			self.consume(TT::RParen, "expected ')'", self.current);
+			return Node::Group(Box::new(node));
+		}
+
+		panic!("woag {}", self.previous());
+	}
 
 }
 
