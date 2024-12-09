@@ -17,6 +17,8 @@ pub enum TT {
 	Identifier,
 	Integer,
 	Float,
+
+	Let,
 	
 	LParen,
 	RParen,
@@ -43,22 +45,30 @@ impl std::fmt::Display for Token {
 			"({})",
 			match self.kind {
 				TT::Eof => "<eof>",
+
 				TT::Semicolon => ";",
 				TT::Dot => ".",
+
+				TT::Let => "let",
+				
 				TT::Add => "+",
 				TT::Sub => "-",
 				TT::Star => "*",
 				TT::Slash => "/",
+				
 				TT::Equal => "=",
 				TT::EqualEqual => "==",
 				TT::Lesser => "<",
 				TT::Greater => ">",
 				TT::LesserEqual => "<=",
 				TT::GreaterEqual => ">=",
+				
 				TT::Bang => "!",
 				TT::BangEqual => "!=",
+				
 				TT::LParen => "'('",
 				TT::RParen => "')'",
+				
 				TT::Identifier => &self.innr,
 				TT::Integer => &self.innr,
 				TT::Float => &self.innr,
@@ -155,10 +165,17 @@ impl Lexer<'_> {
 		}
 	}
 
+	fn make(&self) -> String {
+		self.source[self.start..self.current].to_string()
+	}
 	fn add(&mut self, kind: TT) {
+		let make = self.make();
+		self.add_from(kind, make);
+	}
+	fn add_from(&mut self, kind: TT, make: String) {
 		self.tokens.push(Token {
 			kind,
-			innr: self.source[self.start..self.current].to_string()
+			innr: make.to_string()
 		});
 	}
 
@@ -187,7 +204,11 @@ impl Lexer<'_> {
 		while self.is_alphanumber(self.peek()) {
 			self.advance();
 		}
-		self.add(TT::Identifier);
+		let make = self.make();
+		match make.as_str() {
+			"let" => self.add_from(TT::Let, make),
+			_ => self.add_from(TT::Identifier, make),
+		};
 	}
 
 	fn next(&mut self) {
