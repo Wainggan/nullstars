@@ -47,7 +47,7 @@ fn test_ints() {
 			token!(TT::Integer, "00"),
 			token!(TT::Integer, "10"),
 			token!(TT::Integer, "99"),
-			token!(TT::Eof),
+			token!(TT::Eof, "99"), // temp
 		]
 	);
 }
@@ -63,7 +63,7 @@ fn test_floats() {
 			token!(TT::Integer, "0"),
 			token!(TT::Dot, "."),
 			token!(TT::Integer, "1"),
-			token!(TT::Eof),
+			token!(TT::Eof, "1"), // temp
 		]
 	);
 }
