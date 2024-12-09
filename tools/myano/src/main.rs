@@ -1,5 +1,3 @@
-use parse::Visitor;
-
 
 mod error;
 mod token;

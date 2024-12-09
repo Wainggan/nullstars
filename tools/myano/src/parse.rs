@@ -1,6 +1,6 @@
 
 use crate::error;
-use crate::token::{self, Token, TT};
+use crate::token::{Token, TT};
 
 #[derive(Debug)]
 pub enum Node {
@@ -70,11 +70,11 @@ impl Parser<'_> {
 		}
 		return false;
 	}
-	fn consume(&mut self, check: TT, message: &str, pos: usize) -> &Token {
+	fn consume(&mut self, check: TT, message: &str, _pos: usize) -> &Token {
 		if self.check(check) {
 			return self.advance();
 		}
-		self.reporter.error(format!("expected token: {}", self.peek()));
+		self.reporter.error(message.to_string());
 		return self.peek();
 	}
 
