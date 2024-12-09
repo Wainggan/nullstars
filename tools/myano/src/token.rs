@@ -1,7 +1,7 @@
 
 use crate::error;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Token {
 	pub kind: TT,
 	pub innr: String,
@@ -11,6 +11,7 @@ pub struct Token {
 pub enum TT {
 	Eof,
 	Semicolon,
+	Dot,
 	Integer,
 	Float,
 	Add,
@@ -36,6 +37,7 @@ impl std::fmt::Display for Token {
 			match self.kind {
 				TT::Eof => "<eof>",
 				TT::Semicolon => ";",
+				TT::Dot => ".",
 				TT::Add => "+",
 				TT::Sub => "-",
 				TT::Star => "*",
@@ -174,6 +176,7 @@ impl Lexer<'_> {
 
 		match c {
 			';' => self.add(TT::Semicolon),
+			'.' => self.add(TT::Dot),
 
 			'+' => self.add(TT::Add),
 			'-' => self.add(TT::Sub),

@@ -1,6 +1,21 @@
 
 use crate::error::Reporter;
-use crate::token::{tokenize, Token};
+use crate::token::{tokenize, Token, TT};
+
+macro_rules! token {
+	($a:expr) => {
+		Token {
+			kind: $a,
+			innr: "".to_string(),
+		}
+	};
+	($a:expr, $b:literal) => {
+		Token {
+			kind: $a,
+			innr: $b.to_string(),
+		}
+	}
+}
 
 #[test]
 fn test_empty() {
@@ -8,7 +23,7 @@ fn test_empty() {
 	assert_eq!(
 		tokenize(&mut reporter, ""),
 		vec![
-			Token::Eof,
+			token!(TT::Eof),
 		]
 	);
 }
@@ -19,20 +34,20 @@ fn test_ints() {
 	assert_eq!(
 		tokenize(&mut reporter, "0 1 2 3 4 5 6 7 8 9 00 10 99"),
 		vec![
-			Token::Integer("0".to_string()),
-			Token::Integer("1".to_string()),
-			Token::Integer("2".to_string()),
-			Token::Integer("3".to_string()),
-			Token::Integer("4".to_string()),
-			Token::Integer("5".to_string()),
-			Token::Integer("6".to_string()),
-			Token::Integer("7".to_string()),
-			Token::Integer("8".to_string()),
-			Token::Integer("9".to_string()),
-			Token::Integer("00".to_string()),
-			Token::Integer("10".to_string()),
-			Token::Integer("99".to_string()),
-			Token::Eof,
+			token!(TT::Integer, "0"),
+			token!(TT::Integer, "1"),
+			token!(TT::Integer, "2"),
+			token!(TT::Integer, "3"),
+			token!(TT::Integer, "4"),
+			token!(TT::Integer, "5"),
+			token!(TT::Integer, "6"),
+			token!(TT::Integer, "7"),
+			token!(TT::Integer, "8"),
+			token!(TT::Integer, "9"),
+			token!(TT::Integer, "00"),
+			token!(TT::Integer, "10"),
+			token!(TT::Integer, "99"),
+			token!(TT::Eof),
 		]
 	);
 }
@@ -41,13 +56,14 @@ fn test_ints() {
 fn test_floats() {
 	let mut reporter = Reporter::new();
 	assert_eq!(
-		tokenize(&mut reporter, "1.0 1. 0. 1"),
+		tokenize(&mut reporter, "1.0 1. 0 . 1"),
 		vec![
-			Token::Float("1.0".to_string()),
-			Token::Float("1.".to_string()),
-			Token::Float("0.".to_string()),
-			Token::Integer("1".to_string()),
-			Token::Eof,
+			token!(TT::Float, "1.0"),
+			token!(TT::Float, "1."),
+			token!(TT::Integer, "0"),
+			token!(TT::Dot, "."),
+			token!(TT::Integer, "1"),
+			token!(TT::Eof),
 		]
 	);
 }
