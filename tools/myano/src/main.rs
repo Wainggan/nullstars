@@ -11,7 +11,7 @@ mod test;
 fn main() {
 	let mut reporter = error::Reporter::new();
 
-	let tokens = token::tokenize(&mut reporter, "(2 - 3) < > == >= <= ! * 2");
+	let tokens = token::tokenize(&mut reporter, "(2 - 3) * 4");
 
 	let ast = parse::parse(&mut reporter, &tokens);
 
