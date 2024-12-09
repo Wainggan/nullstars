@@ -58,17 +58,15 @@ impl Parser<'_> {
 			self.peek().kind == check
 		}
 	}
-
-	fn compare(&mut self, check: &[TT]) -> bool {
-		for tt in check {
-			if self.check(*tt) {
+	fn compare(&mut self, checks: &[TT]) -> bool {
+		for check in checks {
+			if self.check(*check) {
 				self.advance();
 				return true;
 			}
 		}
 		return false;
 	}
-
 	fn consume(&mut self, check: TT, message: &str, pos: usize) -> &Token {
 		if self.check(check) {
 			return self.advance();
@@ -104,6 +102,7 @@ impl Parser<'_> {
 			let op = self.previous().clone();
 			let right = self.parse_factor();
 			expr = Node::Binary(op, Box::new(expr), Box::new(right));
+			println!("{:?}", expr);
 		}
 
 		return expr;
@@ -131,19 +130,20 @@ impl Parser<'_> {
 	}
 
 	fn parse_primary(&mut self) -> Node {
-		if self.check(TT::Integer) {
-			let value = u64::from_str_radix(&self.previous().innr, 10)
+		if self.compare(&[TT::Integer]) {
+			let inner = &self.previous().innr;
+			let value = u64::from_str_radix(inner, 10)
 				.unwrap_or(0);
 			return Node::LitInt(value);
 		}
 
-		if self.check(TT::LParen) {
+		if self.compare(&[TT::LParen]) {
 			let node = self.parse_expression();
 			self.consume(TT::RParen, "expected ')'", self.current);
 			return Node::Group(Box::new(node));
 		}
 
-		panic!("woag {}", self.previous());
+		panic!("woag {}", self.peek());
 	}
 
 }
