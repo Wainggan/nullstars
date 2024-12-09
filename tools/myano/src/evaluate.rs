@@ -1,5 +1,5 @@
 
-use crate::token::Token;
+use crate::token::{Token, TT};
 use crate::parse::{Node, Visitor};
 
 struct Evaluate;
@@ -12,10 +12,24 @@ impl Evaluate {
 		return out;
 	}
 	fn visit_binary(&mut self, op: &Token, left: &Node, right: &Node) -> i64 {
-		self.accept(left) + self.accept(right)
+		let left = self.accept(left);
+		let right = self.accept(right);
+		match op.kind {
+			TT::Add => left + right,
+			TT::Sub => left - right,
+			TT::Star => left * right,
+			TT::Slash => left / right,
+			TT::EqualEqual => (left == right) as i64,
+			_ => panic!("oops")
+		}
 	}
 	fn visit_unary(&mut self, op: &Token, right: &Node) -> i64 {
-		-self.accept(right)
+		let right = self.accept(right);
+		match op.kind {
+			TT::Sub => -right,
+			TT::Bang => !(right != 0) as i64,
+			_ => panic!("oops")
+		}
 	}
 }
 impl Visitor<i64> for Evaluate {
