@@ -40,6 +40,7 @@ impl Visitor<i64> for Evaluate {
 			Node::Module(stmts) => self.visit_module(stmts),
 			Node::Binary(op, left, right) => self.visit_binary(op, left, right),
 			Node::Unary(op, right) => self.visit_unary(op, right),
+			Node::Identifer(_name) => 0,
 			Node::LitInt(value) => *value as i64,
 			Node::LitFlt(value) => *value as i64,
 		}

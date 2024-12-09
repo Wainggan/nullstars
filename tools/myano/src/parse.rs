@@ -9,6 +9,7 @@ pub enum Node {
 	Group(Box<Node>),
 	Binary(Token, Box<Node>, Box<Node>),
 	Unary(Token, Box<Node>),
+	Identifer(String),
 	LitInt(u64),
 	LitFlt(f64),
 }
@@ -133,6 +134,11 @@ impl Parser<'_> {
 	}
 
 	fn parse_primary(&mut self) -> Node {
+		if self.compare(&[TT::Identifier]) {
+			let inner = &self.previous().innr;
+			return Node::Identifer(inner.clone());
+		}
+
 		if self.compare(&[TT::Integer]) {
 			let inner = &self.previous().innr;
 			let value = u64::from_str_radix(inner, 10)

@@ -10,7 +10,7 @@ mod test;
 fn main() {
 	let mut reporter = error::Reporter::new();
 
-	let tokens = token::tokenize(&mut reporter, "(2 - 3.5) * 4");
+	let tokens = token::tokenize(&mut reporter, "a + b");
 	println!("{:?}", tokens);
 
 	let ast = parse::parse(&mut reporter, &tokens);

@@ -10,24 +10,31 @@ pub struct Token {
 #[derive(Debug, PartialEq, Clone, Copy)]
 pub enum TT {
 	Eof,
+
 	Semicolon,
 	Dot,
+
+	Identifier,
 	Integer,
 	Float,
+	
+	LParen,
+	RParen,
+
 	Add,
 	Sub,
 	Star,
 	Slash,
+	
 	Equal,
 	EqualEqual,
 	Lesser,
 	Greater,
 	LesserEqual,
 	GreaterEqual,
+	
 	Bang,
 	BangEqual,
-	LParen,
-	RParen,
 }
 
 impl std::fmt::Display for Token {
@@ -52,6 +59,7 @@ impl std::fmt::Display for Token {
 				TT::BangEqual => "!=",
 				TT::LParen => "'('",
 				TT::RParen => "')'",
+				TT::Identifier => &self.innr,
 				TT::Integer => &self.innr,
 				TT::Float => &self.innr,
 			},
@@ -125,11 +133,20 @@ impl Lexer<'_> {
 		return true;
 	}
 
+	fn is_alpha(&self, c: Option<char>) -> bool {
+		match c {
+			None => false,
+			Some(c) => c.is_alphabetic()
+		}
+	}
 	fn is_number(&self, c: Option<char>) -> bool {
 		match c {
 			None => false,
 			Some(c) => c.is_numeric()
 		}
+	}
+	fn is_alphanumber(&self, c: Option<char>) -> bool {
+		self.is_number(c) || self.is_alpha(c)
 	}
 	fn is_whitespace(&self, c: Option<char>) -> bool {
 		match c {
@@ -164,6 +181,13 @@ impl Lexer<'_> {
 		} else {
 			self.add(TT::Integer);
 		}
+	}
+
+	fn consume_identifier(&mut self) {
+		while self.is_alphanumber(self.peek()) {
+			self.advance();
+		}
+		self.add(TT::Identifier);
 	}
 
 	fn next(&mut self) {
@@ -215,6 +239,10 @@ impl Lexer<'_> {
 				}
 				if c.is_numeric() {
 					self.consume_number();
+					return;
+				}
+				if c.is_alphabetic() {
+					self.consume_identifier();
 					return;
 				}
 				self.reporter.error(format!("unknown character: {}", c));
