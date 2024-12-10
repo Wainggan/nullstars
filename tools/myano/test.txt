@@ -30,9 +30,13 @@ let i = Temp<i32> // error: no value provided
 let i = 0: Temp<i32>
 
 // generic default
-let Temp := 0 : <T>(T)
+let Temp := (0) : <T>(T)
 let Temp := (0: T) : <T>()
 let i = Temp<i32> // i == 0
+
+// weirdness
+let Temp := (0) : u32
+let i = Temp // i == 0
 
 // generic default overide
 let i = 10: Temp<i32> // i == 10
