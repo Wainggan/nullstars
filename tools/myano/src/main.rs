@@ -2,6 +2,7 @@
 mod error;
 mod token;
 mod parse;
+mod expr;
 mod evaluate;
 
 #[cfg(test)]
