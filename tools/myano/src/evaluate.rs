@@ -5,18 +5,19 @@ use crate::expr::{self, Visitor};
 
 struct Evaluate;
 impl Visitor for Evaluate {
-	type Result = i64;
+	type Result = String;
 
 	fn visit_module(&mut self, node: &expr::Module) -> Self::Result {
-		let mut out = 0;
+		let mut out = String::new();
 		for stmt in &node.stmts {
-			out = self.resolve(stmt);
+			out += &self.resolve(stmt);
+			out += " ";
 		}
 		return out;
 	}
 
 	fn visit_let(&mut self, node: &expr::Let) -> Self::Result {
-		0
+		format!("let {}", node.name.innr)
 	}
 
 	fn visit_group(&mut self, node: &expr::Group) -> Self::Result {
@@ -27,45 +28,45 @@ impl Visitor for Evaluate {
 		let left = self.resolve(&node.left);
 		let right = self.resolve(&node.right);
 		match node.op.kind {
-			TT::Add => left + right,
-			TT::Sub => left - right,
-			TT::Star => left * right,
-			TT::Slash => left / right,
-			TT::EqualEqual => (left == right) as i64,
+			TT::Add => format!("{}+{}", left, right),
+			TT::Sub => format!("{}-{}", left, right),
+			TT::Star => format!("{}*{}", left, right),
+			TT::Slash => format!("{}/{}", left, right),
+			TT::EqualEqual => format!("{}=={}", left, right),
 			_ => panic!("oops")
 		}
 	}
 
-	fn visit_unary(&mut self, node: &expr::Unary) -> i64 {
+	fn visit_unary(&mut self, node: &expr::Unary) -> Self::Result {
 		let right = self.resolve(&node.right);
 		match node.op.kind {
-			TT::Sub => -right,
-			TT::Bang => !(right != 0) as i64,
+			TT::Sub => format!("-{}", right),
+			TT::Bang => format!("!{}", right),
 			_ => panic!("oops")
 		}
 	}
 
 	fn visit_call(&mut self, node: &expr::Call) -> Self::Result {
-		0
+		format!("{}()", self.resolve(&node.expr))
 	}
 
 	fn visit_identifier(&mut self, node: &expr::Identifer) -> Self::Result {
-		0
+		node.name.innr.clone()
 	}
 
 	fn visit_lit_int(&mut self, node: &expr::LitInt) -> Self::Result {
-		node.value as i64
+		node.value.to_string()
 	}
 
 	fn visit_lit_flt(&mut self, node: &expr::LitFlt) -> Self::Result {
-		node.value as i64
+		node.value.to_string()
 	}
 
 }
 
-pub fn test(reporter: &mut crate::error::Reporter, ast: &expr::Node) -> i64 {
+pub fn test(reporter: &mut crate::error::Reporter, ast: &expr::Node) -> String {
 	if !reporter.valid() {
-		return 0;
+		return "".to_string();
 	}
 	let mut eval = Evaluate;
 	eval.resolve(ast)
