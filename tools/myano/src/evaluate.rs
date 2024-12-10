@@ -20,6 +20,17 @@ impl Visitor for Evaluate {
 		format!("const {}", node.name.innr)
 	}
 
+	fn visit_block(&mut self, node: &expr::Block) -> Self::Result {
+		let mut out = String::new();
+		out += "{ ";
+		for stmt in &node.stmts {
+			out += &self.resolve(stmt);
+			out += "; ";
+		}
+		out += "}";
+		return out;
+	}
+
 	fn visit_group(&mut self, node: &expr::Group) -> Self::Result {
 		self.resolve(&node.value)
 	}

@@ -79,9 +79,9 @@ impl Parser<'_> {
 
 	fn parse_statement(&mut self) -> Node {
 		if self.compare(&[TT::Let]) {
-			return Node::Let(self.parse_statement_let(true));
+			return self.parse_statement_let(true);
 		} else if self.compare(&[TT::Mut]) {
-			return Node::Let(self.parse_statement_let(false));
+			return self.parse_statement_let(false);
 		} else {
 			return self.parse_expression();
 		}
@@ -137,9 +137,11 @@ impl Parser<'_> {
 			if self.compare(&[TT::LParen]) {
 				let mut args = Vec::new();
 				if !self.check(TT::RParen) {
-					args.push(Box::new(self.parse_expression()));
-					while self.compare(&[TT::Comma]) {
+					loop {
 						args.push(Box::new(self.parse_expression()));
+						if !self.compare(&[TT::Comma]) {
+							break;
+						}
 					}
 				}
 				let paren = self.consume(TT::RParen, "expected ')' after function call", 0);
@@ -175,6 +177,10 @@ impl Parser<'_> {
 			return Node::LitFlt(expr::LitFlt { value });
 		}
 
+		if self.compare(&[TT::LBracket]) {
+			return self.parse_statement_block();
+		}
+
 		if self.compare(&[TT::LParen]) {
 			let node = self.parse_expression();
 			self.consume(TT::RParen, "expected ')'", self.current);
@@ -186,7 +192,22 @@ impl Parser<'_> {
 		return Node::None;
 	}
 
-	fn parse_statement_let(&mut self, is_const: bool) -> expr::Let {
+	fn parse_statement_block(&mut self) -> Node {
+		let mut stmts = Vec::new();
+
+		while !self.at_end() && !self.check(TT::RBracket) {
+			if self.compare(&[TT::Semicolon]) {}
+			else {
+				stmts.push(Box::new(self.parse_statement()));
+			}
+		}
+
+		self.consume(TT::RBracket, "expected '}'", 0);
+
+		Node::Block(expr::Block { stmts })
+	}
+
+	fn parse_statement_let(&mut self, is_const: bool) -> Node {
 		let name = self.consume(TT::Identifier, "expected variable identifier", 0).clone();
 		// let kind = None;
 		let value;
@@ -196,9 +217,9 @@ impl Parser<'_> {
 			value = None;
 		}
 
-		expr::Let {
+		Node::Let(expr::Let {
 			is_const, name, value
-		}
+		})
 	}
 
 }

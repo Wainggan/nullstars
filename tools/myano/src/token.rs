@@ -25,6 +25,8 @@ pub enum TT {
 	
 	LParen,
 	RParen,
+	LBracket,
+	RBracket,
 
 	Add,
 	Sub,
@@ -74,6 +76,8 @@ impl std::fmt::Display for Token {
 				
 				TT::LParen => "'('",
 				TT::RParen => "')'",
+				TT::RBracket => "'{'",
+				TT::LBracket => "'}'",
 				
 				TT::Identifier => &self.innr,
 				TT::Integer => &self.innr,
@@ -261,6 +265,8 @@ impl Lexer<'_> {
 
 			'(' => self.add(TT::LParen),
 			')' => self.add(TT::RParen),
+			'{' => self.add(TT::LBracket),
+			'}' => self.add(TT::RBracket),
 
 			_ => {
 				if self.is_whitespace(Some(c)) {

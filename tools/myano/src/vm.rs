@@ -42,6 +42,12 @@ impl Visitor for Compiler {
 		todo!()
 	}
 
+	fn visit_block(&mut self, node: &expr::Block) -> Self::Result {
+		for stmt in &node.stmts {
+			self.resolve(stmt);
+		}
+	}
+
 	fn visit_group(&mut self, node: &expr::Group) -> Self::Result {
 		self.resolve(&node.value);
 	}

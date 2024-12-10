@@ -9,6 +9,7 @@ pub trait Visitor {
 			Node::None => panic!("oops! :3"),
 			Node::Module(v) => self.visit_module(v),
 			Node::Let(v) => self.visit_let(v),
+			Node::Block(v) => self.visit_block(v),
 			Node::Group(v) => self.visit_group(v),
 			Node::Binary(v) => self.visit_binary(v),
 			Node::Unary(v) => self.visit_unary(v),
@@ -21,6 +22,7 @@ pub trait Visitor {
 
 	fn visit_module(&mut self, node: &Module) -> Self::Result;
 	fn visit_let(&mut self, node: &Let) -> Self::Result;
+	fn visit_block(&mut self, node: &Block) -> Self::Result;
 	fn visit_group(&mut self, node: &Group) -> Self::Result;
 	fn visit_binary(&mut self, node: &Binary) -> Self::Result;
 	fn visit_unary(&mut self, node: &Unary) -> Self::Result;
@@ -35,6 +37,7 @@ pub enum Node {
 	None,
 	Module(Module),
 	Let(Let),
+	Block(Block),
 	Group(Group),
 	Binary(Binary),
 	Unary(Unary),
@@ -60,7 +63,7 @@ macro_rules! ast {
 
 #[derive(Debug)]
 pub struct Module {
-	pub stmts: Vec<Box<Node>>
+	pub stmts: Vec<Box<Node>>,
 }
 ast!(Module, visit_module);
 
@@ -71,6 +74,12 @@ pub struct Let {
 	pub value: Option<Box<Node>>
 }
 ast!(Let, visit_let);
+
+#[derive(Debug)]
+pub struct Block {
+	pub stmts: Vec<Box<Node>>
+}
+ast!(Block, visit_block);
 
 #[derive(Debug)]
 pub struct Group {
