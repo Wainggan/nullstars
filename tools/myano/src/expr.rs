@@ -53,46 +53,46 @@ macro_rules! ast {
 }
 
 pub struct Module {
-	stmts: Vec<Box<Expr>>
+	pub stmts: Vec<Box<Expr>>
 }
 ast!(Module, visit_module);
 
 pub struct Let {
-	is_const: bool,
-	name: Token,
-	value: Option<Box<Expr>>
+	pub is_const: bool,
+	pub name: Token,
+	pub value: Option<Box<Expr>>
 }
 ast!(Let, visit_let);
 
 pub struct Group {
-	value: Box<Expr>
+	pub value: Box<Expr>
 }
 ast!(Group, visit_group);
 
 pub struct Binary {
-	left: Box<Expr>,
-	op: Token,
-	right: Box<Expr>,
+	pub left: Box<Expr>,
+	pub op: Token,
+	pub right: Box<Expr>,
 }
 ast!(Binary, visit_binary);
 
 pub struct Unary {
-	op: Token,
-	right: Box<Expr>,
+	pub op: Token,
+	pub right: Box<Expr>,
 }
 ast!(Unary, visit_unary);
 
 pub struct Identifer {
-	name: Token,
+	pub name: Token,
 }
 ast!(Identifer, visit_identifier);
 
 pub struct LitInt {
-	value: u64,
+	pub value: u64,
 }
 ast!(LitInt, visit_lit_int);
 
 pub struct LitFlt {
-	value: f64,
+	pub value: f64,
 }
 ast!(LitFlt, visit_lit_flt);
