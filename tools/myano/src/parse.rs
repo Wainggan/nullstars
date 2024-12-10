@@ -6,6 +6,7 @@ use crate::token::{Token, TT};
 pub enum Node {
 	None,
 	Module(Vec<Node>),
+	Let(bool, Token, Option<Box<Node>>),
 	Group(Box<Node>),
 	Binary(Token, Box<Node>, Box<Node>),
 	Unary(Token, Box<Node>),
@@ -93,7 +94,13 @@ impl Parser<'_> {
 	}
 
 	fn parse_statement(&mut self) -> Node {
-		return self.parse_expression();
+		if self.compare(&[TT::Let]) {
+			return self.parse_statement_let(true);
+		} else if self.compare(&[TT::Mut]) {
+			return self.parse_statement_let(false);
+		} else {
+			return self.parse_expression();
+		}
 	}
 
 	fn parse_expression(&mut self) -> Node {
@@ -163,6 +170,19 @@ impl Parser<'_> {
 		self.reporter.error(format!("unexpected token: {}", self.peek()));
 		self.advance();
 		return Node::None;
+	}
+
+	fn parse_statement_let(&mut self, is_const: bool) -> Node {
+		let name = self.consume(TT::Identifier, "expected variable identifier", 0).clone();
+		// let kind = None;
+		let value;
+		if self.compare(&[TT::Equal]) {
+			value = Some(Box::new(self.parse_expression()));
+		} else {
+			value = None;
+		}
+
+		Node::Let(is_const, name, value)
 	}
 
 }

@@ -12,6 +12,7 @@ pub enum TT {
 	Eof,
 
 	Semicolon,
+	Colon,
 	Dot,
 
 	Identifier,
@@ -19,6 +20,7 @@ pub enum TT {
 	Float,
 
 	Let,
+	Mut,
 	
 	LParen,
 	RParen,
@@ -47,9 +49,11 @@ impl std::fmt::Display for Token {
 				TT::Eof => "<eof>",
 
 				TT::Semicolon => ";",
+				TT::Colon => ":",
 				TT::Dot => ".",
 
 				TT::Let => "let",
+				TT::Mut => "mut",
 				
 				TT::Add => "+",
 				TT::Sub => "-",
@@ -207,6 +211,7 @@ impl Lexer<'_> {
 		let make = self.make();
 		match make.as_str() {
 			"let" => self.add_from(TT::Let, make),
+			"mut" => self.add_from(TT::Mut, make),
 			_ => self.add_from(TT::Identifier, make),
 		};
 	}
@@ -221,6 +226,7 @@ impl Lexer<'_> {
 
 		match c {
 			';' => self.add(TT::Semicolon),
+			':' => self.add(TT::Colon),
 			'.' => self.add(TT::Dot),
 
 			'+' => self.add(TT::Add),

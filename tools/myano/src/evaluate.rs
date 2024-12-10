@@ -37,6 +37,7 @@ impl Visitor<i64> for Evaluate {
 		match node {
 			Node::None => 0,
 			Node::Group(group) => self.accept(group),
+			Node::Let(_, _, _) => 0,
 			Node::Module(stmts) => self.visit_module(stmts),
 			Node::Binary(op, left, right) => self.visit_binary(op, left, right),
 			Node::Unary(op, right) => self.visit_unary(op, right),
