@@ -45,6 +45,10 @@ impl Visitor for Evaluate {
 		}
 	}
 
+	fn visit_call(&mut self, node: &expr::Call) -> Self::Result {
+		0
+	}
+
 	fn visit_identifier(&mut self, node: &expr::Identifer) -> Self::Result {
 		0
 	}

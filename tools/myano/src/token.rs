@@ -14,6 +14,7 @@ pub enum TT {
 	Semicolon,
 	Colon,
 	Dot,
+	Comma,
 
 	Identifier,
 	Integer,
@@ -51,6 +52,7 @@ impl std::fmt::Display for Token {
 				TT::Semicolon => ";",
 				TT::Colon => ":",
 				TT::Dot => ".",
+				TT::Comma => ",",
 
 				TT::Let => "let",
 				TT::Mut => "mut",
@@ -228,6 +230,7 @@ impl Lexer<'_> {
 			';' => self.add(TT::Semicolon),
 			':' => self.add(TT::Colon),
 			'.' => self.add(TT::Dot),
+			',' => self.add(TT::Comma),
 
 			'+' => self.add(TT::Add),
 			'-' => self.add(TT::Sub),

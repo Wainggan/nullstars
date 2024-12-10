@@ -12,6 +12,7 @@ pub trait Visitor {
 			Node::Group(v) => self.visit_group(v),
 			Node::Binary(v) => self.visit_binary(v),
 			Node::Unary(v) => self.visit_unary(v),
+			Node::Call(v) => self.visit_call(v),
 			Node::Identifer(v) => self.visit_identifier(v),
 			Node::LitInt(v) => self.visit_lit_int(v),
 			Node::LitFlt(v) => self.visit_lit_flt(v),
@@ -23,6 +24,7 @@ pub trait Visitor {
 	fn visit_group(&mut self, node: &Group) -> Self::Result;
 	fn visit_binary(&mut self, node: &Binary) -> Self::Result;
 	fn visit_unary(&mut self, node: &Unary) -> Self::Result;
+	fn visit_call(&mut self, node: &Call) -> Self::Result;
 	fn visit_identifier(&mut self, node: &Identifer) -> Self::Result;
 	fn visit_lit_int(&mut self, node: &LitInt) -> Self::Result;
 	fn visit_lit_flt(&mut self, node: &LitFlt) -> Self::Result;
@@ -36,6 +38,7 @@ pub enum Node {
 	Group(Group),
 	Binary(Binary),
 	Unary(Unary),
+	Call(Call),
 	Identifer(Identifer),
 	LitInt(LitInt),
 	LitFlt(LitFlt),
@@ -89,6 +92,14 @@ pub struct Unary {
 	pub right: Box<Node>,
 }
 ast!(Unary, visit_unary);
+
+#[derive(Debug)]
+pub struct Call {
+	pub expr: Box<Node>,
+	pub args: Vec<Box<Node>>,
+	pub paren: Token,
+}
+ast!(Call, visit_call);
 
 #[derive(Debug)]
 pub struct Identifer {

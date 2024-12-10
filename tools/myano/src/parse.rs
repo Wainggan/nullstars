@@ -127,7 +127,31 @@ impl Parser<'_> {
 				op, right: Box::new(right)
 			});
 		}
-		return self.parse_primary();
+		return self.parse_call();
+	}
+
+	fn parse_call(&mut self) -> Node {
+		let mut expr = self.parse_primary();
+
+		loop {
+			if self.compare(&[TT::LParen]) {
+				let mut args = Vec::new();
+				if !self.check(TT::RParen) {
+					args.push(Box::new(self.parse_expression()));
+					while self.compare(&[TT::Comma]) {
+						args.push(Box::new(self.parse_expression()));
+					}
+				}
+				let paren = self.consume(TT::RParen, "expected ')' after function call", 0);
+				expr = Node::Call(expr::Call {
+					expr: Box::new(expr), args, paren: paren.clone(),
+				});
+			} else {
+				break;
+			}
+		}
+
+		return expr;
 	}
 
 	fn parse_primary(&mut self) -> Node {
