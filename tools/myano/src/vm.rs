@@ -191,15 +191,13 @@ struct VM {
 	map: Mapper,
 	pc: usize,
 	sp: usize,
-	stack: Vec<u32>,
 }
 impl VM {
 	fn new(map: Mapper) -> VM {
 		VM {
 			map,
-			stack: Vec::new(),
 			pc: 0,
-			sp: 0,
+			sp: 0x1000,
 		}
 	}
 
@@ -262,28 +260,49 @@ impl VM {
 		match op {
 			op::LIT => {
 				let value = self.get_u32(self.pc);
+				println!("< {}", value);
 				self.pc += 4;
-				self.stack.push(value);
+				self.set_u32(self.sp, value);
+				self.sp += 4;
 			},
 			op::ADD => {
-				let b = self.stack.pop().unwrap();
-				let a = self.stack.pop().unwrap();
-				self.stack.push(a + b);
+				let b = self.get_u32(self.sp - 4);
+				self.sp -= 4;
+				let a = self.get_u32(self.sp - 4);
+				self.sp -= 4;
+
+				let value = a + b;
+				println!("{} + {} = {}", a, b, value);
+
+				self.set_u32(self.sp, value);
+				self.sp += 4;
 			},
 			op::SUB => {
-				let b = self.stack.pop().unwrap();
-				let a = self.stack.pop().unwrap();
-				self.stack.push(a - b);
+				let b = self.get_u32(self.sp);
+				self.sp -= 4;
+				let a = self.get_u32(self.sp);
+				self.sp -= 4;
+				
+				self.set_u32(self.sp, a - b);
+				self.sp += 4;
 			},
 			op::MUL => {
-				let b = self.stack.pop().unwrap();
-				let a = self.stack.pop().unwrap();
-				self.stack.push(a * b);
+				let b = self.get_u32(self.sp);
+				self.sp -= 4;
+				let a = self.get_u32(self.sp);
+				self.sp -= 4;
+				
+				self.set_u32(self.sp, a * b);
+				self.sp += 4;
 			},
 			op::DIV => {
-				let b = self.stack.pop().unwrap();
-				let a = self.stack.pop().unwrap();
-				self.stack.push(a / b);
+				let b = self.get_u32(self.sp);
+				self.sp -= 4;
+				let a = self.get_u32(self.sp);
+				self.sp -= 4;
+				
+				self.set_u32(self.sp, a / b);
+				self.sp += 4;
 			},
 			op::NOP => {
 				panic!("lmfao");
@@ -301,7 +320,7 @@ impl VM {
 
 	fn run(&mut self) {
 		loop {
-			println!("{} {:?}", self.pc, self.stack);
+			println!("{} {}", self.pc, self.get_u32(self.sp));
 			if !self.step() {
 				break;
 			}
