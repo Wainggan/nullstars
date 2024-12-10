@@ -1,0 +1,11 @@
+
+enum OP {
+	Lit = 0x00,
+
+	Add = 0x10,
+	Sub = 0x11,
+
+	Nop = 0xff,
+}
+
+

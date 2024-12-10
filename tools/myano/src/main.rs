@@ -4,6 +4,7 @@ mod token;
 mod parse;
 mod expr;
 mod evaluate;
+mod vm;
 
 #[cfg(test)]
 mod test;
