@@ -5,8 +5,12 @@ use crate::expr::{self, Visitor};
 
 mod op {
 	pub const NOP: u8 = 0xff;
-	pub const ADD: u8 = 0x10;
+	
 	pub const LIT: u8 = 0x00;
+	pub const POP: u8 = 0x01;
+
+	pub const ADD: u8 = 0x10;
+	pub const SUB: u8 = 0x11;
 }
 
 
@@ -100,6 +104,7 @@ impl VM {
 						.try_into()
 						.unwrap_or([0, 0, 0, 0])
 				);
+				self.pc += 4;
 				self.stack.push(value);
 			},
 			op::ADD => {
@@ -119,10 +124,23 @@ impl VM {
 	}
 
 	fn run(&mut self) {
-		while self.step() {
+		loop {
 			println!("{} {:?}", self.pc, self.stack);
+			if !self.step() {
+				break;
+			}
 		}
 	}
+}
+
+pub fn compile(node: &expr::Node) -> Vec<u8> {
+	let mut cc = Compiler::new();
+	cc.compile(node)
+}
+
+pub fn run(bin: Vec<u8>) {
+	let mut vm = VM::new(bin);
+	vm.run();
 }
 
 

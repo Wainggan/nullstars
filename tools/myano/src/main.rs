@@ -26,6 +26,11 @@ fn main() {
 	let value = evaluate::test(&mut reporter, &ast);
 	println!("{}", value);
 
+	let bin = vm::compile(&ast);
+	println!("{:?}", bin);
+
+	vm::run(bin);
+
 	reporter.print();
 }
 
