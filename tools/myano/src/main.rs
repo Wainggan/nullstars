@@ -32,5 +32,6 @@ fn main() {
 	vm::run(bin);
 
 	reporter.print();
+
 }
 

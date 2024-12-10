@@ -1,9 +1,13 @@
 
+use std::borrow::BorrowMut;
+use std::iter::Map;
+
 use crate::token;
 use crate::expr::{self, Visitor};
 
 mod op {
 	pub const NOP: u8 = 0xff;
+	pub const EXIT: u8 = 0xfe;
 	
 	pub const LIT: u8 = 0x00;
 	pub const POP: u8 = 0x01;
@@ -89,34 +93,152 @@ impl Visitor for Compiler {
 }
 
 
+trait Device {
+	fn get(&self, address: usize) -> u8;
+	fn set(&mut self, address: usize, value: u8);
+}
+
+struct RAM {
+	memory: Vec<u8>,
+}
+impl RAM {
+	fn new() -> RAM {
+		RAM {
+			memory: Vec::new(),
+		}
+	}
+}
+impl Device for RAM {
+	fn get(&self, address: usize) -> u8 {
+		self.memory[address]
+	}
+	fn set(&mut self, address: usize, value: u8) {
+		self.memory[address] = value;
+	}
+}
+
+struct Region {
+	device: Box<dyn Device>,
+	start: usize,
+	end: usize,
+}
+
+struct Mapper {
+	regions: Vec<Region>
+}
+impl Mapper {
+	fn new() -> Mapper {
+		Mapper {
+			regions: Vec::new(),
+		}
+	}
+	fn map(&mut self, device: Box<dyn Device>, start: usize, end: usize) {
+		self.regions.push(Region {
+			device: device, start, end,
+		});
+	}
+	fn find(&self, address: usize) -> Option<&Region> {
+		self.regions.iter()
+			.find(|e| e.start <= address && address <= e.end)
+	}
+	fn find_mut(&mut self, address: usize) -> Option<&mut Region> {
+		self.regions.iter_mut()
+			.find(|e| e.start <= address && address <= e.end)
+	}
+	fn get(&self, address: usize) -> u8 {
+		let region = self.find(address);
+		match region {
+			None => panic!(),
+			Some(region) =>
+				region.device.get(address - region.start)
+		}
+	}
+	fn set(&mut self, address: usize, value: u8) {
+		let region = self.find_mut(address);
+		match region {
+			None => panic!(),
+			Some(region) =>
+				region.device.set(address - region.start, value)
+		}
+	}
+}
+
+
 struct VM {
-	bin: Vec<u8>,
+	map: Mapper,
 	pc: usize,
+	sp: usize,
 	stack: Vec<u32>,
 }
 impl VM {
-	fn new(bin: Vec<u8>) -> VM {
+	fn new(map: Mapper) -> VM {
 		VM {
-			bin,
+			map,
 			stack: Vec::new(),
 			pc: 0,
+			sp: 0,
+		}
+	}
+
+	fn get_u8(&self, addr: usize) -> u8 {
+		self.map.get(addr)
+	}
+
+	fn set_u8(&mut self, addr: usize, value: u8) {
+		self.map.set(addr, value);
+	}
+
+	fn get_u16(&self, addr: usize) -> u16 {
+		let mut bytes = 0u16.to_le_bytes();
+		for i in 0..2 {
+			bytes[i] = self.map.get(addr + i);
+		}
+		u16::from_le_bytes(bytes)
+	}
+
+	fn set_u16(&mut self, addr: usize, value: u16) {
+		let bytes = value.to_le_bytes();
+		for i in 0..2 {
+			self.map.set(addr + i, bytes[i]);
+		}
+	}
+
+	fn get_u32(&self, addr: usize) -> u32 {
+		let mut bytes = 0u32.to_le_bytes();
+		for i in 0..4 {
+			bytes[i] = self.map.get(addr + i);
+		}
+		u32::from_le_bytes(bytes)
+	}
+
+	fn set_u32(&mut self, addr: usize, value: u32) {
+		let bytes = value.to_le_bytes();
+		for i in 0..4 {
+			self.map.set(addr + i, bytes[i]);
+		}
+	}
+
+	fn get_u64(&self, addr: usize) -> u64 {
+		let mut bytes = 0u64.to_le_bytes();
+		for i in 0..8 {
+			bytes[i] = self.map.get(addr + i);
+		}
+		u64::from_le_bytes(bytes)
+	}
+
+	fn set_u64(&mut self, addr: usize, value: u64) {
+		let bytes = value.to_le_bytes();
+		for i in 0..8 {
+			self.map.set(addr + i, bytes[i]);
 		}
 	}
 
 	fn step(&mut self) -> bool {
-		if self.pc >= self.bin.len() {
-			return false;
-		}
-
-		let op = self.bin[self.pc];
+		let op = self.map.get(self.pc);
 		self.pc += 1;
 		match op {
 			op::LIT => {
-				let value = u32::from_le_bytes(
-					self.bin[self.pc..self.pc + 4]
-						.try_into()
-						.unwrap_or([0, 0, 0, 0])
-				);
+				let value = self.get_u32(self.pc);
 				self.pc += 4;
 				self.stack.push(value);
 			},
@@ -167,7 +289,19 @@ pub fn compile(node: &expr::Node) -> Vec<u8> {
 }
 
 pub fn run(bin: Vec<u8>) {
-	let mut vm = VM::new(bin);
+	let mut mapper = Mapper::new();
+
+	let mut rom = RAM::new();
+	for i in 0..bin.len() {
+		rom.set(i, bin[i]);
+	}
+
+	let mut ram = RAM::new();
+
+	mapper.map(Box::new(rom), 0x0000, 0x0fff);
+	mapper.map(Box::new(ram), 0x1000, 0xffff);
+
+	let mut vm = VM::new(mapper);
 	vm.run();
 }
 
