@@ -118,6 +118,28 @@ impl Device for RAM {
 	}
 }
 
+struct ROM {
+	memory: Vec<u8>,
+}
+impl ROM {
+	fn new(size: usize) -> ROM {
+		ROM {
+			memory: vec![0; size],
+		}
+	}
+	fn tom(&mut self, address: usize, value: u8) {
+		self.memory[address] = value;
+	}
+}
+impl Device for ROM {
+	fn get(&self, address: usize) -> u8 {
+		self.memory[address]
+	}
+	fn set(&mut self, _address: usize, _value: u8) {
+		panic!("fuck you")
+	}
+}
+
 struct Region {
 	device: Box<dyn Device>,
 	start: usize,
@@ -295,12 +317,12 @@ pub fn compile(node: &expr::Node) -> Vec<u8> {
 pub fn run(bin: Vec<u8>) {
 	let mut mapper = Mapper::new();
 
-	let mut rom = RAM::new(0x0fff);
+	let mut rom = ROM::new(0x0fff);
 	for i in 0..bin.len() {
-		rom.set(i, bin[i]);
+		rom.tom(i, bin[i]);
 	}
 
-	let mut ram = RAM::new(0xffff);
+	let ram = RAM::new(0xffff);
 
 	mapper.map(Box::new(rom), 0x0000, 0x0fff);
 	mapper.map(Box::new(ram), 0x1000, 0xffff);
