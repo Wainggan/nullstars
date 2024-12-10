@@ -1,25 +1,7 @@
 
 use crate::error;
 use crate::token::{Token, TT};
-use crate::expr;
-
-
-#[derive(Debug)]
-pub enum Node {
-	None,
-	Module(Vec<Node>),
-	Let(bool, Token, Option<Box<Node>>),
-	Group(Box<Node>),
-	Binary(Token, Box<Node>, Box<Node>),
-	Unary(Token, Box<Node>),
-	Identifer(String),
-	LitInt(u64),
-	LitFlt(f64),
-}
-
-pub trait Visitor<T> {
-	fn accept(&mut self, node: &Node) -> T;
-}
+use crate::expr::{self, Node};
 
 
 struct Parser<'a> {
@@ -88,18 +70,18 @@ impl Parser<'_> {
 		while !self.at_end() {
 			if self.compare(&[TT::Semicolon]) {}
 			else {
-				stmts.push(self.parse_statement());
+				stmts.push(Box::new(self.parse_statement()));
 			}
 		}
 
-		Node::Module(stmts)
+		Node::Module(expr::Module { stmts })
 	}
 
 	fn parse_statement(&mut self) -> Node {
 		if self.compare(&[TT::Let]) {
-			return self.parse_statement_let(true);
+			return Node::Let(self.parse_statement_let(true));
 		} else if self.compare(&[TT::Mut]) {
-			return self.parse_statement_let(false);
+			return Node::Let(self.parse_statement_let(false));
 		} else {
 			return self.parse_expression();
 		}
@@ -115,7 +97,9 @@ impl Parser<'_> {
 		while self.compare(&[TT::Add, TT::Sub]) {
 			let op = self.previous().clone();
 			let right = self.parse_factor();
-			expr = Node::Binary(op, Box::new(expr), Box::new(right));
+			expr = Node::Binary(expr::Binary {
+				op, left: Box::new(expr), right: Box::new(right)
+			});
 		}
 
 		return expr;
@@ -127,7 +111,9 @@ impl Parser<'_> {
 		while self.compare(&[TT::Star, TT::Slash]) {
 			let op = self.previous().clone();
 			let right = self.parse_unary();
-			expr = Node::Binary(op, Box::new(expr), Box::new(right));
+			expr = Node::Binary(expr::Binary {
+				op, left: Box::new(expr), right: Box::new(right)
+			});
 		}
 
 		return expr;
@@ -137,22 +123,24 @@ impl Parser<'_> {
 		if self.compare(&[TT::Sub, TT::Bang]) {
 			let op = self.previous().clone();
 			let right = self.parse_unary();
-			return Node::Unary(op, Box::new(right));
+			return Node::Unary(expr::Unary {
+				op, right: Box::new(right)
+			});
 		}
 		return self.parse_primary();
 	}
 
 	fn parse_primary(&mut self) -> Node {
 		if self.compare(&[TT::Identifier]) {
-			let inner = &self.previous().innr;
-			return Node::Identifer(inner.clone());
+			let inner = self.previous();
+			return Node::Identifer(expr::Identifer { name: inner.clone() });
 		}
 
 		if self.compare(&[TT::Integer]) {
 			let inner = &self.previous().innr;
 			let value = u64::from_str_radix(inner, 10)
 				.unwrap_or(0);
-			return Node::LitInt(value);
+			return Node::LitInt(expr::LitInt { value });
 		}
 
 		if self.compare(&[TT::Float]) {
@@ -160,13 +148,13 @@ impl Parser<'_> {
 			use std::str::FromStr;
 			let value = f64::from_str(inner)
 				.unwrap_or(0.0);
-			return Node::LitFlt(value);
+			return Node::LitFlt(expr::LitFlt { value });
 		}
 
 		if self.compare(&[TT::LParen]) {
 			let node = self.parse_expression();
 			self.consume(TT::RParen, "expected ')'", self.current);
-			return Node::Group(Box::new(node));
+			return Node::Group(expr::Group { value: Box::new(node) });
 		}
 
 		self.reporter.error(format!("unexpected token: {}", self.peek()));
@@ -174,7 +162,7 @@ impl Parser<'_> {
 		return Node::None;
 	}
 
-	fn parse_statement_let(&mut self, is_const: bool) -> Node {
+	fn parse_statement_let(&mut self, is_const: bool) -> expr::Let {
 		let name = self.consume(TT::Identifier, "expected variable identifier", 0).clone();
 		// let kind = None;
 		let value;
@@ -184,7 +172,9 @@ impl Parser<'_> {
 			value = None;
 		}
 
-		Node::Let(is_const, name, value)
+		expr::Let {
+			is_const, name, value
+		}
 	}
 
 }
