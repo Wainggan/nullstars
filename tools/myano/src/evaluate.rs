@@ -11,13 +11,13 @@ impl Visitor for Evaluate {
 		let mut out = String::new();
 		for stmt in &node.stmts {
 			out += &self.resolve(stmt);
-			out += " ";
+			out += ";\n";
 		}
 		return out;
 	}
 
 	fn visit_let(&mut self, node: &expr::Let) -> Self::Result {
-		format!("let {}", node.name.innr)
+		format!("const {}", node.name.innr)
 	}
 
 	fn visit_group(&mut self, node: &expr::Group) -> Self::Result {
@@ -28,11 +28,11 @@ impl Visitor for Evaluate {
 		let left = self.resolve(&node.left);
 		let right = self.resolve(&node.right);
 		match node.op.kind {
-			TT::Add => format!("{}+{}", left, right),
-			TT::Sub => format!("{}-{}", left, right),
-			TT::Star => format!("{}*{}", left, right),
-			TT::Slash => format!("{}/{}", left, right),
-			TT::EqualEqual => format!("{}=={}", left, right),
+			TT::Add => format!("({} + {})", left, right),
+			TT::Sub => format!("({} - {})", left, right),
+			TT::Star => format!("({} * {})", left, right),
+			TT::Slash => format!("({} / {})", left, right),
+			TT::EqualEqual => format!("({} == {})", left, right),
 			_ => panic!("oops")
 		}
 	}
@@ -40,8 +40,8 @@ impl Visitor for Evaluate {
 	fn visit_unary(&mut self, node: &expr::Unary) -> Self::Result {
 		let right = self.resolve(&node.right);
 		match node.op.kind {
-			TT::Sub => format!("-{}", right),
-			TT::Bang => format!("!{}", right),
+			TT::Sub => format!("(-{})", right),
+			TT::Bang => format!("(!{})", right),
 			_ => panic!("oops")
 		}
 	}
