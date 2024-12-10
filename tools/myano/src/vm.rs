@@ -41,6 +41,7 @@ impl Visitor for Compiler {
 		for stmt in &node.stmts {
 			self.resolve(stmt);
 		}
+		self.data.push(op::EXIT)
 	}
 
 	fn visit_let(&mut self, node: &expr::Let) -> Self::Result {
@@ -102,9 +103,9 @@ struct RAM {
 	memory: Vec<u8>,
 }
 impl RAM {
-	fn new() -> RAM {
+	fn new(size: usize) -> RAM {
 		RAM {
-			memory: Vec::new(),
+			memory: vec![0; size],
 		}
 	}
 }
@@ -265,6 +266,9 @@ impl VM {
 			op::NOP => {
 				panic!("lmfao");
 			},
+			op::EXIT => {
+				return false;
+			},
 			_ => {
 				panic!("skill issue");
 			},
@@ -291,12 +295,12 @@ pub fn compile(node: &expr::Node) -> Vec<u8> {
 pub fn run(bin: Vec<u8>) {
 	let mut mapper = Mapper::new();
 
-	let mut rom = RAM::new();
+	let mut rom = RAM::new(0x0fff);
 	for i in 0..bin.len() {
 		rom.set(i, bin[i]);
 	}
 
-	let mut ram = RAM::new();
+	let mut ram = RAM::new(0xffff);
 
 	mapper.map(Box::new(rom), 0x0000, 0x0fff);
 	mapper.map(Box::new(ram), 0x1000, 0xffff);
