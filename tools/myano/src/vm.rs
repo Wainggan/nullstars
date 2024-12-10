@@ -1,6 +1,5 @@
 
-use std::io::Read;
-
+use crate::token;
 use crate::expr::{self, Visitor};
 
 mod op {
@@ -11,6 +10,8 @@ mod op {
 
 	pub const ADD: u8 = 0x10;
 	pub const SUB: u8 = 0x11;
+	pub const MUL: u8 = 0x12;
+	pub const DIV: u8 = 0x13;
 }
 
 
@@ -55,7 +56,13 @@ impl Visitor for Compiler {
 	fn visit_binary(&mut self, node: &expr::Binary) -> Self::Result {
 		self.resolve(&node.left);
 		self.resolve(&node.right);
-		self.data.push(op::ADD);
+		match node.op.kind {
+			token::TT::Add => self.data.push(op::ADD),
+			token::TT::Sub => self.data.push(op::SUB),
+			token::TT::Star => self.data.push(op::MUL),
+			token::TT::Slash => self.data.push(op::DIV),
+			_ => todo!("{:?}", node.op.kind),
+		}
 	}
 
 	fn visit_unary(&mut self, node: &expr::Unary) -> Self::Result {
@@ -117,6 +124,21 @@ impl VM {
 				let b = self.stack.pop().unwrap();
 				let a = self.stack.pop().unwrap();
 				self.stack.push(a + b);
+			},
+			op::SUB => {
+				let b = self.stack.pop().unwrap();
+				let a = self.stack.pop().unwrap();
+				self.stack.push(a - b);
+			},
+			op::MUL => {
+				let b = self.stack.pop().unwrap();
+				let a = self.stack.pop().unwrap();
+				self.stack.push(a * b);
+			},
+			op::DIV => {
+				let b = self.stack.pop().unwrap();
+				let a = self.stack.pop().unwrap();
+				self.stack.push(a / b);
 			},
 			op::NOP => {
 				panic!("lmfao");
