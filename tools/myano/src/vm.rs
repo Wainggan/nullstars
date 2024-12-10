@@ -55,7 +55,7 @@ impl Visitor for Compiler {
 	fn visit_binary(&mut self, node: &expr::Binary) -> Self::Result {
 		self.resolve(&node.left);
 		self.resolve(&node.right);
-		self.data.push(op::ADD as u8);
+		self.data.push(op::ADD);
 	}
 
 	fn visit_unary(&mut self, node: &expr::Unary) -> Self::Result {
@@ -71,12 +71,12 @@ impl Visitor for Compiler {
 	}
 
 	fn visit_lit_int(&mut self, node: &expr::LitInt) -> Self::Result {
-		self.data.push(op::LIT as u8);
+		self.data.push(op::LIT);
 		self.data.extend_from_slice(&(node.value as u32).to_le_bytes());
 	}
 
 	fn visit_lit_flt(&mut self, node: &expr::LitFlt) -> Self::Result {
-		self.data.push(op::LIT as u8);
+		self.data.push(op::LIT);
 		self.data.extend_from_slice(&(node.value as u32).to_le_bytes());
 	}
 }
@@ -102,9 +102,9 @@ impl VM {
 		}
 
 		let op = self.bin[self.pc];
+		self.pc += 1;
 		match op {
 			op::LIT => {
-				self.pc += 1;
 				let value = u32::from_le_bytes(
 					self.bin[self.pc..self.pc + 4]
 						.try_into()
