@@ -95,7 +95,7 @@ impl Parser<'_> {
 		if self.compare(&[TT::While]) {
 			let token = self.previous().clone();
 
-			let condition = Box::new(self.parse_loops());
+			let condition = Box::new(self.parse_conditional());
 			let branch = Box::new(self.parse_loops());
 
 			return Node::While(expr::While {
