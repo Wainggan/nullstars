@@ -3,8 +3,9 @@ mod error;
 mod token;
 mod parse;
 mod expr;
-mod evaluate;
-mod vm;
+// mod evaluate;
+mod runner;
+// mod vm;
 
 #[cfg(test)]
 mod test;
@@ -22,14 +23,6 @@ fn main() {
 
 	let ast = parse::parse(&mut reporter, &tokens);
 	println!("{:?}", ast);
-
-	let value = evaluate::test(&mut reporter, &ast);
-	println!("{}", value);
-
-	let bin = vm::compile(&ast);
-	println!("{:?}", bin);
-
-	vm::run(bin);
 
 	reporter.print();
 

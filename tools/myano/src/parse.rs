@@ -88,7 +88,57 @@ impl Parser<'_> {
 	}
 
 	fn parse_expression(&mut self) -> Node {
-		return self.parse_term();
+		return self.parse_loops();
+	}
+
+	fn parse_loops(&mut self) -> Node {
+		if self.compare(&[TT::While]) {
+			let token = self.previous().clone();
+
+			let condition = Box::new(self.parse_loops());
+			let branch = Box::new(self.parse_loops());
+
+			return Node::While(expr::While {
+				token, condition, branch,
+			});
+		}
+		return self.parse_conditional();
+	}
+
+	fn parse_conditional(&mut self) -> Node {
+		if self.compare(&[TT::If]) {
+			let token = self.previous().clone();
+			
+			let condition = Box::new(self.parse_conditional());
+
+			let branch_then = Box::new(self.parse_conditional());
+			
+			let branch_else;
+			if self.compare(&[TT::Else]) {
+				branch_else = Some(Box::new(self.parse_conditional()));
+			} else {
+				branch_else = None;
+			}
+
+			return Node::If(expr::If {
+				token, condition, branch_then, branch_else,
+			});
+		}
+		return self.parse_comparison();
+	}
+
+	fn parse_comparison(&mut self) -> Node {
+		let mut expr = self.parse_term();
+
+		while self.compare(&[TT::EqualEqual, TT::Lesser, TT::LesserEqual, TT::GreaterEqual, TT::Greater]) {
+			let op = self.previous().clone();
+			let right = self.parse_term();
+			expr = Node::Binary(expr::Binary {
+				op, left: Box::new(expr), right: Box::new(right),
+			});
+		}
+
+		return expr;
 	}
 
 	fn parse_term(&mut self) -> Node {
@@ -177,7 +227,7 @@ impl Parser<'_> {
 			return Node::LitFlt(expr::LitFlt { value });
 		}
 
-		if self.compare(&[TT::LBracket]) {
+		if self.compare(&[TT::LBrace]) {
 			return self.parse_statement_block();
 		}
 
@@ -195,14 +245,14 @@ impl Parser<'_> {
 	fn parse_statement_block(&mut self) -> Node {
 		let mut stmts = Vec::new();
 
-		while !self.at_end() && !self.check(TT::RBracket) {
+		while !self.at_end() && !self.check(TT::RBrace) {
 			if self.compare(&[TT::Semicolon]) {}
 			else {
 				stmts.push(Box::new(self.parse_statement()));
 			}
 		}
 
-		self.consume(TT::RBracket, "expected '}'", 0);
+		self.consume(TT::RBrace, "expected '}'", 0);
 
 		Node::Block(expr::Block { stmts })
 	}

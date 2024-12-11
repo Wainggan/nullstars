@@ -22,11 +22,18 @@ pub enum TT {
 
 	Let,
 	Mut,
+
+	If,
+	Else,
+	While,
+	For,
 	
 	LParen,
 	RParen,
 	LBracket,
 	RBracket,
+	LBrace,
+	RBrace,
 
 	Add,
 	Sub,
@@ -58,6 +65,11 @@ impl std::fmt::Display for Token {
 
 				TT::Let => "let",
 				TT::Mut => "mut",
+
+				TT::If => "if",
+				TT::Else => "else",
+				TT::While => "while",
+				TT::For => "for",
 				
 				TT::Add => "+",
 				TT::Sub => "-",
@@ -76,8 +88,10 @@ impl std::fmt::Display for Token {
 				
 				TT::LParen => "'('",
 				TT::RParen => "')'",
-				TT::RBracket => "'{'",
-				TT::LBracket => "'}'",
+				TT::RBracket => "'['",
+				TT::LBracket => "']'",
+				TT::LBrace => "'}'",
+				TT::RBrace => "'}'",
 				
 				TT::Identifier => &self.innr,
 				TT::Integer => &self.innr,
@@ -218,6 +232,12 @@ impl Lexer<'_> {
 		match make.as_str() {
 			"let" => self.add_from(TT::Let, make),
 			"mut" => self.add_from(TT::Mut, make),
+			
+			"if" => self.add_from(TT::If, make),
+			"else" => self.add_from(TT::Else, make),
+			"while" => self.add_from(TT::While, make),
+			"for" => self.add_from(TT::For, make),
+			
 			_ => self.add_from(TT::Identifier, make),
 		};
 	}
@@ -265,8 +285,10 @@ impl Lexer<'_> {
 
 			'(' => self.add(TT::LParen),
 			')' => self.add(TT::RParen),
-			'{' => self.add(TT::LBracket),
-			'}' => self.add(TT::RBracket),
+			'[' => self.add(TT::LBracket),
+			']' => self.add(TT::RBracket),
+			'{' => self.add(TT::LBrace),
+			'}' => self.add(TT::RBrace),
 
 			_ => {
 				if self.is_whitespace(Some(c)) {

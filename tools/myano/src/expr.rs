@@ -9,6 +9,8 @@ pub trait Visitor {
 			Node::None => panic!("oops! :3"),
 			Node::Module(v) => self.visit_module(v),
 			Node::Let(v) => self.visit_let(v),
+			Node::If(v) => self.visit_if(v),
+			Node::While(v) => self.visit_while(v),
 			Node::Block(v) => self.visit_block(v),
 			Node::Group(v) => self.visit_group(v),
 			Node::Binary(v) => self.visit_binary(v),
@@ -22,6 +24,8 @@ pub trait Visitor {
 
 	fn visit_module(&mut self, node: &Module) -> Self::Result;
 	fn visit_let(&mut self, node: &Let) -> Self::Result;
+	fn visit_if(&mut self, node: &If) -> Self::Result;
+	fn visit_while(&mut self, node: &While) -> Self::Result;
 	fn visit_block(&mut self, node: &Block) -> Self::Result;
 	fn visit_group(&mut self, node: &Group) -> Self::Result;
 	fn visit_binary(&mut self, node: &Binary) -> Self::Result;
@@ -37,6 +41,8 @@ pub enum Node {
 	None,
 	Module(Module),
 	Let(Let),
+	If(If),
+	While(While),
 	Block(Block),
 	Group(Group),
 	Binary(Binary),
@@ -74,6 +80,23 @@ pub struct Let {
 	pub value: Option<Box<Node>>
 }
 ast!(Let, visit_let);
+
+#[derive(Debug)]
+pub struct If {
+	pub token: Token,
+	pub condition: Box<Node>,
+	pub branch_then: Box<Node>,
+	pub branch_else: Option<Box<Node>>,
+}
+ast!(If, visit_if);
+
+#[derive(Debug)]
+pub struct While {
+	pub token: Token,
+	pub condition: Box<Node>,
+	pub branch: Box<Node>,
+}
+ast!(While, visit_while);
 
 #[derive(Debug)]
 pub struct Block {
