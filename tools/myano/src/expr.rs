@@ -13,6 +13,7 @@ pub trait Visitor {
 			Node::While(v) => self.visit_while(v),
 			Node::Block(v) => self.visit_block(v),
 			Node::Group(v) => self.visit_group(v),
+			Node::Assign(v) => self.visit_assign(v),
 			Node::Binary(v) => self.visit_binary(v),
 			Node::Unary(v) => self.visit_unary(v),
 			Node::Call(v) => self.visit_call(v),
@@ -28,6 +29,7 @@ pub trait Visitor {
 	fn visit_while(&mut self, node: &While) -> Self::Result;
 	fn visit_block(&mut self, node: &Block) -> Self::Result;
 	fn visit_group(&mut self, node: &Group) -> Self::Result;
+	fn visit_assign(&mut self, node: &Assign) -> Self::Result;
 	fn visit_binary(&mut self, node: &Binary) -> Self::Result;
 	fn visit_unary(&mut self, node: &Unary) -> Self::Result;
 	fn visit_call(&mut self, node: &Call) -> Self::Result;
@@ -45,6 +47,7 @@ pub enum Node {
 	While(While),
 	Block(Block),
 	Group(Group),
+	Assign(Assign),
 	Binary(Binary),
 	Unary(Unary),
 	Call(Call),
@@ -100,7 +103,7 @@ ast!(While, visit_while);
 
 #[derive(Debug)]
 pub struct Block {
-	pub stmts: Vec<Box<Node>>
+	pub stmts: Vec<Box<Node>>,
 }
 ast!(Block, visit_block);
 
@@ -109,6 +112,14 @@ pub struct Group {
 	pub value: Box<Node>
 }
 ast!(Group, visit_group);
+
+#[derive(Debug)]
+pub struct Assign {
+	pub token: Token,
+	pub left: Box<Node>,
+	pub right: Box<Node>,
+}
+ast!(Assign, visit_assign);
 
 #[derive(Debug)]
 pub struct Binary {

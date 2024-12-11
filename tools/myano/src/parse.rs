@@ -152,13 +152,34 @@ impl Parser<'_> {
 				token, condition, branch_then, branch_else,
 			});
 		}
-		return self.parse_comparison();
+		return self.parse_assignment();
+	}
+
+	fn parse_assignment(&mut self) -> Node {
+		let expr = self.parse_comparison();
+
+		if self.compare(&[TT::Equal]) {
+			let token = self.previous().clone();
+			let value = self.parse_assignment();
+
+			return Node::Assign(expr::Assign {
+				token, left: Box::new(expr), right: Box::new(value),
+			});
+		}
+
+		return expr;
 	}
 
 	fn parse_comparison(&mut self) -> Node {
 		let mut expr = self.parse_term();
 
-		while self.compare(&[TT::EqualEqual, TT::Lesser, TT::LesserEqual, TT::GreaterEqual, TT::Greater]) {
+		while self.compare(&[
+				TT::EqualEqual,
+				TT::Lesser,
+				TT::LesserEqual,
+				TT::GreaterEqual,
+				TT::Greater
+				]) {
 			let op = self.previous().clone();
 			let right = self.parse_term();
 			expr = Node::Binary(expr::Binary {
