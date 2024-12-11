@@ -3,6 +3,7 @@ mod error;
 mod token;
 mod parse;
 mod expr;
+mod resolve;
 // mod evaluate;
 mod runner;
 // mod vm;
@@ -23,6 +24,8 @@ fn main() {
 
 	let ast = parse::parse(&mut reporter, &tokens);
 	println!("{:?}", ast);
+
+	resolve::resolve(&mut reporter, &ast);
 
 	reporter.print();
 
