@@ -584,9 +584,11 @@ action_dashjump = function(_key_dir) {
 	} else {
 		// fast long jump
 		
-		x_vel = max(abs(x_vel) * 1, 8) * _key_dir;
+		var _key_dir_adjust = _key_dir == 0 ? dir : _key_dir;
 		
-		key_force = _key_dir;
+		x_vel = max(abs(x_vel) * 1, 8) * _key_dir_adjust
+		
+		key_force = _key_dir_adjust;
 		key_force_timer = defs.dashjump_fast_key_force;
 		
 		y_vel = defs.dashjump_fast_vel;
@@ -1109,7 +1111,7 @@ action_dash_end = function() {
 		}
 		
 		if dash_dir_y == 0 {
-			x_vel = lerp(abs(x_vel), abs(dash_dir_x_vel), 0.75) * sign(x_vel);
+			x_vel = lerp(max(abs(x_vel), abs(dash_pre_x_vel)), abs(dash_dir_x_vel), 0.1) * sign(x_vel);
 			
 			hold_jump = true;
 			hold_jump_vel = defs.terminal_vel;
@@ -1118,7 +1120,7 @@ action_dash_end = function() {
 			key_force = dash_dir_x;
 			key_force_timer = 4;
 		} else if dash_dir_y == -1 {
-			x_vel = lerp(abs(x_vel), abs(dash_dir_x_vel), 0.75) * sign(x_vel);
+			x_vel = lerp(max(abs(x_vel), abs(dash_pre_x_vel)), abs(dash_dir_x_vel), 0.1) * sign(x_vel);
 			
 			hold_jump = true;
 			hold_jump_vel = defs.terminal_vel;
@@ -1127,11 +1129,19 @@ action_dash_end = function() {
 			key_force = dash_dir_x;
 			key_force_timer = 4;
 		} else if dash_dir_y == 1 {
+			var _a_clamp, _a_damp;
 			if -sign(dash_dir_x_vel) == sign(dash_pre_x_vel) {
-				x_vel = lerp(abs(x_vel), abs(dash_dir_x_vel), 0.95) * sign(x_vel);
+				_a_clamp = 16;
+				_a_damp = 0.97;
 			} else {
-				x_vel = lerp(abs(x_vel), abs(dash_dir_x_vel), 0.8) * sign(x_vel);
+				_a_clamp = 12;
+				_a_damp = 0.6;
 			}
+			x_vel = lerp(
+				min(max(abs(x_vel), abs(dash_pre_x_vel)), _a_clamp),
+				abs(dash_dir_x_vel),
+				_a_damp
+			) * sign(x_vel);
 		}
 		
 		if y_vel > 0 {
@@ -1290,12 +1300,12 @@ state_dash = state_base.add()
 	
 	if buffer_jump > 0 {
 		if grace > 0 {
-			if _kh != dir && dash_timer <= 3 {
+			if _kh != dir {
 				action_dash_end();
 				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 				state.change(state_free);
 				return;
-			} else if _kh == dir {
+			} else if _kh == dir  {
 				action_dash_end();
 				action_dashjump(_kh);
 				state.change(state_free);
@@ -1312,7 +1322,7 @@ state_dash = state_base.add()
 				state.change(state_free);
 				return;
 			}
-			if _kh != dir && dash_timer <= 1 {
+			if _kh != dir && dash_timer <= 0 {
 				action_dash_end();
 				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 				state.change(state_free);
