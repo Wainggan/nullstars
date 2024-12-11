@@ -102,6 +102,34 @@ impl Parser<'_> {
 				token, condition, branch,
 			});
 		}
+		if self.compare(&[TT::For]) {
+			let token = self.previous().clone();
+
+			let initialize = Box::new(self.parse_statement());
+			self.consume(TT::Semicolon, "expected ';'", 0);
+
+			let condition = Box::new(self.parse_expression());
+			self.consume(TT::Semicolon, "expected ';'", 0);
+
+			let increment = Box::new(self.parse_expression());
+			self.consume(TT::Semicolon, "expected ';'", 0);
+			
+			let branch = Box::new(self.parse_loops());
+
+			return Node::Block(expr::Block {
+				stmts: vec![
+					initialize,
+					Box::new(Node::While(expr::While {
+						token, condition,
+						branch: Box::new(Node::Block(expr::Block {
+							stmts: vec![
+								branch, increment,
+							],
+						})),
+					})),
+				],
+			});
+		}
 		return self.parse_conditional();
 	}
 
