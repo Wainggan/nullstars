@@ -110,6 +110,9 @@ key_force_timer = 0;
 
 walljump_grace = 0;
 walljump_grace_dir = 0;
+walljump_solid = noone;
+walljump_solid_x = 0;
+walljump_solid_y = 0;
 
 ledge_key = 0;
 ledge_buffer_dir = 0;
@@ -540,6 +543,12 @@ action_jump = function() {
 
 action_walljump = function() {
 	
+	walljump_solid = instance_place(x + dir, y, obj_Solid);
+	if walljump_solid != noone {
+		walljump_solid_x = walljump_solid.x;
+		walljump_solid_y = walljump_solid.y;
+	}
+	
 	if actor_lift_get_x() == 0 && actor_lift_get_y() == 0 {
 		var _inst = instance_place(x + dir * defs.wall_distance, y, obj_Solid);
 		if _inst != noone {
@@ -685,6 +694,23 @@ state_base = state.add()
 	
 	scale_x = lerp(scale_x, 1, 0.2);
 	scale_y = lerp(scale_y, 1, 0.2);
+	
+	if state.is(state_free) {
+	 	if walljump_solid != noone {
+			if walljump_solid.x != walljump_solid_x || walljump_solid.y != walljump_solid_y {
+				actor_move_x(walljump_solid.x - walljump_solid_x);
+				actor_move_y(walljump_solid.y - walljump_solid_y);
+				walljump_solid_x = walljump_solid.x;
+				walljump_solid_y = walljump_solid.y;
+			}
+			var _solid = instance_place(x + dir, y, obj_Solid);
+			if _solid != walljump_solid {
+				walljump_solid = noone;
+			}
+		}
+	} else {
+		walljump_solid = noone;
+	}
 	
 	if y_vel >= 0 {
 		onground = actor_collision(x, y + 1);
