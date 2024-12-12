@@ -571,7 +571,7 @@ action_dashjump = function(_key_dir) {
 		if _key_dir == dash_dir_x {
 			// normal long jump
 			
-			x_vel = clamp(abs(x_vel), defs.move_speed + 1, 5) * _key_dir;
+			x_vel = 5 * _key_dir;
 			
 			y_vel = defs.jump_vel;
 			hold_jump_timer = defs.dashjump_time;
