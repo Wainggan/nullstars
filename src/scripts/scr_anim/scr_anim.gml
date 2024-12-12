@@ -15,28 +15,41 @@ function AnimController() constructor {
 	__meta_items = {};
 	__cache = 0;
 	
-	/// @return {self}
-	static add = function(_name, _level){
+	/// adds an AnimLevel
+	/// @arg {string} _name
+	/// @arg {struct.AnimLevel} _level
+	/// @return {struct.AnimController}
+	/// @self struct.AnimController
+	static add = function(_name, _level) {
 		animations[$ _name] = _level;
 		return self;
 	}
 	
-	static set = function(_name){
+	/// sets the current animation
+	/// @arg {string} _name
+	/// @self struct.AnimController
+	static set = function(_name) {
 		if current != _name {
 			timer = 0;
 		}
 		current = _name;
 	}
 	
-	static update = function(){
+	/// updates the current animation
+	static update = function() {
 		timer += animations[$ current].speed;
 	}
 	
-	static extract = function(_name){
+	/// gets an AnimLevel
+	/// @arg {string} _name
+	/// @return {struct.AnimLevel}
+	static extract = function(_name) {
 		return animations[$ _name];
 	}
 	
-	static get = function(){
+	/// gets the current frame
+	/// @return {real}
+	static get = function() {
 		var _current = animations[$ current];
 		var _frames = _current.frames;
 		if _current.loop != -1 {
