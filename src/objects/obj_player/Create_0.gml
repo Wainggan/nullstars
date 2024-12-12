@@ -9,6 +9,7 @@ event_inherited();
 defs = {
 	move_speed: 2,
 	move_accel: 0.5,
+	move_accel_fast: 0.8,
 	move_slowdown: 0.08,
 	move_slowdown_air: 0.04,
 	
@@ -864,8 +865,14 @@ state_free = state_base.add()
 			_x_accel = defs.move_slowdown_air;
 		}
 	} else {
-		_x_accel = defs.move_accel;
-		if nat_crouch() _x_accel = 0.2;
+		if abs(x_vel) > defs.move_speed && _k_move == -sign(x_vel) {
+			_x_accel = defs.move_accel_fast;
+		} else {
+			_x_accel = defs.move_accel;
+		}
+		if nat_crouch() {
+			_x_accel = 0.2;
+		}
 	}
 	
 	vel_keygrace -= 1;
