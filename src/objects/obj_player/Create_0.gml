@@ -244,6 +244,8 @@ anim.add("idle", new AnimLevel([_s_stand]))
 	x: -3, y: -15,
 });
 
+depth -= 10;
+
 anim_dive_timer = 0;
 anim_jab_timer = 0;
 anim_longjump_timer = 0;
@@ -526,8 +528,8 @@ action_jump = function() {
 	
 	dash_left = defs.dash_total;
 	
-	scale_x = 0.8;
-	scale_y = 1.2;
+	scale_x = 0.7;
+	scale_y = 1.3;
 	
 	if abs(x_vel) > defs.move_speed + 2 {
 		anim_runjump_timer = 120;
