@@ -14,7 +14,7 @@ defs = {
 	
 	gravity: 0.45,
 	gravity_hold: 0.26,
-	gravity_peak: 0.12,
+	gravity_peak: 0.1,
 	gravity_peak_thresh: 0.36,
 	gravity_term: 0.12,
 	
@@ -34,7 +34,7 @@ defs = {
 	dashjump_high_time: 8,
 	
 	terminal_vel: global.defs.terminal_vel,
-	terminal_vel_fast: 6,
+	terminal_vel_fast: 7,
 	
 	wall_distance: 4,
 	
