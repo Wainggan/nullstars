@@ -667,18 +667,22 @@ action_dashjump_wall = function(_key_dir, _wall_dir) {
 
 action_jump_bounce = function(_dir, _from_x, _from_y) {
 	
+	actor_move_y(_from_y - y);
+	
 	action_jump_shared();
 	
 	state.change(state_free);
 
-	y_vel = defs.jump_vel;
+	y_vel = defs.jump_vel - 2;
 	
-	hold_jump_key_timer = 24;
+	hold_jump_key_timer = 48;
 	hold_jump_vel = y_vel;
-	hold_jump_vel_timer = 12;
+	hold_jump_vel_timer = 6;
 	
-	scale_x = 0.7;
-	scale_y = 1.3;
+	dash_left = defs.dash_total;
+	
+	scale_x = 0.6;
+	scale_y = 1.4;
 	
 }
 
@@ -971,6 +975,7 @@ state_free = state_base.add()
 	
 	if INPUT.check_released("jump") && y_vel < 0 {
 		y_vel *= defs.jump_damp;
+		hold_jump_vel_timer = 0;
 	}
 	
 	var _termvel = defs.terminal_vel;
@@ -1262,7 +1267,7 @@ state_dash = state_base.add()
 		
 		if dash_dir_y == -1 {
 			dash_grace_kick = 16;
-			y_vel *= 0.7;
+			y_vel *= 0.8;
 		}
 		
 		dash_dir_x_vel = x_vel;
