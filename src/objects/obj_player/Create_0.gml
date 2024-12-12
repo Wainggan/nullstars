@@ -782,6 +782,13 @@ state_base = state.add()
 	};
 	actor_move_x(x_vel, __collide_x);
 	
+	var _inst = instance_place(x, y, obj_dash)
+	if dash_left < defs.dash_total && _inst && _inst.state.is(_inst.state_active) {
+		game_set_pause(4);
+		dash_left = defs.dash_total;
+		_inst.state.change(_inst.state_recover);
+	}
+	
 	if instance_exists(light) {
 		light.x = x;
 		light.y = y - (nat_crouch() ? 14 : 22);
