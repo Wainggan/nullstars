@@ -677,7 +677,7 @@ action_jump_bounce = function(_dir, _from_x, _from_y) {
 	
 	hold_jump_key_timer = 48;
 	hold_jump_vel = y_vel;
-	hold_jump_vel_timer = 6;
+	hold_jump_vel_timer = 7;
 	
 	dash_left = defs.dash_total;
 	
