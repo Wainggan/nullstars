@@ -20,7 +20,7 @@ defs = {
 	gravity_term: 0.12,
 	
 	boost_limit_x: 9,
-	boost_limit_y: 3,
+	boost_limit_y: 4,
 	
 	jump_vel: -4.8,
 	jump_time: 3,
