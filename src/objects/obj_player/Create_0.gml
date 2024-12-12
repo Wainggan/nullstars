@@ -695,7 +695,7 @@ state_base = state.add()
 	scale_x = lerp(scale_x, 1, 0.2);
 	scale_y = lerp(scale_y, 1, 0.2);
 	
-	if state.is(state_free) {
+	if state.is(state_free) || state.is(state_dash) {
 	 	if walljump_solid != noone {
 			if walljump_solid.x != walljump_solid_x || walljump_solid.y != walljump_solid_y {
 				actor_move_x(walljump_solid.x - walljump_solid_x);
@@ -801,7 +801,7 @@ state_base = state.add()
 	}
 	
 	static __collide_x = function() {
-		if vel_grace_timer <= 0 {
+		if vel_grace_timer <= 0 || abs(x_vel) > abs(vel_grace) { // bad idea
 			vel_grace_timer = 14;
 			vel_grace = x_vel;
 		}
@@ -1088,7 +1088,7 @@ state_ledge = state_base.add()
 	var _kh = INPUT.check("right") - INPUT.check("left");
 	var _kv = INPUT.check("down") - INPUT.check("up");
 	
-	x_vel = dir;
+	x_vel = 0;
 	
 	y_vel = 0;
 	if !actor_collision(x + dir, y - 22) {
