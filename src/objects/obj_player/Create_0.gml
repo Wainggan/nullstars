@@ -1164,8 +1164,8 @@ state_dash = state_base.add()
 	
 	dash_timer = 6;
 	dash_frame = 0; // this is stupid
-	dash_grace = 15;
-	dash_recover = 9;
+	dash_grace = 14;
+	dash_recover = 10;
 	
 })
 .set("leave", function() {
@@ -1214,7 +1214,7 @@ state_dash = state_base.add()
 		y_vel += lengthdir_y(7, _dir);
 		
 		if dash_dir_y == -1 {
-			dash_grace_kick = 20;
+			dash_grace_kick = 16;
 			y_vel *= 0.7;
 		}
 		
