@@ -702,6 +702,9 @@ state = new State();
 state_base = state.add()
 .set("step", function () {
 	
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
+	
 	buffer_jump -= 1;
 	buffer_dash -= 1;
 	if INPUT.check_pressed("jump") {
@@ -844,6 +847,28 @@ state_base = state.add()
 		game_set_pause(4);
 		dash_left = defs.dash_total;
 		_inst.state.change(_inst.state_recover);
+	}
+	
+	// this is horrible
+	if state.is(state_free) {
+		if y_vel > -1 {
+			if (
+				!onground && get_check_wall(_kh, 1) && !INPUT.check("down")
+			) && (
+				(ledge_buffer_dir_timer > 0 && ledge_buffer_dir == dir) ||
+				ledge_key == dir ||
+				(dash_grace > 0 && _kh == dash_dir_x)
+			) {
+				ledge_buffer_dir_timer = 0;
+				ledge_key = 0;
+				state.change(state_ledge);
+				return;
+			} else {
+				if y_vel > 2 {
+					ledge_key = 0;
+				}
+			}
+		}
 	}
 	
 	if instance_exists(light) {
@@ -1087,24 +1112,6 @@ state_free = state_base.add()
 	
 	if y_vel <= -1 && _kh != 0 {
 		ledge_key = _kh;
-	}
-	if y_vel > -1 {
-		if (
-			!onground && get_check_wall(_kh, 1) && !INPUT.check("down")
-		) && (
-			(ledge_buffer_dir_timer > 0 && ledge_buffer_dir == dir) ||
-			ledge_key == dir ||
-			(dash_grace > 0 && _kh == dash_dir_x)
-		) {
-			ledge_buffer_dir_timer = 0;
-			ledge_key = 0;
-			state.change(state_ledge);
-			return;
-		} else {
-			if y_vel > 2 {
-				ledge_key = 0;
-			}
-		}
 	}
 	
 });
