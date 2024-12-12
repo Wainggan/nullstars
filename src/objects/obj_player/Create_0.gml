@@ -589,7 +589,7 @@ action_dashjump = function(_key_dir) {
 		
 		var _key_dir_adjust = _key_dir == 0 ? dir : _key_dir;
 		
-		x_vel = max(abs(x_vel) * 1, 8) * _key_dir_adjust
+		x_vel = max(abs(x_vel) * 1, 8) * _key_dir_adjust;
 		
 		key_force = _key_dir_adjust;
 		key_force_timer = defs.dashjump_fast_key_force;

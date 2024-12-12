@@ -15,6 +15,7 @@ function AnimController() constructor {
 	__meta_items = {};
 	__cache = 0;
 	
+	/// @return {self}
 	static add = function(_name, _level){
 		animations[$ _name] = _level;
 		return self;
