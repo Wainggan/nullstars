@@ -539,6 +539,8 @@ action_jump = function() {
 		anim_runjump_timer = 120;
 	}
 	
+	game_sound_play(sfx_pop_0);
+	
 };
 
 action_walljump = function() {
@@ -623,6 +625,8 @@ action_dashjump = function(_key_dir) {
 	scale_x = 0.8;
 	scale_y = 1.2;
 	
+	game_sound_play(sfx_pop_2);
+	
 };
 
 action_dashjump_wall = function(_key_dir, _wall_dir) {
@@ -662,6 +666,8 @@ action_dashjump_wall = function(_key_dir, _wall_dir) {
 	
 	scale_x = 0.6;
 	scale_y = 1.4;
+	
+	game_sound_play(sfx_pop_2);
 	
 };
 
@@ -791,6 +797,7 @@ state_base = state.add()
 			if y_vel > 1 {
 				scale_x = 1.2;
 				scale_y = 0.8;
+				game_sound_play(sfx_pop_1);
 			}
 		}
 		y_vel = 0;
@@ -1218,6 +1225,8 @@ state_dash = state_base.add()
 	dash_frame = 0; // this is stupid
 	dash_grace = 14;
 	dash_recover = 10;
+	
+	game_sound_play(sfx_dash);
 	
 })
 .set("leave", function() {
