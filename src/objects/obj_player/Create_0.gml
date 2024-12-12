@@ -665,6 +665,25 @@ action_dashjump_wall = function(_key_dir, _wall_dir) {
 	
 };
 
+action_jump_bounce = function(_dir, _from_x, _from_y) {
+	
+	action_jump_shared();
+	
+	state.change(state_free);
+
+	y_vel = defs.jump_vel;
+	
+	hold_jump = true;
+	hold_jump_vel = y_vel;
+	hold_jump_timer = 10;
+	
+	scale_x = 0.7;
+	scale_y = 1.3;
+	
+}
+
+event.add("bounce", action_jump_bounce);
+
 #endregion
 
 
