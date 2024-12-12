@@ -27,3 +27,4 @@ function tween(_index, _t) {
 function terp(_a, _b, _index, _t) {
 	return lerp(_a, _b, tween(_index, _t));
 }
+
