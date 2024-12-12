@@ -1061,7 +1061,8 @@ state_free = state_base.add()
 			!onground && get_check_wall(_kh, 1) && !INPUT.check("down")
 		) && (
 			(ledge_buffer_dir_timer > 0 && ledge_buffer_dir == dir) ||
-			ledge_key == dir
+			ledge_key == dir ||
+			(dash_grace > 0 && _kh == dash_dir_x)
 		) {
 			ledge_buffer_dir_timer = 0;
 			ledge_key = 0;
