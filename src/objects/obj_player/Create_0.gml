@@ -101,9 +101,9 @@ vel_keygrace = 0;
 vel_grace = 0;
 vel_grace_timer = 0;
 
-hold_jump = false;
+hold_jump_key_timer = 0;
 hold_jump_vel = 0;
-hold_jump_timer = 0;
+hold_jump_vel_timer = 0;
 
 key_force = 0;
 key_force_timer = 0;
@@ -494,9 +494,9 @@ action_jump_shared = function() {
 	dash_grace = 0;
 	dash_grace_kick = 0;
 	
-	hold_jump = false;
+	hold_jump_key_timer = 0;
 	hold_jump_vel = defs.terminal_vel;
-	hold_jump_timer = 0;
+	hold_jump_vel_timer = 0;
 	
 	action_anim_jump();
 	
@@ -523,9 +523,9 @@ action_jump = function() {
 	}
 	x_vel += defs.jump_move_boost * _kh;
 	
-	hold_jump = false;
+	hold_jump_key_timer = 0;
 	hold_jump_vel = y_vel;
-	hold_jump_timer = defs.jump_time;
+	hold_jump_vel_timer = defs.jump_time;
 	
 	x_vel += get_lift_x();
 	y_vel += get_lift_y();
@@ -560,7 +560,7 @@ action_walljump = function() {
 	
 	anim_runjump_timer = 0;
 	
-	hold_jump = true;
+	hold_jump_key_timer = defs.jump_time;
 	
 	walljump_grace = defs.walljump_grace;
 	walljump_grace_dir = dir;
@@ -584,14 +584,14 @@ action_dashjump = function(_key_dir) {
 			x_vel = 5 * _key_dir;
 			
 			y_vel = defs.jump_vel;
-			hold_jump_timer = defs.dashjump_time;
+			hold_jump_vel_timer = defs.dashjump_time;
 		} else {
 			// high jump
 			
 			x_vel = abs(x_vel) * 0.8 * _key_dir;
 			
 			y_vel = defs.jump_vel;
-			hold_jump_timer = defs.dashjump_high_time;
+			hold_jump_vel_timer = defs.dashjump_high_time;
 		}
 	} else {
 		// fast long jump
@@ -604,13 +604,13 @@ action_dashjump = function(_key_dir) {
 		key_force_timer = defs.dashjump_fast_key_force;
 		
 		y_vel = defs.dashjump_fast_vel;
-		hold_jump_timer = defs.dashjump_time;
+		hold_jump_vel_timer = defs.dashjump_time;
 	}
 	if !INPUT.check("jump") {
 		y_vel *= defs.jump_damp;
 	}
 	
-	hold_jump = false;
+	hold_jump_key_timer = 0;
 	hold_jump_vel = y_vel;
 	
 	if get_can_uncrouch() {
@@ -650,9 +650,9 @@ action_dashjump_wall = function(_key_dir, _wall_dir) {
 	key_force = -_wall_dir;
 	dir = -_wall_dir;
 	
-	hold_jump = false;
+	hold_jump_key_timer = 0;
 	hold_jump_vel = y_vel;
-	hold_jump_timer = 6;
+	hold_jump_vel_timer = 6;
 	
 	vel_grace = 0;
 	vel_grace_timer = 0;
@@ -673,9 +673,9 @@ action_jump_bounce = function(_dir, _from_x, _from_y) {
 
 	y_vel = defs.jump_vel;
 	
-	hold_jump = true;
+	hold_jump_key_timer = 24;
 	hold_jump_vel = y_vel;
-	hold_jump_timer = 10;
+	hold_jump_vel_timer = 12;
 	
 	scale_x = 0.7;
 	scale_y = 1.3;
@@ -950,7 +950,7 @@ state_free = state_base.add()
 	}
 	
 	var _k_jump = INPUT.check("jump");
-	if hold_jump {
+	if hold_jump_key_timer > 0 {
 		_k_jump = true;
 	}
 	
@@ -982,16 +982,17 @@ state_free = state_base.add()
 		_termvel -= 1;
 	}
 	
-	if hold_jump_timer > 0 {
-		hold_jump_timer -= 1;
+	if hold_jump_key_timer > 0 {
+		hold_jump_key_timer -= 1;
+	}
+	if hold_jump_vel_timer > 0 {
+		hold_jump_vel_timer -= 1;
 		if _k_jump {
 			y_vel = min(y_vel, hold_jump_vel);
-		} else {
-			hold_jump = false;
-			hold_jump_timer = 0;
 		}
-	} else {
-		hold_jump = false;
+	}
+	if !_k_jump {
+		hold_jump_vel_timer = 0;
 	}
 	
 	if !onground {
@@ -1169,15 +1170,15 @@ action_dash_end = function() {
 	if dash_dir_y == 0 {
 		x_vel = max(abs(dash_pre_x_vel), 3) * sign(x_vel);
 		
-		hold_jump = true;
+		hold_jump_key_timer = 12;
 		hold_jump_vel = defs.terminal_vel;
-		hold_jump_timer = 12;
+		hold_jump_vel_timer = 12;
 	} else if dash_dir_y == -1 {
 		x_vel = max(abs(dash_pre_x_vel), 3) * sign(x_vel);
 		
-		hold_jump = true;
+		hold_jump_key_timer = 24;
 		hold_jump_vel = defs.terminal_vel;
-		hold_jump_timer = 24;
+		hold_jump_vel_timer = 24;
 	} else if dash_dir_y == 1 {
 		if sign(dash_dir_x_vel) == sign(dash_pre_x_vel) {
 			x_vel = max(lerp(abs(dash_pre_x_vel), abs(dash_dir_x_vel) - 1, 0.1), 8) * sign(x_vel);
