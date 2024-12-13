@@ -1358,6 +1358,10 @@ state_swim = state_base.add()
 	var _kh = INPUT.check("right") - INPUT.check("left");
 	var _kv = INPUT.check("down") - INPUT.check("up");
 	
+	if _kh != 0 {
+		dir = _kh;
+	}
+	
 	grace = defs.grace;
 	grace_y = y;
 	

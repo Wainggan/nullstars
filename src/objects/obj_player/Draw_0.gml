@@ -5,7 +5,31 @@ anim_longjump_timer -= 1;
 anim_flip_timer -= 1;
 anim_runjump_timer -= 1;
 
-if state.is(state_ledge) {
+var _pos_x = x;
+var _pos_y = y;
+
+if state.is(state_swim) {
+	
+	var _swim_spd = point_distance(0, 0, x_vel, y_vel);
+	var _swim_dir = point_direction(0, 0, x_vel, y_vel);
+	
+	if _swim_spd < 1 {
+		anim.extract("swim").speed = 1 / 60;
+		anim.set("swim");
+	}
+	else if abs(_swim_dir % 360 - 90) < 10 || (abs(_swim_dir % 360 - 270) < 10 && false) {
+		anim.extract("swim").speed = 1 / round(max(20 - abs(_swim_spd) * 2, 8));
+		anim.set("swim");
+	}
+	else {
+		anim.extract("swimming").speed = 1 / round(max(20 - abs(_swim_spd) * 2, 8));
+		anim.set("swimming");
+	}
+	
+	_pos_y += wave(-2, 3, 8);
+	
+}
+else if state.is(state_ledge) {
 	anim.set("ledge");
 }
 else if state.is(state_menu) {
@@ -63,7 +87,7 @@ anim.update();
 
 var _meta = anim.meta();
 
-tail.position(x + _meta.x * dir, y + _meta.y);
+tail.position(_pos_x + _meta.x * dir, _pos_y + _meta.y);
 
 tail.update(, action_tail_update_point);
 
@@ -78,7 +102,7 @@ var _frame = anim.get();
 
 draw_sprite_ext(
 	spr_player,
-	_frame, x, y,
+	_frame, _pos_x, _pos_y,
 	scale_x * dir, scale_y,
 	0, _mult, 1
 );
