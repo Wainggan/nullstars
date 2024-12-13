@@ -5,10 +5,23 @@ anim_longjump_timer -= 1;
 anim_flip_timer -= 1;
 anim_runjump_timer -= 1;
 
+var _sprite = spr_player;
 var _pos_x = x;
 var _pos_y = y;
+var _tail_x = undefined;
+var _tail_y = undefined;
+var _angle = 0;
+var _dir = dir;
 
-if state.is(state_swim) {
+if state.is(state_swim_bullet) {
+	_sprite = spr_player_bullet;
+	_angle = swim_dir;
+	_dir = 1;
+	_pos_y -= 16;
+	_tail_x = 0;
+	_tail_y = 0;
+}
+else if state.is(state_swim) {
 	
 	var _swim_spd = point_distance(0, 0, x_vel, y_vel);
 	var _swim_dir = point_direction(0, 0, x_vel, y_vel);
@@ -87,7 +100,10 @@ anim.update();
 
 var _meta = anim.meta();
 
-tail.position(_pos_x + _meta.x * dir, _pos_y + _meta.y);
+tail.position(
+	_pos_x + (_tail_x ?? _meta.x * dir),
+	_pos_y + (_tail_y ?? _meta.y),
+);
 
 tail.update(, action_tail_update_point);
 
@@ -101,10 +117,10 @@ if !_meta.front {
 var _frame = anim.get();
 
 draw_sprite_ext(
-	spr_player,
+	_sprite,
 	_frame, _pos_x, _pos_y,
-	scale_x * dir, scale_y,
-	0, _mult, 1
+	scale_x * _dir, scale_y,
+	_angle, _mult, 1
 );
 
 if _meta.front {

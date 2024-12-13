@@ -133,6 +133,9 @@ dash_recover = 0;
 
 swim_dir = 0;
 swim_spd = 0;
+swim_pre_x_vel = 0;
+swim_pre_y_vel = 0;
+swim_frame = 0;
 
 
 dash_left = defs.dash_total;
@@ -159,7 +162,6 @@ var _s_stand = 0,
 	_s_swim_idle_2 = 12,
 	_s_swim_1 = 13,
 	_s_swim_2 = 14,
-	_s_swim_bullet = 15,
 	_s_ledge = 16,
 	_s_crouch = 17,
 	_s_flip_1 = 18,
@@ -183,7 +185,6 @@ anim.add("idle", new AnimLevel([_s_stand]))
 .add("longjump", new AnimLevel([_s_long]))
 .add("swim", new AnimLevel([_s_swim_idle_1, _s_swim_idle_2], 1 / 60))
 .add("swimming", new AnimLevel([_s_swim_1, _s_swim_2], 1 / 60))
-.add("swimbullet", new AnimLevel([_s_swim_bullet]))
 .add("ledge", new AnimLevel([_s_ledge]))
 .add("crouch", new AnimLevel([_s_crouch]))
 .add("flip", new AnimLevel([_s_flip_1, _s_flip_2], 1 / 14, 0))
@@ -226,9 +227,6 @@ anim.add("idle", new AnimLevel([_s_stand]))
 })
 .meta_items([_s_swim_2], {
 	x: -4, y: -17,
-})
-.meta_items([_s_swim_bullet], {
-	x: 0, y: -16,
 })
 .meta_items([_s_ledge], {
 	x: -4, y: -17,
@@ -317,8 +315,8 @@ action_tail_update_point = function(_p, i, _points) {
 	_p.x_move = 0;
 	_p.y_move = 0;
 	
-	//if state.is(state_swim) && swim_bullet {
-	//	_p.damp = 0.5;
+	if state.is(state_swim_bullet) {
+		_p.damp = 0.5;
 	//	
 	//} else 
 	//if holding {
@@ -337,13 +335,13 @@ action_tail_update_point = function(_p, i, _points) {
 		//} else {
 			//
 		//}
-	//} else {
+	} else {
 		_p.damp = 0.8;
 		
 		var _d = sin(global.time / 60 - i * 0.6);
 		_p.x_move = -dir * (power(_scale_inv, 6) * 6 + 0.1);
 		_p.y_move = _d * (_scale_inv * 0.2 + 0.1) + 0.3 * _scale_inv;
-	//}
+	}
 };
 
 action_tail_draw_point = function(_p, i, _points, _tip, _blend) {
@@ -1114,7 +1112,11 @@ state_free = state_base.add()
 	}
 	
 	if get_check_water(x, y) {
-		state.change(state_swim);
+		if dash_grace > 0 {
+			state.change(state_swim_bullet);
+		} else {
+			state.change(state_swim);
+		}
 		return;
 	}
 	
@@ -1409,6 +1411,11 @@ state_swim = state_base.add()
 		return;
 	}
 	
+	if buffer_dash > 0 {
+		state.change(state_swim_bullet);
+		return;
+	}
+	
 	if buffer_jump > 0 {
 		action_jump();
 		return;
@@ -1419,26 +1426,42 @@ state_swim = state_base.add()
 state_swim_bullet = state_base.add()
 .set("enter", function() {
 	
-	game_set_pause(4);
+	game_set_pause(3);
 	
-	swim_dir = point_direction(0, 0, x_vel, y_vel);
-	swim_spd = max(point_distance(0, 0, x_vel, y_vel), 8);
+	buffer_dash = 0;
+	
+	swim_pre_x_vel = x_vel;
+	swim_pre_y_vel = y_vel;
+	
+	x_vel = 0;
+	y_vel = 0;
+	
+	swim_frame = 0;
 	
 })
 .set("step", function() {
-	
-	if get_can_uncrouch() {
-		nat_crouch(false);
-	}
-	
-	var _push_x = place_meeting(x + 16, y, obj_water) - place_meeting(x - 16, y, obj_water);
-	var _push_y = place_meeting(x, y + 24, obj_water) - place_meeting(x, y - 24, obj_water);
 	
 	var _kh = INPUT.check("right") - INPUT.check("left");
 	var _kv = INPUT.check("down") - INPUT.check("up");
 	
 	var _kh_r = INPUT.check_raw("horizontal");
 	var _kv_r = INPUT.check_raw("vertical");
+	
+	if swim_frame == 0 {
+		if _kh == 0 && _kv == 0 {
+			swim_dir = point_direction(0, 0, swim_pre_x_vel, swim_pre_y_vel);
+		} else {
+			swim_dir = point_direction(0, 0, _kh == 0 ? dir : _kh, _kv);
+		}
+		swim_spd = max(point_distance(0, 0, swim_pre_x_vel, swim_pre_y_vel), 8);
+	}
+	
+	if get_can_uncrouch() {
+		nat_crouch(false);
+	}
+	
+	var _push_x = get_check_water(x + 16, y) - get_check_water(x - 16, y);
+	var _push_y = get_check_water(x, y + 24) - get_check_water(x, y - 24);
 	
 	if _kh != 0 {
 		dir = _kh;
@@ -1465,14 +1488,21 @@ state_swim_bullet = state_base.add()
 	x_vel = lengthdir_x(swim_spd, swim_dir) + _push_x;
 	y_vel = lengthdir_y(swim_spd, swim_dir) + _push_y;
 	
-	if !place_meeting(x, y, obj_water) {
+	if !get_check_water(x, y) {
 		grace = defs.grace;
 		grace_y = y;
 		state.change(state_free);
 		return;
 	}
 	
-})
+	if buffer_dash > 0 {
+		state.change(state_swim_bullet);
+		return;
+	}
+	
+	swim_frame += 1;
+	
+});
 
 state_menu = state_base.add()
 .set("enter", function() {
