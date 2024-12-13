@@ -364,6 +364,12 @@ action_tail_draw = function(_color, _mult) {
 
 #region methods
 
+get_check_water = function(_x, _y) {
+	return place_meeting(_x, _y, obj_water) &&
+		place_meeting(_x, _y - 16, obj_water) &&
+		place_meeting(_x, _y + 6, obj_water);
+}
+
 get_check_wall = function(_dir, _dist = defs.wall_distance) {
 	return actor_collision(x + _dir * _dist, y);
 };
@@ -1102,6 +1108,11 @@ state_free = state_base.add()
 		}
 	}
 	
+	if get_check_water(x, y) {
+		state.change(state_swim);
+		return;
+	}
+	
 	var _kh_p = INPUT.check_pressed("right") - INPUT.check_pressed("left");
 	
 	ledge_buffer_dir_timer -= 1;
@@ -1340,11 +1351,63 @@ state_dash = state_base.add()
 	
 });
 
+state_swim = state_base.add()
+.set("step", function() {
+	
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
+	
+	grace = defs.grace;
+	grace_y = y;
+	
+	dash_left = defs.dash_total;
+	
+	var _spd = 5;
+	
+	var _x_vel = _spd * _kh;
+	var _y_vel = _spd * _kv;
+	if _kh != 0 && _kv != 0 {
+		var _factor = sqrt(2) / 2;
+		_x_vel *= _factor;
+		_y_vel *= _factor;
+	}
+	
+	var _x_accel = 0.3;
+	var _y_accel = 0.3;
+	
+	if abs(x_vel) > abs(_x_vel) && sign(x_vel) == _kh {
+		_x_accel = 0.04;
+	}
+	if abs(y_vel) > abs(_y_vel) && sign(y_vel) == _kv {
+		_y_accel = 0.04;
+	}
+	
+	x_vel = approach(x_vel, _x_vel, _x_accel);
+	y_vel = approach(y_vel, _y_vel, _y_accel);
+	
+	if !get_check_water(x, y) {
+		if y_vel < 0 {
+			y_vel *= 0.95;
+			hold_jump_key_timer = 8;
+			hold_jump_vel = y_vel;
+			hold_jump_vel_timer = 2;
+		}
+		state.change(state_free);
+		return;
+	}
+	
+	if buffer_jump > 0 {
+		action_jump();
+		return;
+	}
+	
+});
+
 state_menu = state_base.add()
-.set("enter", function(){
+.set("enter", function() {
 	with obj_menu system.open(page_none);
 })
-.set("step", function(){
+.set("step", function() {
 	x_vel = approach(x_vel, 0, defs.move_accel);
 	y_vel = approach(y_vel, defs.terminal_vel, defs.gravity);
 	
