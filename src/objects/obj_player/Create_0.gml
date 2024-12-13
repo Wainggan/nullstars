@@ -707,6 +707,22 @@ event.add("bounce", action_jump_bounce);
 
 state = new State();
 
+state_stuck = state.add()
+.set("step", function() {
+	if game_paused() {
+		return;
+	}
+	x_vel = approach(x_vel, 0, 0.5);
+	y_vel = approach(y_vel, defs.terminal_vel, defs.gravity);
+	
+	actor_move_x(x_vel);
+	actor_move_y(y_vel);
+	
+	if actor_collision(x, y + 1) {
+		state.change(state_free);
+	}
+});
+
 state_base = state.add()
 .set("step", function () {
 	
@@ -917,6 +933,11 @@ state_base = state.add()
 		}
 	} else {
 		respawn_timer = approach(respawn_timer, 0, 2);
+	}
+	
+	if place_meeting(x, y, obj_flag_stop) {
+		state.change(state_stuck);
+		return;
 	}
 	
 });
