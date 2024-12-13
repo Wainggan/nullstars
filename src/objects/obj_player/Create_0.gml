@@ -131,6 +131,10 @@ dash_grace = 0;
 dash_grace_kick = 0;
 dash_recover = 0;
 
+swim_dir = 0;
+swim_spd = 0;
+
+
 dash_left = defs.dash_total;
 
 cam_ground_x = x;
@@ -1346,7 +1350,11 @@ state_dash = state_base.add()
 	
 	if dash_timer <= 0 {
 		action_dash_end();
-		state.change(state_free);
+		if get_check_water(x, y) {
+			state.change(state_swim_bullet);
+		} else {
+			state.change(state_free);
+		}
 		return;
 	}
 	
@@ -1407,6 +1415,64 @@ state_swim = state_base.add()
 	}
 	
 });
+
+state_swim_bullet = state_base.add()
+.set("enter", function() {
+	
+	game_set_pause(4);
+	
+	swim_dir = point_direction(0, 0, x_vel, y_vel);
+	swim_spd = max(point_distance(0, 0, x_vel, y_vel), 8);
+	
+})
+.set("step", function() {
+	
+	if get_can_uncrouch() {
+		nat_crouch(false);
+	}
+	
+	var _push_x = place_meeting(x + 16, y, obj_water) - place_meeting(x - 16, y, obj_water);
+	var _push_y = place_meeting(x, y + 24, obj_water) - place_meeting(x, y - 24, obj_water);
+	
+	var _kh = INPUT.check("right") - INPUT.check("left");
+	var _kv = INPUT.check("down") - INPUT.check("up");
+	
+	var _kh_r = INPUT.check_raw("horizontal");
+	var _kv_r = INPUT.check_raw("vertical");
+	
+	if _kh != 0 {
+		dir = _kh;
+	}
+	
+	dash_left = defs.dash_total;
+
+	var _k_dir = point_direction(0, 0, _kh_r, _kv_r)
+	
+	var _dir_target = _k_dir;
+	if _kh == 0 && _kv == 0 {
+		_dir_target = swim_dir;
+	}
+	var _dir_diff = angle_difference(swim_dir, _dir_target);
+	
+	var _spd_target_normal = point_distance(0, 0, _kh_r, _kv_r);
+	var _dir_accel = 2;
+	
+	swim_spd = approach(swim_spd, max(swim_spd, 8), 1);
+	_dir_accel = 2;
+	
+	swim_dir -= clamp(round(sign(_dir_diff) * _dir_accel), -abs(_dir_diff), abs(_dir_diff));
+	
+	x_vel = lengthdir_x(swim_spd, swim_dir) + _push_x;
+	y_vel = lengthdir_y(swim_spd, swim_dir) + _push_y;
+	
+	if !place_meeting(x, y, obj_water) {
+		grace = defs.grace;
+		grace_y = y;
+		state.change(state_free);
+		return;
+	}
+	
+})
 
 state_menu = state_base.add()
 .set("enter", function() {
