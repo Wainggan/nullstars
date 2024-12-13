@@ -396,10 +396,10 @@ get_check_death = function(_x, _y) {
 	
 	static __size = 5;
 	
-	var _left = bbox_left + 1;
-	var _top = bbox_top + 1;
-	var _right = bbox_right - 1;
-	var _bottom = bbox_bottom - 1;
+	var _left = (bbox_left - x) + _x + 1;
+	var _top = (bbox_top - y) + _y + 1;
+	var _right = (bbox_right - x) + _x - 1;
+	var _bottom = (bbox_bottom - y) + _y - 1;
 	
 	for (var i_level = 0; i_level < array_length(level.loaded); i_level++) {
 		
@@ -1087,11 +1087,12 @@ state_free = state_base.add()
 			var _close = actor_collision(x, y + 24) ||
 				get_check_wall(-1, 20) ||
 				get_check_wall(1, 20);
+			_close = _close && !get_check_death(x, y + 24);
 			if _close && dash_grace > 0 {
 				dash_grace = 2;
 			}
 			if dash_grace > 0 && dash_dir_y != -1 && 
-				((_close && grace > 0) || !_close || dash_dir_y == 0) &&
+				(!_close || dash_dir_y == 0) &&
 				!get_check_wall(sign(x_vel), 6) {
 				action_dashjump(_kh == 0 && dash_dir_y == 1 ? dir : _kh);
 			} else if dash_grace_kick > 0 && dash_dir_y == -1 {
