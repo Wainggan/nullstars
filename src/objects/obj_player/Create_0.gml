@@ -1426,7 +1426,7 @@ state_swim = state_base.add()
 state_swim_bullet = state_base.add()
 .set("enter", function() {
 	
-	game_set_pause(3);
+	game_set_pause(4);
 	
 	buffer_dash = 0;
 	
@@ -1449,9 +1449,9 @@ state_swim_bullet = state_base.add()
 	
 	if swim_frame == 0 {
 		if _kh == 0 && _kv == 0 {
-			swim_dir = point_direction(0, 0, swim_pre_x_vel, swim_pre_y_vel);
+			swim_dir = point_direction(0, 0, swim_pre_x_vel == 0 ? dir : swim_pre_x_vel, swim_pre_y_vel);
 		} else {
-			swim_dir = point_direction(0, 0, _kh == 0 ? dir : _kh, _kv);
+			swim_dir = point_direction(0, 0, _kh, _kv);
 		}
 		swim_spd = max(point_distance(0, 0, swim_pre_x_vel, swim_pre_y_vel), 8);
 	}
