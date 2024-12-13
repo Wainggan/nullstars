@@ -1491,6 +1491,9 @@ state_swim_bullet = state_base.add()
 	if !get_check_water(x, y) {
 		grace = defs.grace;
 		grace_y = y;
+		if y_vel < 0 {
+			y_vel *= 0.95;
+		}
 		state.change(state_free);
 		return;
 	}
