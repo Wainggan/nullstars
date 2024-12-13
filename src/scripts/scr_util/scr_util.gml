@@ -45,7 +45,7 @@ function mod_euclidean(_value, _by) {
 
 /// @pure
 function map(_value, _start_low, _start_high, _target_low, _target_high) {
-    return (((_value - _start_low) / (_start_high - _start_low)) * (_target_high - _target_low)) + _target_low;
+    return ((_value - _start_low) / (_start_high - _start_low)) * (_target_high - _target_low) + _target_low;
 }
 
 /// wrapper for `sin()`.

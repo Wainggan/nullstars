@@ -811,7 +811,11 @@ state_base = state.add()
 				game_sound_play(sfx_pop_1);
 			}
 		}
-		y_vel = 0;
+		if state.is(state_swim_bullet) {
+			swim_dir = point_direction(0, 0, x_vel, -y_vel);
+		} else {
+			y_vel = 0;
+		}
 	};
 	actor_move_y(y_vel, __collide_y);
 	
@@ -846,7 +850,11 @@ state_base = state.add()
 			vel_grace_timer = 14;
 			vel_grace = x_vel;
 		}
-		x_vel = 0;
+		if state.is(state_swim_bullet) {
+			swim_dir = point_direction(0, 0, -x_vel, y_vel);
+		} else {
+			x_vel = 0;
+		}
 	};
 	actor_move_x(x_vel, __collide_x);
 	
@@ -1481,7 +1489,10 @@ state_swim_bullet = state_base.add()
 	var _dir_accel = 2;
 	
 	swim_spd = approach(swim_spd, max(swim_spd, 8), 1);
-	_dir_accel = 2;
+	_dir_accel = map(swim_spd, 8, 24, 4, 1);
+	_dir_accel = clamp(_dir_accel, 1, 4);
+	
+	show_debug_message(_dir_accel)
 	
 	swim_dir -= clamp(round(sign(_dir_diff) * _dir_accel), -abs(_dir_diff), abs(_dir_diff));
 	
@@ -1491,8 +1502,11 @@ state_swim_bullet = state_base.add()
 	if !get_check_water(x, y) {
 		grace = defs.grace;
 		grace_y = y;
-		if y_vel < 0 {
+		if y_vel <= 0 {
 			y_vel *= 0.95;
+			hold_jump_key_timer = 24;
+			hold_jump_vel = y_vel;
+			hold_jump_vel_timer = 2;
 		}
 		state.change(state_free);
 		return;
