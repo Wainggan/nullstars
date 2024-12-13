@@ -1492,8 +1492,6 @@ state_swim_bullet = state_base.add()
 	_dir_accel = map(swim_spd, 8, 24, 4, 1);
 	_dir_accel = clamp(_dir_accel, 1, 4);
 	
-	show_debug_message(_dir_accel)
-	
 	swim_dir -= clamp(round(sign(_dir_diff) * _dir_accel), -abs(_dir_diff), abs(_dir_diff));
 	
 	x_vel = lengthdir_x(swim_spd, swim_dir) + _push_x;
