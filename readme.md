@@ -3,7 +3,7 @@
 
 speedrun platformer.
 
-[updates](https://bsky.app/profile/parchii.bsky.social)
+- [updates](https://bsky.app/profile/parchii.bsky.social)
 
 
 ## use
@@ -19,11 +19,11 @@ currently only tested on windows, with plans to support ubuntu and web assembly.
 
 [ldtk](https://ldtk.io/) is used for level editing [the map](/map).
 
-after editing the level, make sure the game is closed, then either build+run [plevel](/tools/plevel) or use `build-level.bat` to compile the map.
+after editing the level, make sure the game is closed, then either build+run [plevel](/tools/plevel) or use `build-level.[bat/sh]` to compile the map.
 
 
 ### tools
 
-custom tools are found in [tools](/tools). make sure to have [rust](https://www.rust-lang.org/) installed.
+custom tools are found in [/tools](/tools). make sure to have [rust installed](https://www.rust-lang.org/).
 
 
