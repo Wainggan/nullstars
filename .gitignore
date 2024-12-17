@@ -2,3 +2,4 @@
 assets/sounds/*.wav
 src/datafiles/*
 src/Build/*
+bin/*
