@@ -32,33 +32,37 @@ function draw_circle_sprite_outline(_x, _y, _r, _width = 1, _col = draw_get_colo
 	
 }
 
-function draw_circle_outline_part(_x, _y, _radius, _thick, _percentage, _start, _anti, _color = draw_get_color(), _alpha = draw_get_alpha()) {
+function draw_circle_outline_part(_x, _y, _radius, _thick, _percentage, _start, _anti, _color = draw_get_color(), _alpha = draw_get_alpha(), _res = 32) {
 
-	static __res = 32;
-	static __interval = 360 / __res;
+	var _interval = 360 / _res;
 	
-	_anti = _anti ? -1 : 1
+	_anti = _anti ? -1 : 1;
 	
 	var _hthick = _thick / 2;
     
 	draw_primitive_begin(pr_trianglestrip);
     
-	for (var i = 0; i < _percentage * __res; i++) {
-
-		var angle = _start + __interval * i * _anti;
+	for (var i = 0; i < _percentage * _res; i++) {
+		var angle = _start + _interval * i * _anti;
 		var dir_x = dcos(angle);
 		var dir_y = -dsin(angle);
         
 		draw_vertex_color(_x + (_radius + _hthick) * dir_x, _y + (_radius + _hthick) * dir_y, _color, _alpha);
-        
 		draw_vertex_color(_x + (_radius - _hthick) * dir_x, _y + (_radius - _hthick) * dir_y, _color, _alpha);
 	}
+	
+	var angle = _start + _interval * _percentage * _res * _anti;
+	var dir_x = dcos(angle);
+	var dir_y = -dsin(angle);
+	
+	draw_vertex_color(_x + (_radius + _hthick) * dir_x, _y + (_radius + _hthick) * dir_y, _color, _alpha);
+	draw_vertex_color(_x + (_radius - _hthick) * dir_x, _y + (_radius - _hthick) * dir_y, _color, _alpha);
 	
 	draw_primitive_end();
 }
 
-function draw_circle_outline(_x, _y, _radius, _thick, _color = undefined, _alpha = undefined) {
-	draw_circle_outline_part(_x, _y, _radius, _thick, 1, 0, false, _color, _alpha)
+function draw_circle_outline(_x, _y, _radius, _thick, _color = undefined, _alpha = undefined, _res = undefined) {
+	draw_circle_outline_part(_x, _y, _radius, _thick, 1, 0, false, _color, _alpha, _res)
 }
 
 function draw_circle_sprite(_x, _y, _radius, _color = draw_get_color(), _alpha = draw_get_alpha()) {

@@ -21,7 +21,12 @@ update = function(_anim = true) {
 	_cam_h = camera_get_view_height(view_camera[0])
 
 	if instance_exists(target) {
-		target.cam()
+		var _out = {
+			x: x, y: y
+		};
+		target.cam(_out); // bandage
+		target_x = _out.x;
+		target_y = _out.y;
 	}
 
 	var _tx = target_x, _ty = target_y;

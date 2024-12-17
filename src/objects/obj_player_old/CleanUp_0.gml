@@ -1,5 +1,4 @@
-
 if variable_instance_exists(self, "defs") {
-	instance_destroy(light);
+	hold_end()
+	instance_destroy(light)
 }
-

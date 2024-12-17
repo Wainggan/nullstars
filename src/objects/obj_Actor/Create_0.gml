@@ -19,9 +19,11 @@ y_rem = 0;
 // updated when moved by an obj_Solid
 lift_x = 0;
 lift_y = 0;
+lift_last_time = 0;
 lift_last_x = 0;
 lift_last_y = 0;
-lift_last_time = 0;
+
+event = new Event();
 
 riding = function(_solid) {
 	return place_meeting(x, y + 1, _solid);

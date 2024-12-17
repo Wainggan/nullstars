@@ -2549,7 +2549,7 @@
 				},
 				{
 					"__identifier": "obj_ss_up",
-					"__grid": [13,17],
+					"__grid": [13,18],
 					"__pivot": [0,0],
 					"__tags": [ "semisolid", "SIZE_TILE" ],
 					"__tile": { "tilesetUid": 8, "x": 384, "y": 80, "w": 16, "h": 16 },
@@ -2558,10 +2558,10 @@
 					"width": 128,
 					"height": 16,
 					"defUid": 244,
-					"px": [208,272],
+					"px": [208,288],
 					"fieldInstances": [],
 					"__worldX": 27664,
-					"__worldY": 6208
+					"__worldY": 6224
 				},
 				{
 					"__identifier": "obj_ss_up",
