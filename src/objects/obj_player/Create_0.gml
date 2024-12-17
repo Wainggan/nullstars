@@ -647,24 +647,17 @@ action_dashjump_wall = function(_key_dir, _wall_dir) {
 		dash_left = defs.dash_total;
 	}
 	
-	if _key_dir == _wall_dir {
-		y_vel = min(-6.5, y_vel, -min(abs(dash_dir_x_vel) + 1, 8));
-		x_vel = -_wall_dir * 2;
-		
-		key_force_timer = 9;
-	} else {
-		y_vel = min(-6.2, y_vel, -min(abs(dash_dir_x_vel) + 1, 9));
-		x_vel = -_wall_dir * 4;
-		
-		key_force_timer = 5;
-	}
+	y_vel = defs.jump_vel;
+	x_vel = -_wall_dir * 3;
+	
+	key_force_timer = 8;
 	
 	key_force = -_wall_dir;
 	dir = -_wall_dir;
 	
-	hold_jump_key_timer = 0;
+	hold_jump_key_timer = 5;
 	hold_jump_vel = y_vel;
-	hold_jump_vel_timer = 6;
+	hold_jump_vel_timer = 12;
 	
 	vel_grace = 0;
 	vel_grace_timer = 0;
@@ -921,7 +914,7 @@ state_base = state.add()
 	
 	if state.is(state_free) && !nat_crouch() {
 		if INPUT.check_pressed("menu") && place_meeting(x, y, obj_checkpoint) {
-			state.change(state_menu)
+			state.change(state_menu);
 			return;
 		} else if INPUT.check("menu") {
 			respawn_timer += 1;
