@@ -1038,8 +1038,11 @@ function game_level_grab_data(_lvl) {
 	__return.biome = _lvl.fields.biome ?? __return.biome;
 	__return.background = _lvl.fields.background ?? __return.background;
 	__return.music =
-		(_lvl.fields.music != undefined && _lvl.fields.music != "null")
-		? _lvl.fields.music : __return.music;
+		_lvl.fields.music == undefined
+			? __return.music
+			: (_lvl.fields.music == "null"
+				? undefined
+				: _lvl.fields.music);
 	__return.lut_grade = _lvl.fields.lut_grade ?? __return.lut_grade;
 	__return.lut_mix = _lvl.fields.lut_mix ?? __return.lut_mix;
 	for (var i = 0; i < array_length(_lvl.fields.flags); i++) {
