@@ -1036,7 +1036,7 @@ state_free = state_base.add()
 		_y_accel = defs.gravity_term;
 	}
 	
-	if INPUT.check_released("jump") && y_vel < 0 {
+	if (INPUT.check_released("jump") && hold_jump_key_timer <= 0) && y_vel < 0 {
 		y_vel *= defs.jump_damp;
 		hold_jump_vel_timer = 0;
 	}
@@ -1052,6 +1052,10 @@ state_free = state_base.add()
 	
 	if hold_jump_key_timer > 0 {
 		hold_jump_key_timer -= 1;
+		if hold_jump_key_timer <= 0 && !INPUT.check("jump") {
+			y_vel *= defs.jump_damp;
+			hold_jump_vel_timer = 0;
+		}
 	}
 	if hold_jump_vel_timer > 0 {
 		hold_jump_vel_timer -= 1;
