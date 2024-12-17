@@ -1216,8 +1216,6 @@ state_ledge = state_base.add()
 		ledge_stick = 4;
 	}
 	if _kh != dir && ledge_stick <= 0 {
-		x_vel += get_lift_x();
-		y_vel += get_lift_y();
 		state.change(state_free);
 		return;
 	}
