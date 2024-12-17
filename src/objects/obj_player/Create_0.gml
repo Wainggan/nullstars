@@ -647,17 +647,17 @@ action_dashjump_wall = function(_key_dir, _wall_dir) {
 		dash_left = defs.dash_total;
 	}
 	
-	y_vel = defs.jump_vel;
+	y_vel = defs.jump_vel - 0.5;
 	x_vel = -_wall_dir * 3;
 	
-	key_force_timer = 8;
+	key_force_timer = 7;
 	
 	key_force = -_wall_dir;
 	dir = -_wall_dir;
 	
 	hold_jump_key_timer = 5;
 	hold_jump_vel = y_vel;
-	hold_jump_vel_timer = 12;
+	hold_jump_vel_timer = 10;
 	
 	vel_grace = 0;
 	vel_grace_timer = 0;
