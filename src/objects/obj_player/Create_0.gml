@@ -1273,6 +1273,10 @@ state_dash = state_base.add()
 	x_vel = 0;
 	y_vel = 0;
 	
+	hold_jump_key_timer = 0;
+	hold_jump_vel = defs.terminal_vel;
+	hold_jump_vel_timer = 0;
+	
 	dash_timer = 6;
 	dash_frame = 0; // this is stupid
 	dash_grace = 14;
