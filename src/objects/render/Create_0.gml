@@ -75,6 +75,7 @@ config = {
 	particles_light: true,
 	
 	light_rim: true,
+	light_ray: true,
 	light_spot: true,
 	light_spot_shader: true,
 	light_shadow: true,

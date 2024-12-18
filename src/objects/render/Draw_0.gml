@@ -25,14 +25,16 @@ draw_clear_alpha(c_black, 0);
 if !surface_exists(surf_background_rays) {
 	surf_background_rays = surface_create(WIDTH, HEIGHT);
 }
-surface_set_target(surf_background_rays);
-draw_surface(surf_background_lights, 0, 0);
-draw_sprite_ext(spr_pixel, 0, 0, 0, WIDTH, HEIGHT, 0, c_white, 0.6);
-draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_black, 1);
-draw_surface_ext(surf_tiles, 0, 0, 1, 1, 0, c_black, 1);
-draw_surface_ext(surf_tiles, 0, 0 - 16, 1, 1, 0, c_black, 1);
-draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, c_black, 1);
-surface_reset_target();
+if config.light_ray {
+	surface_set_target(surf_background_rays);
+	draw_surface(surf_background_lights, 0, 0);
+	draw_sprite_ext(spr_pixel, 0, 0, 0, WIDTH, HEIGHT, 0, c_white, 0.4);
+	draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_black, 1);
+	draw_surface_ext(surf_tiles, 0, 0, 1, 1, 0, c_black, 1);
+	draw_surface_ext(surf_tiles, 0, 0 - 16, 1, 1, 0, c_black, 1);
+	surface_reset_target();
+}
+
 
 // -- background lights --
 
@@ -205,20 +207,23 @@ if config.light_method {
 	// rim lighting
 	draw_surface(surf_background_lights, 0, 0);
 	
-	var _ray_x_off = WIDTH / 2;
-	var _ray_y_off = -HEIGHT * 2;
-	var _ray_s_fac = 1;
-	var _ray_a_fac = 1;
-	repeat 12 {
-		_ray_s_fac *= 1.004
-		_ray_a_fac *= 0.9;
-		draw_surface_ext(
-			surf_background_rays,
-			-_ray_x_off * _ray_s_fac + _ray_x_off,
-			-_ray_y_off * _ray_s_fac + _ray_y_off,
-			_ray_s_fac, _ray_s_fac,
-			0, #777777, 0.5 * _ray_a_fac
-		);
+	// god rays
+	if config.light_ray {
+		var _ray_x_off = WIDTH / 2;
+		var _ray_y_off = -HEIGHT * 2;
+		var _ray_s_fac = 1;
+		var _ray_a_fac = 1;
+		repeat 10 {
+			_ray_s_fac *= 1.005;
+			_ray_a_fac *= 0.86;
+			draw_surface_ext(
+				surf_background_rays,
+				-_ray_x_off * _ray_s_fac + _ray_x_off,
+				-_ray_y_off * _ray_s_fac + _ray_y_off,
+				_ray_s_fac, _ray_s_fac,
+				0, #bbbbff, 0.07 * _ray_a_fac
+			);
+		}
 	}
 
 	for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
