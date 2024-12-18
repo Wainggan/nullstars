@@ -877,6 +877,11 @@ state_base = state.add()
 	// this is horrible
 	if state.is(state_free) {
 		if y_vel > -1 {
+			if get_check_wall(dir, 1) && INPUT.check("grab") {
+				state.change(state_ledge);
+				return;
+			}
+			/*
 			if (
 				!onground && get_check_wall(_kh, 1) && !INPUT.check("down")
 			) && (
@@ -893,6 +898,7 @@ state_base = state.add()
 					ledge_key = 0;
 				}
 			}
+			*/
 		}
 	}
 	
@@ -1149,6 +1155,7 @@ state_free = state_base.add()
 	
 	var _kh_p = INPUT.check_pressed("right") - INPUT.check_pressed("left");
 	
+	/*
 	ledge_buffer_dir_timer -= 1;
 	if _kh_p != 0 {
 		ledge_buffer_dir = _kh_p;
@@ -1158,6 +1165,7 @@ state_free = state_base.add()
 	if y_vel <= -1 && _kh != 0 {
 		ledge_key = _kh;
 	}
+	*/
 	
 });
 
@@ -1210,6 +1218,12 @@ state_ledge = state_base.add()
 		return;
 	}
 	
+	if !INPUT.check("grab") {
+		state.change(state_free);
+		return;
+	}
+	
+	/*
 	if _kh != dir {
 		ledge_stick -= 1;
 	} else {
@@ -1219,6 +1233,7 @@ state_ledge = state_base.add()
 		state.change(state_free);
 		return;
 	}
+	*/
 	
 });
 
