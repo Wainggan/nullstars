@@ -114,11 +114,6 @@ walljump_solid = noone;
 walljump_solid_x = 0;
 walljump_solid_y = 0;
 
-ledge_key = 0;
-ledge_buffer_dir = 0;
-ledge_buffer_dir_timer = 0;
-ledge_stick = 0;
-
 dash_dir_x = 0;
 dash_dir_y = 0;
 dash_dir_x_vel = 0;
@@ -877,25 +872,10 @@ state_base = state.add()
 	// this is horrible
 	if state.is(state_free) {
 		if y_vel > -1 {
-			/*
-			if (
-				!onground && get_check_wall(_kh, 1) && !INPUT.check("down")
-			) && (
-				(ledge_buffer_dir_timer > 0 && ledge_buffer_dir == dir) ||
-				ledge_key == dir ||
-				(dash_grace > 0 && _kh == dash_dir_x)
-			) {
-				ledge_buffer_dir_timer = 0;
-				ledge_key = 0;
 			if get_check_wall(dir, 1) && INPUT.check("grab") && !onground {
 				state.change(state_ledge);
 				return;
-			} else {
-				if y_vel > 2 {
-					ledge_key = 0;
-				}
 			}
-			*/
 		}
 	}
 	
@@ -1150,28 +1130,12 @@ state_free = state_base.add()
 		return;
 	}
 	
-	var _kh_p = INPUT.check_pressed("right") - INPUT.check_pressed("left");
-	
-	/*
-	ledge_buffer_dir_timer -= 1;
-	if _kh_p != 0 {
-		ledge_buffer_dir = _kh_p;
-		ledge_buffer_dir_timer = 4;
-	}
-	
-	if y_vel <= -1 && _kh != 0 {
-		ledge_key = _kh;
-	}
-	*/
-	
 });
 
 state_ledge = state_base.add()
 .set("enter", function(){
-	ledge_stick = 1;
 })
 .set("leave", function(){
-	ledge_stick = 0;
 })
 .set("step", function() {
 	
@@ -1219,18 +1183,6 @@ state_ledge = state_base.add()
 		state.change(state_free);
 		return;
 	}
-	
-	/*
-	if _kh != dir {
-		ledge_stick -= 1;
-	} else {
-		ledge_stick = 4;
-	}
-	if _kh != dir && ledge_stick <= 0 {
-		state.change(state_free);
-		return;
-	}
-	*/
 	
 });
 
