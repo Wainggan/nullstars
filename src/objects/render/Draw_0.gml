@@ -17,8 +17,22 @@ surface_set_target(surf_layer_0);
 draw_surface(application_surface, 0, 0);
 surface_reset_target();
 
+// clear application surface
 draw_clear_alpha(c_black, 0);
 
+
+// set up god rays
+if !surface_exists(surf_background_rays) {
+	surf_background_rays = surface_create(WIDTH, HEIGHT);
+}
+surface_set_target(surf_background_rays);
+draw_surface(surf_background_lights, 0, 0);
+draw_sprite_ext(spr_pixel, 0, 0, 0, WIDTH, HEIGHT, 0, c_white, 0.6);
+draw_surface_ext(surf_layer_0, 0, 0, 1, 1, 0, c_black, 1);
+draw_surface_ext(surf_tiles, 0, 0, 1, 1, 0, c_black, 1);
+draw_surface_ext(surf_tiles, 0, 0 - 16, 1, 1, 0, c_black, 1);
+draw_surface_ext(surf_bubbles, 0, 0, 1, 1, 0, c_black, 1);
+surface_reset_target();
 
 // -- background lights --
 
@@ -192,18 +206,18 @@ if config.light_method {
 	draw_surface(surf_background_lights, 0, 0);
 	
 	var _ray_x_off = WIDTH / 2;
-	var _ray_y_off = -HEIGHT;
+	var _ray_y_off = -HEIGHT * 2;
 	var _ray_s_fac = 1;
 	var _ray_a_fac = 1;
-	repeat 10 {
-		_ray_s_fac *= 1.01;
+	repeat 12 {
+		_ray_s_fac *= 1.004
 		_ray_a_fac *= 0.9;
 		draw_surface_ext(
-			surf_background_lights,
+			surf_background_rays,
 			-_ray_x_off * _ray_s_fac + _ray_x_off,
 			-_ray_y_off * _ray_s_fac + _ray_y_off,
 			_ray_s_fac, _ray_s_fac,
-			0, #777777, 0.1 * _ray_a_fac
+			0, #777777, 0.5 * _ray_a_fac
 		);
 	}
 
@@ -589,44 +603,8 @@ surface_set_target(surf_layer_2);
 
 draw_surface(surf_mask, 0, 0);
 
-
-// draw tile layer
-
-shader_set(shd_tiles);
-
-var _matrix = matrix_build_identity();
-var _matrix_ind = util_matrix_get_alignment();
-
-for (var i = 0; i < array_length(_lvl_onscreen); i++) {
-	var _lvl = _lvl_onscreen[i]
-	_matrix[_matrix_ind.x] = _lvl.x - _cam_x;
-	_matrix[_matrix_ind.y] = _lvl.y - _cam_y;
-	matrix_set(matrix_world, _matrix);
-	vertex_submit(_lvl.vb_tiles_below, pr_trianglelist, tileset_get_texture(tl_tiles));
-	vertex_submit(_lvl.vb_front, pr_trianglelist, tileset_get_texture(tl_tiles));
-}
-matrix_set(matrix_world, matrix_identity);
-
-shader_reset();
-
-for (var i = 0; i < array_length(_lvl_onscreen); i++) {
-	var _lvl = _lvl_onscreen[i]
-	draw_tilemap(
-		_lvl.tiles_tiles_above, 
-		tilemap_get_x(_lvl.tiles_tiles_above) - _cam_x,
-		tilemap_get_y(_lvl.tiles_tiles_above) - _cam_y
-	);
-	draw_tilemap(
-		_lvl.tiles_decor, 
-		tilemap_get_x(_lvl.tiles_decor) - _cam_x,
-		tilemap_get_y(_lvl.tiles_decor) - _cam_y
-	);
-	draw_tilemap(
-		_lvl.tiles_spike, 
-		tilemap_get_x(_lvl.tiles_spike) - _cam_x,
-		tilemap_get_y(_lvl.tiles_spike) - _cam_y
-	);
-}
+// draw tiles
+draw_surface(surf_tiles, 0, 0);
 
 surface_reset_target();
 

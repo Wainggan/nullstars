@@ -10,6 +10,8 @@ surf_lights_buffer = -1;
 surf_mask = -1;
 surf_background = -1;
 
+surf_tiles = -1;
+
 surf_layer_0 = -1;
 surf_layer_1 = -1;
 surf_layer_2 = -1;

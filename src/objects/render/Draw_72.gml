@@ -230,6 +230,52 @@ for (var i = 0; i < array_length(_lvl_onscreen); i++) {
 
 surface_reset_target();
 
+if !surface_exists(surf_tiles) {
+	surf_tiles = surface_create(WIDTH, HEIGHT);
+}
+surface_set_target(surf_tiles);
+draw_clear_alpha(c_black, 0);
+
+// draw tile layer
+
+shader_set(shd_tiles);
+
+var _matrix = matrix_build_identity();
+var _matrix_ind = util_matrix_get_alignment();
+
+for (var i = 0; i < array_length(_lvl_onscreen); i++) {
+	var _lvl = _lvl_onscreen[i]
+	_matrix[_matrix_ind.x] = _lvl.x - _cam_x;
+	_matrix[_matrix_ind.y] = _lvl.y - _cam_y;
+	matrix_set(matrix_world, _matrix);
+	vertex_submit(_lvl.vb_tiles_below, pr_trianglelist, tileset_get_texture(tl_tiles));
+	vertex_submit(_lvl.vb_front, pr_trianglelist, tileset_get_texture(tl_tiles));
+}
+matrix_set(matrix_world, matrix_identity);
+
+shader_reset();
+
+for (var i = 0; i < array_length(_lvl_onscreen); i++) {
+	var _lvl = _lvl_onscreen[i]
+	draw_tilemap(
+		_lvl.tiles_tiles_above, 
+		tilemap_get_x(_lvl.tiles_tiles_above) - _cam_x,
+		tilemap_get_y(_lvl.tiles_tiles_above) - _cam_y
+	);
+	draw_tilemap(
+		_lvl.tiles_decor, 
+		tilemap_get_x(_lvl.tiles_decor) - _cam_x,
+		tilemap_get_y(_lvl.tiles_decor) - _cam_y
+	);
+	draw_tilemap(
+		_lvl.tiles_spike, 
+		tilemap_get_x(_lvl.tiles_spike) - _cam_x,
+		tilemap_get_y(_lvl.tiles_spike) - _cam_y
+	);
+}
+
+surface_reset_target();
+
 /*
 note:
 up to this point, the application surface consists of the level background tiles.
