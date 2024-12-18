@@ -570,7 +570,7 @@ action_walljump = function() {
 	
 	anim_runjump_timer = 0;
 	
-	hold_jump_key_timer = defs.jump_time;
+	hold_jump_key_timer = 5;
 	
 	walljump_grace = defs.walljump_grace;
 	walljump_grace_dir = dir;
