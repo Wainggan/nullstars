@@ -19,6 +19,7 @@ surf_ping = -1;
 surf_ping16 = -1;
 surf_pong = -1;
 
+surf_background_rays = -1;
 surf_background_lights = -1;
 
 surf_bubbles = -1;

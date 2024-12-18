@@ -191,6 +191,22 @@ if config.light_method {
 	// rim lighting
 	draw_surface(surf_background_lights, 0, 0);
 	
+	var _ray_x_off = WIDTH / 2;
+	var _ray_y_off = -HEIGHT;
+	var _ray_s_fac = 1;
+	var _ray_a_fac = 1;
+	repeat 10 {
+		_ray_s_fac *= 1.01;
+		_ray_a_fac *= 0.9;
+		draw_surface_ext(
+			surf_background_lights,
+			-_ray_x_off * _ray_s_fac + _ray_x_off,
+			-_ray_y_off * _ray_s_fac + _ray_y_off,
+			_ray_s_fac, _ray_s_fac,
+			0, #777777, 0.1 * _ray_a_fac
+		);
+	}
+
 	for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
 		var _x = i_light % _size_index,
 			_y = floor(i_light / _size_index);
