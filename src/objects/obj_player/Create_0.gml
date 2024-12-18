@@ -780,6 +780,45 @@ state_base = state.add()
 	var _d = 0, _amount = 0;
 	var _shifted = false;
 	
+	if !_shifted {
+		_d = 0;
+		_amount = state.is(state_dash) ? 16 : 4;
+		if actor_collision(x + x_vel, y)
+			for (_d = 1; _d < _amount; _d++) {
+				if actor_collision(x + x_vel, y + _d) {
+				} else break;
+			}
+		if _d != _amount {
+			actor_move_y(_d)
+			_shifted = true;
+		}
+			
+		_d = 0;
+		_amount = state.is(state_dash) ? 10 : 2;
+		if actor_collision(x + x_vel, y)
+			for (_d = 1; _d < _amount; _d++) {
+				if actor_collision(x + x_vel, y - _d) {
+				} else break;
+			}
+		if _d != _amount {
+			actor_move_y(-_d)
+			_shifted = true;
+		}
+	}
+	
+	static __collide_x = function() {
+		if vel_grace_timer <= 0 || abs(x_vel) > abs(vel_grace) { // bad idea
+			vel_grace_timer = 14;
+			vel_grace = x_vel;
+		}
+		if state.is(state_swim_bullet) {
+			swim_dir = point_direction(0, 0, -x_vel, y_vel);
+		} else {
+			x_vel = 0;
+		}
+	};
+	actor_move_x(x_vel, __collide_x);
+
 	if (y_vel < 0 ||
 		(dash_grace > 0 && dash_dir_y == 1 && dash_dir_x == 0)) &&
 		!_shifted {
@@ -822,45 +861,6 @@ state_base = state.add()
 		}
 	};
 	actor_move_y(y_vel, __collide_y);
-	
-	if !_shifted {
-		_d = 0;
-		_amount = state.is(state_dash) ? 16 : 4;
-		if actor_collision(x + x_vel, y)
-			for (_d = 1; _d < _amount; _d++) {
-				if actor_collision(x + x_vel, y + _d) {
-				} else break;
-			}
-		if _d != _amount {
-			actor_move_y(_d)
-			_shifted = true;
-		}
-			
-		_d = 0;
-		_amount = state.is(state_dash) ? 10 : 2;
-		if actor_collision(x + x_vel, y)
-			for (_d = 1; _d < _amount; _d++) {
-				if actor_collision(x + x_vel, y - _d) {
-				} else break;
-			}
-		if _d != _amount {
-			actor_move_y(-_d)
-			_shifted = true;
-		}
-	}
-	
-	static __collide_x = function() {
-		if vel_grace_timer <= 0 || abs(x_vel) > abs(vel_grace) { // bad idea
-			vel_grace_timer = 14;
-			vel_grace = x_vel;
-		}
-		if state.is(state_swim_bullet) {
-			swim_dir = point_direction(0, 0, -x_vel, y_vel);
-		} else {
-			x_vel = 0;
-		}
-	};
-	actor_move_x(x_vel, __collide_x);
 	
 	var _inst = instance_place(x, y, obj_dash)
 	if dash_left < defs.dash_total && _inst && _inst.state.is(_inst.state_active) {
