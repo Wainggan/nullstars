@@ -877,10 +877,6 @@ state_base = state.add()
 	// this is horrible
 	if state.is(state_free) {
 		if y_vel > -1 {
-			if get_check_wall(dir, 1) && INPUT.check("grab") {
-				state.change(state_ledge);
-				return;
-			}
 			/*
 			if (
 				!onground && get_check_wall(_kh, 1) && !INPUT.check("down")
@@ -891,6 +887,7 @@ state_base = state.add()
 			) {
 				ledge_buffer_dir_timer = 0;
 				ledge_key = 0;
+			if get_check_wall(dir, 1) && INPUT.check("grab") && !onground {
 				state.change(state_ledge);
 				return;
 			} else {
