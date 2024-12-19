@@ -204,27 +204,9 @@ if config.light_method {
 	draw_clear_alpha(#777788, 1);
 	
 	gpu_set_blendmode(bm_add);
+	
 	// rim lighting
 	draw_surface(surf_background_lights, 0, 0);
-	
-	// god rays
-	if config.light_ray {
-		var _ray_x_off = WIDTH / 2;
-		var _ray_y_off = -HEIGHT * 2;
-		var _ray_s_fac = 1;
-		var _ray_a_fac = 1;
-		repeat 10 {
-			_ray_s_fac *= 1.005;
-			_ray_a_fac *= 0.86;
-			draw_surface_ext(
-				surf_background_rays,
-				-_ray_x_off * _ray_s_fac + _ray_x_off,
-				-_ray_y_off * _ray_s_fac + _ray_y_off,
-				_ray_s_fac, _ray_s_fac,
-				0, #bbbbff, 0.07 * _ray_a_fac
-			);
-		}
-	}
 
 	for (var i_light = 0; i_light < array_length(lights_array); i_light++) {
 		var _x = i_light % _size_index,
@@ -479,6 +461,28 @@ if config.light_method {
 
 // draw bubbles
 surface_set_target(surf_layer_0);
+
+// god rays
+if config.light_ray {
+	gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_one, bm_zero, bm_one);
+	var _ray_x_off = WIDTH / 2;
+	var _ray_y_off = -HEIGHT * 2;
+	var _ray_s_fac = 1;
+	var _ray_a_fac = 1;
+	repeat 10 {
+		_ray_s_fac *= 1.005;
+		_ray_a_fac *= 0.8;
+		draw_surface_ext(
+			surf_background_rays,
+			-_ray_x_off * _ray_s_fac + _ray_x_off,
+			-_ray_y_off * _ray_s_fac + _ray_y_off,
+			_ray_s_fac, _ray_s_fac,
+			0, #aaaaff, 0.05 * _ray_a_fac
+		);
+	}
+	gpu_set_blendmode(bm_normal);
+}
+
 draw_surface(surf_bubbles, 0, 0);
 surface_reset_target();
 
