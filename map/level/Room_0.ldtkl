@@ -426,7 +426,7 @@
 						{ "__identifier": "text", "__type": "String", "__value": "-- crystals\n* it is said that their glow will bring the end of times. \n* time has already ended. this legend is meaningless.", "__tile": null, "defUid": 266, "realEditorValues": [{
 							"id": "V_String",
 							"params": [
-								"-- crystals\n* it is said that their glow will bring the end of times. \n* time has already ended. this legend is meaningless."
+								"-- crystals\\n* it is said that their glow will bring the end of times. \\n* time has already ended. this legend is meaningless."
 							]
 						}] },
 						{ "__identifier": "color", "__type": "Color", "__value": "#FFFFFF", "__tile": null, "defUid": 602, "realEditorValues": [] }
@@ -449,7 +449,7 @@
 					"fieldInstances": [
 						{ "__identifier": "text", "__type": "String", "__value": "<-- exit\n\nsorry you didn't enjoy what was here. you may leave.", "__tile": null, "defUid": 266, "realEditorValues": [{
 							"id": "V_String",
-							"params": ["<-- exit\n\nsorry you didn't enjoy what was here. you may leave."]
+							"params": ["<-- exit\\n\\nsorry you didn't enjoy what was here. you may leave."]
 						}] },
 						{ "__identifier": "color", "__type": "Color", "__value": "#FFFFFF", "__tile": null, "defUid": 602, "realEditorValues": [] }
 					],
@@ -471,6 +471,25 @@
 					"fieldInstances": [],
 					"__worldX": 552,
 					"__worldY": 496
+				},
+				{
+					"__identifier": "obj_decor_showbutton",
+					"__grid": [77,57],
+					"__pivot": [0.5,0.5],
+					"__tags": ["decor"],
+					"__tile": null,
+					"__smartColor": "#8B9BB4",
+					"iid": "f18e0480-9b00-11ef-b45a-1348383d2da2",
+					"width": 16,
+					"height": 16,
+					"defUid": 192,
+					"px": [1240,920],
+					"fieldInstances": [{ "__identifier": "button", "__type": "LocalEnum.Control", "__value": "grab", "__tile": null, "defUid": 193, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["grab"]
+					}] }],
+					"__worldX": 1240,
+					"__worldY": 920
 				}
 			]
 		},
