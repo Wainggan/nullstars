@@ -1426,6 +1426,9 @@ state_swim_bullet = state_base.add()
 	swim_pre_x_vel = x_vel;
 	swim_pre_y_vel = y_vel;
 	
+	// for anim
+	swim_dir = point_direction(0, 0, x_vel, y_vel);
+	
 	x_vel = 0;
 	y_vel = 0;
 	
