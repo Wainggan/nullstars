@@ -10,6 +10,8 @@ surf_lights_buffer = -1;
 surf_mask = -1;
 surf_background = -1;
 
+surf_tiles = -1;
+
 surf_layer_0 = -1;
 surf_layer_1 = -1;
 surf_layer_2 = -1;
@@ -19,6 +21,7 @@ surf_ping = -1;
 surf_ping16 = -1;
 surf_pong = -1;
 
+surf_background_rays = -1;
 surf_background_lights = -1;
 
 surf_bubbles = -1;
@@ -72,6 +75,7 @@ config = {
 	particles_light: true,
 	
 	light_rim: true,
+	light_ray: true,
 	light_spot: true,
 	light_spot_shader: true,
 	light_shadow: true,
