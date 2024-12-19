@@ -418,7 +418,7 @@
 					"levelIid": "b4572070-9b00-11ef-8881-d96bcd9e8e89",
 					"layerIid": "b4572073-9b00-11ef-8881-7578e0aef15c",
 					"entityIid": "3098aaa0-9b00-11ef-8881-4905fc36e248"
-				}, "worldX": 30160, "worldY": 8208, "widPx": 128, "heiPx": 16, "fields": { "time": 14, "ref": {
+				}, "worldX": 30160, "worldY": 8208, "widPx": 128, "heiPx": 16, "fields": { "time": 8, "ref": {
 					"entityIid": "33053dd0-9b00-11ef-8881-17350a5c2ee2",
 					"layerIid": "b4572073-9b00-11ef-8881-7578e0aef15c",
 					"levelIid": "b4572070-9b00-11ef-8881-d96bcd9e8e89",
@@ -14711,7 +14711,7 @@
 			"worldX": 30080,
 			"worldY": 8176,
 			"worldDepth": 0,
-			"pxWid": 784,
+			"pxWid": 832,
 			"pxHei": 896,
 			"__bgColor": "#2D2A30",
 			"bgColor": null,
